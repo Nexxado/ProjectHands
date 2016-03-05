@@ -1,4 +1,5 @@
 # Project 'Hands'
+[Table of Contents](#table-of-contents)
 
 ![logo](/logo.jpg)
 
