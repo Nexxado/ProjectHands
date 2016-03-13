@@ -6,6 +6,8 @@ Projects organization and team communication made easy.
 
 ![project-logo](/logo.jpg)
 
+## Please visit our [Demo Application](https://project-hands.herokuapp.com/)
+
 ## Disclaimer
 This project is developed as part of the requirements for a [software engineering course](https://github.com/jce-il/se-class/wiki) at the software engineering department - [Azrieli College of Engineering](http://www.jce.ac.il/), Jerusalem, Israel.
 
