@@ -2,6 +2,8 @@
 
 [![Join the chat at https://gitter.im/Nexxado/ProjectHands](https://badges.gitter.im/Nexxado/ProjectHands.svg)](https://gitter.im/Nexxado/ProjectHands?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+Projects organization and team communication made easy.
+
 ![project-logo](/logo.jpg)
 
 ## Disclaimer
