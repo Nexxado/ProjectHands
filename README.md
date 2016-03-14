@@ -4,7 +4,7 @@
 
 Projects organization and team communication made easy.
 
-![project-logo](/logo.jpg)
+![project-logo](./documents/logo.jpg)
 
 ## Please visit our [Demo Application](https://project-hands.herokuapp.com/)
 
@@ -21,5 +21,5 @@ Please visit our wiki for furthur project info:
 
 ### Project Documents
 * <a target="_blank" href="https://www.facebook.com/%D7%A4%D7%A8%D7%95%D7%99%D7%A7%D7%98-%D7%99%D7%93%D7%99%D7%99%D7%9D-1498261200461010">Organization Facebook page</a>
-* [Project Idea Presentation](/Project.Presentation.pptx)
-* [Statement of Work](/Statement.of.Work.pdf)
+* [Project Idea Presentation](./documents/Project.Presentation.pptx)
+* [Statement of Work](./documents/Statement.of.Work.pdf)
