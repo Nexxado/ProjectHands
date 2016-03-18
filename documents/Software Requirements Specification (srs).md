@@ -3,31 +3,31 @@
 Table of Contents
 =================
 
-  * [introduction](#introduction)
-    * [goal](#goal)
-    * [scope](#scope)
-    * [glossary](#glossary)
-    * [overview](#overview)
+  * [Introduction](#introduction)
+    * [Goal](#goal)
+    * [Scope](#scope)
+    * [Glossary](#glossary)
+    * [Overview](#overview)
   * [Use Cases](#usecases)
-    * [Actor & Stakeholer table](#actorastakeholertable)
-    * [Main UC diagrams](#mainucdiagrams)
-    * [UC 1](#uc1)
-    * [UC 2](#uc2)
+    * [Actor & Stakeholer Table](#actorastakeholertable)
+    * [Main Use-case diagrams](#mainucdiagrams)
+    * [Use-case 1](#uc1)
+    * [Use-case 2](#uc2)
   * [User Stories](#userstories)
   * [Requirements](#requirements)
     * [Hardware Requirements](#hardware)
     * [Software Requirements](#software) 
     * [Additional Requirements](#additionalrequirements)
-  * [Prototype](#prototype)
+  * [User Interface Prototype](#prototype)
 
  
  
 ## SRS External Document
 
 
-## introduction
+## <a name="introduction">Introduction</a> 
 
-#### goal
+#### <a name="goal">Goal</a> 
 
 התוכנה תייעל תנהל ותתעד את עבודת השיפוצים אותם הארגון מבצע
 </br>
@@ -47,7 +47,7 @@ Table of Contents
 
 <hr/>
 
-#### scope
+#### <a name="scope">Scope</a> 
 </br>
 התוכנה תפעל במודל שרת-לקוח  </br>
 צד השרת יספק את שמירת המידע במסד נתונים, מערכת צ'אט, אימות משתמשים.</br>
@@ -69,7 +69,7 @@ Table of Contents
 
 <hr/>
 
-#### glossary 
+#### <a name="glossary">Glossary</a>  
 
 
 |    |    |   | 
@@ -83,7 +83,7 @@ Table of Contents
 <hr/>
 
 
-#### overview
+#### <a name="overview">Overview</a> 
 
 בהמשך יפורטו תרחישי שימוש 
 </br>
@@ -95,7 +95,7 @@ Table of Contents
 ## <a name="usecases">Use Cases</a>
  
 
-#### <a name="actorastakeholertable">Actor & Stkeholer table</a> 
+#### <a name="actorastakeholertable">Actor & Stkeholer Table</a> 
 
 |    |player name     | Goals | 
 |----|----------------|-------|
@@ -108,7 +108,7 @@ Table of Contents
 <hr/>
 
 
-#### <a name="mainucdiagrams">Main UC diagrams</a> 
+#### <a name="mainucdiagrams">Main Use-case Diagrams</a> 
 
 
 ![uml_d](https://github.com/Nexxado/ProjectHands/blob/master/documents/uml-d.png)
@@ -165,6 +165,6 @@ Table of Contents
 #### <a name="additionalrequirements">Additional Requirements</a>  
 <hr/>
 
-## <a name="prototype">Prototype</a>   
+## <a name="prototype">User Interface Prototype</a>   
 
  
