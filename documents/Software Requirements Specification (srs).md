@@ -13,12 +13,12 @@ Table of Contents
     * [Main UC diagrams](#mainucdiagrams)
     * [uc1](#uc1)
     * [uc2](#uc2)
-  * [userstories](#userstories)
+  * [User Stories](#userstories)
   * [requirements](#requirements)
     * [hardware](#hardware)
     * [software](#software) 
     * [additionalrequirements](#additionalrequirements)
-    * [prototype](#prototype)
+  * [prototype](#prototype)
 
  
  
@@ -108,7 +108,7 @@ Table of Contents
 <hr/>
 
 
-#### mainucdiagrams
+#### <a name="mainucdiagrams">Main UC diagrams</a> 
 
 
 ![uml_d](https://github.com/Nexxado/ProjectHands/blob/master/documents/uml-d.png)
@@ -116,7 +116,7 @@ Table of Contents
 <hr/>
 
 
-#### uc1
+#### <a name="uc1">UC 1</a> 
 
 |    |                |       | 
 |----|----------------|-------|
@@ -136,7 +136,7 @@ Table of Contents
 <hr/>
 
 
-#### uc2
+#### <a name="uc2">UC 2</a> 
 
 |    |                |       | 
 |----|----------------|-------|
@@ -155,8 +155,10 @@ Table of Contents
 
 
 
-## userstories 
-## requirements 
+## <a name="userstories"User Stories</a>  
+
+## requirements
+
 #### hardware  
 <hr/>
 #### software
