@@ -24,12 +24,13 @@ Table of Contents
     * [terms](#terms)
     * [review](#review)
   * [usecases](#usecases)
-  * User Stories
-  * דרישות סביבה
-    * דרישות חומרה
-    * דרישות תוכנה
-    * דרישות נוספות
-    * ממשק משתמש – אב טיפוס
+    * [diagrams](#diagram)
+  * [userstories](#userstories)
+  * [requirements](#requirements)
+    * [hardware](#hardware)
+    * [software](#software) 
+    * [additionalrequirements](#additionalrequirements)
+    * [prototype](#prototype)
 
 ## introduction
 
@@ -109,6 +110,13 @@ Use Cases
 | 3 | Renovation Owner | קבלת עדכון על תהליך השיבוץ |  
 | 4 | Employees seeker | לחפש עובדים להעסקה |  
 
-##### UML's
+## diagrams
+
+## userstories 
+## requirements 
+## hardware  
+## software 
+## additionalrequirements 
+## prototype 
 
  
