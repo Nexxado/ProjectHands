@@ -131,8 +131,7 @@ Table of Contents
 | Scenario major success           |   | | 
 | Extensions ( errors )            |   | | 
 | Alternative scenarios            |   | | 
-
-Description
+ 
 
 <hr/>
 
