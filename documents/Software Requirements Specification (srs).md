@@ -23,7 +23,7 @@ Table of Contents
     * [scope](#scope)
     * [terms](#terms)
     * [review](#review)
-  * [UseCases](#UseCases)
+  * [usecases](#usecases)
   * User Stories
   * דרישות סביבה
     * דרישות חומרה
@@ -95,7 +95,7 @@ Table of Contents
 תרחישי שימוש פורמאלים וסיכונים וסיפורי שימוש 
 
 
-## UseCases
+## usecases
 
 
 Use Cases
