@@ -15,29 +15,14 @@ related documents
  * a
  * b 
  
-
-
-<!-- toc -->
-- [use cases](#use cases)
-- [xyz](#xyz)
-<!-- tocstop -->
-
-## usecases
-This is a b c.
-
-## xyz
-This is x y z.
-
-
-
 Table of Contents
 =================
 
   * [introduction](#introduction)
-    * מטרה
-    * היקף
-    * מילון מונחים
-    * סקירה
+    * [purpose](#purpose)
+    * [scope](#Scope)
+    * [terms](#terms)
+    * [review](#review)
   * Use Cases
   * User Stories
   * דרישות סביבה
@@ -48,7 +33,7 @@ Table of Contents
 
 ## introduction
 
-#### מטרה
+## purpose
 
 התוכנה תייעל תנהל ותתעד את עבודת השיפוצים אותם הארגון מבצע
 </br>
@@ -74,7 +59,7 @@ Table of Contents
 הול רשימת משימות  כתוב
 ת לוח זמנים ועוד.
  
-#### היקף
+## scope
 
 התוכנה תפעל במודל שרת-לקוח 
 צד השרת יספק את שמירת המידע במסד נתונים, מערכת צ'אט, אימות משתמשים.
@@ -90,7 +75,7 @@ Table of Contents
 ביצועים ואמינות:
 אנו משתמשים בטכנולוגיות ובסיפריות העדכניות ביותר עם דגש על ביצועים ואמינות בעולם ה spa 
 
-#### מילון מונחים
+## terms 
 
 **Volunteer**  איש שמתנדב לעבוד בלי שכר
 </br>
@@ -101,7 +86,7 @@ Table of Contents
 **Renovation Owner** בעל הדירה/הבית אותו משפצים
 </br>
 
-#### סקירה
+## review
 
 בהמשך יפורטו תרחישי שימוש 
 </br>
