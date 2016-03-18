@@ -11,14 +11,14 @@ Table of Contents
   * [Use Cases](#usecases)
     * [Actor & Stakeholer table](#actorastakeholertable)
     * [Main UC diagrams](#mainucdiagrams)
-    * [uc1](#uc1)
-    * [uc2](#uc2)
+    * [UC 1](#uc1)
+    * [UC 2](#uc2)
   * [User Stories](#userstories)
-  * [requirements](#requirements)
-    * [hardware](#hardware)
-    * [software](#software) 
-    * [additionalrequirements](#additionalrequirements)
-  * [prototype](#prototype)
+  * [Requirements](#requirements)
+    * [Hardware Requirements](#hardware)
+    * [Software Requirements](#software) 
+    * [Additional Requirements](#additionalrequirements)
+  * [Prototype](#prototype)
 
  
  
@@ -151,20 +151,20 @@ Table of Contents
 | Scenario major success           |   | | 
 | Extensions ( errors )            |   | | 
 | Alternative scenarios            |   | | 
+ 
+## <a name="userstories">User Stories</a>  
 
+##  <a name="requirements">Requirements</a>  
 
-
-
-## <a name="userstories"User Stories</a>  
-
-## requirements
-
-#### hardware  
+#### <a name="requirements">Hardware Requirements</a>    
 <hr/>
-#### software
+
+#### <a name="software">Software Requirements</a>  
 <hr/>
-#### additionalrequirements
+
+#### <a name="additionalrequirements">Additional Requirements</a>  
 <hr/>
-## prototype 
+
+## <a name="prototype">Prototype</a>   
 
  
