@@ -1,7 +1,25 @@
 # מפרט דרישות תוכנה  - SRS
 
 
-#### Project 'Hands' 
+## Project 'Hands' 
+
+
+Table of Contents
+=================
+
+  * [introduction](#introduction)
+    * [purpose](#purpose)
+    * [scope](#scope)
+    * [terms](#terms)
+    * [review](#review)
+  * [usecases](#usecases)
+    * [diagrams](#diagrams)
+  * [userstories](#userstories)
+  * [requirements](#requirements)
+    * [hardware](#hardware)
+    * [software](#software) 
+    * [additionalrequirements](#additionalrequirements)
+    * [prototype](#prototype)
 
 Team Members
 ============
@@ -15,22 +33,7 @@ related documents
  * a
  * b 
  
-Table of Contents
-=================
 
-  * [introduction](#introduction)
-    * [purpose](#purpose)
-    * [scope](#scope)
-    * [terms](#terms)
-    * [review](#review)
-  * [usecases](#usecases)
-    * [diagrams](#diagram)
-  * [userstories](#userstories)
-  * [requirements](#requirements)
-    * [hardware](#hardware)
-    * [software](#software) 
-    * [additionalrequirements](#additionalrequirements)
-    * [prototype](#prototype)
 
 ## introduction
 
@@ -97,10 +100,7 @@ Table of Contents
 
 
 ## usecases
-
-
-Use Cases
-========
+ 
 
 ### players table 
 |    |player name     | Goals | 
@@ -111,6 +111,8 @@ Use Cases
 | 4 | Employees seeker | לחפש עובדים להעסקה |  
 
 ## diagrams
+
+![uml_d](https://github.com/Nexxado/ProjectHands/blob/master/documents/uml-d.png)
 
 ## userstories 
 ## requirements 
