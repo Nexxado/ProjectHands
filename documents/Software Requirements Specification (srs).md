@@ -1,18 +1,15 @@
-# מפרט דרישות תוכנה  - SRS
-
-
-## Project 'Hands' 
-
-
+#SRS - Software Requirements Specification
+ 
 Table of Contents
 =================
 
   * [introduction](#introduction)
-    * [purpose](#purpose)
+    * [goal](#goal)
     * [scope](#scope)
-    * [terms](#terms)
-    * [review](#review)
+    * [glossary](#glossary)
+    * [overview](#overview)
   * [usecases](#usecases)
+    * [playerstable](#playerstable)
     * [diagrams](#diagrams)
   * [userstories](#userstories)
   * [requirements](#requirements)
@@ -37,7 +34,7 @@ related documents
 
 ## introduction
 
-#### purpose
+#### goal
 
 התוכנה תייעל תנהל ותתעד את עבודת השיפוצים אותם הארגון מבצע
 </br>
@@ -63,7 +60,7 @@ related documents
 הול רשימת משימות  כתוב
 ת לוח זמנים ועוד.
  
-## scope
+#### scope
 
 התוכנה תפעל במודל שרת-לקוח 
 צד השרת יספק את שמירת המידע במסד נתונים, מערכת צ'אט, אימות משתמשים.
@@ -79,7 +76,7 @@ related documents
 ביצועים ואמינות:
 אנו משתמשים בטכנולוגיות ובסיפריות העדכניות ביותר עם דגש על ביצועים ואמינות בעולם ה spa 
 
-## terms 
+#### glossary 
 
 **Volunteer**  איש שמתנדב לעבוד בלי שכר
 </br>
@@ -90,7 +87,7 @@ related documents
 **Renovation Owner** בעל הדירה/הבית אותו משפצים
 </br>
 
-## review
+#### overview
 
 בהמשך יפורטו תרחישי שימוש 
 </br>
@@ -102,7 +99,7 @@ related documents
 ## usecases
  
 
-### players table 
+#### playerstable 
 |    |player name     | Goals | 
 |----|----------------|-------|
 | 1  | Volunteer  |  הרשמה למערכת, הרשמה לשיפוצים עתידיים. | 
