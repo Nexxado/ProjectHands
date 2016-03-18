@@ -20,10 +20,10 @@ Table of Contents
 
   * [introduction](#introduction)
     * [purpose](#purpose)
-    * [scope](#Scope)
+    * [scope](#scope)
     * [terms](#terms)
     * [review](#review)
-  * Use Cases
+  * [Use Cases](#Use Cases)
   * User Stories
   * דרישות סביבה
     * דרישות חומרה
@@ -93,6 +93,10 @@ Table of Contents
 כולל דיאגרמות מפורטות של שימושים במערכת 
 </br>
 תרחישי שימוש פורמאלים וסיכונים וסיפורי שימוש 
+
+
+## Use Cases
+
 
 Use Cases
 ========
