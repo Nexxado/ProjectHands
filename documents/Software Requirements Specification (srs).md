@@ -18,7 +18,7 @@ related documents
 
 
 <!-- toc -->
-- [usecases](#usecases)
+- [use cases](#use cases)
 - [xyz](#xyz)
 <!-- tocstop -->
 
@@ -33,7 +33,7 @@ This is x y z.
 Table of Contents
 =================
 
-  * [הקדמה](הקדמה#)
+  * [introduction](#introduction)
     * מטרה
     * היקף
     * מילון מונחים
@@ -46,8 +46,7 @@ Table of Contents
     * דרישות נוספות
     * ממשק משתמש – אב טיפוס
 
-##הקדמה## 
-=====
+## introduction
 
 #### מטרה
 
