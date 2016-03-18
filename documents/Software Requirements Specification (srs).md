@@ -156,7 +156,7 @@ Table of Contents
 
 ##  <a name="requirements">Requirements</a>  
 
-#### <a name="requirements">Hardware Requirements</a>    
+#### <a name="hardware">Hardware Requirements</a>    
 <hr/>
 
 #### <a name="software">Software Requirements</a>  
