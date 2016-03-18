@@ -18,18 +18,9 @@ Table of Contents
     * [additionalrequirements](#additionalrequirements)
     * [prototype](#prototype)
 
-Team Members
-============
-* Ruby Lichtenstein - <a href="https://github.com/RubyLichtenstein" target="_blank">RubyLichtenstein</a>
-* Ihab Zhaika - <a href="https://github.com/ihabZhaika" target="_blank">ihabZhaika</a>
-* Dan Draiman - <a href="https://github.com/DDraiman1990" target="_blank">DDraiman1990</a>
-* Netanel Draiman - <a href="https://github.com/Nexxado" target="_blank">Nexxado</a>
-
-related documents
-=================
- * a
- * b 
  
+ 
+## SRS External Document
 
 
 ## introduction
