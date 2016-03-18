@@ -9,7 +9,7 @@ Table of Contents
     * [glossary](#glossary)
     * [overview](#overview)
   * [Use Cases](#usecases)
-    * [actorastakeholertable](#actorastakeholertable)
+    * [Actor & Stakeholer table](#actorastakeholertable)
     * [mainucdiagrams](#mainucdiagrams)
     * [uc1](#uc1)
     * [uc2](#uc2)
@@ -92,10 +92,10 @@ Table of Contents
 תרחישי שימוש פורמאלים וסיכונים וסיפורי שימוש 
 
 
-## <a name="usecases">use cases</a>
+## <a name="usecases">Use Cases</a>
  
 
-#### actorastakeholertable 
+#### <a name="actorastakeholertable">Actor & Stkeholer table</a> 
 
 |    |player name     | Goals | 
 |----|----------------|-------|
