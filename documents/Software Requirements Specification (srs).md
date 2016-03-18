@@ -10,7 +10,7 @@ Table of Contents
     * [overview](#overview)
   * [Use Cases](#usecases)
     * [Actor & Stakeholer table](#actorastakeholertable)
-    * [mainucdiagrams](#mainucdiagrams)
+    * [Main UC diagrams](#mainucdiagrams)
     * [uc1](#uc1)
     * [uc2](#uc2)
   * [userstories](#userstories)
