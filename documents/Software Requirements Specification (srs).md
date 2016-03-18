@@ -12,6 +12,7 @@ Table of Contents
     * [playerstable](#playerstable)
     * [diagrams](#diagrams)
     * [uc1](#uc1)
+    * [uc2](#uc2)
   * [userstories](#userstories)
   * [requirements](#requirements)
     * [hardware](#hardware)
@@ -102,6 +103,27 @@ Table of Contents
 #### diagrams
 
 #### uc1
+
+|    |player name     | Goals | 
+|----|----------------|-------|
+| main player  | Volunteer  |  הרשמה למערכת, הרשמה לשיפוצים עתידיים. | 
+| goal | Renovation Manager  | ניהול מאגר השיפוצים והשמת המתנדבים לשיפוץ | 
+| scope  | Renovation Owner | קבלת עדכון על תהליך השיבוץ |  
+| Description | Employees seeker | לחפש עובדים להעסקה |  
+| Trigger | Employees seeker | לחפש עובדים להעסקה |  
+| Prerequisites | Employees seeker | לחפש עובדים להעסקה |  
+| Successful completion conditions | Employees seeker | לחפש עובדים להעסקה |  
+| Failure end conditions | Employees seeker | לחפש עובדים להעסקה |  
+| Scenario major success | Employees seeker | לחפש עובדים להעסקה |  
+| Extensions ( errors ) | Employees seeker | לחפש עובדים להעסקה |  
+| Alternative scenarios | Employees seeker | לחפש עובדים להעסקה |  
+
+Description
+
+
+#### uc2
+
+
 ![uml_d](https://github.com/Nexxado/ProjectHands/blob/master/documents/uml-d.png)
 
 ## userstories 
