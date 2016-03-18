@@ -104,7 +104,7 @@ Table of Contents
 
 #### uc1
 
- 
+|    |                |       | 
 |----|----------------|-------|
 | main player                      |   | | 
 | goal                             |   | | 
@@ -122,6 +122,21 @@ Description
 
 
 #### uc2
+
+|    |                |       | 
+|----|----------------|-------|
+| main player                      |   | | 
+| goal                             |   | | 
+| scope                            |   | | 
+| Description                      |   | | 
+| Trigger                          |   | | 
+| Prerequisites                    |   | | 
+| Successful completion conditions |   | | 
+| Failure end conditions           |   | | 
+| Scenario major success           |   | | 
+| Extensions ( errors )            |   | | 
+| Alternative scenarios            |   | | 
+
 
 
 ![uml_d](https://github.com/Nexxado/ProjectHands/blob/master/documents/uml-d.png)
