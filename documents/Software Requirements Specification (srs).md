@@ -11,6 +11,7 @@ Table of Contents
   * [usecases](#usecases)
     * [playerstable](#playerstable)
     * [diagrams](#diagrams)
+    * [uc1](#uc1)
   * [userstories](#userstories)
   * [requirements](#requirements)
     * [hardware](#hardware)
