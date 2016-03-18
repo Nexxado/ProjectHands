@@ -71,14 +71,14 @@ Table of Contents
 
 #### glossary 
 
-**Volunteer**  איש שמתנדב לעבוד בלי שכר
-</br>
-**Renovation Manager** מנהל המוסד והאתר והוא משבץ Volunteer לפרויקט שיפוץ
-</br>
-**Renovation Place** מקום שנדרש לשפץ אותו
-</br>
-**Renovation Owner** בעל הדירה/הבית אותו משפצים
-</br>
+
+|    |    |   | 
+|----|----------------|-------|
+| 1  | Volunteer  |    איש שמתנדב לעבוד בלי שכר | 
+| 2 | Renovation Manager  |מנהל המוסד והאתר והוא משבץ Volunteer לפרויקט שיפוץ  | 
+| 3 | Renovation Owner |  מקום שנדרש לשפץ אותו | 
+| 4 | Employees Place |   בעל הדירה/הבית אותו משפצים | 
+
 
 <hr/>
 
