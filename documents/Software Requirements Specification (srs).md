@@ -1,35 +1,37 @@
-# מפרט דרישות תוכנה  - SRS
-
-#### Project 'Hands' 
-
-Team Members
-============
-* Ruby Lichtenstein - <a href="https://github.com/RubyLichtenstein" target="_blank">RubyLichtenstein</a>
-* Ihab Zhaika - <a href="https://github.com/ihabZhaika" target="_blank">ihabZhaika</a>
-* Dan Draiman - <a href="https://github.com/DDraiman1990" target="_blank">DDraiman1990</a>
-* Netanel Draiman - <a href="https://github.com/Nexxado" target="_blank">Nexxado</a>
-
-related documents
-=================
- * a
- * b 
+#SRS - Software Requirements Specification
  
 Table of Contents
 =================
 
-  * הקדמה
-    * מטרה
-    * היקף
-    * מילון מונחים
-    * סקירה
-  
-הקדמה 
-=====
-#### מטרה
+  * [introduction](#introduction)
+    * [goal](#goal)
+    * [scope](#scope)
+    * [glossary](#glossary)
+    * [overview](#overview)
+  * [usecases](#usecases)
+    * [actorastakeholertable](#actorastakeholertable)
+    * [mainucdiagrams](#mainucdiagrams)
+    * [uc1](#uc1)
+    * [uc2](#uc2)
+  * [userstories](#userstories)
+  * [requirements](#requirements)
+    * [hardware](#hardware)
+    * [software](#software) 
+    * [additionalrequirements](#additionalrequirements)
+    * [prototype](#prototype)
+
+ 
+ 
+## SRS External Document
+
+
+## introduction
+
+#### goal
 
 התוכנה תייעל תנהל ותתעד את עבודת השיפוצים אותם הארגון מבצע
 </br>
-תיעוד
+##### תיעוד
  
  * כמות המתנדבים
  * שמות המתנדבים
@@ -39,36 +41,128 @@ Table of Contents
  * הכתובת
  * הגורם שהפנה לאותה דירה
 
-ועוד.
+##### ניהול צוותים
 
-ניהול צוותים
-ע"י חדר צאט לכל קבוצה
-שבה יוכלו המתנדבים לת
-קשר כאשר בנוסף יהיו ה
-ודעות נעוצות שבהן יפו
-רטו הכלים הנדרשים אישו
-ר הגעה של מתנדבים, וני
-הול רשימת משימות  כתוב
-ת לוח זמנים ועוד.
+לכל צוות יהיה חדר צאט שבו יוכלו המתנדבים לתקשר כאשר בנוסף יהיו הודעות נעוצות שבהן יפורטו הכלים הנדרשים, אישור הגעה של מתנדבים, ניהול רשימת משימות, לוח זמנים ועוד.
+
+<hr/>
+
+#### scope
+</br>
+התוכנה תפעל במודל שרת-לקוח  </br>
+צד השרת יספק את שמירת המידע במסד נתונים, מערכת צ'אט, אימות משתמשים.</br>
+צד הלקוח יספק גישה למערכת, תצוגה של לו"ז השיפוצים, מידע על כל שיפוץ, מידע על המתנדבים.</br>
+כאשר לצד הלקוח יהיו שלשה חלקים </br>
+ *  ממשק תיעוד שאליו תהיה כניסה של המנהל בלבד שבו ישמרו הפרטים על כל ההתנדבויות והשיפוצים </br> 
+ *  ממשק רישום שבו מתנדב חדש יוכל להציע את עצמו להתנדבות ובו יפרט את כישוריו את זמינותו ואת מיקומו </br>
+ *  ממשק ניהול שיפוץ שבו יהיה הצאט עצמו ומידע על המיקום השיפוץ הכלים ועוד </br>
  
-#### היקף
+**גבולות המערכת**    
+</br>
+ *  לא יהיו מפות מוטמעות במרכת עצמה אלא רק לינק למיקום </br>
+ *  לא תהיה אפשרות להעברת כספים (למשל כדי לקנות כלים) </br>
+ *  המוצר יעבוד בטכנולוגית web  וזה דורש שכל המתנדבים חייבים להיות עם  smartphone  שמחובר לרשת </br>
+ 
+**ביצועים ואמינות**
+</br>
+ * אנו משתמשים בטכנולוגיות ובסיפריות העדכניות ביותר עם דגש על ביצועים ואמינות .
 
-התוכנה תפעל במודל שרת-לקוח 
-צד השרת יספק את שמירת המידע במסד נתונים, מערכת צ'אט, אימות משתמשים.
-צד הלקוח יספק גישה למערכת, תצוגה של לו"ז השיפוצים, מידע על כל שיפוץ, מידע על המתנדבים.
-כאשר לצד הלקוח יהיו שלשה חלקים 
-ממשק תיעוד שאליו תהיה כניסה של המנהל בלבד שבו ישמרו הפרטים על כל ההתנדבויות והשיפוצים 
-ממשק רישום שבו מתנדב חדש יוכל להציע את עצמו להתנדבות ובו יפרט את כישוריו את זמינותו ואת מיקומו 
-ממשק ניהול שיפוץ שבו יהיה הצאט עצמו ומידע על המיקום השיפוץ הכלים ועוד 
-גבולות המערכת:
-לא יהיו מפות מוטמעות במרכת עצמה אלא רק לינק למיקום 
-לא תהיה אפשרות להעברת כספים (למשל כדי לקנות כלים) 
-המוצר יעבוד דרך web  זא שכל המתנדבים חייבים להיות עם  smartphone עליהם שמחובר לרשת 
-ביצועים ואמינות:
-אנו משתמשים בטכנולוגיות ובסיפריות העדכניות ביותר עם דגש על ביצועים ואמינות בעולם ה spa 
+<hr/>
 
+#### glossary 
+
+**Volunteer**  איש שמתנדב לעבוד בלי שכר
+</br>
+**Renovation Manager** מנהל המוסד והאתר והוא משבץ Volunteer לפרויקט שיפוץ
+</br>
+**Renovation Place** מקום שנדרש לשפץ אותו
+</br>
+**Renovation Owner** בעל הדירה/הבית אותו משפצים
+</br>
+
+<hr/>
+
+
+#### overview
+
+בהמשך יפורטו תרחישי שימוש 
+</br>
+כולל דיאגרמות מפורטות של שימושים במערכת 
+</br>
+תרחישי שימוש פורמאלים וסיכונים וסיפורי שימוש 
+
+
+## usecases
+ 
+
+#### actorastakeholertable 
+
+|    |player name     | Goals | 
+|----|----------------|-------|
+| 1  | Volunteer  |  הרשמה למערכת, הרשמה לשיפוצים עתידיים. | 
+| 2 | Renovation Manager  | ניהול מאגר השיפוצים והשמת המתנדבים לשיפוץ | 
+| 3 | Renovation Owner | קבלת עדכון על תהליך השיבוץ |  
+| 4 | Employees seeker | לחפש עובדים להעסקה |  
+
+
+<hr/>
+
+
+#### mainucdiagrams
+
+
+![uml_d](https://github.com/Nexxado/ProjectHands/blob/master/documents/uml-d.png)
+
+<hr/>
+
+
+#### uc1
+
+|    |                |       | 
+|----|----------------|-------|
+| main player                      |   | | 
+| goal                             |   | | 
+| scope                            |   | | 
+| Description                      |   | | 
+| Trigger                          |   | | 
+| Prerequisites                    |   | | 
+| Successful completion conditions |   | | 
+| Failure end conditions           |   | | 
+| Scenario major success           |   | | 
+| Extensions ( errors )            |   | | 
+| Alternative scenarios            |   | | 
+ 
+
+<hr/>
+
+
+#### uc2
+
+|    |                |       | 
+|----|----------------|-------|
+| main player                      |   | | 
+| goal                             |   | | 
+| scope                            |   | | 
+| Description                      |   | | 
+| Trigger                          |   | | 
+| Prerequisites                    |   | | 
+| Successful completion conditions |   | | 
+| Failure end conditions           |   | | 
+| Scenario major success           |   | | 
+| Extensions ( errors )            |   | | 
+| Alternative scenarios            |   | | 
+
+
+
+
+## userstories 
+## requirements 
+#### hardware  
+<hr/>
+#### software
+<hr/>
+#### additionalrequirements
+<hr/>
+## prototype 
 
  
-#### מילון מונחים
-
-#### סקירה
