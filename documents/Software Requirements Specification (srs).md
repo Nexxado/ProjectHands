@@ -1,5 +1,6 @@
 # מפרט דרישות תוכנה  - SRS
 
+
 #### Project 'Hands' 
 
 Team Members
@@ -14,10 +15,25 @@ related documents
  * a
  * b 
  
+
+
+<!-- toc -->
+- [abc](#abc)
+- [xyz](#xyz)
+<!-- tocstop -->
+
+## abc
+This is a b c.
+
+## xyz
+This is x y z.
+
+
+
 Table of Contents
 =================
 
-  * הקדמה
+  * [הקדמה](הקדמה#)
     * מטרה
     * היקף
     * מילון מונחים
@@ -30,7 +46,7 @@ Table of Contents
     * דרישות נוספות
     * ממשק משתמש – אב טיפוס
 
-הקדמה 
+##הקדמה## 
 =====
 
 #### מטרה
