@@ -44,7 +44,9 @@ Table of Contents
 ##### ניהול צוותים
 
 לכל צוות יהיה חדר צאט שבו יוכלו המתנדבים לתקשר כאשר בנוסף יהיו הודעות נעוצות שבהן יפורטו הכלים הנדרשים, אישור הגעה של מתנדבים, ניהול רשימת משימות, לוח זמנים ועוד.
- 
+
+<hr/>
+
 #### scope
 </br>
 התוכנה תפעל במודל שרת-לקוח  </br>
@@ -65,7 +67,7 @@ Table of Contents
 </br>
  * אנו משתמשים בטכנולוגיות ובסיפריות העדכניות ביותר עם דגש על ביצועים ואמינות .
 
-
+<hr/>
 
 #### glossary 
 
@@ -77,6 +79,9 @@ Table of Contents
 </br>
 **Renovation Owner** בעל הדירה/הבית אותו משפצים
 </br>
+
+<hr/>
+
 
 #### overview
 
@@ -99,10 +104,16 @@ Table of Contents
 | 3 | Renovation Owner | קבלת עדכון על תהליך השיבוץ |  
 | 4 | Employees seeker | לחפש עובדים להעסקה |  
 
+
+<hr/>
+
+
 #### mainucdiagrams
 
 
 ![uml_d](https://github.com/Nexxado/ProjectHands/blob/master/documents/uml-d.png)
+
+<hr/>
 
 
 #### uc1
@@ -122,6 +133,8 @@ Table of Contents
 | Alternative scenarios            |   | | 
 
 Description
+
+<hr/>
 
 
 #### uc2
@@ -146,8 +159,11 @@ Description
 ## userstories 
 ## requirements 
 #### hardware  
-#### software 
-#### additionalrequirements 
+<hr/>
+#### software
+<hr/>
+#### additionalrequirements
+<hr/>
 ## prototype 
 
  
