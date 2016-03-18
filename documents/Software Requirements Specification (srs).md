@@ -8,7 +8,7 @@ Table of Contents
     * [scope](#scope)
     * [glossary](#glossary)
     * [overview](#overview)
-  * [usecases](#usecases)
+  * [Use Cases](#usecases)
     * [actorastakeholertable](#actorastakeholertable)
     * [mainucdiagrams](#mainucdiagrams)
     * [uc1](#uc1)
@@ -92,7 +92,7 @@ Table of Contents
 תרחישי שימוש פורמאלים וסיכונים וסיפורי שימוש 
 
 
-## usecases
+## <a name="usecases">use cases</a>
  
 
 #### actorastakeholertable 
