@@ -9,8 +9,8 @@ Table of Contents
     * [glossary](#glossary)
     * [overview](#overview)
   * [usecases](#usecases)
-    * [playerstable](#playerstable)
-    * [diagrams](#diagrams)
+    * [actorastakeholertable](#actorastakeholertable)
+    * [mainucdiagrams](#mainucdiagrams)
     * [uc1](#uc1)
     * [uc2](#uc2)
   * [userstories](#userstories)
@@ -92,7 +92,8 @@ Table of Contents
 ## usecases
  
 
-#### playerstable 
+#### actorastakeholertable 
+
 |    |player name     | Goals | 
 |----|----------------|-------|
 | 1  | Volunteer  |  הרשמה למערכת, הרשמה לשיפוצים עתידיים. | 
@@ -100,7 +101,11 @@ Table of Contents
 | 3 | Renovation Owner | קבלת עדכון על תהליך השיבוץ |  
 | 4 | Employees seeker | לחפש עובדים להעסקה |  
 
-#### diagrams
+#### mainucdiagrams
+
+
+![uml_d](https://github.com/Nexxado/ProjectHands/blob/master/documents/uml-d.png)
+
 
 #### uc1
 
@@ -139,7 +144,6 @@ Description
 
 
 
-![uml_d](https://github.com/Nexxado/ProjectHands/blob/master/documents/uml-d.png)
 
 ## userstories 
 ## requirements 
