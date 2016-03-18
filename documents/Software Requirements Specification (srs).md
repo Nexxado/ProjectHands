@@ -107,15 +107,15 @@ related documents
 | 3 | Renovation Owner | קבלת עדכון על תהליך השיבוץ |  
 | 4 | Employees seeker | לחפש עובדים להעסקה |  
 
-## diagrams
+#### diagrams
 
 ![uml_d](https://github.com/Nexxado/ProjectHands/blob/master/documents/uml-d.png)
 
 ## userstories 
 ## requirements 
-## hardware  
-## software 
-## additionalrequirements 
+#### hardware  
+#### software 
+#### additionalrequirements 
 ## prototype 
 
  
