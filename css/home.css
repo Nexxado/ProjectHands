@@ -2,12 +2,10 @@
     height: 450px;
     width: auto;
 }
-
 .slide img {
     width: auto;
     margin: auto;
 }
-
 .top-buffer {
     margin-top: 20px;
 }
