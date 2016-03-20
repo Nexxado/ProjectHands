@@ -6,10 +6,10 @@ angular.module('ProjectHands')
 
     $stateProvider.state('home', {
         url: '/home',
-        templateUrl: 'templates/home.html'
-
+        templateUrl: 'templates/home.html',
+        controller: 'HomeController'
     })
-    
+
     .state('profile', {
         url: '/profile',
         templateUrl: 'templates/profile.html'
@@ -20,9 +20,33 @@ angular.module('ProjectHands')
         url: '/chat',
         templateUrl: 'templates/chat.html'
 
+    })
+
+    .state('about', {
+        url: '/about',
+        templateUrl: 'templates/about/index.html',
+        controller: 'AboutController',
+        deepStateRedirect: {
+            default: {
+                state: 'about.who'
+            }
+        }
+    })
+
+    .state('about.who', {
+        url: '/who',
+        templateUrl: 'templates/about/who.html'
+    })
+
+    .state('about.jobs', {
+        url: '/jobs',
+        templateUrl: 'templates/about/jobs.html'
+    })
+
+    .state('about.contact', {
+        url: '/contact',
+        templateUrl: 'templates/about/contact.html'
     });
-
-
 
 
 });

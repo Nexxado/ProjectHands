@@ -1,1 +1,44 @@
-<h3>Home page</h3>
+<main class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <uib-carousel active="active" interval="carouselInterval">
+                <uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id" class="slide">
+                    <img ng-src="{{ slide.img }}">
+                </uib-slide>
+            </uib-carousel>
+        </div>
+        <aside class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Thank You Letters</div>
+                <div class="panel-body">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce aliquet metus non molestie consequat. Fusce non lorem et ipsum facilisis interdum. Ut eu turpis purus. Fusce eros purus, mattis vitae quam non, semper auctor velit. Nullam nec sem sodales, molestie leo vel, placerat sem
+                    <br/>
+                    <br/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce aliquet metus non molestie consequat. Fusce non lorem et ipsum facilisis interdum. Ut eu turpis purus. Fusce eros purus, mattis vitae quam non, semper auctor velit. Nullam nec sem sodales, molestie leo vel, placerat sem
+                    <br/>
+                    <br/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce aliquet metus non molestie consequat. Fusce non lorem et ipsum facilisis interdum. Ut eu turpis purus. Fusce eros purus, mattis vitae quam non, semper auctor velit.
+                </div>
+            </div>
+        </aside>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0">
+            <img src="/assets/img/banner-handyman.jpg" class="img-responsive">
+        </div>
+        <div class="col-md-4 text-center">
+            <h3>Volunteer Today!</h3>
+            <button class="btn btn-success">Sign UP</button>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Messages</div>
+                <div class="panel-body">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas feugiat ullamcorper. Phasellus facilisis erat.
+                    <br/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas feugiat ullamcorper. Phasellus facilisis erat.
+                    <br/> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas feugiat ullamcorper. Phasellus facilisis erat.
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</main>

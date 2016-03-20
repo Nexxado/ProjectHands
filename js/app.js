@@ -1,1 +1,1 @@
-angular.module('ProjectHands', ['ngAria', 'ngAnimate', 'ngMessages', 'ngTouch', 'ui.router', 'ui.bootstrap']);
+angular.module('ProjectHands', ['ngAria', 'ngAnimate', 'ngMessages', 'ngTouch', 'ui.router', 'ct.ui.router.extras', 'ui.bootstrap']);

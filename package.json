@@ -26,6 +26,7 @@
     "angular-ui-router": "^0.2.18",
     "bootstrap": "^3.3.6",
     "express": "^4.13.4",
-    "mongodb": "^2.1.7"
+    "mongodb": "^2.1.7",
+    "ui-router-extras": "^0.1.2"
   }
 }
