@@ -9,4 +9,13 @@ angular.module('ProjectHands')
         templateUrl: 'templates/home.html'
     });
     
+      $stateProvider.state('chat', {
+        url: '/chat',
+        templateUrl: 'templates/chat.html'
+        
+     });
+    
+    
+    
+    
 });
