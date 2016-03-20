@@ -26,9 +26,9 @@ angular.module('ProjectHands')
         templateUrl: 'templates/about/jobs.html'
     })
     
-    .state('about.volunteers', {
-        url: '/volunteers',
-        templateUrl: 'templates/about/volunteers.html'
+    .state('about.contact', {
+        url: '/contact',
+        templateUrl: 'templates/about/contact.html'
     });
     
     
