@@ -7,6 +7,13 @@ angular.module('ProjectHands')
     $stateProvider.state('home', {
         url: '/home',
         templateUrl: 'templates/home.html'
+        
+    });
+    
+        $stateProvider.state('profile', {
+        url: '/profile',
+        templateUrl: 'templates/profile.html'
+        
     });
     
 });
