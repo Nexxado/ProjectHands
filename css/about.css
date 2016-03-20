@@ -1,34 +1,3 @@
-.navbar-custom {
-    border-width: 1px;
-    border-color: black;
-    background-color: #3C4D5D;
-}
-.navbar-top-line {
-    background-color: #F3632F;
-    background-image: linear-gradient(90deg, transparent 50%, rgba(239, 150, 61, .5) 50%);
-    background-size: 50px 50px;
-    height: 15px;
-}
-.navTab {
-    color: white;
-}
-.aboutTopPic {
-    position: relative;
-    width: 100%;
-}
-.informationBox {
-    position: absolute;
-    top: 15px;
-    left: 0;
-    width: 50%;
-    background-color: white;
-    margin-left: 25%;
-    border-radius: 50px;
-    border-style: solid;
-    border-width: 5px;
-    padding: 10px;
-    
-}
 .pageBody{
     text-align: center;
 }
