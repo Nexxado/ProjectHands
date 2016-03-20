@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+
+    </title>
+
+    <script src="js/jquery.js"></script>
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+    <div class="alert alert-warning fade in text-center">
+        <h3 class="">Profile Page</h3></div>
+
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-md-2 ">
+                <img src="img/avatar.jpg" class="img-circle img-thumbnail " style="width:250px;">
+                <div class="page-header text-info text-center lead">FULL NAME</div>
+                <div class="page-header text-primary text-center lead">TITLE</div>
+
+                <input type="file" class="alert alert-danger">
+                <button class="btn btn-success btn-block">UPLOAD</button>
+            </div>
+            <div class="col-md-1 ">
+                <div class="btn-group-vertical  btn-block">
+                    <button class="btn btn-primary"><span class="glyphicon  glyphicon-home"></span> Home</button>
+                    <button class="btn btn-info"><span class="glyphicon  glyphicon-list-alt"></span> Projects</button>
+
+                    <button class="btn btn-warning"><span class="glyphicon  glyphicon-question-sign"></span> FAQ</button>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-8 jumbotron">
+
+                <div class="panel panel-success">
+
+                    <div class="panel-heading">
+                        <a href="#details" data-toggle="collapse">BASIC INFO</a>
+
+                    </div>
+
+                    <div id="details" class="collapse panel-collapse in">
+
+                        <div class="panel-body">
+
+                            <div class="form-group">
+
+                                <div class="input-group input-group-md">
+                                    <span class="input-group-addon">First Name :</span>
+                                    <input class="form-control col-md-5" placeholder="Demo first" type="text">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="input-group input-group-md">
+                                    <span class="input-group-addon">last Name :</span>
+                                    <input class="form-control col-md-5" placeholder="Demo Last" type="text">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="input-group input-group-md">
+                                    <span class="input-group-addon">Birth Date :</span>
+                                    <input class="form-control col-md-5"  type="date">
+                                </div>
+
+                            </div>
+							
+
+                            <div class="form-group">
+
+                                <div class="input-group input-group-md">
+                                    <span class="input-group-addon">Gender :</span>
+                                <div class="ui-select col-md-8">
+                                    <select  class="form-control dropdown-menu ">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+
+                                    </select>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+                            
+                            <div class="form-group">
+
+                                <div class="input-group input-group-md">
+                                    <span class="input-group-addon">last Name :</span>
+                                    <input class="form-control col-md-5" placeholder="email@email.com" type="email">
+                                </div>
+
+                            </div>
+
+                        <div class="panel-footer">
+                            <button class="btn-block btn btn-primary">Save</button>
+
+                        </div>
+                    </div>
+                </div>
+
+                    <!-- ADVANCE -->
+
+                    <div class="panel panel-danger">
+
+                        <div class="panel-heading">
+                            <a href="#details-advance" data-toggle="collapse">ADVANCE INFO</a>
+
+                        </div>
+
+                        <div id="details-advance" class="collapse panel-collapse ">
+
+                            <div class="panel-body">
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Jop Title :</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" placeholder="BlackSmith" type="text">
+                                    </div>
+                                </div>
+                                <div class="badge col-md-1">4 chars</div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Fields Of Expierence :</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" placeholder="BlackSmithing , Bumber" type="text">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">City :</label>
+                                    <div class="ui-select col-md-8">
+                                        <select id="user_time_zone" class="form-control">
+                                            <option value="Male">Jerusalem</option>
+                                            <option value="Female">Al-mukaber</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">About You</label>
+                                    <div class="col-lg-8">
+                                        <textarea class="form-control" type="text box" value="example@email.com"> i am ..</textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="panel-footer">
+                                <button class="btn-block btn btn-primary">Save</button>
+
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+
+            </div>
+            <div class="col-md-12 footer well text-center text-success small bg-success">Project Hands 2016 <span class="glyphicon glyphicon-copyright-mark"></span></div>
+</body>
+
+
+</html>
