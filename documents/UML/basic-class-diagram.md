@@ -29,8 +29,10 @@
 
 |  Chat  |                 
 |---------|
-|  members: List<User>     |
-|  messages: List<Massage> |
+|  created: Date     |
+|  content: String  |
+|  username: String|
+|  room: String|
  
 
 |  Renovation         |                 
