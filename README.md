@@ -23,3 +23,4 @@ Please visit our wiki for furthur project info:
 * [Statement of Work](./documents/Statement.of.Work.pdf)
 * [Inception](../../wiki/inception)
 * [SRS](../../wiki/srs)
+* [SDS](../../wiki/SDS)
