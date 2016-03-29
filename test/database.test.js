@@ -4,4 +4,4 @@ describe('Database', function() {
 		expect(0).toEqual(0);
 	});
 	
-})
+});

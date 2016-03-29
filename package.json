@@ -27,6 +27,7 @@
     "bootstrap": "^3.3.6",
     "express": "^4.13.4",
     "mongodb": "^2.1.7",
+    "shrinkwrap": "^0.4.0",
     "ui-router-extras": "^0.1.2"
   },
   "devDependencies": {
@@ -37,7 +38,6 @@
     "karma-chrome-launcher": "^0.2.3",
     "karma-firefox-launcher": "^0.1.7",
     "karma-jasmine": "^0.3.8",
-    "karma-mocha-reporter": "^2.0.0",
-    "shrinkwrap": "^0.4.0"
+    "karma-mocha-reporter": "^2.0.0"
   }
 }

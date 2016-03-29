@@ -1,1 +1,0 @@
-angular.module('ProjectHands', ['ngAria', 'ngAnimate', 'ngMessages', 'ngTouch', 'ui.router', 'ui.bootstrap']);
