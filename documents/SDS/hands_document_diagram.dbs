@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="handsDb" id="Project_27b480a1" html="y" template="Default" database="MongoDb" >
+	<comment><![CDATA[Mongo database structure for Hands association]]></comment>
+	<schema name="handsDb" schemaname="handsDb" >
+		<table name="donor" >
+			<column name="id" type="string" jt="12" />
+			<column name="first_name" type="string" jt="12" />
+			<column name="last_name" type="string" jt="12" />
+			<column name="phone" type="string" jt="12" />
+			<column name="address" type="string" jt="12" />
+			<column name="email" type="string" jt="12" />
+		</table>
+		<table name="mission" >
+			<column name="id" type="string" jt="12" />
+			<column name="creator" type="string" jt="12" />
+			<column name="description" type="string" jt="12" />
+			<column name="created_at" type="string" jt="12" />
+			<column name="executeur" type="string" jt="12" />
+			<fk name="fk_mission_renovation_event" virtual="y" to_schema="handsDb" to_table="renovation_event" >
+				<fk_column name="id" pk="id" />
+			</fk>
+			<fk name="fk_mission_renovation" virtual="y" to_schema="handsDb" to_table="renovation" >
+				<fk_column name="id" pk="id" />
+			</fk>
+		</table>
+		<table name="renovation" >
+			<comment><![CDATA[Renovation doucument]]></comment>
+			<column name="id" type="string" jt="12" />
+			<column name="description" type="string" jt="12" />
+			<column name="address" type="string" jt="12" />
+			<column name="phone" type="string" jt="12" />
+			<column name="referrer" type="string" jt="12" />
+			<column name="referrer_phone" type="string" jt="12" />
+			<column name="referrer_email" type="string" jt="12" />
+		</table>
+		<table name="renovation_event" >
+			<column name="id" type="string" jt="12" />
+			<column name="date_" type="date" jt="91" />
+			<column name="description" type="string" jt="12" />
+			<column name="hours_of_work" type="double" jt="8" />
+			<column name="number_of_volunteers" type="integer" jt="4" />
+			<column name="material_cost" type="double" jt="8" />
+			<fk name="fk_renovation_event_renovation" virtual="y" to_schema="handsDb" to_table="renovation" >
+				<fk_column name="id" pk="id" />
+			</fk>
+		</table>
+		<table name="volunteer" >
+			<column name="id" type="string" jt="12" />
+			<column name="first_name" type="string" jt="12" />
+			<column name="last_name" type="string" jt="12" />
+			<column name="phone" type="string" jt="12" />
+			<column name="address" type="string" jt="12" />
+			<column name="email" type="string" jt="12" />
+			<column name="role" type="string" jt="12" />
+			<fk name="fk_volunteer_renovation_event" virtual="y" to_schema="handsDb" to_table="renovation_event" >
+				<fk_column name="id" pk="id" />
+			</fk>
+		</table>
+	</schema>
+	<layout id="Layout_e1ca00a" name="handsDb" show_relation_columns="y" >
+		<entity schema="handsDb" name="renovation_event" color="b7c8e3" x="240" y="105" />
+		<entity schema="handsDb" name="renovation" color="b7c8e3" x="45" y="90" />
+		<entity schema="handsDb" name="donor" color="b7c8e3" x="690" y="45" />
+		<entity schema="handsDb" name="mission" color="b7c8e3" x="450" y="45" />
+		<entity schema="handsDb" name="volunteer" color="b7c8e3" x="450" y="210" />
+	</layout>
+</project>
