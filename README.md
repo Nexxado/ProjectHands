@@ -3,6 +3,8 @@
 [![Join the chat at https://gitter.im/Nexxado/ProjectHands](https://badges.gitter.im/Nexxado/ProjectHands.svg)](https://gitter.im/Nexxado/ProjectHands?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/Nexxado/ProjectHands.svg?branch=master)](https://travis-ci.org/Nexxado/ProjectHands)
 
+### [HuBoard](https://huboard.com/Nexxado/ProjectHands/)
+
 Projects organization and team communication made easy.
 
 ![project-logo](./documents/logo.jpg)
@@ -25,6 +27,9 @@ Please visit our wiki for furthur project info:
 * [Inception](../../wiki/inception)
 * [SRS](../../wiki/srs)
 * [SDS](../../wiki/SDS)
+
+### Iterations
+* [Iteration 0 - ZFR](../../wiki/iterations/zfr)
 
 ### License
 The MIT License (MIT)
