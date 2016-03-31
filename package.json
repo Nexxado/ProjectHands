@@ -4,6 +4,7 @@
   "description": "Projects organization and team communication made easy.",
   "main": "app.js",
   "scripts": {
+    "start" : "node server/app",
     "test": "karma start"
   },
   "repository": {

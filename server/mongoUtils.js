@@ -1,5 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
-var config = require('./config.json');
+var config = require('../config.json');
 var _db;
 
 
@@ -12,7 +12,6 @@ module.exports = {
                 process.exit(1);
             }
             console.log("connected to Mongo");
-            
             _db = db;
         });
     },
