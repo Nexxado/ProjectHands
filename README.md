@@ -29,7 +29,7 @@ Please visit our wiki for furthur project info:
 * [SDS](../../wiki/SDS)
 
 ### Iterations
-* [Iteration 0 - ZFR](../../wiki/iterations/zfr)
+* [Iteration 0 - ZFR](../../wiki/iterations/ZFR)
 
 ### License
 The MIT License (MIT)
