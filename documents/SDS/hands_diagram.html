@@ -1,0 +1,948 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN' 'http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml' >
+<head>
+<title>handsDb</title>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+<style type='text/css'>
+body {
+    font-family: 'trebuchet MS', 'Lucida sans', Dialog;
+    font-size: 12px;
+    color: #444;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.bordered {
+    border: solid #ccc 1px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 1px 1px #ccc;
+    -moz-box-shadow: 0 1px 1px #ccc;
+    box-shadow: 0 1px 1px #ccc;
+}
+
+.bordered tr:hover {
+    background: #fbf8e9;
+    -o-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+}
+
+.bordered td, .bordered th {
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    padding: 4px;
+    text-align: left;
+}
+
+.bordered th {
+    background-color: #d7d7ea;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#f4f4fb), to(#d7d7ea));
+    background-image: -webkit-linear-gradient(top, #f4f4fb, #d7d7ea);
+    background-image:    -moz-linear-gradient(top, #f4f4fb, #d7d7ea);
+    background-image:     -ms-linear-gradient(top, #f4f4fb, #d7d7ea);
+    background-image:      -o-linear-gradient(top, #f4f4fb, #d7d7ea);
+    background-image:         linear-gradient(top, #f4f4fb, #d7d7ea);
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+    border-top: none;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+
+.bordered td:first-child, .bordered th:first-child {
+    border-left: none;
+}
+
+.bordered th:first-child {
+    -moz-border-radius: 6px 0 0 0;
+    -webkit-border-radius: 6px 0 0 0;
+    border-radius: 6px 0 0 0;
+}
+
+.bordered th:last-child {
+    -moz-border-radius: 0 6px 0 0;
+    -webkit-border-radius: 0 6px 0 0;
+    border-radius: 0 6px 0 0;
+}
+
+.bordered th:only-child{
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
+}
+
+.bordered tr:last-child td:first-child {
+    -moz-border-radius: 0 0 0 6px;
+    -webkit-border-radius: 0 0 0 6px;
+    border-radius: 0 0 0 6px;
+}
+
+.bordered tr:last-child td:last-child {
+    -moz-border-radius: 0 0 6px 0;
+    -webkit-border-radius: 0 0 6px 0;
+    border-radius: 0 0 6px 0;
+}
+
+</style>
+</head>
+
+<body>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'   width='750' height='560' viewbox='0 0 750 560' >
+  <script type='text/ecmascript'>
+  <![CDATA[
+  function hghl(el) { for ( var i in el ){ document.getElementById(el[i]).setAttribute('class','highlight');  }  }
+  function uhghl(el) { for ( var i in el ){ document.getElementById(el[i]).setAttribute('class','scene'); }  } 
+  ]]>
+  </script> 
+
+<style type='text/css'>
+  text                { fill:#000000; font-family: Tahoma, 'Trebuchet MS', Dialog; font-size:11px; }
+  text:hover          { fill:#304ea4; font-weight:bold; }
+  text.highlight      { fill:#304ea4; font-weight:bold; }
+  text.colType        { fill:#b3b3b3; }
+  path                { stroke:#5c554f; stroke-width:1.25; fill:none; }
+  path.scene          { stroke-width:10; opacity:0;}
+  path.highlight      { stroke-width:7; stroke:#d9ce90; opacity:0.6;}
+  rect.table          { fill:#ffffff; stroke:#bbb; stroke-width:1;shape-rendering:crispEdges; filter:url(#shadow); }
+  line.delim          { stroke:#777; stroke-width:0.3; }
+  rect.callout        { fill:url(#calloutGradient); stroke:#bebdbd; stroke-width:0.5; filter: url(#shadow);}
+  rect.grp            { stroke:#b1b1b1; stroke-width:1.7; }
+</style>
+<defs>
+  <pattern patternUnits='userSpaceOnUse' id='layoutBgA' width='10' height='20' x='0' y='0' viewBox='0 0 5 10'>  
+     <line x1='-2' y1='1' x2='7' y2='10' stroke='#f3f3f3' stroke-width='.5'/>  
+     <line x1='-2' y1='6' x2='7' y2='15' stroke='#f3f3f3' stroke-width='.5'/>  
+     <line x1='-2' y1='-4' x2='7' y2='5' stroke='#f3f3f3' stroke-width='.5'/>  
+  </pattern>  
+  <radialGradient id='layoutBgB' gradientUnits='userSpaceOnUse' cx='50%' cy='50%' r='75%' fx='46%' fy='22%'>
+     <stop offset='0%' stop-opacity='.2' stop-color='#f0f0f0' />  
+     <stop offset='100%' stop-color='#e7e7e7' />  
+  </radialGradient>
+  <linearGradient id='tableHeaderGradient0' x1='0%' y1='0%' x2='0%' y2='90%' >
+          <stop offset='-50%' stop-color='#b7c8e3'/> 
+          <stop offset='20%' stop-color='#fafafa'/> 
+          <stop offset='100%' stop-color='#b7c8e3'/> 
+   </linearGradient>
+  <linearGradient id='groupUnderTitleLine' x1='0%' y1='0%' x2='100%' y2='0%' >
+          <stop offset='0%' stop-color='#999999' stop-opacity='0.7'/> 
+          <stop offset='100%' stop-color='#999999' stop-opacity='0' /> 
+   </linearGradient>
+  <radialGradient id='calloutGradient' cx='25%' cy='20%' r='80%' fx='10%' fy='10%'>
+	   <stop offset='0%' stop-color='#ffffff' />
+    <stop offset='100%' stop-color='#f8f6d1' />
+  </radialGradient>
+  <filter id='shadow' width='120%' height='120%'> 
+      <feOffset result='offOut' in='SourceGraphic' dx='2' dy='2' /> 
+      <feColorMatrix result='matrixOut' in='offOut' type='matrix' 
+      values='0.1 0 0 0 0 0 0.1 0 0 0 0 0 0.1 0 0 0 0 0 0.3 0' /> 
+      <feGaussianBlur result='blurOut' in='matrixOut' stdDeviation='3' /> 
+      <feBlend in='SourceGraphic' in2='blurOut' mode='normal' /> 
+    </filter> 
+  <filter id='fkShadow' height='130%'> 
+    <feGaussianBlur in='SourceAlpha' stdDeviation='1.5'/> <!-- stdDeviation is how much to blur -->
+    <feOffset dx='1.2' dy='1.2' result='offsetblur'/> <!-- how much to offset -->
+    <feMerge>
+    <feMergeNode/> <!-- this contains the offset blurred image -->
+    <feMergeNode in='SourceGraphic'/> <!-- this contains the element that the filter is applied to -->
+    </feMerge>
+  </filter>
+  <radialGradient id='legendGradient' fx='5%' fy='5%' r='75%' spreadMethod='pad'>
+          <stop offset='0%' stop-color='#eaf6ee' stop-opacity='1'/> 
+          <stop offset='100%' stop-color='#d0efcd' stop-opacity='1' /> 
+   </radialGradient>
+  <symbol id='calloutArrowDown' overflow='visible' >
+      <path d='M 0,0 L 7,11 L 15,0 z' style='fill:#f8f6d1;stroke:none; filter: url(#shadow);' />
+      <path d='M 0,0 L 7,11 L 15,0' style='stroke:#bebdbd; stroke-width:0.5;' />
+  </symbol>
+  <symbol id='calloutArrowUp' overflow='visible' >
+      <path d='M 0,15 L 7,3 L 15,15 z' style='fill:#ffffff; stroke:none; filter: url(#shadow);' />
+      <path d='M 0,15 L 7,3 L 15,15' style='stroke:#bebdbd; stroke-width:0.5;' />
+  </symbol>
+  <symbol id='pk' overflow='visible' >
+    <g transform='scale(0.99)'>
+     <path style='fill:#fbea8e;stroke:#472106;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;'
+        d='M 9.3678877,3.5695485 C 9.1030218,3.2729386 9.0796382,2.7628519 9.3396185,2.4517097 9.5449651,2.1956495 9.9040386,2.0980533 10.199638,2.2169415 10.533525,2.3415459 10.775153,2.706942 10.750675,3.0842709 10.737029,3.3980003 10.541153,3.699122 10.258248,3.8066067 9.966649,3.9250429 9.6169668,3.8418805 9.4008073,3.6062324 9.3894892,3.5943518 9.3785264,3.582104 9.3678886,3.5695487 z M 11.226617,6.9916004 C 11.888137,6.3548946 12.293488,5.4172188 12.311087,4.442353 12.378144,2.7379364 11.248678,1.0541269 9.7322318,0.44767357 8.3887112,-0.1280313 6.7865012,0.26822889 5.8918395,1.4007929 5.080823,2.3839145 4.9336815,3.8452096 5.3635544,5.101615 L 4.3670905,5.315913 C 4.0664984,5.3682645 4.0967703,5.6316724 4.2574957,5.8208829 L 4.9124,6.5655244 4.1543436,7.2512357 3.2136002,7.2163506 3.1674775,8.5586827 2.0406832,8.5086512 1.5965306,8.9299953 1.5471661,10.179833 0.75616674,10.195223 0.2112857,10.758575 0.15354288,11.735988 0.07199052,12.765553 c 0.36440953,0.238225 0.79006967,0.195492 1.44938278,-0.02675 L 6.3033562,8.1282037 6.8217102,8.6765688 C 6.9985465,8.8799427 7.3003699,8.7497574 7.358381,8.5016252 L 7.4938877,7.5084164 c 0.8537488,0.3985387 1.8303125,0.4711541 2.6851793,0.1427713 0.393927,-0.1407258 0.746858,-0.3701772 1.04755,-0.6595873 z'/>
+     <path d='M 6.8014948,6.3102123 0.15369063,13.024481 0.21560535,12.141962 6.0062342,6.2683782 z'
+        style='fill:#ffe5a5;fill-opacity:1;stroke:#854e31;stroke-width:0.06912433;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:3.00300009'/>
+    </g>
+  </symbol>
+  <symbol id='unq' overflow='visible' >
+    <g transform='scale(0.99)'>
+      <rect style='fill:#e07554;stroke:#7e4d31;stroke-width:0.71934468;stroke-linecap:round;stroke-linejoin:round;'
+         width='2.29' height='8.43' x='7.48' y='-0.76' ry='1.14' transform='matrix(0.701,0.713,-0.727,0.685,0,0)' />
+      <path style='fill:white;stroke:#858585;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;'
+         d='m 26.04,8.64 a 4.13,4.13 0 1 1 -8.26,0 4.13,4.13 0 1 1 8.26,0 z'
+         transform='matrix(1.025,0,0,0.987,-14.690,-3.862)' />
+      <text x='5.5' y='7.7' style='font-size:8px;fill:#8a8a8a;'>1</text>
+    </g>
+  </symbol>
+  <symbol id='idx' overflow='visible' >
+    <g transform='scale(0.99)'>
+      <rect style='fill:#e07554;stroke:#7e4d31;stroke-width:0.71934468;stroke-linecap:round;stroke-linejoin:round;'
+         width='2.29' height='8.43' x='7.48' y='-0.76' ry='1.14' transform='matrix(0.701,0.713,-0.727,0.685,0,0)' />
+      <path style='fill:white;stroke:#858585;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;'
+         d='m 26.04,8.64 a 4.13,4.13 0 1 1 -8.26,0 4.13,4.13 0 1 1 8.26,0 z'
+         transform='matrix(1.025,0,0,0.987,-14.690,-3.862)' />
+    </g>
+  </symbol>
+  <symbol id='fk' overflow='visible' >
+    <g transform='scale(0.87)'>
+      <path style='fill:#b7d0f6;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+      d='M 12.48,0.33 7.07,0.89 9.067,2.974 0.329,11.731 1.073,12.597 9.811,3.841 11.77,5.78 z' />
+    </g>
+  </symbol>
+  <symbol id='ref' overflow='visible' >
+    <g transform='scale(0.87)'>
+      <path style='fill:#f3e1b7;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0.10,12.70 5.31,12.15 3.40,10.06 11.82,1.32 11.11,0.45 2.68,9.19 0.80,7.24 z'/>
+    </g>
+  </symbol>
+  <symbol id='flag' overflow='visible' >
+    <g transform='scale(0.92)'>
+      <path style='fill:#b7d0f6;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0.12,12.67 0.16,7.22 C 2.59,7.22 4.13,8.78 9.22,4.22 5.68,4.98 2.53,4.50 0.09,1.80 z'/>
+    </g>
+  </symbol>
+  <symbol id='nn' overflow='visible' >
+  <path style='stroke:#9b3e50;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0,0 3,3 M 0,3 3,0 z'/>
+  </symbol>
+  <symbol id='view' overflow='visible' >
+    <g transform='scale(0.99)'>
+     <line x1='12' y1='6' x2='19' y2='0' stroke='black' stroke-width='0.5' />
+     <line x1='0' y1='6' x2='7' y2='0' stroke='black' stroke-width='0.5' />
+     <circle cx='3' cy='6' r='3' fill='#f9ebbc' stroke='black' stroke-width='0.5'/>
+     <circle cx='10' cy='6' r='3' fill='#f9ebbc' stroke='black' stroke-width='0.5'/>
+    </g>
+  </symbol>
+  <marker id='arrow01' viewBox='0 0 15.00 7.50' refX='7.50' refY='3.75' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='7.50' orient='auto'>
+    <path d='M 15.000,3.750 L 7.500,2.500 L 7.500,7.500 L 15.000,3.750 z' style='fill:#5e554d;' />
+  </marker>
+  <marker id='arrow1' viewBox='0 0 15.00 7.50' refX='7.50' refY='3.75' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='7.50' orient='auto'>
+    <path d='M 15.000,3.750 L 7.500,2.500 L 7.500,7.500 L 15.000,3.750 z' style='fill:#5e554d;' />
+  </marker>
+  <marker id='foot01' viewBox='0 0 15.00 7.50' refX='7.50' refY='3.75' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='7.50' orient='auto'>
+    <path d='M 0.00,3.75 L 15.00,3.75 z' />
+    <circle cx='11.25' cy='3.75' r='2.50' style='fill:white;stroke:#5e554d;' />
+    <path d='M 3.75,0.00 L 3.75, 7.50 z' />
+  </marker>
+  <marker id='foot0p' viewBox='0 0 15.00 7.50' refX='7.50' refY='3.75' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='7.50' orient='auto'>
+    <path d='M 0.00,3.75 L 15.00,3.75 z' />
+    <circle cx='11.25' cy='3.75' r='2.50' style='fill:white;stroke:#5e554d;' />
+    <path d='M 0.00,0.00 L 7.50,3.75 L 0.00,7.50' />
+  </marker>
+  <marker id='foot1' viewBox='0 0 15.00 7.50' refX='7.50' refY='3.75' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='7.50' orient='auto'>
+    <path d='M 0.00,3.75 L 15.00,3.75 z' />
+    <path d='M 7.50,0.00 L 7.50, 7.50 z' />
+    <path d='M 3.75,0.00 L 3.75, 7.50 z' />
+  </marker>
+  <marker id='foot1p' viewBox='0 0 15.00 7.50' refX='7.50' refY='3.75' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='7.50' orient='auto'>
+    <path d='M 0.00,3.75 L 15.00,3.75 z' />
+    <path d='M 7.50,0.00 L 7.50, 7.50 z' />
+    <path d='M 0.00,0.00 L 7.50,3.75 L 0.00,7.50' />
+  </marker>
+</defs>
+
+<!-- ============= Desktop ============= -->
+<rect x='1' y='1' width='748' height='558' rx='7' ry='7' style='fill:url(#layoutBgA); stroke:#333333; stroke-width:0.5;' />
+<rect x='1' y='1' width='748' height='558' rx='7' ry='7' style='fill:url(#layoutBgB)'/>
+
+<!-- ============= Legend ============= -->
+<g transform='translate(10,10)'>
+  <rect x='10' y='10' width='267' height='78' rx='6' ry='6' style='fill:url(#legendGradient);filter:url(#shadow);'/> 
+  <text x='20' y='30'>handsDb</text> 
+  <text x='25' y='49' style='fill:#97a496; font-size:11px;'><tspan>This is an interactive HTML5 image.</tspan></text> 
+  <text x='25' y='63' style='fill:#97a496; font-size:11px;'><tspan>Move the mouse over tables to read the comments.</tspan></text> 
+  <text x='25' y='77' style='fill:#97a496; font-size:11px;'>Powered by <a xlink:href='http://www.dbschema.com' text-decoration='underline' style='fill:#97a496'>DbSchema</a></text> 
+</g>
+
+<g transform='translate(0,110)'>
+<!-- ============= Fk 'renovation_event_fk_renovation_event_renovation' ============= -->
+<path id='renovation_event_fk_renovation_event_renovation'  onmouseover="hghl(['renovation_event_fk_renovation_event_renovation','handsDb.renovation_event.id','handsDb.renovation.id'])" onmouseout="uhghl(['renovation_event_fk_renovation_event_renovation','handsDb.renovation_event.id','handsDb.renovation.id'])" transform='translate(7,0)' class='scene' d='M 195 60 L 180,60' >
+	<title>Fk fk_renovation_event_renovation
+renovation_event ref renovation ( id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot0p)' marker-end='url(#arrow01)'    d='M 195 60 L 180,60' ></path>
+<text x='189' y='55' transform='rotate(0 189,55)' title='Fk fk_renovation_event_renovation
+renovation_event ref renovation ( id )' style='fill:#b6b696;'>id</text>
+<!-- ============= Fk 'mission_fk_mission_renovation_event' ============= -->
+<path id='mission_fk_mission_renovation_event'  onmouseover="hghl(['mission_fk_mission_renovation_event','handsDb.mission.id','handsDb.renovation_event.id'])" onmouseout="uhghl(['mission_fk_mission_renovation_event','handsDb.mission.id','handsDb.renovation_event.id'])" transform='translate(7,0)' class='scene' d='M 285 255 L 285,210' >
+	<title>Fk fk_mission_renovation_event
+mission ref renovation_event ( id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot0p)' marker-end='url(#arrow01)'    d='M 285 255 L 285,210' ></path>
+<text x='287' y='250' transform='rotate(270 287,250)' title='Fk fk_mission_renovation_event
+mission ref renovation_event ( id )' style='fill:#b6b696;'>id</text>
+<!-- ============= Fk 'mission_fk_mission_renovation' ============= -->
+<path id='mission_fk_mission_renovation'  onmouseover="hghl(['mission_fk_mission_renovation','handsDb.mission.id','handsDb.renovation.id'])" onmouseout="uhghl(['mission_fk_mission_renovation','handsDb.mission.id','handsDb.renovation.id'])" transform='translate(7,0)' class='scene' d='M 255 270 L 172,270 Q 165,270 165,262 L 165,240' >
+	<title>Fk fk_mission_renovation
+mission ref renovation ( id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot0p)' marker-end='url(#arrow01)'    d='M 255 270 L 172,270 Q 165,270 165,262 L 165,240' ></path>
+<text x='249' y='265' transform='rotate(0 249,265)' title='Fk fk_mission_renovation
+mission ref renovation ( id )' style='fill:#b6b696;'>id</text>
+<!-- ============= Fk 'message_fk_message_chat_room' ============= -->
+<path id='message_fk_message_chat_room'  onmouseover="hghl(['message_fk_message_chat_room','handsDb.message._id','handsDb.chat_room._id'])" onmouseout="uhghl(['message_fk_message_chat_room','handsDb.message._id','handsDb.chat_room._id'])" transform='translate(7,0)' class='scene' d='M 615 60 L 600,60' >
+	<title>Fk fk_message_chat_room
+message ref chat_room ( _id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot0p)' marker-end='url(#arrow01)'    d='M 615 60 L 600,60' ></path>
+<text x='603' y='55' transform='rotate(0 603,55)' title='Fk fk_message_chat_room
+message ref chat_room ( _id )' style='fill:#b6b696;'>_id</text>
+<!-- ============= Fk 'user_fk_user_renovation_event' ============= -->
+<path id='user_fk_user_renovation_event'  onmouseover="hghl(['user_fk_user_renovation_event','handsDb.user.id','handsDb.renovation_event.id'])" onmouseout="uhghl(['user_fk_user_renovation_event','handsDb.user.id','handsDb.renovation_event.id'])" transform='translate(7,0)' class='scene' d='M 375 60 L 360,60' >
+	<title>Fk fk_user_renovation_event
+user ref renovation_event ( id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot0p)' marker-end='url(#arrow01)'    d='M 375 60 L 360,60' ></path>
+<text x='369' y='55' transform='rotate(0 369,55)' title='Fk fk_user_renovation_event
+user ref renovation_event ( id )' style='fill:#b6b696;'>id</text>
+<!-- ============= Fk 'user_fk_user_renovation' ============= -->
+<path id='user_fk_user_renovation'  onmouseover="hghl(['user_fk_user_renovation','handsDb.user.id','handsDb.renovation.id'])" onmouseout="uhghl(['user_fk_user_renovation','handsDb.user.id','handsDb.renovation.id'])" transform='translate(7,0)' class='scene' d='M 405 210 L 405,217 Q 405,225 397,225 L 180,225' >
+	<title>Fk fk_user_renovation
+user ref renovation ( id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot0p)' marker-end='url(#arrow01)'    d='M 405 210 L 405,217 Q 405,225 397,225 L 180,225' ></path>
+<text x='418' y='210' transform='rotate(90 418,210)' title='Fk fk_user_renovation
+user ref renovation ( id )' style='fill:#b6b696;'>id</text>
+<!-- ============= Fk 'user_fk_user_mission' ============= -->
+<path id='user_fk_user_mission'  onmouseover="hghl(['user_fk_user_mission','handsDb.user.id','handsDb.mission.id'])" onmouseout="uhghl(['user_fk_user_mission','handsDb.user.id','handsDb.mission.id'])" transform='translate(7,0)' class='scene' d='M 420 210 L 420,277 Q 420,285 412,285 L 360,285' >
+	<title>Fk fk_user_mission
+user ref mission ( id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot0p)' marker-end='url(#arrow01)'    d='M 420 210 L 420,277 Q 420,285 412,285 L 360,285' ></path>
+<text x='433' y='210' transform='rotate(90 433,210)' title='Fk fk_user_mission
+user ref mission ( id )' style='fill:#b6b696;'>id</text>
+<!-- ============= Fk 'user_fk_user_message' ============= -->
+<path id='user_fk_user_message'  onmouseover="hghl(['user_fk_user_message','handsDb.user.id','handsDb.message._id'])" onmouseout="uhghl(['user_fk_user_message','handsDb.user.id','handsDb.message._id'])" transform='translate(7,0)' class='scene' d='M 480 165 L 637,165 Q 645,165 645,157 L 645,135' >
+	<title>Fk fk_user_message
+user ref message ( id -&gt; _id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot0p)' marker-end='url(#arrow01)'    d='M 480 165 L 637,165 Q 645,165 645,157 L 645,135' ></path>
+<text x='487' y='160' transform='rotate(0 487,160)' title='Fk fk_user_message
+user ref message ( id -&gt; _id )' style='fill:#b6b696;'>id</text>
+<!-- ============= Fk 'user_fk_user_chat_room' ============= -->
+<path id='user_fk_user_chat_room'  onmouseover="hghl(['user_fk_user_chat_room','handsDb.user.id','handsDb.chat_room._id'])" onmouseout="uhghl(['user_fk_user_chat_room','handsDb.user.id','handsDb.chat_room._id'])" transform='translate(7,0)' class='scene' d='M 480 60 L 495,60' >
+	<title>Fk fk_user_chat_room
+user ref chat_room ( id -&gt; _id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot0p)' marker-end='url(#arrow01)'    d='M 480 60 L 495,60' ></path>
+<text x='487' y='55' transform='rotate(0 487,55)' title='Fk fk_user_chat_room
+user ref chat_room ( id -&gt; _id )' style='fill:#b6b696;'>id</text>
+<!-- ============= Fk 'donor_fk_donor_donation' ============= -->
+<path id='donor_fk_donor_donation'  onmouseover="hghl(['donor_fk_donor_donation','handsDb.donor.id','handsDb.donation._id'])" onmouseout="uhghl(['donor_fk_donor_donation','handsDb.donor.id','handsDb.donation._id'])" transform='translate(7,0)' class='scene' d='M 600 285 L 570,285' >
+	<title>Fk fk_donor_donation
+donor ref donation ( id -&gt; _id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot0p)' marker-end='url(#arrow01)'    d='M 600 285 L 570,285' ></path>
+<text x='594' y='280' transform='rotate(0 594,280)' title='Fk fk_donor_donation
+donor ref donation ( id -&gt; _id )' style='fill:#b6b696;'>id</text>
+<!-- ============= Table 'renovation' ============= -->
+<rect class='table' x='45' y='38' width='135' height='195' rx='7' ry='7' />
+<line class='delim' x1='45.500000' y1='64.500000' x2='179.500000' y2='64.500000'/>
+<line class='delim' x1='60.500000' y1='64.500000' x2='60.500000' y2='232.500000'/>
+<line class='delim' x1='168.500000' y1='64.500000' x2='168.500000' y2='232.500000'/>
+<path d='M 45.50 64.50 L 45.50 45.50 Q 45.50 38.50 52.50 38.50 L 172.50 38.50 Q 179.50 38.50 179.50 45.50 L 179.50 64.50 L45.50 64.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#renovation'><text x='84' y='56'>renovation</text><title>Collection handsDb.renovation
+Renovation doucument</title></a>
+  <a xlink:href='#renovation.id'><text id='handsDb.renovation.id' x='63' y='82' onmouseover="hghl(['renovation_event_fk_renovation_event_renovation','mission_fk_mission_renovation','renovation_event_fk_renovation_event_renovation','user_fk_user_renovation'])" onmouseout="uhghl(['renovation_event_fk_renovation_event_renovation','mission_fk_mission_renovation','renovation_event_fk_renovation_event_renovation','user_fk_user_renovation'])">id</text><title>id
+string</title></a>
+<a xlink:href='#renovation.id'><use id='ref' x='168' y='71' xlink:href='#ref'/><title>Referred by renovation_event ( id ) 
+Referred by mission ( id ) 
+Referred by renovation_event ( id ) 
+Referred by user ( id ) </title></a>
+  <a xlink:href='#renovation.description'><text id='handsDb.renovation.description' x='63' y='97'>description</text><title>description
+string</title></a>
+  <a xlink:href='#renovation.address'><text id='handsDb.renovation.address' x='63' y='112'>address</text><title>address
+string</title></a>
+  <a xlink:href='#renovation.phone'><text id='handsDb.renovation.phone' x='63' y='127'>phone</text><title>phone
+string</title></a>
+  <a xlink:href='#renovation.referrer'><text id='handsDb.renovation.referrer' x='63' y='142'>referrer</text><title>referrer
+string</title></a>
+  <a xlink:href='#renovation.referrer_phone'><text id='handsDb.renovation.referrer_phone' x='63' y='157'>referrer_phone</text><title>referrer_phone
+string</title></a>
+  <a xlink:href='#renovation.referrer_email'><text id='handsDb.renovation.referrer_email' x='63' y='172'>referrer_email</text><title>referrer_email
+string</title></a>
+  <a xlink:href='#renovation.missions_id'><text id='handsDb.renovation.missions_id' x='63' y='187'>missions_id</text><title>missions_id
+list</title></a>
+  <a xlink:href='#renovation.user_id'><text id='handsDb.renovation.user_id' x='63' y='202'>user_id</text><title>user_id
+list</title></a>
+  <a xlink:href='#renovation.renovation_events_id'><text id='handsDb.renovation.renovation_events_id' x='63' y='217'>renovation_events_id</text><title>renovation_events_id
+string</title></a>
+
+<!-- ============= Table 'renovation_event' ============= -->
+<rect class='table' x='210' y='38' width='150' height='165' rx='7' ry='7' />
+<line class='delim' x1='210.500000' y1='64.500000' x2='359.500000' y2='64.500000'/>
+<line class='delim' x1='225.500000' y1='64.500000' x2='225.500000' y2='202.500000'/>
+<line class='delim' x1='348.500000' y1='64.500000' x2='348.500000' y2='202.500000'/>
+<path d='M 210.50 64.50 L 210.50 45.50 Q 210.50 38.50 217.50 38.50 L 352.50 38.50 Q 359.50 38.50 359.50 45.50 L 359.50 64.50 L210.50 64.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#renovation_event'><text x='240' y='56'>renovation_event</text><title>Collection handsDb.renovation_event</title></a>
+  <a xlink:href='#renovation_event.id'><text id='handsDb.renovation_event.id' x='228' y='82' onmouseover="hghl(['renovation_event_fk_renovation_event_renovation','mission_fk_mission_renovation_event','user_fk_user_renovation_event'])" onmouseout="uhghl(['renovation_event_fk_renovation_event_renovation','mission_fk_mission_renovation_event','user_fk_user_renovation_event'])">id</text><title>id
+string</title></a>
+<a xlink:href='#renovation_event.id'><use id='fk' x='348' y='71' xlink:href='#fk'/><title>References renovation ( id ) 
+Referred by mission ( id ) 
+Referred by user ( id ) </title></a>
+  <a xlink:href='#renovation_event.date_'><text id='handsDb.renovation_event.date_' x='228' y='97'>date_</text><title>date_
+date</title></a>
+  <a xlink:href='#renovation_event.description'><text id='handsDb.renovation_event.description' x='228' y='112'>description</text><title>description
+string</title></a>
+  <a xlink:href='#renovation_event.hours_of_work'><text id='handsDb.renovation_event.hours_of_work' x='228' y='127'>hours_of_work</text><title>hours_of_work
+double</title></a>
+  <a xlink:href='#renovation_event.number_of_volunteers'><text id='handsDb.renovation_event.number_of_volunteers' x='228' y='142'>number_of_volunteers</text><title>number_of_volunteers
+integer</title></a>
+  <a xlink:href='#renovation_event.material_cost'><text id='handsDb.renovation_event.material_cost' x='228' y='157'>material_cost</text><title>material_cost
+double</title></a>
+  <a xlink:href='#renovation_event.user_id'><text id='handsDb.renovation_event.user_id' x='228' y='172' onmouseover="hghl(['user_id_JSon'])" onmouseout="uhghl(['user_id_JSon'])">user_id</text><title>user_id
+list</title></a>
+  <a xlink:href='#renovation_event.mission_id'><text id='handsDb.renovation_event.mission_id' x='228' y='187' onmouseover="hghl(['mission_id_JSon'])" onmouseout="uhghl(['mission_id_JSon'])">mission_id</text><title>mission_id
+list</title></a>
+
+<!-- ============= Table 'mission' ============= -->
+<rect class='table' x='270' y='263' width='90' height='120' rx='7' ry='7' />
+<line class='delim' x1='270.500000' y1='289.500000' x2='359.500000' y2='289.500000'/>
+<line class='delim' x1='285.500000' y1='289.500000' x2='285.500000' y2='382.500000'/>
+<line class='delim' x1='348.500000' y1='289.500000' x2='348.500000' y2='382.500000'/>
+<path d='M 270.50 289.50 L 270.50 270.50 Q 270.50 263.50 277.50 263.50 L 352.50 263.50 Q 359.50 263.50 359.50 270.50 L 359.50 289.50 L270.50 289.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#mission'><text x='294' y='281'>mission</text><title>Collection handsDb.mission</title></a>
+  <a xlink:href='#mission.id'><text id='handsDb.mission.id' x='288' y='307' onmouseover="hghl(['mission_fk_mission_renovation_event','mission_fk_mission_renovation','user_fk_user_mission'])" onmouseout="uhghl(['mission_fk_mission_renovation_event','mission_fk_mission_renovation','user_fk_user_mission'])">id</text><title>id
+string</title></a>
+<a xlink:href='#mission.id'><use id='fk' x='348' y='296' xlink:href='#fk'/><title>References renovation_event ( id ) 
+References renovation ( id ) 
+Referred by user ( id ) </title></a>
+  <a xlink:href='#mission.creator'><text id='handsDb.mission.creator' x='288' y='322'>creator</text><title>creator
+string</title></a>
+  <a xlink:href='#mission.description'><text id='handsDb.mission.description' x='288' y='337'>description</text><title>description
+string</title></a>
+  <a xlink:href='#mission.created_at'><text id='handsDb.mission.created_at' x='288' y='352'>created_at</text><title>created_at
+string</title></a>
+  <a xlink:href='#mission.executeur'><text id='handsDb.mission.executeur' x='288' y='367'>executeur</text><title>executeur
+string</title></a>
+
+<!-- ============= Table 'chat_room' ============= -->
+<rect class='table' x='510' y='38' width='90' height='105' rx='7' ry='7' />
+<line class='delim' x1='510.500000' y1='64.500000' x2='599.500000' y2='64.500000'/>
+<line class='delim' x1='525.500000' y1='64.500000' x2='525.500000' y2='142.500000'/>
+<line class='delim' x1='588.500000' y1='64.500000' x2='588.500000' y2='142.500000'/>
+<path d='M 510.50 64.50 L 510.50 45.50 Q 510.50 38.50 517.50 38.50 L 592.50 38.50 Q 599.50 38.50 599.50 45.50 L 599.50 64.50 L510.50 64.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#chat_room'><text x='526' y='56'>chat_room</text><title>Collection handsDb.chat_room</title></a>
+  <a xlink:href='#chat_room._id'><text id='handsDb.chat_room._id' x='528' y='82' onmouseover="hghl(['message_fk_message_chat_room','user_fk_user_chat_room'])" onmouseout="uhghl(['message_fk_message_chat_room','user_fk_user_chat_room'])">_id</text><title>_id
+string</title></a>
+<a xlink:href='#chat_room._id'><use id='ref' x='588' y='71' xlink:href='#ref'/><title>Referred by message ( _id ) 
+Referred by user ( id -&gt; _id ) </title></a>
+  <a xlink:href='#chat_room.created_at'><text id='handsDb.chat_room.created_at' x='528' y='97'>created_at</text><title>created_at
+string</title></a>
+  <a xlink:href='#chat_room.message_id'><text id='handsDb.chat_room.message_id' x='528' y='112' onmouseover="hghl(['message_id_JSon'])" onmouseout="uhghl(['message_id_JSon'])">message_id</text><title>message_id
+list</title></a>
+  <a xlink:href='#chat_room.user_id'><text id='handsDb.chat_room.user_id' x='528' y='127' onmouseover="hghl(['user_id_JSon'])" onmouseout="uhghl(['user_id_JSon'])">user_id</text><title>user_id
+list</title></a>
+
+<!-- ============= Table 'message' ============= -->
+<rect class='table' x='630' y='38' width='75' height='90' rx='7' ry='7' />
+<line class='delim' x1='630.500000' y1='64.500000' x2='704.500000' y2='64.500000'/>
+<line class='delim' x1='645.500000' y1='64.500000' x2='645.500000' y2='127.500000'/>
+<line class='delim' x1='693.500000' y1='64.500000' x2='693.500000' y2='127.500000'/>
+<path d='M 630.50 64.50 L 630.50 45.50 Q 630.50 38.50 637.50 38.50 L 697.50 38.50 Q 704.50 38.50 704.50 45.50 L 704.50 64.50 L630.50 64.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#message'><text x='642' y='56'>message</text><title>Collection handsDb.message</title></a>
+  <a xlink:href='#message._id'><text id='handsDb.message._id' x='648' y='82' onmouseover="hghl(['message_fk_message_chat_room','user_fk_user_message'])" onmouseout="uhghl(['message_fk_message_chat_room','user_fk_user_message'])">_id</text><title>_id
+string</title></a>
+<a xlink:href='#message._id'><use id='fk' x='693' y='71' xlink:href='#fk'/><title>References chat_room ( _id ) 
+Referred by user ( id -&gt; _id ) </title></a>
+  <a xlink:href='#message.content'><text id='handsDb.message.content' x='648' y='97'>content</text><title>content
+string</title></a>
+  <a xlink:href='#message.sender'><text id='handsDb.message.sender' x='648' y='112'>sender</text><title>sender
+string</title></a>
+
+<!-- ============= Table 'user' ============= -->
+<rect class='table' x='390' y='38' width='90' height='165' rx='7' ry='7' />
+<line class='delim' x1='390.500000' y1='64.500000' x2='479.500000' y2='64.500000'/>
+<line class='delim' x1='405.500000' y1='64.500000' x2='405.500000' y2='202.500000'/>
+<line class='delim' x1='468.500000' y1='64.500000' x2='468.500000' y2='202.500000'/>
+<path d='M 390.50 64.50 L 390.50 45.50 Q 390.50 38.50 397.50 38.50 L 472.50 38.50 Q 479.50 38.50 479.50 45.50 L 479.50 64.50 L390.50 64.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#user'><text x='421' y='56'>user</text><title>Collection handsDb.user</title></a>
+  <a xlink:href='#user.id'><text id='handsDb.user.id' x='408' y='82' onmouseover="hghl(['user_fk_user_renovation_event','user_fk_user_renovation','user_fk_user_mission','user_fk_user_message','user_fk_user_chat_room'])" onmouseout="uhghl(['user_fk_user_renovation_event','user_fk_user_renovation','user_fk_user_mission','user_fk_user_message','user_fk_user_chat_room'])">id</text><title>id
+string</title></a>
+<a xlink:href='#user.id'><use id='fk' x='468' y='71' xlink:href='#fk'/><title>References renovation_event ( id ) 
+References renovation ( id ) 
+References mission ( id ) 
+References message ( id -&gt; _id ) 
+References chat_room ( id -&gt; _id ) </title></a>
+  <a xlink:href='#user.first_name'><text id='handsDb.user.first_name' x='408' y='97'>first_name</text><title>first_name
+string</title></a>
+  <a xlink:href='#user.last_name'><text id='handsDb.user.last_name' x='408' y='112'>last_name</text><title>last_name
+string</title></a>
+  <a xlink:href='#user.phone'><text id='handsDb.user.phone' x='408' y='127'>phone</text><title>phone
+string</title></a>
+  <a xlink:href='#user.address'><text id='handsDb.user.address' x='408' y='142'>address</text><title>address
+string</title></a>
+  <a xlink:href='#user.email'><text id='handsDb.user.email' x='408' y='157'>email</text><title>email
+string</title></a>
+  <a xlink:href='#user.role'><text id='handsDb.user.role' x='408' y='172'>role</text><title>role
+string</title></a>
+  <a xlink:href='#user.type'><text id='handsDb.user.type' x='408' y='187'>type</text><title>type
+string</title></a>
+
+<!-- ============= Table 'donation' ============= -->
+<rect class='table' x='495' y='263' width='75' height='105' rx='7' ry='7' />
+<line class='delim' x1='495.500000' y1='289.500000' x2='569.500000' y2='289.500000'/>
+<line class='delim' x1='510.500000' y1='289.500000' x2='510.500000' y2='367.500000'/>
+<line class='delim' x1='558.500000' y1='289.500000' x2='558.500000' y2='367.500000'/>
+<path d='M 495.50 289.50 L 495.50 270.50 Q 495.50 263.50 502.50 263.50 L 562.50 263.50 Q 569.50 263.50 569.50 270.50 L 569.50 289.50 L495.50 289.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#donation'><text x='509' y='281'>donation</text><title>Collection handsDb.donation</title></a>
+  <a xlink:href='#donation._id'><text id='handsDb.donation._id' x='513' y='307' onmouseover="hghl(['donor_fk_donor_donation'])" onmouseout="uhghl(['donor_fk_donor_donation'])">_id</text><title>_id
+string</title></a>
+<a xlink:href='#donation._id'><use id='ref' x='558' y='296' xlink:href='#ref'/><title>Referred by donor ( id -&gt; _id ) </title></a>
+  <a xlink:href='#donation.donor_id'><text id='handsDb.donation.donor_id' x='513' y='322'>donor_id</text><title>donor_id
+string</title></a>
+  <a xlink:href='#donation._date'><text id='handsDb.donation._date' x='513' y='337'>_date</text><title>_date
+date</title></a>
+  <a xlink:href='#donation.amount'><text id='handsDb.donation.amount' x='513' y='352'>amount</text><title>amount
+double</title></a>
+
+<!-- ============= Table 'donor' ============= -->
+<rect class='table' x='615' y='263' width='90' height='135' rx='7' ry='7' />
+<line class='delim' x1='615.500000' y1='289.500000' x2='704.500000' y2='289.500000'/>
+<line class='delim' x1='630.500000' y1='289.500000' x2='630.500000' y2='397.500000'/>
+<line class='delim' x1='693.500000' y1='289.500000' x2='693.500000' y2='397.500000'/>
+<path d='M 615.50 289.50 L 615.50 270.50 Q 615.50 263.50 622.50 263.50 L 697.50 263.50 Q 704.50 263.50 704.50 270.50 L 704.50 289.50 L615.50 289.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#donor'><text x='643' y='281'>donor</text><title>Collection handsDb.donor</title></a>
+  <a xlink:href='#donor.id'><text id='handsDb.donor.id' x='633' y='307' onmouseover="hghl(['donor_fk_donor_donation'])" onmouseout="uhghl(['donor_fk_donor_donation'])">id</text><title>id
+string</title></a>
+<a xlink:href='#donor.id'><use id='fk' x='693' y='296' xlink:href='#fk'/><title>References donation ( id -&gt; _id ) </title></a>
+  <a xlink:href='#donor.first_name'><text id='handsDb.donor.first_name' x='633' y='322'>first_name</text><title>first_name
+string</title></a>
+  <a xlink:href='#donor.last_name'><text id='handsDb.donor.last_name' x='633' y='337'>last_name</text><title>last_name
+string</title></a>
+  <a xlink:href='#donor.phone'><text id='handsDb.donor.phone' x='633' y='352'>phone</text><title>phone
+string</title></a>
+  <a xlink:href='#donor.address'><text id='handsDb.donor.address' x='633' y='367'>address</text><title>address
+string</title></a>
+  <a xlink:href='#donor.email'><text id='handsDb.donor.email' x='633' y='382'>email</text><title>email
+string</title></a>
+
+</g></svg>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='renovation'>Collection renovation</a></th></tr>
+<tr><td colspan='3'>Renovation doucument </td></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation.id'>id</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation.description'>description</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation.address'>address</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation.phone'>phone</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation.referrer'>referrer</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation.referrer_phone'>referrer&#95;phone</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation.referrer_email'>referrer&#95;email</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation.missions_id'>missions&#95;id</a></td>
+		<td> list   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation.user_id'>user&#95;id</a></td>
+		<td> list   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation.renovation_events_id'>renovation&#95;events&#95;id</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='renovation_event'>Collection renovation_event</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation_event.id'>id</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation_event.date_'>date&#95;</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation_event.description'>description</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation_event.hours_of_work'>hours&#95;of&#95;work</a></td>
+		<td> double   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation_event.number_of_volunteers'>number&#95;of&#95;volunteers</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation_event.material_cost'>material&#95;cost</a></td>
+		<td> double   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation_event.user_id'>user&#95;id</a></td>
+		<td> list   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='renovation_event.mission_id'>mission&#95;id</a></td>
+		<td> list   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Virtual Relations</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_renovation_event_renovation</td>
+		<td > ( id ) ref <a href='#renovation'>renovation</a> (id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='mission'>Collection mission</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='mission.id'>id</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='mission.creator'>creator</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='mission.description'>description</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='mission.created_at'>created&#95;at</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='mission.executeur'>executeur</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Virtual Relations</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_mission_renovation_event</td>
+		<td > ( id ) ref <a href='#renovation&#95;event'>renovation&#95;event</a> (id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_mission_renovation</td>
+		<td > ( id ) ref <a href='#renovation'>renovation</a> (id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='chat_room'>Collection chat_room</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='chat_room._id'>&#95;id</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='chat_room.created_at'>created&#95;at</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='chat_room.message_id'>message&#95;id</a></td>
+		<td> list   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='chat_room.user_id'>user&#95;id</a></td>
+		<td> list   </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='message'>Collection message</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='message._id'>&#95;id</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='message.content'>content</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='message.sender'>sender</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Virtual Relations</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_message_chat_room</td>
+		<td > ( &#95;id ) ref <a href='#chat&#95;room'>chat&#95;room</a> (&#95;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='user'>Collection user</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='user.id'>id</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='user.first_name'>first&#95;name</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='user.last_name'>last&#95;name</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='user.phone'>phone</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='user.address'>address</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='user.email'>email</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='user.role'>role</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='user.type'>type</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Virtual Relations</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_user_renovation_event</td>
+		<td > ( id ) ref <a href='#renovation&#95;event'>renovation&#95;event</a> (id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_user_renovation</td>
+		<td > ( id ) ref <a href='#renovation'>renovation</a> (id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_user_mission</td>
+		<td > ( id ) ref <a href='#mission'>mission</a> (id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_user_message</td>
+		<td > ( id ) ref <a href='#message'>message</a> (&#95;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_user_chat_room</td>
+		<td > ( id ) ref <a href='#chat&#95;room'>chat&#95;room</a> (&#95;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='donation'>Collection donation</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='donation._id'>&#95;id</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='donation.donor_id'>donor&#95;id</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='donation._date'>&#95;date</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='donation.amount'>amount</a></td>
+		<td> double   </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='donor'>Collection donor</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='donor.id'>id</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='donor.first_name'>first&#95;name</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='donor.last_name'>last&#95;name</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='donor.phone'>phone</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='donor.address'>address</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='donor.email'>email</a></td>
+		<td> string   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Virtual Relations</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_donor_donation</td>
+		<td > ( id ) ref <a href='#donation'>donation</a> (&#95;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+</body></html>
