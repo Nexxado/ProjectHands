@@ -2,7 +2,7 @@
   "name": "project-hands",
   "version": "1.0.0",
   "description": "Projects organization and team communication made easy.",
-  "main": "app.js",
+  "main": "server/app.js",
   "scripts": {
     "start": "node server/app",
     "test": "karma start"
