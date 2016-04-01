@@ -4,7 +4,7 @@
   "description": "Projects organization and team communication made easy.",
   "main": "app.js",
   "scripts": {
-    "start" : "node server/app",
+    "start": "node server/app",
     "test": "karma start"
   },
   "repository": {
@@ -34,7 +34,11 @@
   "devDependencies": {
     "angular-mocks": "^1.5.3",
     "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-jshint": "^2.0.0",
     "jasmine-core": "^2.4.1",
+    "jshint": "^2.9.1",
+    "jshint-stylish": "^2.1.0",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^0.2.3",
     "karma-firefox-launcher": "^0.1.7",
