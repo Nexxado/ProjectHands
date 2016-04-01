@@ -1,7 +1,7 @@
 # Project 'Hands'
 
 [![HuBoard](https://img.shields.io/badge/link-HuBoard-8674D1.svg?style=flat)](https://huboard.com/Nexxado/ProjectHands/)
-[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT)
+[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](#license)
 [![Join the chat at https://gitter.im/Nexxado/ProjectHands](https://badges.gitter.im/Nexxado/ProjectHands.svg)](https://gitter.im/Nexxado/ProjectHands?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/Nexxado/ProjectHands.svg?branch=master)](https://travis-ci.org/Nexxado/ProjectHands)
 
