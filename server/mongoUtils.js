@@ -9,7 +9,7 @@ module.exports = {
         MongoClient.connect(config.mongoDBUrl, function (err, db) {
             if (err) {
                 console.log("Error connecting to Mongo: ", err);
-                process.exit(1);
+                return;
             }
             console.log("connected to Mongo");
             _db = db;
