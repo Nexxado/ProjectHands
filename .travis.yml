@@ -2,7 +2,9 @@ language: node_js
 node_js:
   - "4"
   
-script: karma start --browsers Firefox --single-run
+script: 
+  - karma start --browsers Firefox --single-run
+  - mocha server/test
 
 before_script:
   - export DISPLAY=:99.0
