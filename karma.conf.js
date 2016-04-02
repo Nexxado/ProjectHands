@@ -18,7 +18,7 @@ module.exports = function(config) {
       'node_modules/angular/angular.js',
       'node_modules/angular-*/angular-*.js',
       'js/**/*.js',
-      'test/*.test.js'
+      'client/test/*.test.js'
     ],
       
       reporters: ['mocha'],

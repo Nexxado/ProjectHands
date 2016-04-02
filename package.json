@@ -2,9 +2,9 @@
   "name": "project-hands",
   "version": "1.0.0",
   "description": "Projects organization and team communication made easy.",
-  "main": "server/app.js",
+  "main": "bin/www",
   "scripts": {
-    "start": "node server/app",
+    "start": "node bin/www",
     "test": "karma start"
   },
   "repository": {
@@ -37,6 +37,7 @@
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-jshint": "^2.0.0",
+    "gulp-mocha": "^2.2.0",
     "jasmine-core": "^2.4.1",
     "jshint": "^2.9.1",
     "jshint-stylish": "^2.1.0",
@@ -44,6 +45,8 @@
     "karma-chrome-launcher": "^0.2.3",
     "karma-firefox-launcher": "^0.1.7",
     "karma-jasmine": "^0.3.8",
-    "karma-mocha-reporter": "^2.0.0"
+    "karma-mocha-reporter": "^2.0.0",
+    "mocha": "^2.4.5",
+    "supertest": "^1.2.0"
   }
 }
