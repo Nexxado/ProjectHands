@@ -21,7 +21,10 @@ module.exports = {
     users() {
         return _db.collection('users');
     },
-    chat() {
-        return _db.collection('chat');
+    chats() {
+        return _db.collection('chats');
+    },
+    teams() {
+        return _db.collection('teams');
     }
 };

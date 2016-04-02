@@ -1,0 +1,35 @@
+[
+    {
+        "addr": {
+            "city": "ירושלים",
+            "street": "ישראל זרחי",
+            "num": "12"
+        },
+        "created": "01/03/2016",
+        "updated": "05/03/2016",
+        "date": "07/04/2016",
+        "tasks": [
+            {
+                "name": "Kurkevan",
+                "description": "Bring the fooking Kurkevan",
+                "assigned_id": "138548975",
+                "done": "false"
+            }, {
+                "name": "Krepalach",
+                "description": "Cook some Krepalach for the guys",
+                "assigned_id": "868876951",
+                "done": "true"
+            }, {
+                "name": "Bobalach",
+                "description": "Buy Bobalach before the renovation",
+                "assigned_id": "504425136",
+                "done": "true"
+            }
+        ],
+        "chat_id": "ren1_chat",
+        "team_id": "team_315568991",
+        "pinned": [
+
+        ]
+    }
+]
