@@ -2,11 +2,11 @@ var MongoClient = require('mongodb').MongoClient;
 var config = require('../config.json');
 var _db;
 
-
+var url = process.env.MONGODB_URL || config.mongoDBUrl;
 
 module.exports = {
     connect() {
-        MongoClient.connect(config.mongoDBUrl, function (err, db) {
+        MongoClient.connect(url, function (err, db) {
             if (err) {
                 console.log("Error connecting to Mongo: ", err);
                 return;
