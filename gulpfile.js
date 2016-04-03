@@ -37,6 +37,7 @@ gulp.task('browserSync', function () {
 
 
 gulp.task('mocha', function () {
+	gulp.watch('./server/**/*.js', ['mocha']);
     return gulp.src('./server/test/**/*.test.js')
         .pipe(mocha());
 });
