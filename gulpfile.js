@@ -24,9 +24,10 @@ gulp.task('css-autoprefixer', function () {
 });
 
 
-gulp.task('watch', ['browserSync'], function () {
+gulp.task('watch', ['browserSync', 'jshint', 'mocha'], function () {
     gulp.watch('./client/js/**/*.js', ['jshint']);
     gulp.watch(['./client/**/*.html', './client/js/**/*.js', './client/css/**/*.css'], browserSync.reload);
+    gulp.watch('./server/**/*.js', ['mocha']);
 });
 
 gulp.task('browserSync', function () {
