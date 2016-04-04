@@ -8,7 +8,7 @@ angular.module('ProjectHands')
             var args = arguments;
             $rootScope.$apply(function () {
                 callback.apply(socket, args);
-            })
+            });
         },
         emit: function (eventName, data, callback) {
             socket.emit(eventName, data, function () {
@@ -17,8 +17,8 @@ angular.module('ProjectHands')
                     if (callback) {
                         callback.apply(socket, args);
                     }
-                })
-            })
+                });
+            });
         }
-    }
+    };
 });
