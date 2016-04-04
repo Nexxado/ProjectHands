@@ -1,52 +1,58 @@
 angular.module('ProjectHands')
 
-.config(function ($stateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise('/home');
 
-    $stateProvider.state('home', {
-        url: '/home',
-        templateUrl: 'templates/home.html',
-        controller: 'HomeController'
-    })
+        $stateProvider.state('home', {
+                url: '/home',
+                templateUrl: 'templates/home.html',
+                controller: 'HomeController'
+            })
 
-    .state('profile', {
-        url: '/profile',
-        templateUrl: 'templates/profile.html'
+            .state('renovation_dashboard', {
+                url: '/renovation_dashboard',
+                templateUrl: 'templates/renovation_dashboard.html',
+                controller: 'renovationDashboardController'
+            })
 
-    })
+            .state('profile', {
+                url: '/profile',
+                templateUrl: 'templates/profile.html'
 
-    .state('chat', {
-        url: '/chat',
-        templateUrl: 'templates/chat.html'
+            })
 
-    })
+            .state('chat', {
+                url: '/chat',
+                templateUrl: 'templates/chat.html'
 
-    .state('about', {
-        url: '/about',
-        templateUrl: 'templates/about/index.html',
-        controller: 'AboutController',
-        deepStateRedirect: {
-            default: {
-                state: 'about.who'
-            }
-        }
-    })
+            })
 
-    .state('about.who', {
-        url: '/who',
-        templateUrl: 'templates/about/who.html'
-    })
+            .state('about', {
+                url: '/about',
+                templateUrl: 'templates/about/index.html',
+                controller: 'AboutController',
+                deepStateRedirect: {
+                    default: {
+                        state: 'about.who'
+                    }
+                }
+            })
 
-    .state('about.jobs', {
-        url: '/jobs',
-        templateUrl: 'templates/about/jobs.html'
-    })
+            .state('about.who', {
+                url: '/who',
+                templateUrl: 'templates/about/who.html'
+            })
 
-    .state('about.contact', {
-        url: '/contact',
-        templateUrl: 'templates/about/contact.html'
+            .state('about.jobs', {
+                url: '/jobs',
+                templateUrl: 'templates/about/jobs.html'
+            })
+
+            .state('about.contact', {
+                url: '/contact',
+                templateUrl: 'templates/about/contact.html'
+            });
+
+
     });
-
-
-});
