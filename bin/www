@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 
-var app = require('../server/app'),
-    mongoUtil = require('../server/mongoUtils');
+var app = require('../server/app');
+var mongoUtil = require('../server/mongoUtils');
 
 var port = process.env.PORT || 8080;
 
 mongoUtil.connect();
 
-app.listen(port, function () {
+var server = require('http').createServer(app);
+app.io.attach(server);
+
+server.listen(port, function () {
     console.log('Listening on port ' + port + '\n');
 });
