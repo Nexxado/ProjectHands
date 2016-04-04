@@ -19,9 +19,10 @@
   "homepage": "https://github.com/Nexxado/ProjectHands#readme",
   "dependencies": {
     "angular": "^1.5.2",
-    "angular-animate": "^1.5.2",
-    "angular-aria": "^1.5.2",
-    "angular-messages": "^1.5.2",
+    "angular-animate": "^1.5.3",
+    "angular-aria": "^1.5.3",
+    "angular-material": "^1.0.7",
+    "angular-messages": "^1.5.3",
     "angular-touch": "^1.5.2",
     "angular-ui-bootstrap": "^1.2.4",
     "angular-ui-router": "^0.2.18",
