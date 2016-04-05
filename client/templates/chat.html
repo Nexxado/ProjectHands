@@ -1,22 +1,53 @@
 <md-content layout-padding>
-    <md-list>
-        <md-list-item ng-repeat="message in history">
-            <div class="md-list-item-text" layout="column">
-                <h4>{{ message.user }}: {{ message.content }}</h4>
-            </div>
-        </md-list-item>
-    </md-list>
 
-    <div layout="row" flex="100" style="position: fixed; bottom: 88px; width: 100%">
-        <form name="ChatMessageForm" ng-submit="sendMessage()" flex novalidate>
-            <md-input-container flex="100" style="width: 80%;">
-                <label>Write a message...</label>
-                <input name="search" type="text" ng-model="message.content" />
+    <div layout="column" layout-align="center center" ng-show="!isLoggedIn">
+        <form name="ChatLoginForm" ng-submit="chatLogin()" flex novalidate class="md-whiteframe-5dp"
+              style="padding: 20px;">
+            <md-input-container class="md-block">
+                <label>Username</label>
+                <input name="username" type="text" ng-model="login.username" required/>
+                <div ng-messages="ChatLoginForm.username.$error">
+                    <div ng-message="required">
+                        This is required
+                    </div>
+                </div>
             </md-input-container>
-            <md-button type="submit" layout-align="end center" class="md-accent">Send</md-button>
+            <md-input-container class="md-block">
+                <label>Password</label>
+                <input name="password" type="password" ng-model="login.password"/>
+            </md-input-container>
+            <div layout="column" layout-align="center center">
+                <md-button type="submit" layout-align="end center" class="md-accent md-raised" style="color: white;">
+                    Login
+                </md-button>
+            </div>
         </form>
     </div>
 
+    <div layout="column" ng-show="isLoggedIn">
+        <md-list>
+            <md-list-item ng-repeat="message in history">
+                <div class="md-list-item-text" layout="column">
+                    <h4>{{ message.user }}: {{ message.content }}</h4>
+                </div>
+            </md-list-item>
+        </md-list>
+
+        <div layout="row" flex="100" style="position: fixed; bottom: 88px; width: 100%">
+            <form name="ChatMessageForm" ng-submit="sendMessage()" flex novalidate>
+                <md-input-container flex="100" style="width: 80%;">
+                    <label>Write a message...</label>
+                    <input name="message" type="text" ng-model="message.content" required/>
+                    <div ng-messages="ChatMessageForm.message.$error">
+                        <div ng-message="required">
+                            This is required
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-button type="submit" layout-align="end center" class="md-accent">Send</md-button>
+            </form>
+        </div>
+    </div>
 
 </md-content>
 <md-toolbar class="md-medium-tall" style="position: fixed; bottom: 0;">
