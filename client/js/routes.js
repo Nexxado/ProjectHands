@@ -18,8 +18,8 @@ angular.module('ProjectHands')
 
     .state('chat', {
         url: '/chat',
-        templateUrl: 'templates/chat.html'
-
+        templateUrl: 'templates/chat.html',
+        controller: 'ChatController'
     })
 
     .state('about', {

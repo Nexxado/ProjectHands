@@ -1,199 +1,26 @@
-<div class="container">
-    <div class="row " style="padding-top:40px;">
-        <h3 class="text-center"></h3>
-        <br/><br/>
-        <div class="col-md-8">
-
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    Pin Data
-                </div>
-                <div class="panel-body">
-                    <li class="media">
-
-                        <div class="media-body">
-
-                            <div class="media">
-                                <a class="pull-left" href="#">
-
-                                </a>
-                                <div class="media-body">
-                                    <h3>Address</h3>
-                                    <h3>Tools</h3>
-                                    <br/>
-                                    <small class="text-muted">Jhon Rexa | 23rd June at 5:00pm</small>
-                                    <hr/>
-                                </div>
-                            </div>
-
-                        </div>
-                    </li>
-                </div>
+<md-content layout-padding>
+    <md-list>
+        <md-list-item ng-repeat="message in history">
+            <div class="md-list-item-text" layout="column">
+                <h4>{{ message.user }}: {{ message.content }}</h4>
             </div>
+        </md-list-item>
+    </md-list>
 
-
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    Team Chat
-                </div>
-
-                <div class="panel-body">
-                    <ul class="media-list">
-
-
-                        <li class="media">
-
-                            <div class="media-body">
-
-                                <div class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle " height="50" width="50"
-                                             src="https://scontent.fsdv1-1.fna.fbcdn.net/hphotos-xpa1/v/t1.0-9/1380320_10151708217961375_1587275360_n.jpg?oh=2f7a6389c0bad261e69e9ebcebbe5c1f&oe=57884AB5"/>
-                                    </a>
-                                    <div class="media-body">
-                                        Donec sit amet ligula enim. Duis vel condimentum massa.
-
-                                        Donec sit amet ligula enim. Duis vel condimentum massa.Donec sit amet ligula
-                                        enim.
-                                        Duis vel condimentum massa.
-                                        Donec sit amet ligula enim. Duis vel condimentum massa.
-                                        <br/>
-                                        <small class="text-muted">Jhon Rexa | 23rd June at 5:00pm</small>
-                                        <hr/>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <li class="media">
-
-                            <div class="media-body">
-
-                                <div class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle "
-                                             src="https://scontent.fsdv1-1.fna.fbcdn.net/hphotos-xfp1/v/t1.0-9/12651358_10153870832864134_3322863401449412355_n.jpg?oh=8a94390da6448f636eed1049a8828827&oe=57907C15"
-                                             height="50" width="50"/>
-                                    </a>
-                                    <div class="media-body">
-                                        Donec sit amet ligula enim. Duis vel condimentum massa.
-
-                                        <br/>
-                                        <small class="text-muted">Alex Deo | 23rd June at 5:00pm</small>
-                                        <hr/>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <li class="media">
-
-                            <div class="media-body">
-
-                                <div class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle "
-                                             src="https://scontent.fsdv1-1.fna.fbcdn.net/hphotos-xfa1/v/t1.0-9/313125_3028672775204_1983039052_n.jpg?oh=add0b973d3108d2199ea037a60156dec&oe=578EF5B4"
-                                             height="50" width="50"/>
-                                    </a>
-                                    <div class="media-body">
-                                        Donec sit amet ligula enim. Duis vel condimentum massa.
-
-                                        Donec sit amet ligula enim. Duis vel condimentum massa.Donec sit amet ligula
-                                        enim.
-                                        Duis vel condimentum massa.
-                                        Donec sit amet ligula enim. Duis vel condimentum massa.
-                                        <br/>
-                                        <small class="text-muted">Jhon Rexa | 23rd June at 5:00pm</small>
-                                        <hr/>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="panel-footer">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Enter Message"/>
-                                        <span class="input-group-btn">
-                                                <button class="btn btn-info" type="button">SEND</button>
-                                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Team Members
-                </div>
-                <div class="panel-body">
-                    <ul class="media-list">
-
-                        <li class="media">
-
-                            <div class="media-body">
-
-                                <div class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle " height="50" width="50"
-                                             src="https://scontent.fsdv1-1.fna.fbcdn.net/hphotos-xpa1/v/t1.0-9/1380320_10151708217961375_1587275360_n.jpg?oh=2f7a6389c0bad261e69e9ebcebbe5c1f&oe=57884AB5"/>
-                                    </a>
-                                    <div class="media-body">
-                                        <h5>Alex Deo | Manager </h5>
-
-                                        <small class="text-muted">Active From 3 hours</small>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <hr/>
-                        <li class="media">
-
-                            <div class="media-body">
-
-                                <div class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle "
-                                             src="https://scontent.fsdv1-1.fna.fbcdn.net/hphotos-xfa1/v/t1.0-9/313125_3028672775204_1983039052_n.jpg?oh=add0b973d3108d2199ea037a60156dec&oe=578EF5B4"
-                                             height="50" width="50"/>
-                                    </a>
-                                    <div class="media-body">
-                                        <h5>Jhon Rexa | Driver</h5>
-
-                                        <small class="text-muted">Active From 3 hours</small>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <hr/>
-                        <li class="media">
-
-                            <div class="media-body">
-
-                                <div class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle"
-                                             src="https://scontent.fsdv1-1.fna.fbcdn.net/hphotos-xfa1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B"
-                                             height="50" width="50"/>
-                                    </a>
-                                    <div class="media-body">
-                                        <h5>Alex Deo | Volunteer </h5>
-
-                                        <small class="text-muted">Active From 3 hours</small>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <hr/>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
+    <div layout="row" flex="100" style="position: fixed; bottom: 88px; width: 100%">
+        <form name="ChatMessageForm" ng-submit="sendMessage()" flex novalidate>
+            <md-input-container flex="100" style="width: 80%;">
+                <label>Write a message...</label>
+                <input name="search" type="text" ng-model="message.content" />
+            </md-input-container>
+            <md-button type="submit" layout-align="end center" class="md-accent">Send</md-button>
+        </form>
     </div>
-</div>
+
+
+</md-content>
+<md-toolbar class="md-medium-tall" style="position: fixed; bottom: 0;">
+    <div layout="row" layout-align="center center" flex>
+        <span>FOOTER</span>
+    </div>
+</md-toolbar>

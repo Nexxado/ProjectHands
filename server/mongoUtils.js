@@ -5,7 +5,7 @@ var _db;
 var url = process.env.MONGODB_URL || config.mongoDBUrl;
 
 module.exports = {
-    connect() {
+    connect: function () {
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 console.log("Error connecting to Mongo: ", err);
@@ -15,16 +15,16 @@ module.exports = {
             _db = db;
         });
     },
-    renovations() {
+    renovations: function () {
         return _db.collection('renovations');
     },
-    users() {
+    users: function () {
         return _db.collection('users');
     },
-    chats() {
+    chats: function () {
         return _db.collection('chats');
     },
-    teams() {
+    teams: function () {
         return _db.collection('teams');
     }
 };
