@@ -1,13 +1,50 @@
-.gridListdemoBasicUsage md-grid-list {
-    margin: 8px;
+
+.member_list{
+    padding-top: 42px;
+    height: inherit;
+    padding-bottom: 42px;
+}
+.member_list_content{
+    height: inherit;
 }
 
-.gridListdemoBasicUsage .gray {
+.chat_input{
+    /*height: 300px;*/
+    padding-bottom:  10px;
+}
+.send_btn{
+    /*height: 150px;*/
+    /*width: 100px;*/
+}
+.chat{
+    padding-top: 42px;
+    height: inherit;
+}
+.messages{
+    height: inherit;
+    padding-bottom: 150px;
+}
+.messages_a{
+    height: inherit;
+}
+/*.chat_input md-grid-tile-footer{*/
+    /*background: rebeccapurple;*/
+    /*height: 50px;*/
+    /*width: inherit;*/
+/*}*/
+
+
+.gridListdemoBasicUsage md-grid-list {
+    margin: 8px;
+
+}
+
+.gridListdemoBasicUsage .information {
     background: #f5f5f5;
 }
 
-.gridListdemoBasicUsage .green {
-    background: #b9f6ca;
+.gridListdemoBasicUsage .members {
+    background: #f5f5f5;
 }
 
 .gridListdemoBasicUsage .yellow {
@@ -22,8 +59,8 @@
     background: #b388ff;
 }
 
-.gridListdemoBasicUsage .red {
-    background: #ff8a80;
+.gridListdemoBasicUsage .chat {
+    background: #f5f5f5;
 }
 
 .gridListdemoBasicUsage md-grid-tile {
