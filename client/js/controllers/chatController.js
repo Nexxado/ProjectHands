@@ -7,6 +7,8 @@ angular.module('ProjectHands')
         username: '',
         password: ''
     };
+
+    $scope.room = '';
     
     $scope.chatLogin = function() {
 
@@ -16,6 +18,10 @@ angular.module('ProjectHands')
 
         $scope.isLoggedIn = true;
         $scope.message.user = $scope.login.username;
+
+        if($scope.room !== '') {
+            socketio.emit('room.join', $scope.room);
+        }
     };
 
     $scope.history = [
@@ -40,7 +46,7 @@ angular.module('ProjectHands')
         }
 
         $scope.history.push({ user: $scope.message.user, content: $scope.message.content});
-        socketio.emit('message', $scope.message, function(data) {
+        socketio.emit('message', $scope.message, $scope.room, function(data) {
             console.log('Ack: ', data);
         });
 
