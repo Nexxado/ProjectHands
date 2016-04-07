@@ -1,4 +1,5 @@
 var io = require('socket.io')();
+var mongoUtils = require('./mongoUtils');
 
 io.on("connection", function (socket) {
 
@@ -21,6 +22,7 @@ io.on("connection", function (socket) {
             socket.broadcast.to(defaultRoom).emit('message', message);
         }
 
+        // mongoUtils //TODO insert message to mongoDB;
         //save to chat history
     });
 

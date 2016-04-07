@@ -1,65 +1,73 @@
 angular.module('ProjectHands')
 
-.controller('ChatController', function($scope, socketio) {
+    .controller('ChatController', function ($scope, socketio, APIService) {
 
-    $scope.isLoggedIn = false;
-    $scope.login = {
-        username: '',
-        password: ''
-    };
+        $scope.isLoggedIn = false;
+        $scope.login = {
+            username: '',
+            password: ''
+        };
 
-    $scope.room = '';
-    
-    $scope.chatLogin = function() {
+        $scope.room = '';
 
-        if ($scope.ChatLoginForm.$invalid) {
-            return;
-        }
+        $scope.chatLogin = function () {
 
-        $scope.isLoggedIn = true;
-        $scope.message.user = $scope.login.username;
+            if ($scope.ChatLoginForm.$invalid) {
+                return;
+            }
+            $scope.isLoggedIn = true;
+            $scope.message.user = $scope.login.username;
 
-        if($scope.room !== '') {
-            socketio.emit('room.join', $scope.room);
-        }
-    };
+            if ($scope.room !== '') {
+                socketio.emit('room.join', $scope.room);
+            } else {
+                $scope.room = 'general';
+            }
 
-    $scope.history = [
-        {
-            user: 'Netanel',
-            content: 'Hi there'
-        } , {
-            user: 'Dan',
-            content: 'heyyy!'
-        }
-    ];
+            APIService.getChatHistory($scope.room)
+                .then(function(data) {
+                    if(!data)
+                        return;
 
-    $scope.message = {
-        user: '', //TODO replace with actual user
-        content: ''
-    };
+                    $scope.history = data.messages;
+                    console.log('scope history: ', $scope.history);
+                })
+                .catch(function(error) {
+                    console.log('scope error: ', error);
+                });
+        };
 
-    $scope.sendMessage = function() {
+        $scope.history = [];
 
-        if ($scope.ChatMessageForm.$invalid) {
-            return;
-        }
+        $scope.message = {
+            user: '', //TODO replace with actual user
+            content: '',
+            timestamp: ''
+        };
 
-        $scope.history.push({ user: $scope.message.user, content: $scope.message.content});
-        socketio.emit('message', $scope.message, $scope.room, function(data) {
-            console.log('Ack: ', data);
-        });
+        $scope.sendMessage = function () {
 
-        $scope.ChatMessageForm.$setPristine();
-        $scope.ChatMessageForm.$setUntouched();
-        $scope.message.content = '';
-        // angular.element('input[name="message"]').focus();
-    };
+            if ($scope.ChatMessageForm.$invalid) {
+                return;
+            }
 
-    socketio.on('message', function(message) {
-        $scope.$apply(function () {
-            $scope.history.push(message);
+            $scope.message.timestamp = new Date();
+            $scope.history.push(angular.copy($scope.message));
+
+            socketio.emit('message', $scope.message, $scope.room, function (data) {
+                console.log('Ack: ', data);
+            });
+
+            //reset form
+            $scope.ChatMessageForm.$setPristine();
+            $scope.ChatMessageForm.$setUntouched();
+            $scope.message.content = '';
+            // angular.element('input[name="message"]').focus();
+        };
+
+        socketio.on('message', function (message) {
+            $scope.$apply(function () {
+                $scope.history.push(message);
+            });
         });
     });
-
-});
