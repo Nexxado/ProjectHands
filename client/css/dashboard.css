@@ -1,0 +1,21 @@
+.dashboard-sidenav {
+    background-color: white;
+    width: 25%;
+}
+.wrapper {
+    height: 100%;
+}
+.sidenav-btn {
+    min-width: 100%;
+    text-transform: none;
+/*
+    padding: 0 6px 0 6px;
+    margin: 6px 8px 6px 8px;
+    border-radius: 3px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    outline: none;
+*/
+}
