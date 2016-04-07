@@ -29,10 +29,11 @@
     </div>
 
     <div layout="column" ng-show="isLoggedIn">
+        <h1>Room: {{ room }}</h1>
         <md-list>
             <md-list-item ng-repeat="message in history">
                 <div class="md-list-item-text" layout="column">
-                    <h4>{{ message.user }}: {{ message.content }}</h4>
+                    <h4>[{{ message.timestamp }}] {{ message.user }}: {{ message.content }}</h4>
                 </div>
             </md-list-item>
         </md-list>
