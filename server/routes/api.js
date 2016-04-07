@@ -13,17 +13,18 @@ router.get('/chat', function (req, res) {
 // });
 
 router.get('/chat/:room', function (req, res) {
-    mongoUtils.chats().find({ "_id": req.params.room}).toArray(function (err, docs) {
-        if (err) {
-            res.sendStatus(400);
-            return;
-        }
-        console.log(JSON.stringify(docs));
-        var chat = docs.map(function(entity) {
-            return entity;
+    mongoUtils.chats().find({"_id": req.params.room})
+        .toArray(function (err, docs) {
+            if (err) {
+                res.sendStatus(400);
+                return;
+            }
+            console.log(JSON.stringify(docs));
+            var chat = docs.map(function (entity) {
+                return entity;
+            });
+            res.json(chat);
         });
-        res.json(chat);
-    });
 });
 
 

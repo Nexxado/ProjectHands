@@ -3,12 +3,17 @@ angular.module('ProjectHands')
     .controller('ChatController', function ($scope, socketio, APIService) {
 
         $scope.isLoggedIn = false;
+        $scope.room = '';
+        $scope.history = [];
         $scope.login = {
             username: '',
             password: ''
         };
-
-        $scope.room = '';
+        $scope.message = {
+            user: '',
+            content: '',
+            timestamp: ''
+        };
 
         $scope.chatLogin = function () {
 
@@ -18,32 +23,23 @@ angular.module('ProjectHands')
             $scope.isLoggedIn = true;
             $scope.message.user = $scope.login.username;
 
+            //Join room
             if ($scope.room !== '') {
                 socketio.emit('room.join', $scope.room);
             } else {
                 $scope.room = 'general';
             }
 
-            APIService.getChatHistory($scope.room)
-                .then(function(data) {
-                    if(!data)
-                        return;
+            //Get chat history
+            APIService.chat($scope.room).query({room: $scope.room}, function(chat) {
+                if(chat.length > 0)
+                    $scope.history = chat[0].messages;
 
-                    $scope.history = data.messages;
-                    console.log('scope history: ', $scope.history);
-                })
-                .catch(function(error) {
-                    console.log('scope error: ', error);
-                });
+            } , function(error) {
+                console.log('chat query error', error);
+            });
         };
 
-        $scope.history = [];
-
-        $scope.message = {
-            user: '', //TODO replace with actual user
-            content: '',
-            timestamp: ''
-        };
 
         $scope.sendMessage = function () {
 

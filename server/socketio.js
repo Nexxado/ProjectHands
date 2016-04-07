@@ -22,8 +22,12 @@ io.on("connection", function (socket) {
             socket.broadcast.to(defaultRoom).emit('message', message);
         }
 
-        // mongoUtils //TODO insert message to mongoDB;
-        //save to chat history
+        //Saving message to chat history
+        mongoUtils.chats().update(
+            {"_id": room},
+            {$push: {"messages": message}},
+            {upsert: true}
+        );
     });
 
     socket.on('room.join', function(room) {
@@ -38,6 +42,7 @@ io.on("connection", function (socket) {
         if(!room) {
             console.error('[socket.io] room.leave - room is undefined');
         }
+        socket.leave(room);
     });
 
 });
