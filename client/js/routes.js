@@ -15,6 +15,13 @@ angular.module('ProjectHands')
         templateUrl: 'templates/profile.html'
 
     })
+    
+     .state('dashboard', {
+        url: '/dashboard',
+        templateUrl: 'templates/dashboard.html',
+        controller: 'DashboardController'
+
+    })
 
     .state('chat', {
         url: '/chat',
