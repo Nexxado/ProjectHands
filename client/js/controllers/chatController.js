@@ -2,62 +2,62 @@ angular.module('ProjectHands')
 
     .controller('ChatController', function ($scope, socketio, APIService) {
 
+        //Message Classes
+        var class_message_self = 'chat-message-self';
+        var class_message_others = 'chat-message-others';
+
+
         $scope.isLoggedIn = false;
         $scope.room = '';
         $scope.history = [];
         $scope.login = {
-            username: '',
+            user: '',
             password: ''
         };
         $scope.message = {
             user: '',
             content: '',
-            timestamp: ''
+            timestamp: '',
+            class: class_message_self,
+            dir: 'ltr'
         };
 
 
         $scope.chatLogin = function () {
 
             //Form validation
-            if ($scope.ChatLoginForm.$invalid) {
+            if ($scope.ChatLoginForm.$invalid)
                 return;
-            }
+
             $scope.isLoggedIn = true;
-            $scope.message.user = $scope.login.username;
+            $scope.message.user = $scope.login.user;
+            if (isHebrew($scope.message.user))
+                $scope.message.dir = 'rtl';
+
 
             //Join room
-            if ($scope.room !== '') {
+            if ($scope.room !== '')
                 socketio.emit('room.join', $scope.room);
-            } else {
-                $scope.room = 'General';
-            }
+            else
+                $scope.room = 'general';
 
-            //Get chat history
-            APIService.chat($scope.room).query({room: $scope.room}, function(chat) {
-                if(chat.length > 0)
-                    $scope.history = chat[0].messages;
-
-                $scope.history.forEach(function (message) {
-                    return parseTimestamp(message);
-                });
-
-                console.log($scope.history);
-
-            } , function(error) {
-                console.log('chat query error', error);
-            });
+            getChatHistory();
         };
 
         $scope.sendMessage = function () {
 
-            if ($scope.ChatMessageForm.$invalid) {
+            if ($scope.ChatMessageForm.$invalid)
                 return;
-            }
 
             $scope.message.timestamp = new Date();
             $scope.history.push(parseTimestamp(angular.copy($scope.message)));
 
-            socketio.emit('message', $scope.message, $scope.room, function (data) {
+            //Don't save dir and class to DB.
+            var message = angular.copy($scope.message);
+            delete message.dir;
+            delete message.class;
+
+            socketio.emit('message', message, $scope.room, function (data) {
                 console.log('Ack: ', data);
             });
 
@@ -65,12 +65,13 @@ angular.module('ProjectHands')
             $scope.ChatMessageForm.$setPristine();
             $scope.ChatMessageForm.$setUntouched();
             $scope.message.content = '';
-            // angular.element('input[name="message"]').focus();
         };
 
         socketio.on('message', function (message) {
             $scope.$apply(function () {
-                $scope.history.push(message);
+                message.dir = isHebrew(message.user) ? 'rtl' : 'ltr';
+                message.class = class_message_others;
+                $scope.history.push(parseTimestamp(message));
             });
         });
 
@@ -80,14 +81,39 @@ angular.module('ProjectHands')
             var date = new Date(message.timestamp);
             var minutes = date.getMinutes();
             var hours = date.getHours();
-            if(minutes < 10)
+            if (minutes < 10)
                 minutes = '0' + minutes;
-            if(hours < 10)
+            if (hours < 10)
                 hours = '0' + hours;
 
             message.timestamp = hours + ':' + minutes;
 
             return message;
+        }
+
+
+        //Get chat history
+        function getChatHistory() {
+
+            APIService.chat($scope.room).query({room: $scope.room}, function (chat) {
+                if (chat.length > 0)
+                    $scope.history = chat[0].messages;
+
+                $scope.history.forEach(function (message) {
+                    message.class = $scope.login.user === message.user ? class_message_self : class_message_others;
+                    message.dir = isHebrew(message.user) ? 'rtl' : 'ltr';
+
+                    return parseTimestamp(message);
+                });
+
+            }, function (error) {
+                console.log('chat query error', error);
+            });
+        }
+
+        //Regex for hebrew unicode chars
+        function isHebrew(message) {
+            return message.match(/[\u0590-\u05FF]+/);
         }
 
     });

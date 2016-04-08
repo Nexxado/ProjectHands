@@ -3,7 +3,7 @@ var mongoUtils = require('./mongoUtils');
 
 io.on("connection", function (socket) {
 
-    var defaultRoom = 'General';
+    var defaultRoom = 'general';
 
     socket.join(defaultRoom); 
     socket.leave(socket.id); //Leave socket.io default room
