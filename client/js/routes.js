@@ -34,28 +34,53 @@ angular.module('ProjectHands')
     })
     
     .state('dashboard.tasks', {
-        url: '/main-page',
+        url: '/tasks',
         templateUrl: 'templates/dashboard/tasks.html'
     })
     
     .state('dashboard.renovations', {
-        url: '/main-page',
+        url: '/renovations',
         templateUrl: 'templates/dashboard/renovations.html'
     })
     
     .state('dashboard.toolbox', {
-        url: '/main-page',
+        url: '/toolbox',
         templateUrl: 'templates/dashboard/toolbox.html'
     })
     
     .state('dashboard.team', {
-        url: '/main-page',
+        url: '/team',
         templateUrl: 'templates/dashboard/team.html'
     })
     
     .state('dashboard.calendar', {
-        url: '/main-page',
+        url: '/calendar',
         templateUrl: 'templates/dashboard/calendar.html'
+    })
+    
+        .state('dashboard.statistics', {
+        url: '/statistics',
+        templateUrl: 'templates/dashboard/statistics.html'
+    })
+    
+        .state('dashboard.all-teams', {
+        url: '/all-teams',
+        templateUrl: 'templates/dashboard/all-teams.html'
+    })
+    
+        .state('dashboard.renovations-ref', {
+        url: '/renovations-ref',
+        templateUrl: 'templates/dashboard/renovations-ref.html'
+    })
+    
+        .state('dashboard.store-supporters', {
+        url: '/store-supporters',
+        templateUrl: 'templates/dashboard/store-supporters.html'
+    })
+    
+        .state('dashboard.join-requests', {
+        url: '/join-requests',
+        templateUrl: 'templates/dashboard/join-requests.html'
     })
 
     .state('chat', {
