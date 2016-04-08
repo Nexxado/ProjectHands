@@ -1,0 +1,20 @@
+<div class="wrapper" ng-controller="DashboardController" layout="column">
+
+    <!--Top of page-->
+    <!--First Column-->
+    <dashboard-toolbar></dashboard-toolbar>
+
+    <!--Left side of page-->
+    <!--Second Column-->
+    <div layout="row">
+        <!--First row-->
+        <dashboard-sidenav></dashboard-sidenav>
+        <!--Main part of Page - Content-->
+        <!--Second row-->
+        <!--start of UI-VIEW-->
+        <div class="dashboard-content">
+            <ui-view></ui-view>
+        </div>
+        <!--end of UI-VIEW-->
+    </div>
+</div>

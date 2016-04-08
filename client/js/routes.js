@@ -18,9 +18,44 @@ angular.module('ProjectHands')
     
      .state('dashboard', {
         url: '/dashboard',
-        templateUrl: 'templates/dashboard.html',
-        controller: 'DashboardController'
+        templateUrl: 'templates/dashboard/dashboard.html',
+        controller: 'DashboardController',
+        deepStateRedirect: {
+            default: {
+                state: 'dashboard.main-page'
+            }
+        }
 
+    })
+    
+    .state('dashboard.main-page', {
+        url: '/main-page',
+        templateUrl: 'templates/dashboard/main-page.html'
+    })
+    
+    .state('dashboard.tasks', {
+        url: '/main-page',
+        templateUrl: 'templates/dashboard/tasks.html'
+    })
+    
+    .state('dashboard.renovations', {
+        url: '/main-page',
+        templateUrl: 'templates/dashboard/renovations.html'
+    })
+    
+    .state('dashboard.toolbox', {
+        url: '/main-page',
+        templateUrl: 'templates/dashboard/toolbox.html'
+    })
+    
+    .state('dashboard.team', {
+        url: '/main-page',
+        templateUrl: 'templates/dashboard/team.html'
+    })
+    
+    .state('dashboard.calendar', {
+        url: '/main-page',
+        templateUrl: 'templates/dashboard/calendar.html'
     })
 
     .state('chat', {
