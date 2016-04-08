@@ -17,7 +17,10 @@ module.exports = function(config) {
     files: [
       'node_modules/angular/angular.js',
       'node_modules/angular-*/angular-*.js',
-      'js/**/*.js',
+      'node_modules/angular-ui-router/release/angular-ui-router.min.js',
+      'node_modules/ui-router-extras/release/ct-ui-router-extras.min.js',
+      'node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
+      'client/js/**/*.js',
       'client/test/*.test.js'
     ],
       

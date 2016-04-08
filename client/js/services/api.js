@@ -4,8 +4,8 @@ angular.module('ProjectHands')
 
         var baseUrl = '/api';
 
-        function chat() {
-            return $resource(baseUrl + '/chat/:room');
+        function chat(room) {
+            return $resource(baseUrl + '/chat/:room').query({room: room});
         }
 
 

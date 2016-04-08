@@ -95,20 +95,22 @@ angular.module('ProjectHands')
         //Get chat history
         function getChatHistory() {
 
-            APIService.chat($scope.room).query({room: $scope.room}, function (chat) {
-                if (chat.length > 0)
-                    $scope.history = chat[0].messages;
+            APIService.chat($scope.room).$promise
+                .then(function (data) {
+                    if (data.length > 0)
+                        $scope.history = data[0].messages;
 
-                $scope.history.forEach(function (message) {
-                    message.class = $scope.login.user === message.user ? class_message_self : class_message_others;
-                    message.dir = isHebrew(message.user) ? 'rtl' : 'ltr';
+                    $scope.history.forEach(function (message) {
+                        message.class = $scope.login.user === message.user ? class_message_self : class_message_others;
+                        message.dir = isHebrew(message.user) ? 'rtl' : 'ltr';
 
-                    return parseTimestamp(message);
+                        return parseTimestamp(message);
+                    });
+
+                })
+                .catch(function (error) {
+                    console.log('chat query error', error);
                 });
-
-            }, function (error) {
-                console.log('chat query error', error);
-            });
         }
 
         //Regex for hebrew unicode chars
