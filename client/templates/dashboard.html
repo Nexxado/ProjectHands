@@ -1,117 +1,125 @@
-<div class="wrapper" ng-controller="DashboardController">
+<div class="wrapper" ng-controller="DashboardController" layout="column">
 
-    <md-toolbar>
-        <div class="md-toolbar-tools">
-            <h2>
-          <span>Jhon Jhonny</span>
-        </h2>
-            <span flex></span>
-            <md-menu>
-                <!-- Trigger element is a md-button with an icon -->
-                <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-                    <i class="material-icons">email</i>
-                </md-button>
-                <md-menu-content>
-                    <md-menu-item>
-                        <md-list>
-                            <md-list-item class="md-2-line" ng-repeat="todo in todos">
-                                <md-checkbox ng-model="todo.done"></md-checkbox>
-                                <div class="md-list-item-text">
-                                    <h3>{{todo.title}}</h3>
-                                    <p>{{todo.description}}</p>
-                                </div>
-                            </md-list-item>
-                        </md-list>
-                    </md-menu-item>
-                </md-menu-content>
-            </md-menu>
-            <md-menu>
-                <!-- Trigger element is a md-button with an icon -->
-                <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-                    <i class="material-icons">notifications</i>
-                </md-button>
-                <md-menu-content>
-                    <md-menu-item>
-                        <md-list>
-                            <md-list-item class="md-2-line" ng-repeat="notification in notifications">
-                                <md-checkbox ng-model="notification.read"></md-checkbox>
-                                <div class="md-list-item-text">
-                                    <h3>{{notification.title}}</h3>
-                                    <p>{{notification.description}}</p>
-                                </div>
-                            </md-list-item>
-                        </md-list>
-                    </md-menu-item>
-                </md-menu-content>
-            </md-menu>
-            <md-menu>
-                <!-- Trigger element is a md-button with an icon -->
-                <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-                    <i class="material-icons">settings</i>
-                </md-button>
-                <md-menu-content>
-                    <md-menu-item layout="column" style="height:100%">
-                        <table style="width:100%">
-                            <tr>
-                                <md-button class="sidenav-btn">שינוי פרטים <i class="material-icons">settings_applications
-</i></md-button>
-                            </tr>
-                            <tr>
-                                <md-button class="sidenav-btn">בקשה לשינוי צוות <i class="material-icons">perm_identity</i></md-button>
-                            </tr>
-                            <tr>
-                                <md-button class="sidenav-btn">פיתרון בעיות <i class="material-icons">report_problem</i></md-button>
-                            </tr>
-                            <tr>
-                                <md-button class="sidenav-btn">הגדרות צבעים <i class="material-icons">invert_colors</i></md-button>
-                            </tr>
-                            <tr>
-                                <md-button class="sidenav-btn">הגדרות שפה <i class="material-icons">font_download</i></md-button>
-                            </tr>
-                        </table>
-                    </md-menu-item>
-                </md-menu-content>
-            </md-menu>
-        </div>
-    </md-toolbar>
-
+    <!--Top of page-->
+    <!--First Column-->
     <div>
-        <span>
-            <md-sidenav md-component-id="left" class="md-sidenav-left dashboard-sidenav" md-is-locked-open="true">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <span>בחירת עמוד</span>
-        <span flex></span>
-    </div>
-    </md-toolbar>
-    <div layout="column" layout-align="center center">
-        <table style="width:100%">
-            <tr>
-                <md-button class="sidenav-btn">דאשבורד <i class="material-icons">dashboard</i></md-button>
-            </tr>
-            <tr>
-                <md-button class="sidenav-btn">משימות <i class="material-icons">assignment</i></md-button>
-            </tr>
-            <tr>
-                <md-button class="sidenav-btn">שיפוצים מתוכננים <i class="material-icons">build</i></md-button>
-            </tr>
-            <tr>
-                <md-button class="sidenav-btn">ארגז הכלים <i class="material-icons">work</i></md-button>
-            </tr>
-            <tr>
-                <md-button class="sidenav-btn">הצוות שלי <i class="material-icons">face</i></md-button>
-            </tr>
-            <tr>
-                <md-button class="sidenav-btn">לוח שנה <i class="material-icons">today</i></md-button>
-            </tr>
-        </table>
-    </div>
-    </md-sidenav>
-        </span>
-        <span>
-            <div>
-                
+                <h2>
+          <span>Jhon Jhonny</span>
+        </h2>
+                <span flex></span>
+                <md-menu>
+                    <!-- Trigger element is a md-button with an icon -->
+                    <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+                        <i class="material-icons">email</i>
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-list>
+                                <md-list-item class="md-2-line" ng-repeat="todo in todos">
+                                    <md-checkbox ng-model="todo.done"></md-checkbox>
+                                    <div class="md-list-item-text">
+                                        <h3>{{todo.title}}</h3>
+                                        <p>{{todo.description}}</p>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+                <md-menu>
+                    <!-- Trigger element is a md-button with an icon -->
+                    <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+                        <i class="material-icons">notifications</i>
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-list>
+                                <md-list-item class="md-2-line" ng-repeat="notification in notifications">
+                                    <md-checkbox ng-model="notification.read"></md-checkbox>
+                                    <div class="md-list-item-text">
+                                        <h3>{{notification.title}}</h3>
+                                        <p>{{notification.description}}</p>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+                <md-menu>
+                    <!-- Trigger element is a md-button with an icon -->
+                    <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+                        <i class="material-icons">settings</i>
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item layout="column" style="height:100%">
+                            <table style="width:100%">
+                                <tr>
+                                    <md-button class="sidenav-btn">שינוי פרטים <i class="material-icons">settings_applications
+</i></md-button>
+                                </tr>
+                                <tr>
+                                    <md-button class="sidenav-btn">בקשה לשינוי צוות <i class="material-icons">perm_identity</i></md-button>
+                                </tr>
+                                <tr>
+                                    <md-button class="sidenav-btn">פיתרון בעיות <i class="material-icons">report_problem</i></md-button>
+                                </tr>
+                                <tr>
+                                    <md-button class="sidenav-btn">הגדרות צבעים <i class="material-icons">invert_colors</i></md-button>
+                                </tr>
+                                <tr>
+                                    <md-button class="sidenav-btn">הגדרות שפה <i class="material-icons">font_download</i></md-button>
+                                </tr>
+                            </table>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
             </div>
-        </span>
+        </md-toolbar>
+    </div>
+
+    <!--Left side of page-->
+    <!--Second Column-->
+    <div layout="row">
+        <!--First row-->
+        <div>
+            <md-sidenav md-component-id="left" class="md-sidenav-left dashboard-sidenav" md-is-locked-open="true">
+                <md-toolbar>
+                    <div class="md-toolbar-tools">
+                        <span>בחירת עמוד</span>
+                        <span flex></span>
+                    </div>
+                </md-toolbar>
+                <div layout="column" layout-align="center center">
+                    <table style="width:100%">
+                        <tr>
+                            <md-button class="sidenav-btn">דאשבורד <i class="material-icons">dashboard</i></md-button>
+                        </tr>
+                        <tr>
+                            <md-button class="sidenav-btn">משימות <i class="material-icons">assignment</i></md-button>
+                        </tr>
+                        <tr>
+                            <md-button class="sidenav-btn">שיפוצים מתוכננים <i class="material-icons">build</i></md-button>
+                        </tr>
+                        <tr>
+                            <md-button class="sidenav-btn">ארגז הכלים <i class="material-icons">work</i></md-button>
+                        </tr>
+                        <tr>
+                            <md-button class="sidenav-btn">הצוות שלי <i class="material-icons">face</i></md-button>
+                        </tr>
+                        <tr>
+                            <md-button class="sidenav-btn">לוח שנה <i class="material-icons">today</i></md-button>
+                        </tr>
+                    </table>
+                </div>
+            </md-sidenav>
+        </div>
+
+        <!--Main part of Page - Content-->
+        <!--Second row-->
+        <div class="dashboard-content">
+           <ng-view></ng-view>
+        </div>
     </div>
 </div>

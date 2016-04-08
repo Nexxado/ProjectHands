@@ -1,6 +1,6 @@
 .dashboard-sidenav {
     background-color: white;
-    width: 25%;
+    width: 100%;
 }
 .wrapper {
     height: 100%;
@@ -18,4 +18,14 @@
     border: none;
     outline: none;
 */
+}
+.dashboard-content{
+    border-style: solid;
+    border-color: darkgray;
+    border-radius: 20px;
+    border-width: 1px;
+    padding: 10px;
+    margin: 10px;
+    width: 100%;
+    height: 100%;
 }
