@@ -1,68 +1,118 @@
-
-.member_list{
-    padding-top: 42px;
-    height: inherit;
-    padding-bottom: 42px;
-}
-.member_list_content{
-    height: inherit;
+/**
+*height of grid item header and footer is 48 px
+*/
+:root {
+    --grid-header-height: 48px;
 }
 
-.chat_input{
-    /*height: 300px;*/
-    padding-bottom:  10px;
+.tasks_list_content {
+    height: inherit;
 }
-.send_btn{
+.tools_list_content {
+    height: inherit;
+}
+
+.missions_header {
+    width: 375px;
+}
+
+.grid_item {
+    padding-top: var(--grid-header-height);
+    padding-bottom: var(--grid-header-height);
+
+    /*background: #f5f5f5;*/
+
+    height: inherit;
+}
+
+.member_list_content {
+    height: inherit;
+    background: #f5f5f5;
+}
+
+.chat_input {
+    padding-left: 8px;
+    margin-top: 30px;
+}
+
+.send_btn {
     /*height: 150px;*/
     /*width: 100px;*/
 }
-.chat{
-    padding-top: 42px;
-    height: inherit;
+
+.chat {
+    /*background: #f5f5f5;*/
 }
-.messages{
+
+.messages {
     height: inherit;
-    padding-bottom: 150px;
+    padding-bottom: 120px;
+
 }
-.messages_a{
+
+.messages_list {
     height: inherit;
+    /*background: #f5f5f5;*/
+
 }
+
 /*.chat_input md-grid-tile-footer{*/
-    /*background: rebeccapurple;*/
-    /*height: 50px;*/
-    /*width: inherit;*/
+/*background: rebeccapurple;*/
+/*height: 50px;*/
+/*width: inherit;*/
 /*}*/
-
-
-.gridListdemoBasicUsage md-grid-list {
-    margin: 8px;
-
+.renovationDashboardGridList md-toolbar {
+    background-color: rgb(117, 117, 117);
 }
 
-.gridListdemoBasicUsage .information {
+.renovationDashboardGridList md-list {
+    padding: 0px;
+    /*margin: 0px;*/
     background: #f5f5f5;
 }
 
-.gridListdemoBasicUsage .members {
+.renovationDashboardGridList md-list-item {
+    /*background: #f5f5f5;*/
+
+}
+
+.renovationDashboardGridList md-grid-list {
+    margin: 32px;
+
+}
+
+.renovationDashboardGridList .information {
     background: #f5f5f5;
 }
 
-.gridListdemoBasicUsage .yellow {
+.renovationDashboardGridList md-content{
+    background: #ECECEC;
+}
+
+.renovationDashboardGridList .yellow {
     background: #ffff8d;
 }
 
-.gridListdemoBasicUsage .blue {
+.renovationDashboardGridList .blue {
     background: #84ffff;
 }
 
-.gridListdemoBasicUsage .purple {
-    background: #b388ff;
+.renovationDashboardGridList md-input-container {
+    margin: 0px;
+    padding: 0px;
 }
 
-.gridListdemoBasicUsage .chat {
+.renovationDashboardGridList .chat {
     background: #f5f5f5;
 }
 
-.gridListdemoBasicUsage md-grid-tile {
+.renovationDashboardGridList md-grid-tile {
     transition: all 400ms ease-out 50ms;
+    /*background: #f5f5f5;*/
+    margin: 16px;
+}
+
+.toolbar {
+    background-color: rgb(117, 117, 117);
+    position: absolute;
 }
