@@ -33,7 +33,7 @@
         <md-list>
             <md-list-item dir="{{ message.dir }}" ng-repeat="message in history" class="chat-message-wrapper">
                 <div class="md-list-item-text chat-message-text {{ message.dir }}" ng-class="message.class" layout="column">
-                    <div flex>[{{ message.timestamp }}] <span class="chat-message">{{ message.user }}: {{ message.content }}</span></div>
+                    <div flex><span class="chat-timestamp">{{ message.timestamp }}</span><span class="chat-message-user">{{ message.user }}: </span><span class="chat-message-content">{{ message.content }}</span></div>
                 </div>
             </md-list-item>
         </md-list>

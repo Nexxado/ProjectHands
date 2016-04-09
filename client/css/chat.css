@@ -1,21 +1,45 @@
 .chat-message-wrapper {
     min-height: 35px;
+
 }
 
-.chat-message-wrapper .chat-message {
-    font-size: 18px;
+.chat-message-wrapper .chat-message-user {
+    font-size: 1.8rem;
+}
+
+.chat-message-wrapper .chat-message-content {
+    font-size: 1.5rem;
 }
 
 .chat-message-wrapper .chat-message-text.ltr {
     padding: 1px 10px;
-    border-top-right-radius: 100px;
-    border-bottom-right-radius: 100px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
 }
 
 .chat-message-wrapper .chat-message-text.rtl {
     padding: 1px 10px;
-    border-top-left-radius: 100px;
-    border-bottom-left-radius: 100px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+
+.chat-message-wrapper .chat-message-text.rtl .chat-timestamp {
+    padding-left: 5px;
+}
+
+.chat-message-wrapper .chat-message-text.ltr .chat-timestamp {
+    padding-right: 5px;
+}
+
+.chat-message-text {
+    overflow: hidden;
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.chat-message-text .chat-timestamp {
+    font-size: 1.1rem;
+    font-style: italic;
 }
 
 .chat-message-text.chat-message-self {
@@ -25,3 +49,4 @@
 .chat-message-text.chat-message-others {
     background: rgba(33, 150, 243, 0.5);
 }
+

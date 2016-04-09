@@ -95,7 +95,7 @@ angular.module('ProjectHands')
         //Get chat history
         function getChatHistory() {
 
-            APIService.chat($scope.room).$promise
+            APIService.chat.query($scope.room).$promise
                 .then(function (data) {
                     if (data.length > 0)
                         $scope.history = data[0].messages;
