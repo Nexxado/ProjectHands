@@ -35,13 +35,14 @@ describe('APIService', function () {
         // console.log(result);
         expect(result[0]._id).toEqual('test');
     });
+
     it('Renovation - query', function () {
-        $httpBackend.expectGET('/api/renovation/date&01%2F01%2F2015')
+        $httpBackend.expectGET('/api/renovation/date&01%2F01%2F2015') //%2F = '/'
             .respond(200, [{
                 addr: {
-                    "city": "ירושלים",
-                    "street": "ישראל זרחי",
-                    "num": "12"
+                    city: "ירושלים",
+                    street: "ישראל זרחי",
+                    num: "12"
                 },
                 date: "01/01/2015"
             }]);
@@ -49,6 +50,9 @@ describe('APIService', function () {
         $httpBackend.flush();
         // console.log(result);
         expect(result[0].date).toEqual('01/01/2015');
+        expect(result[0].addr.city).toEqual('ירושלים');
+        expect(result[0].addr.street).toEqual('ישראל זרחי');
+        expect(result[0].addr.num).toEqual('12');
     });
 
 
