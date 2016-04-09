@@ -10,7 +10,6 @@ app.use('/vendor', express.static(__dirname + '/../node_modules/')); //Static Ro
 app.use('/api', require('./routes/api'));
 
 
-
 io.on("connection", function (socket) {
     console.log("A user connected");
     socket.on('disconnect', function () {

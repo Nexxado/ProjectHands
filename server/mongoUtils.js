@@ -53,23 +53,24 @@ module.exports = {
      * Insert data into collection
      * @param collectionName : the collection the data exists in
      * @param data : the data to be inserted to that collection
+     * callback will be executed when finish , and with null if any errors
      * */
-    insert(collectionName,data)
+    insert(collectionName,data,callback)
     {
         _db.collection(collectionName).insert(data,function(error,result)
         {
             if(error)
             {
                 // console.log(error);
-                return error;
+                callback(null);
 
             }
             else
             {
                 console.log('Inserted %d document into the %s collection. The document inserted is ', result.insertedCount,collectionName , result);
+                callback(result);
             }
 
-            return " hell data";
         });
 
     },
@@ -78,43 +79,82 @@ module.exports = {
      * @param collectionName : the collection the data exists in
      * @param query : the search criteria
      * @param updatedData : the new data to be replaced by
-     * @isUpdateAll : true to update all the matches , false to update the first match
+     * @param isUpdateAll : true to update all the matches , false to update the first match
+     * callback will be executed when finish , and with null if any errors
      * */
-    update(collectionName,query,isUpdateAll,updatedData)
+    update(collectionName,query,isUpdateAll,updatedData,callback)
     {
-        _db.collection(collectionName).update(query, {$set: updatedData},{multi : isUpdateAll}, function (error, numUpdated) {
-            if (error) {
+        _db.collection(collectionName).update(query, {$set: updatedData},{multi : isUpdateAll}, function (error, result) {
+            if (error)
+            {
                 console.log(error);
-            } else if (numUpdated) {
-                console.log('Updated Successfully %d document(s).', numUpdated.result.n );
-            } else {
-                console.log('No document found with defined "find" criteria!');
+                callback(null);
+                return;
             }
+            else if (result)
+            {
+                console.log('Updated Successfully %d document(s).', result.result.n );
+            } else
+            {
+                console.log('No document found with defined "find" criteria!');
+
+            }
+            callback(result);
 
         });
 
     },
     /**
+     * delete data from collection
      * @param collectionName : the collection the data exists in
      * @param query : the search criteria
+     * callback will be executed when finish , and with null if any errors
      * */
-    delete(collectionName,query)
+    delete(collectionName,query,callback)
     {
         _db.collection(collectionName).remove(query ,function (error,result)
         {
             if(error)
             {
                 console.log(error);
+                callback(null);
+
             }
             else
             {
                 console.log("Removed  %d doc(s)",result.result.n);
+                callback(result);
             }
 
 
         })
 
+    },
+    /**
+     * get data from collection
+     * @param collectionName : the collection the data exists in
+     * @param query : the search criteria
+     * @param callback : method that will be executed when data is retrieved
+     * callback will be executed when finish , and with null if any errors
+     * */
+    query(collectionName,query,callback)
+    {
+        _db.collection(collectionName).find(query).toArray(function (error,result)
+        {
+            if(error)
+            {
+                console.log(error);
+                callback(null);
+            }
+            else
+            {
+                console.log("The result is : ",result);
+                callback(result);
+            }
+        })
+
     }
+
 
 
 
