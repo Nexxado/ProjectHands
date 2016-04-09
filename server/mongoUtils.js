@@ -6,25 +6,27 @@ var _db;
 
 var url = process.env.MONGODB_URL || config.mongoDBUrl;
 /*
-// to get A ref for the collection
-function collection(collectionName)
-{
-    _db.collection(collectionName,{},function (error,collection)
-    {
-        if(error)
-        {
-            console.log("No such collection");
-            assert.equal(null,error);
-        }
-        else
-        {
-           return collection;
+ // to get A ref for the collection
+ function collection(collectionName)
+ {
+ _db.collection(collectionName,{},function (error,collection)
+ {
+ if(error)
+ {
+ console.log("No such collection");
+ assert.equal(null,error);
+ }
+ else
+ {
+ return collection;
 
-        }
+ }
 
-    });
-    
-}*/
+ });
+
+ }*/
+
+
 module.exports = {
     connect() {
         MongoClient.connect(url, function (err, db) {
@@ -58,7 +60,7 @@ module.exports = {
         {
             if(error)
             {
-               // console.log(error);
+                // console.log(error);
                 return error;
 
             }
@@ -67,6 +69,7 @@ module.exports = {
                 console.log('Inserted %d document into the %s collection. The document inserted is ', result.insertedCount,collectionName , result);
             }
 
+            return " hell data";
         });
 
     },
@@ -77,7 +80,7 @@ module.exports = {
      * @param updatedData : the new data to be replaced by
      * @isUpdateAll : true to update all the matches , false to update the first match
      * */
-    update(collectionName,query,updatedData,isUpdateAll)
+    update(collectionName,query,isUpdateAll,updatedData)
     {
         _db.collection(collectionName).update(query, {$set: updatedData},{multi : isUpdateAll}, function (error, numUpdated) {
             if (error) {
@@ -97,7 +100,7 @@ module.exports = {
      * */
     delete(collectionName,query)
     {
-        _db.collection(collectionName).remove(query ,!isDeleteAll,function (error,result)
+        _db.collection(collectionName).remove(query ,function (error,result)
         {
             if(error)
             {
