@@ -18,7 +18,7 @@ describe('APIService', function () {
     });
 
 
-    it('Chat - call with room id', function () {
+    it('Chat - query (room_id)', function () {
         $httpBackend.expectGET('/api/chat/test')
             .respond(200, [{
                 _id: 'test',
@@ -30,10 +30,25 @@ describe('APIService', function () {
                     }
                 ]
             }]);
-        var result = $APIService.chat('test');
+        var result = $APIService.chat.query('test');
         $httpBackend.flush();
         // console.log(result);
         expect(result[0]._id).toEqual('test');
+    });
+    it('Renovation - query', function () {
+        $httpBackend.expectGET('/api/renovation/date&01%2F01%2F2015')
+            .respond(200, [{
+                addr: {
+                    "city": "ירושלים",
+                    "street": "ישראל זרחי",
+                    "num": "12"
+                },
+                date: "01/01/2015"
+            }]);
+        var result = $APIService.renovation.query('date', '01/01/2015');
+        $httpBackend.flush();
+        // console.log(result);
+        expect(result[0].date).toEqual('01/01/2015');
     });
 
 
