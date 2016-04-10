@@ -1,3 +1,9 @@
 {
-    "mongoDBUrl" : "mongodb://localhost:27017/hands"
+    "mongoDBUrl" : "mongodb://localhost:27017/hands",
+    "collections": {
+        "users": "users",
+        "renovations": "renovations",
+        "teams": "teams",
+        "chats": "chats"
+    }
 }

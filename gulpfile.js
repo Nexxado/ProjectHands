@@ -7,7 +7,7 @@ var gulp = require('gulp'),
 
 gulp.task('jshint', function () {
 
-    return gulp.src('./client/js/**/*.js')
+    return gulp.src(['./client/js/**/*.js', './server/js/**/*.js'])
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'));
 });
@@ -25,7 +25,7 @@ gulp.task('css-autoprefixer', function () {
 
 
 gulp.task('watch', ['browserSync', 'jshint', 'mocha'], function () {
-    gulp.watch('./client/js/**/*.js', ['jshint']);
+    gulp.watch(['./client/js/**/*.js', './server/js/**/*.js'], ['jshint']);
     gulp.watch(['./client/**/*.html', './client/js/**/*.js', './client/css/**/*.css'], browserSync.reload);
     gulp.watch('./server/**/*.js', ['mocha']);
 });

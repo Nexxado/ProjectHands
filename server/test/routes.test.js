@@ -1,7 +1,7 @@
 var request = require('supertest');
+var server = require('../app');
 
 describe('Loading Express', function () {
-    var server = require('../app');
 
     it('Responds to /', function (done) {
         request(server)
