@@ -1,22 +1,24 @@
 <div class="wrapper" ng-controller="DashboardController" layout="column">
 
-    <!--Top of page-->
-    <!--First Column-->
-    <dashboard-toolbar></dashboard-toolbar>
+	<!--Top of page-->
+	<!--First Column-->
+	<dashboard-toolbar></dashboard-toolbar>
 
-    <!--Left side of page-->
-    <!--Second Column-->
-    <div layout="row">
-        <!--First row-->
-        <!--Main part of Page - Content-->
-        <div class="dashboard-content">
-            <ui-view></ui-view>
-        </div>
-        
-        <!--Second row-->
-        <div layout="column">
-            <dashboard-sidenav></dashboard-sidenav>
-            <dashboard-sidenav-admin></dashboard-sidenav-admin>
-        </div>
-    </div>
+	<!--Left side of page-->
+	<!--Second Column-->
+	<div layout="row">
+		<!--First row-->
+		<!--Main part of Page - Content-->
+		<div class="dashboard-content-wrapper">
+			<div class="dashboard-content">
+				<ui-view></ui-view>
+			</div>
+		</div>
+
+		<!--Second row-->
+		<div layout="column">
+			<dashboard-sidenav></dashboard-sidenav>
+			<dashboard-sidenav-admin></dashboard-sidenav-admin>
+		</div>
+	</div>
 </div>
