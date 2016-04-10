@@ -2,14 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="44cfd42c-9a77-4d70-925c-a22efefb33da" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/assets/icons/ic_close_white_24px.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/assets/icons/ic_priority_high_black_24px.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/dialogs/create-task-dialog.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/npm-debug.log" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/client/assets/img/ic_add_black_24px.svg" afterPath="$PROJECT_DIR$/client/assets/icons/ic_add_black_24px.svg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/client/assets/img/ic_add_white_24px.svg" afterPath="$PROJECT_DIR$/client/assets/icons/ic_add_white_24px.svg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/client/assets/img/ic_send_black_24px.svg" afterPath="$PROJECT_DIR$/client/assets/icons/ic_send_black_24px.svg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/css/renovation_dashboard.css" afterPath="$PROJECT_DIR$/client/css/renovation_dashboard.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/js/controllers/renovationDashboardController.js" afterPath="$PROJECT_DIR$/client/js/controllers/renovationDashboardController.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/templates/renovation_dashboard.html" afterPath="$PROJECT_DIR$/client/templates/renovation_dashboard.html" />
@@ -36,16 +28,18 @@
       <file leaf-file-name="renovation_dashboard.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/templates/renovation_dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="45" column="38" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
+            <state relative-caret-position="115">
+              <caret line="191" column="29" selection-start-line="191" selection-start-column="29" selection-end-line="191" selection-end-column="29" />
               <folding>
                 <element signature="n#md-toolbar#0;n#div#0;n#!!top" expanded="false" />
-                <element signature="n#md-grid-tile#1;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
+                <element signature="n#div#0;n#md-grid-tile#0;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
+                <element signature="n#md-toolbar#0;n#div#0;n#md-grid-tile#0;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
+                <element signature="n#div#0;n#div#0;n#md-grid-tile#0;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
+                <element signature="n#div#0;n#md-grid-tile#1;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
                 <element signature="n#md-toolbar#0;n#div#0;n#md-grid-tile#1;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
+                <element signature="n#md-card#0;n#div#0;n#md-grid-tile#1;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
                 <element signature="n#md-grid-tile#2;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
-                <element signature="n#div#0;n#md-grid-tile#3;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
-                <element signature="n#md-toolbar#0;n#div#0;n#md-grid-tile#3;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
-                <element signature="n#md-content#0;n#div#0;n#md-card#0;n#div#0;n#md-grid-tile#3;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
+                <element signature="n#md-list-item#0;n#md-list#0;n#md-content#0;n#div#0;n#md-card#0;n#div#0;n#md-grid-tile#3;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#md-list-item#0;n#md-list#0;n#md-content#0;n#div#0;n#md-card#0;n#div#0;n#md-grid-tile#3;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#md-list-item#0;n#md-list#0;n#md-content#0;n#div#0;n#md-card#0;n#div#0;n#md-grid-tile#3;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#md-card#0;n#div#0;n#md-card#0;n#div#0;n#md-grid-tile#3;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="true" />
@@ -61,37 +55,16 @@
       <file leaf-file-name="renovationDashboardController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/js/controllers/renovationDashboardController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="187" column="11" selection-start-line="187" selection-start-column="11" selection-end-line="187" selection-end-column="11" />
+            <state relative-caret-position="136">
+              <caret line="79" column="26" selection-start-line="79" selection-start-column="26" selection-end-line="79" selection-end-column="26" />
               <folding>
                 <element signature="e#177#3535#0" expanded="false" />
-                <element signature="e#3564#5939#0" expanded="false" />
-                <element signature="e#4050#4496#0" expanded="false" />
-                <element signature="e#4523#4969#0" expanded="false" />
-                <element signature="e#4996#5442#0" expanded="false" />
-                <element signature="e#5469#5915#0" expanded="false" />
-                <element signature="e#5965#6197#0" expanded="false" />
-                <element signature="e#6567#6717#0" expanded="false" />
-                <marker date="1460262607968" expanded="false" signature="6223:6535" placeholder="[...]" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="create-task-dialog.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/templates/dialogs/create-task-dialog.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="19" column="84" selection-start-line="19" selection-start-column="84" selection-end-line="19" selection-end-column="84" />
-              <folding>
-                <element signature="n#div#0;n#md-toolbar#0;n#form#0;n#md-dialog#0;n#!!top" expanded="false" />
-                <element signature="n#style#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#md-content#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#md-content#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#md-input-container#0;n#div#0;n#div#0;n#md-content#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#md-content#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#md-datepicker#0;n#div#0;n#md-content#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#md-button#0;n#md-dialog-actions#0;n#form#0;n#md-dialog#0;n#!!top" expanded="true" />
+                <element signature="e#3564#4045#0" expanded="false" />
+                <element signature="e#4071#4303#0" expanded="false" />
+                <element signature="e#4673#4823#0" expanded="false" />
+                <element signature="e#4871#5456#0" expanded="false" />
+                <element signature="n#!!block;n#DialogController#0" expanded="false" />
+                <marker date="1460265240894" expanded="false" signature="4329:4641" placeholder="[...]" />
               </folding>
             </state>
           </provider>
@@ -100,8 +73,8 @@
       <file leaf-file-name="renovation_dashboard.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/css/renovation_dashboard.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="134" column="18" selection-start-line="134" selection-start-column="18" selection-end-line="134" selection-end-column="18" />
+            <state relative-caret-position="155">
+              <caret line="56" column="1" selection-start-line="56" selection-start-column="1" selection-end-line="56" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -123,10 +96,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/client/assets/img/ic_add_white_24px.svg" />
-        <option value="$PROJECT_DIR$/client/templates/renovation_dashboard.html" />
-        <option value="$PROJECT_DIR$/client/css/renovation_dashboard.css" />
-        <option value="$PROJECT_DIR$/client/js/controllers/renovationDashboardController.js" />
         <option value="$PROJECT_DIR$/client/templates/dialogs/create-task-dialog.html" />
+        <option value="$PROJECT_DIR$/client/css/renovation_dashboard.css" />
+        <option value="$PROJECT_DIR$/client/templates/renovation_dashboard.html" />
+        <option value="$PROJECT_DIR$/client/js/controllers/renovationDashboardController.js" />
       </list>
     </option>
   </component>
@@ -171,10 +144,10 @@
     </gulpfiles>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="92" />
-    <option name="y" value="79" />
-    <option name="width" value="1013" />
-    <option name="height" value="664" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -403,7 +376,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1460217114264</updated>
-      <workItem from="1460217115462" duration="35665000" />
+      <workItem from="1460217115462" duration="37897000" />
     </task>
     <task id="LOCAL-00001" summary="dashboard ui">
       <created>1460240393422</created>
@@ -416,22 +389,22 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35665000" />
+    <option name="totallyTimeSpent" value="37897000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="92" y="79" width="1013" height="664" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24219409" sideWeight="0.50980395" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34974357" sideWeight="0.70726496" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27306548" sideWeight="0.709854" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24219409" sideWeight="0.50980395" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.118644066" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10310966" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34974357" sideWeight="0.29273504" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27306548" sideWeight="0.290146" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -512,61 +485,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/js/controllers/renovationDashboardController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="187" column="11" selection-start-line="187" selection-start-column="11" selection-end-line="187" selection-end-column="11" />
-          <folding>
-            <element signature="e#177#3535#0" expanded="false" />
-            <element signature="e#3564#5939#0" expanded="false" />
-            <element signature="e#4050#4496#0" expanded="false" />
-            <element signature="e#4523#4969#0" expanded="false" />
-            <element signature="e#4996#5442#0" expanded="false" />
-            <element signature="e#5469#5915#0" expanded="false" />
-            <element signature="e#5965#6197#0" expanded="false" />
-            <element signature="e#6567#6717#0" expanded="false" />
-            <marker date="1460262607968" expanded="false" signature="6223:6535" placeholder="[...]" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/css/renovation_dashboard.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="134" column="18" selection-start-line="134" selection-start-column="18" selection-end-line="134" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/templates/dialogs/create-task-dialog.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="19" column="84" selection-start-line="19" selection-start-column="84" selection-end-line="19" selection-end-column="84" />
           <folding>
             <element signature="n#div#0;n#md-toolbar#0;n#form#0;n#md-dialog#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#md-content#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#md-content#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#md-input-container#0;n#div#0;n#div#0;n#md-content#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#md-content#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#md-datepicker#0;n#div#0;n#md-content#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#md-button#0;n#md-dialog-actions#0;n#form#0;n#md-dialog#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#md-content#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#md-content#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#md-input-container#0;n#div#0;n#div#0;n#md-content#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#md-content#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#md-datepicker#0;n#div#0;n#md-content#0;n#md-dialog-content#0;n#form#0;n#md-dialog#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#md-button#0;n#md-dialog-actions#0;n#form#0;n#md-dialog#0;n#!!top" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/js/controllers/renovationDashboardController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="79" column="26" selection-start-line="79" selection-start-column="26" selection-end-line="79" selection-end-column="26" />
+          <folding>
+            <element signature="e#177#3535#0" expanded="false" />
+            <element signature="e#3564#4045#0" expanded="false" />
+            <element signature="e#4071#4303#0" expanded="false" />
+            <element signature="e#4673#4823#0" expanded="false" />
+            <element signature="e#4871#5456#0" expanded="false" />
+            <element signature="n#!!block;n#DialogController#0" expanded="false" />
+            <marker date="1460265240894" expanded="false" signature="4329:4641" placeholder="[...]" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/css/renovation_dashboard.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="56" column="1" selection-start-line="56" selection-start-column="1" selection-end-line="56" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/templates/renovation_dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="45" column="38" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
+        <state relative-caret-position="115">
+          <caret line="191" column="29" selection-start-line="191" selection-start-column="29" selection-end-line="191" selection-end-column="29" />
           <folding>
             <element signature="n#md-toolbar#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#md-grid-tile#1;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#div#0;n#md-grid-tile#0;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#md-toolbar#0;n#div#0;n#md-grid-tile#0;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#div#0;n#div#0;n#md-grid-tile#0;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#div#0;n#md-grid-tile#1;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#md-toolbar#0;n#div#0;n#md-grid-tile#1;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#md-card#0;n#div#0;n#md-grid-tile#1;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#md-grid-tile#2;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#div#0;n#md-grid-tile#3;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#md-toolbar#0;n#div#0;n#md-grid-tile#3;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#md-content#0;n#div#0;n#md-card#0;n#div#0;n#md-grid-tile#3;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#md-list-item#0;n#md-list#0;n#md-content#0;n#div#0;n#md-card#0;n#div#0;n#md-grid-tile#3;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#div#0;n#div#0;n#md-list-item#0;n#md-list#0;n#md-content#0;n#div#0;n#md-card#0;n#div#0;n#md-grid-tile#3;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#md-list-item#0;n#md-list#0;n#md-content#0;n#div#0;n#md-card#0;n#div#0;n#md-grid-tile#3;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#md-card#0;n#div#0;n#md-card#0;n#div#0;n#md-grid-tile#3;n#md-grid-list#0;n#md-content#0;n#div#0;n#!!top" expanded="true" />

@@ -84,35 +84,7 @@ angular.module('ProjectHands')
                 role: 'manager',
                 imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
             }
-            ,
-            {
-                content: 'renovationDashboardController renovationDashboardController renovationDashboardController renovationDashboardController renovationDashboardController  ',
-                sender: 'ruby',
-                role: 'manager',
-                imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
-            }
-            ,
-            {
-                content: 'renovationDashboardController renovationDashboardController renovationDashboardController renovationDashboardController renovationDashboardController  ',
-                sender: 'ruby',
-                role: 'manager',
-                imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
-            }
-            ,
-            {
-                content: 'renovationDashboardController renovationDashboardController renovationDashboardController renovationDashboardController renovationDashboardController  ',
-                sender: 'ruby',
-                role: 'manager',
-                imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
-            }
-            ,
-            {
-                content: 'renovationDashboardController renovationDashboardController renovationDashboardController renovationDashboardController renovationDashboardController  ',
-                sender: 'ruby',
-                role: 'manager',
-                imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
-            }
-            ,
+           
         ];
 
         $scope.tasks = [

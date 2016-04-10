@@ -13,7 +13,7 @@
     </md-toolbar>
 
 
-    <md-content flex>
+    <md-content flex class="body">
 
 
         <md-grid-list md-cols-xs="1"
@@ -100,18 +100,28 @@
                     <md-card>
                         <md-content>
 
-                            <h3>Description</h3>
-                            <h5>{{inforamtion.description}}</h5>
+                            <div class="info_card">
 
-                            <h3>Address</h3>
-                            <h5>{{inforamtion.address}}</h5>
+                                <h4>Description</h4>
+                                <h5>{{inforamtion.description}}</h5>
+                            </div>
+                            <md-divider></md-divider>
+                            <div class="info_card">
+                                <h4>Address</h4>
+                                <h5>{{inforamtion.address}}</h5>
 
-                            <h3>Phone</h3>
-                            <h5>{{inforamtion.phone}}</h5>
-
-                            <h3>Date</h3>
-                            <h5>{{inforamtion.date}}</h5>
-
+                            </div>
+                            <md-divider></md-divider>
+                            <div class="info_card">
+                                <h4>Phone</h4>
+                                <h5>{{inforamtion.phone}}</h5>
+                            </div>
+                            <md-divider></md-divider>
+                            <div class="info_card">
+                                <h4>Date</h4>
+                                <h5>{{inforamtion.date}}</h5>
+                            </div>
+                            <md-divider></md-divider>
                         </md-content>
                     </md-card>
                 </div>
@@ -239,7 +249,6 @@
 
                 </div>
             </md-grid-tile>
-
 
 
             <md-grid-tile class="tools"

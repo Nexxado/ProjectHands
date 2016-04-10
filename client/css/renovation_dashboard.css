@@ -80,15 +80,24 @@
 
 }
 
-.renovationDashboardGridList .information {
+.info_card {
+padding: 8px;
+}
+
+.renovationDashboardGridList .information > md-card {
+    /*margin: 8px;*/
     background: #f5f5f5;
 }
 
 .renovationDashboardGridList md-card {
-    margin: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 0px;
 }
 
-.renovationDashboardGridList md-content {
+.body {
     background: #ECECEC;
 
 }
@@ -132,7 +141,8 @@
     background-color: rgb(117, 117, 117);
     position: absolute;
 }
-.md-toolbar-tools{
+
+.md-toolbar-tools {
     background-color: rgb(117, 117, 117);
 }
 
