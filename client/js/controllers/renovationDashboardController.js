@@ -83,9 +83,60 @@ angular.module('ProjectHands')
                 sender: 'ruby',
                 role: 'manager',
                 imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
+            },
+            {
+                content: 'renovationDashboardControllerrenovationDashboardController renovationDashboardController renovationDashboardController renovationDashboardController  ',
+                sender: 'ruby',
+                role: 'manager',
+                imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
+            },
+            {
+                content: 'renovationDashboardControllerrenovationDashboardController renovationDashboardController renovationDashboardController renovationDashboardController  ',
+                sender: 'ruby',
+                role: 'manager',
+                imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
+            },
+            {
+                content: 'renovationDashboardControllerrenovationDashboardController renovationDashboardController renovationDashboardController renovationDashboardController  ',
+                sender: 'ruby',
+                role: 'manager',
+                imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
+            },
+            {
+                content: 'renovationDashboardControllerrenovationDashboardController renovationDashboardController renovationDashboardController renovationDashboardController  ',
+                sender: 'ruby',
+                role: 'manager',
+                imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
+            },
+            {
+                content: 'renovationDashboardControllerrenovationDashboardController renovationDashboardController renovationDashboardController renovationDashboardController  ',
+                sender: 'ruby',
+                role: 'manager',
+                imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
             }
-           
         ];
+
+
+        var message = {
+            content: 'c',
+            sender: 'ruby',
+            role: 'manager',
+            imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
+        };
+        $scope.send = function () {
+            
+            var message = {
+                content: $scope.message.content,
+                sender: 'ruby',
+                role: 'manager',
+                imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
+            };
+            //$scope.message.content = 'ssss';
+
+            // message.content = $scope.message.content ;
+            $scope.messages.push(message);
+
+        };
 
         $scope.tasks = [
             {
