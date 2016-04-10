@@ -3,19 +3,22 @@ var mongoUtils = require('../mongoUtils');
 
 
 function writeToClient(response, data, isObject) {
-    var value = "";
+    
+    console.log('writetoclient data', data);
+    console.log('writetoclient isObject', isObject);
+    
     if (data !== null) {
         if (isObject) {
-            value = JSON.stringify(data);
+            response.json(data);
+            return;
         } else {
-            value = data;
+            response.send(data);
+            return;
         }
 
     } else {
-        value = "DB Error";
+        response.send("DB Error");
     }
-    response.write(value);
-    response.end();
 
 }
 router.post("/insert", function (request, response) {
@@ -93,6 +96,7 @@ router.get("/query/:collection&:query", function (request, response) {
         var colName = request.params.collection;
         var query = JSON.parse(request.params.query);
         mongoUtils.query(colName, query, function (result) {
+            console.log('query callback result', result);
             writeToClient(response, result, true);
 
         });
