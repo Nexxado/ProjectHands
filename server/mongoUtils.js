@@ -1,15 +1,17 @@
 var MongoClient = require('mongodb').MongoClient;
 var _db;
 
+var debug = require('debug')('mongoUtils');
+
 
 module.exports = {
     connect: function (url) {
         MongoClient.connect(url, function (err, db) {
             if (err) {
-                console.log("Error connecting to Mongo: ", err);
+                debug("Error connecting to Mongo: ", err);
                 return;
             }
-            console.log("connected to Mongo");
+            debug("connected to Mongo");
             _db = db;
         });
     },
@@ -37,13 +39,13 @@ module.exports = {
         {
             if(error)
             {
-                // console.log(error);
+                // debug(error);
                 callback(null);
 
             }
             else
             {
-                console.log('Inserted %d document into the %s collection. The document inserted is ', result.insertedCount,collectionName , result);
+                debug('Inserted %d document into the %s collection. The document inserted is ', result.insertedCount,collectionName , result);
                 callback(result);
             }
 
@@ -63,16 +65,16 @@ module.exports = {
         _db.collection(collectionName).update(query, updatedData, options, function (error, result) {
             if (error)
             {
-                console.log(error);
+                debug(error);
                 callback(null);
                 return;
             }
             else if (result)
             {
-                console.log('Updated Successfully %d document(s).', result.result.n );
+                debug('Updated Successfully %d document(s).', result.result.n );
             } else
             {
-                console.log('No document found with defined "find" criteria!');
+                debug('No document found with defined "find" criteria!');
 
             }
             callback(result);
@@ -92,13 +94,13 @@ module.exports = {
         {
             if(error)
             {
-                console.log(error);
+                debug(error);
                 callback(null);
 
             }
             else
             {
-                console.log("Removed  %d doc(s)",result.result.n);
+                debug("Removed  %d doc(s)",result.result.n);
                 callback(result);
             }
 
@@ -119,12 +121,12 @@ module.exports = {
         {
             if(error)
             {
-                console.log(error);
+                debug(error);
                 callback(null);
             }
             else
             {
-                console.log("The result is : ",result);
+                debug("The result is : ",result);
                 callback(result);
             }
         });

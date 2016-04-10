@@ -1,11 +1,12 @@
 var router = require('express').Router();
 var mongoUtils = require('../mongoUtils');
+var debug = require('debug')('routes/database');
 
 
 function writeToClient(response, data, isObject) {
     
-    console.log('writetoclient data', data);
-    console.log('writetoclient isObject', isObject);
+    debug('writetoclient data', data);
+    debug('writetoclient isObject', isObject);
     
     if (data !== null) {
         if (isObject) {
@@ -23,8 +24,8 @@ function writeToClient(response, data, isObject) {
 }
 router.post("/insert", function (request, response) {
 
-    console.log('insert col', request.body.collection);
-    console.log('insert data', request.body.data);
+    debug('insert col', request.body.collection);
+    debug('insert data', request.body.data);
 
     try {
         var colName = request.body.collection;
@@ -34,7 +35,7 @@ router.post("/insert", function (request, response) {
         });
     } catch (error) {
         writeToClient(response, "Request Error", false);
-        console.log("The error is : ", error);
+        debug("The error is : ", error);
     }
 
 });
@@ -45,8 +46,8 @@ router.post("/insert", function (request, response) {
 router.delete("/delete/:collection&:query", function (request, response) {
 
     try {
-        console.log('delete col', request.params.collection);
-        console.log('delete data', request.params.query);
+        debug('delete col', request.params.collection);
+        debug('delete data', request.params.query);
 
         var colName = request.params.collection;
         var query = JSON.parse(request.params.query);
@@ -55,7 +56,7 @@ router.delete("/delete/:collection&:query", function (request, response) {
         });
     } catch (error) {
         writeToClient(response, "Request Error", false);
-        console.log("The error is : ", error);
+        debug("The error is : ", error);
     }
 
 
@@ -63,10 +64,10 @@ router.delete("/delete/:collection&:query", function (request, response) {
 
 
 router.post("/update", function (request, response) {
-    console.log(request.body.collection);
-    console.log(request.body.query);
-    console.log(request.body.data);
-    console.log(request.body.options);
+    debug(request.body.collection);
+    debug(request.body.query);
+    debug(request.body.data);
+    debug(request.body.options);
 
     try {
         var colName = request.body.collection;
@@ -79,7 +80,7 @@ router.post("/update", function (request, response) {
         });
     } catch (error) {
         writeToClient(response, "Request Error", false);
-        console.log("The error is : ", error);
+        debug("The error is : ", error);
     }
 
 
@@ -90,20 +91,20 @@ router.post("/update", function (request, response) {
 router.get("/query/:collection&:query", function (request, response) {
 
     try {
-        console.log('query col', request.params.collection);
-        console.log('query query', request.params.query);
+        debug('query col', request.params.collection);
+        debug('query query', request.params.query);
 
         var colName = request.params.collection;
         var query = JSON.parse(request.params.query);
         mongoUtils.query(colName, query, function (result) {
-            console.log('query callback result', result);
+            debug('query callback result', result);
             writeToClient(response, result, true);
 
         });
 
     } catch (error) {
         writeToClient(response, "Request Error", false);
-        console.log("The error is : ", error);
+        debug("The error is : ", error);
     }
 
 });

@@ -3,6 +3,7 @@ var io = require('socket.io')({
 });
 var config = require('../config.json');
 var mongoUtils = require('./mongoUtils');
+var debug = require('debug')('server/socketio');
  
 
 io.on("connection", function (socket) {
@@ -12,9 +13,9 @@ io.on("connection", function (socket) {
     socket.join(defaultRoom); 
     socket.leave(socket.id); //Leave socket.io default room
 
-    console.log("A user connected");
+    debug("A user connected");
     socket.on('disconnect', function () {
-        console.log('user disconnected');
+        debug('user disconnected');
     });
 
 
@@ -32,7 +33,7 @@ io.on("connection", function (socket) {
                          {$push: {"messages": message}}, 
                          {upsert: true}, 
                          function(result) {
-                            console.log('update chat', JSON.stringify(result));
+                            debug('update chat', JSON.stringify(result));
         });
         
     });
