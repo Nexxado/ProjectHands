@@ -26,7 +26,7 @@ angular.module('ProjectHands')
         }
      
         function query(collection, data) {
-            return $resource(baseUrl + '/query/:collection&:query').query({collection: collection, query: JSON.stringify(data)});
+            return $resource(baseUrl + '/query/:collection&:query').get({collection: collection, query: JSON.stringify(data)});
         }
 
         return {
