@@ -1,0 +1,78 @@
+<md-dialog aria-label="Create Task">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Create Task</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="assets/icons/ic_close_white_24px.svg"
+                             aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="width: 400px">
+
+            <md-content style="padding: 16px">
+                <div layout="column"
+                     layout-fill>
+
+                    <div style="padding-left: 16px;padding-right: 16px;" layout-fill>
+                        <md-input-container style="margin-bottom: 0px;width: inherit">
+                            <label>Description</label>
+
+                            <textarea ng-model="task.description" rows="5" md-select-on-focus></textarea>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="row"
+                         layout-fill>
+                        <div>
+                            <md-menu md-offset="0 -7">
+
+                                <md-button
+                                        aria-label="Open demo menu"
+                                        class="md-icon-button"
+                                        ng-click="$mdOpenMenu($event)">
+
+                                    <md-icon md-menu-origin
+                                             md-svg-icon="assets/icons/ic_priority_high_black_24px.svg"></md-icon>
+
+                                </md-button>
+
+                                <md-menu-content width="2">
+                                    <md-menu-item>
+                                        <md-button ng-click="announceClick('Low')">
+                                            <span md-menu-align-target>Low</span></md-button>
+                                    </md-menu-item>
+
+                                    <md-menu-item>
+                                        <md-button ng-click="announceClick('Medium')">
+                                            <span md-menu-align-target>Medium</span></md-button>
+                                    </md-menu-item>
+
+                                    <md-menu-item>
+                                        <md-button ng-click="announceClick('High')">
+                                            <span md-menu-align-target>High</span></md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+
+                        </div>
+                        <div style="padding-left: 24px">
+                            <h4>Priority {{ task.priority }}</h4>
+                        </div>
+                    </div>
+                    <md-datepicker ng-model="myDate" style="padding-right: 0px;margin-right: 0px"
+                                   md-placeholder="Enter date"></md-datepicker>
+
+                </div>
+            </md-content>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="answer('useful')" style="margin-right:20px;">
+                Create
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
