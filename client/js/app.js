@@ -4,4 +4,12 @@ angular.module('ProjectHands', ['ngResource','ngAria', 'ngAnimate', 'ngMessages'
     $mdThemingProvider.theme('default')
         .primaryPalette('blue')
         .accentPalette('orange');
+})
+
+.constant('COLLECTIONS', {
+    
+    RENOVATIONS: 'renovations',
+    CHATS: 'chats',
+    USERS: 'users',
+    TEAMS: 'teams'
 });

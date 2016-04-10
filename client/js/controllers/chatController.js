@@ -1,6 +1,6 @@
 angular.module('ProjectHands')
 
-    .controller('ChatController', function ($scope, socketio, APIService) {
+    .controller('ChatController', function ($scope, socketio, DatabaseService, COLLECTIONS) {
 
         //Message Classes
         var class_message_self = 'chat-message-self';
@@ -42,6 +42,8 @@ angular.module('ProjectHands')
                 $scope.room = 'general';
 
             getChatHistory();
+            
+            DatabaseService.update(COLLECTIONS.USERS, {user: "test"}, {user: "test2"}, {});
         };
 
         $scope.sendMessage = function () {
@@ -95,8 +97,9 @@ angular.module('ProjectHands')
         //Get chat history
         function getChatHistory() {
 
-            APIService.chat.query($scope.room).$promise
+            DatabaseService.query(COLLECTIONS.CHATS, {_id: $scope.room}).$promise
                 .then(function (data) {
+                console.log('data', data);
                     if (data.length > 0)
                         $scope.history = data[0].messages;
 

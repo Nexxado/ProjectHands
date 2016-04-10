@@ -1,4 +1,5 @@
 var io = require('socket.io')();
+var config = require('../config.json');
 var mongoUtils = require('./mongoUtils');
 
 io.on("connection", function (socket) {
@@ -23,11 +24,14 @@ io.on("connection", function (socket) {
         }
 
         //Saving message to chat history
-        mongoUtils.chats().update(
-            {"_id": room},
-            {$push: {"messages": message}},
-            {upsert: true}
-        );
+        mongoUtils.update(config.collections.chats,
+                         {"_id": room}, 
+                         {$push: {"messages": message}}, 
+                         {upsert: true}, 
+                         function(result) {
+                            console.log('update chat', JSON.stringify(result));
+        });
+        
     });
 
     socket.on('room.join', function(room) {
