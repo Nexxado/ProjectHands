@@ -30,7 +30,8 @@ angular.module('ProjectHands')
     
     .state('dashboard.main-page', {
         url: '/main-page',
-        templateUrl: 'templates/dashboard/main-page.html'
+        templateUrl: 'templates/dashboard/main-page.html',
+        controller: 'DashboardMainPageController'
     })
     
     .state('dashboard.tasks', {
