@@ -1,4 +1,6 @@
-var io = require('socket.io')();
+var io = require('socket.io')({
+    transports: ['websocket','xhr-polling']
+});
 var config = require('../config.json');
 var mongoUtils = require('./mongoUtils');
  
