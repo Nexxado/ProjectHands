@@ -4,7 +4,7 @@ var mongoUtils = require('../mongoUtils');
 
 function writeToClient(response, data, isObject) {
     var value = "";
-    if (data === null) {
+    if (data !== null) {
         if (isObject) {
             value = JSON.stringify(data);
         } else {

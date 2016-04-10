@@ -43,7 +43,6 @@ angular.module('ProjectHands')
 
             getChatHistory();
             
-            DatabaseService.update(COLLECTIONS.USERS, {user: "test"}, {user: "test2"}, {});
         };
 
         $scope.sendMessage = function () {
