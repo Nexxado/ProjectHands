@@ -1,10 +1,10 @@
 angular.module('ProjectHands')
 
-.directive('renovation', function() {
+.directive('renovation-members', function() {
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/directives/renovation.html',
+        templateUrl: 'templates/directives/renovation-dashboard/renovation-members.html',
         controller: function($scope) {
             $scope.members = [
                 {
