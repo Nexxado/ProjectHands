@@ -1,0 +1,129 @@
+/**
+*height of grid item header and footer is 48 px
+*/
+:root {
+    --grid-header-height: 0px;
+}
+
+.tasks_list_content {
+    height: inherit;
+}
+
+.message_box {
+    background: #f5f5f5;
+    /*border: 1px solid;*/
+    border-radius: 2px;
+    margin: 16px;
+    width: inherit;
+}
+
+.message_box p {
+    background: #f5f5f5;
+    /*border: 1px solid;*/
+    border-radius: 2px;
+    margin: 16px;
+    width: inherit;
+    line-break: normal;
+}
+
+.grid_item {
+    height: inherit;
+}
+
+.member_list_content {
+    height: inherit;
+    background: #f5f5f5;
+}
+
+.chat_input {
+    width: inherit;
+}
+
+.messages {
+    height: inherit;
+    padding-bottom: 120px;
+
+}
+
+.renovationDashboardGridList md-toolbar {
+    /*background-color: rgb(117, 117, 117);*/
+}
+
+.renovationDashboardGridList md-list {
+    padding: 0px;
+    /*margin: 0px;*/
+    background: #f5f5f5;
+}
+
+.renovationDashboardGridList md-list-item {
+    background: #FFFFFF;
+
+}
+
+.renovationDashboardGridList md-grid-list {
+    margin: 32px;
+
+}
+
+.info_card {
+    padding: 8px;
+}
+
+.renovationDashboardGridList .information > md-card {
+    /*margin: 8px;*/
+    background: #f5f5f5;
+}
+
+.renovationDashboardGridList md-card {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 0px;
+}
+
+.body {
+    background: #ECECEC;
+    height: inherit;
+}
+
+.renovationDashboardGridList p {
+    /*margin: 0px;*/
+    /*line-height: normal;*/
+
+}
+
+.renovationDashboardGridList h4 {
+    margin: 0px;
+    line-height: normal;
+
+}
+
+.renovationDashboardGridList .yellow {
+    background: #ffff8d;
+}
+
+.renovationDashboardGridList .blue {
+    background: #84ffff;
+}
+
+.renovationDashboardGridList md-input-container {
+    margin: 0px;
+    padding: 0px;
+}
+
+.renovationDashboardGridList md-grid-tile {
+    transition: all 400ms ease-out 50ms;
+    /*background: #f5f5f5;*/
+    margin: 16px;
+}
+
+.toolbar {
+    /*background-color: rgb(117, 117, 117);*/
+    position: absolute;
+}
+
+.md-toolbar-tools {
+    /*background-color: rgb(117, 117, 117);*/
+}
+
