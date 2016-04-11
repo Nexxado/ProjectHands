@@ -115,10 +115,13 @@ angular.module('ProjectHands')
     }
     
     $scope.showUsername = function(message, index)  {
+        if(message.user === $scope.login.user)
+            return false;
+        
         if(index === 0)
             return true;
         
-        return (message.user !== $scope.login.user) && (message.user !== $scope.history[index-1].user);
+        return (message.user !== $scope.history[index-1].user);
     };
 
     //Regex for hebrew unicode chars

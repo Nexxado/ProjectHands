@@ -52,3 +52,9 @@ md-list-item.chat-message-wrapper {
 .chat-user-divider {
     margin: 0;
 }
+
+.chat-input-wrapper {
+    position: relative; 
+    bottom: 0; 
+    margin-top: 10px;
+}

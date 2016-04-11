@@ -1,8 +1,7 @@
 <md-content layout-padding>
 
     <div layout="column" layout-align="center center" ng-show="!isLoggedIn">
-        <form name="ChatLoginForm" ng-submit="chatLogin()" flex novalidate class="md-whiteframe-5dp"
-              style="padding: 20px;">
+        <form name="ChatLoginForm" ng-submit="chatLogin()" flex novalidate class="md-whiteframe-5dp" style="padding: 20px;">
             <md-input-container class="md-block">
                 <label>Username</label>
                 <input name="username" type="text" ng-model="login.user" required/>
@@ -14,14 +13,14 @@
             </md-input-container>
             <md-input-container class="md-block">
                 <label>Password</label>
-                <input name="password" type="password" ng-model="login.password"/>
+                <input name="password" type="password" ng-model="login.password" />
             </md-input-container>
             <md-input-container class="md-block">
                 <label>Chat Room</label>
-                <input name="room" type="text" ng-model="room"/>
+                <input name="room" type="text" ng-model="room" />
             </md-input-container>
             <div layout="column" layout-align="center center">
-                <md-button type="submit" layout-align="end center" class="md-accent md-raised" style="color: white;">
+                <md-button type="submit" layout-align="end center" class="md-accent md-raised white">
                     Login
                 </md-button>
             </div>
@@ -42,27 +41,26 @@
             </md-list-item>
         </md-list>
         <md-divider class="chat-divider"></md-divider>
-        <div layout="row" flex="100" style="position: relative; bottom: 0; width: 100%">
-            <form name="ChatMessageForm" ng-submit="sendMessage()" flex novalidate>
-                <md-input-container flex="100" style="width: 80%;">
-                    <label>Write a message...</label>
-                    <input name="message" type="text" ng-model="message.content" required/>
-                    <div ng-messages="ChatMessageForm.message.$error">
-                        <div ng-message="required">
-                            This is required
+        <div class="chat-input-wrapper">
+            <form name="ChatMessageForm" ng-submit="sendMessage()" novalidate layout="row" layout-align="center center" layout-padding>
+                <div layout="row" flex>
+                    <md-input-container flex class="md-icon-float md-block">
+                        <label>Write a message...</label>
+                        <input name="message" type="text" ng-model="message.content" required />
+                        <div ng-messages="ChatMessageForm.message.$error">
+                            <div ng-message="required">
+                                This is required
+                            </div>
                         </div>
-                    </div>
-                </md-input-container>
-                <md-button type="submit" layout-align="end center" class="md-accent">Send</md-button>
+                    </md-input-container>
+                </div>
+                <div>
+                    <md-button type="submit" class="md-accent">
+                        <md-icon class="material-icons">send</md-icon>
+                    </md-button>
+                </div>
             </form>
         </div>
     </div>
 
 </md-content>
-<!--
-<md-toolbar class="md-medium-tall" style="position: relative; bottom: 0;">
-    <div layout="row" layout-align="center center" flex>
-        <span>FOOTER</span>
-    </div>
-</md-toolbar>
--->

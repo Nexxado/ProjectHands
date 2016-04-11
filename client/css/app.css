@@ -1,5 +1,12 @@
-@media (max-width: 768px) {
-    [class*="col-"] {
-        margin: 15px 0;
-    }
+md-input-container.rtl label {
+    right: 0;
+    left: auto;
+}
+
+md-input-container.rtl {
+    direction: rtl;
+}
+
+.white {
+    color: white !important;
 }
