@@ -46,7 +46,8 @@ angular.module('ProjectHands')
     
     .state('dashboard.toolbox', {
         url: '/toolbox',
-        templateUrl: 'templates/dashboard/toolbox.html'
+        templateUrl: 'templates/dashboard/toolbox.html',
+		controller: 'DashboardToolboxController'
     })
     
     .state('dashboard.team', {
@@ -58,6 +59,12 @@ angular.module('ProjectHands')
         url: '/calendar',
         templateUrl: 'templates/dashboard/calendar.html'
     })
+	
+	.state('dashboard.userProfile', {
+		url: '/userProfile',
+		templateUrl: 'templates/dashboard/userProfile.html',
+		controller: 'DashboardUserProfileController'
+	})
     
         .state('dashboard.statistics', {
         url: '/statistics',

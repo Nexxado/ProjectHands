@@ -10,7 +10,7 @@
 	background-color: #2196F3;
 	min-height: 100%;
 }
-.wrapper {
+.dashboard-wrapper {
     height: 100%;
 }
 .sidenav-btn {
@@ -49,4 +49,34 @@ md-menu-item > .md-button{
 
 .dashboard-layout{
 	height: 100%;
+}
+
+.profile-pic{
+	width: 25%;
+	height: 25%;
+}
+.profile-info{
+	text-align: center;
+	font-family: "Times New Roman", Times, serif;
+	font-size: 20px;
+	width: 50%;
+	height: 190%;
+}
+
+.profile-card-content{
+	width: 95%;
+	height: 100%;
+}
+.profile-actions{
+	width: 5%;
+	height: 100%;
+}
+.profile-title{
+	text-align: center;
+	font-family: "Times New Roman", Times, serif;
+}
+.toolbox-list-item{
+	border-style: solid;
+	border-color: aliceblue;
+	border-width: 1px;
 }
