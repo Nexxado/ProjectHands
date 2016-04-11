@@ -1,10 +1,10 @@
 angular.module('ProjectHands')
 
-.directive('dashboardSidenavAdmin', function() {
+.directive('dashboardSidenav', function() {
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/directives/dashboard-sidenav-admin.html',
+        templateUrl: 'templates/directives/dashboard/dashboard-sidenav.html',
         controller: function($scope) {
             
         }

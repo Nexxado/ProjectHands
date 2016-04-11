@@ -4,7 +4,7 @@ angular.module('ProjectHands')
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/directives/dashboard-toolbar.html',
+        templateUrl: 'templates/directives/dashboard/dashboard-toolbar.html',
         controller: function($scope) {
             
         }
