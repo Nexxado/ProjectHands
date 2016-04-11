@@ -2,31 +2,38 @@
 <html lang="en" ng-app="ProjectHands">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Project 'Hands'</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Project 'Hands'</title>
 
-    <!-- Vendor -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="/vendor/angular-material/angular-material.css" rel="stylesheet">
-    <link href="/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> <!-- Remove once AngularMaterial Website is up -->
+	<!-- Vendor -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="/vendor/angular-material/angular-material.css" rel="stylesheet">
+	<link href="/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Remove once AngularMaterial Website is up -->
+	<link href="/vendor/angular-gridster/dist/angular-gridster.min.css" rel="stylesheet">
+	<link href="vendor/fullcalendar/dist/fullcalendar.css" rel="stylesheet">
 
     <!-- App -->
     <link href="css/app.css" rel="stylesheet" />
     <link href="css/toolbar.css" rel="stylesheet" />
     <link href="css/home.css" rel="stylesheet" />
     <link href="css/chat.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
 
 
 </head>
 
 <body>
-    <toolbar></toolbar>
-    <!-- Main Content -->
-    <div ui-view></div>
+	<toolbar></toolbar>
+	<!-- Main Content -->
+	<div ui-view style="height:100%;"></div>
 
 </body>
+
+
+
 
 <!-- Vendor (3rd party libraries) -->
 <script src="/vendor/jquery/dist/jquery.js"></script>
@@ -37,11 +44,21 @@
 <script src="/vendor/angular-resource/angular-resource.min.js"></script>
 <script src="/vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="/vendor/ui-router-extras/release/ct-ui-router-extras.min.js"></script>
-<script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script> <!-- Remove once AngularMaterial Website is up -->
-<script src="/vendor/angular-ui-bootstrap/dist/ui-bootstrap.js"></script> <!-- Remove once AngularMaterial Website is up -->
-<script src="/vendor/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script> <!-- Remove once AngularMaterial Website is up -->
+<script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Remove once AngularMaterial Website is up -->
+<script src="/vendor/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
+<!-- Remove once AngularMaterial Website is up -->
+<script src="/vendor/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+<!-- Remove once AngularMaterial Website is up -->
 <script src="/vendor/angular-material/angular-material.js"></script>
 <script src="/socket.io/socket.io.js"></script>
+<script src="/vendor/javascript-detect-element-resize/jquery.resize.js"></script>
+<script src="/vendor/angular-gridster/dist/angular-gridster.min.js"></script>
+<script src="vendor/moment/min/moment.min.js"></script>
+<script src="vendor/angular-ui-calendar/src/calendar.js"></script>
+<script src="vendor/fullcalendar/dist/fullcalendar.min.js"></script>
+<script src="vendor/fullcalendar/dist/gcal.js"></script>
+
 
 <!-- App -->
 <script src="js/app.js"></script>
@@ -51,11 +68,18 @@
 <script src="js/controllers/homeController.js"></script>
 <script src="js/controllers/aboutController.js"></script>
 <script src="js/controllers/chatController.js"></script>
+<script src="js/controllers/dashboard/dashboardController.js"></script>
+<script src="js/controllers/dashboard/dashboardMainPageController.js"></script>
+<script src="js/controllers/dashboard/dashboardUserProfileController.js"></script>
+<script src="js/controllers/dashboard/dashboardToolboxController.js"></script>
 
 
 <!-- Directives -->
 <script src="js/directives/toolbar.js"></script>
 <script src="js/directives/custom-footer.js"></script>
+<script src="js/directives/dashboard/dashboard-toolbar.js"></script>
+<script src="js/directives/dashboard/dashboard-sidenav.js"></script>
+<script src="js/directives/dashboard/dashboard-sidenav-admin.js"></script>
 
 <!-- Services -->
 <script src="js/services/socketio.js"></script>
