@@ -3,6 +3,7 @@
 var app = require('../server/app');
 var mongoUtil = require('../server/mongoUtils');
 var config = require('../config.json');
+var debug = require('debug')('bin/www');
 
 var DB_URL = process.env.MONGODB_URL || config.mongoDBUrl;
 var port = process.env.PORT || 8080;
@@ -13,5 +14,5 @@ var server = require('http').createServer(app);
 app.io.attach(server);
 
 server.listen(port, function () {
-    console.log('Listening on port ' + port + '\n');
+    debug('Listening on port ' + port + '\n');
 });

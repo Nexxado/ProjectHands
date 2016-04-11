@@ -5,9 +5,10 @@
   "main": "bin/www",
   "scripts": {
     "start": "node bin/www",
+    "test": "karma start --singleRun && mocha server/test",
     "debug": "set DEBUG=*,-express*,-socket.io*,-engine*,-send*,-body-parser* && node bin/www",
-    "azure-log": "azure site log tail project-hands",
-    "test": "karma start --singleRun && mocha server/test"
+    "nodemon": "set DEBUG=*,-express*,-socket.io*,-engine*,-send*,-body-parser*,-nodemon* && nodemon ./bin/www -w ./server -i ./server/test",
+    "azure-log": "azure site log tail project-hands"
   },
   "repository": {
     "type": "git",
