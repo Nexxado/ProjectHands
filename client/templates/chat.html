@@ -30,15 +30,15 @@
 
     <div layout="column" ng-show="isLoggedIn">
         <h1>Room: {{ room | capitalize }}</h1>
-        <md-list>
+        <md-list class="chat-message-list">
             <md-list-item dir="{{ message.dir }}" ng-repeat="message in history" class="chat-message-wrapper">
                 <div class="md-list-item-text chat-message-text {{ message.dir }}" ng-class="message.class" layout="column">
                     <div flex><span class="chat-timestamp">{{ message.timestamp }}</span><span class="chat-message-user">{{ message.user }}: </span><span class="chat-message-content">{{ message.content }}</span></div>
                 </div>
             </md-list-item>
         </md-list>
-
-        <div layout="row" flex="100" style="position: fixed; bottom: 88px; width: 100%">
+        <md-divider class="chat-divider"></md-divider>
+        <div layout="row" flex="100" style="position: relative; bottom: 0; width: 100%">
             <form name="ChatMessageForm" ng-submit="sendMessage()" flex novalidate>
                 <md-input-container flex="100" style="width: 80%;">
                     <label>Write a message...</label>
@@ -55,8 +55,10 @@
     </div>
 
 </md-content>
-<md-toolbar class="md-medium-tall" style="position: fixed; bottom: 0;">
+<!--
+<md-toolbar class="md-medium-tall" style="position: relative; bottom: 0;">
     <div layout="row" layout-align="center center" flex>
         <span>FOOTER</span>
     </div>
 </md-toolbar>
+-->

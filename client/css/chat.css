@@ -1,3 +1,8 @@
+.chat-message-list {
+    overflow: auto;
+    height: 450px;
+}
+
 .chat-message-wrapper {
     min-height: 35px;
 
@@ -50,3 +55,6 @@
     background: rgba(33, 150, 243, 0.5);
 }
 
+.chat-divider {
+    margin-top: 10px;
+}
