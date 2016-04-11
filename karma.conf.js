@@ -15,11 +15,18 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'node_modules/jquery/dist/jquery.js',
       'node_modules/angular/angular.js',
       'node_modules/angular-*/angular-*.js',
       'node_modules/angular-ui-router/release/angular-ui-router.min.js',
       'node_modules/ui-router-extras/release/ct-ui-router-extras.min.js',
+      'node_modules/angular-ui-calendar/src/calendar.js',
       'node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
+      'node_modules/angular-gridster/dist/angular-gridster.min.js',
+      'node_modules/javascript-detect-element-resize/jquery.resize.js',
+      'node_modules/moment/min/moment.min.js',
+      'node_modules/fullcalendar/dist/fullcalendar.min.js',
+      'node_modules/fullcalendar/dist/gcal.js',
       'client/js/**/*.js',
       'client/test/*.test.js'
     ],
