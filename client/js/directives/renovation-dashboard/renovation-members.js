@@ -1,6 +1,6 @@
 angular.module('ProjectHands')
 
-.directive('renovation-members', function() {
+.directive('renovationMembers', function() {
     return {
         restrict: 'E',
         replace: true,
@@ -82,3 +82,4 @@ angular.module('ProjectHands')
         }
     };
 });
+ 

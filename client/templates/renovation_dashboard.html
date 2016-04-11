@@ -1,6 +1,7 @@
 <div ng-cloak=""
      class="renovationDashboardGridList"
-     layout="column">
+     layout="column"
+     style="height: inherit;width: inherit">
 
     <md-toolbar md-scroll ng-if="true">
         <div class="md-toolbar-tools">
@@ -12,11 +13,10 @@
 
     <md-content flex class="body">
 
-
         <md-grid-list md-cols-xs="1"
                       md-cols-sm="2"
                       md-cols-md="3"
-                      md-cols-gt-md="4"
+                      md-cols-gt-md="7"
                       md-row-height-gt-md="1:1"
                       md-row-height="2:2"
                       md-gutter="32px"
@@ -76,40 +76,41 @@
                           md-colspan-sm="1"
                           md-colspan-xs="1">
 
+                <renovation-members>
+                </renovation-members>
+                <!--<div class="grid_item"-->
+                <!--layout="column"-->
+                <!--layout-fill>-->
 
-                <div class="grid_item"
-                     layout="column"
-                     layout-fill>
+                <!--<md-toolbar md-scroll ng-if="true">-->
+                <!--<div class="md-toolbar-tools">-->
+                <!--<h3>-->
+                <!--<span>Team Members</span>-->
+                <!--</h3>-->
+                <!--</div>-->
+                <!--</md-toolbar>-->
 
-                    <md-toolbar md-scroll ng-if="true">
-                        <div class="md-toolbar-tools">
-                            <h3>
-                                <span>Team Members</span>
-                            </h3>
-                        </div>
-                    </md-toolbar>
+                <!--<md-card>-->
+                <!--<md-content style="height: inherit;">-->
 
-                    <md-card>
-                        <md-content style="height: inherit;">
+                <!--<md-list>-->
+                <!--<md-list-item class="md-2-line"-->
+                <!--ng-repeat="member in members"-->
+                <!--ng-click="fun()">-->
+                <!--<img ng-src="{{member.imageUrl}}"-->
+                <!--class="md-avatar"-->
+                <!--alt="{{member.name}}"/>-->
+                <!--<div class="md-list-item-text">-->
+                <!--<h3>{{ member.name }}</h3>-->
+                <!--<p>{{ member.role }}</p>-->
+                <!--</div>-->
+                <!--<md-divider></md-divider>-->
+                <!--</md-list-item>-->
+                <!--</md-list>-->
+                <!--</md-content>-->
+                <!--</md-card>-->
 
-                            <md-list>
-                                <md-list-item class="md-2-line"
-                                              ng-repeat="member in members"
-                                              ng-click="fun()">
-                                    <img ng-src="{{member.imageUrl}}"
-                                         class="md-avatar"
-                                         alt="{{member.name}}"/>
-                                    <div class="md-list-item-text">
-                                        <h3>{{ member.name }}</h3>
-                                        <p>{{ member.role }}</p>
-                                    </div>
-                                    <md-divider></md-divider>
-                                </md-list-item>
-                            </md-list>
-                        </md-content>
-                    </md-card>
-
-                </div>
+                <!--</div>-->
 
             </md-grid-tile>
 
@@ -136,20 +137,20 @@
                         <md-content style="height: inherit;">
                             <md-list>
                                 <md-list-item style="width: inherit"
-                                        ng-repeat="message in messages"
-                                        ng-click="fun()">
+                                              ng-repeat="message in messages"
+                                              ng-click="fun()">
 
                                     <!--<div layout="row"-->
-                                         <!--style="width: inherit">-->
-                                        <div style="padding-top: 8px">
-                                            <img ng-src="{{message.imageUrl}}"
-                                                 class="md-avatar"
-                                                 alt="{{message.sender}}"/>
-                                        </div>
-                                        <!--<h4>{{ message.sender }}</h4>-->
-                                        <div class="message_box">
-                                            <a style="width: inherit">{{ message.content }}</a>
-                                        </div>
+                                    <!--style="width: inherit">-->
+                                    <div style="padding-top: 8px">
+                                        <img ng-src="{{message.imageUrl}}"
+                                             class="md-avatar"
+                                             alt="{{message.sender}}"/>
+                                    </div>
+                                    <!--<h4>{{ message.sender }}</h4>-->
+                                    <div class="message_box">
+                                        <p style="width: inherit">{{ message.content }}</p>
+                                    </div>
                                     <!--</div>-->
 
                                     <md-divider></md-divider>
@@ -167,14 +168,14 @@
                             <div flex>
                                 <md-input-container md-no-float class="md-block">
                                     <textarea ng-model="message.content" rows="3"
-                                              placeholder="Type message..."></textarea>
+                                              placeholder="Type message..." md-select-on-focus></textarea>
                                 </md-input-container>
                             </div>
 
                             <div class="send_btn">
                                 <md-button class="md-fab md-mini"
                                            aria-label="Send message"
-                                           ng-click="send()">
+                                           ng-click="sendMessage()">
                                     <md-icon md-svg-src="assets/icons/ic_send_black_24px.svg"></md-icon>
                                 </md-button>
                             </div>
@@ -200,7 +201,7 @@
                             <span flex></span>
                             <md-button class="md-icon-button"
                                        aria-label="More"
-                                       ng-click="showTabDialog($event)">
+                                       ng-click="showCreteTaskDialog($event)">
 
                                 <md-icon md-svg-icon="assets/icons/ic_add_white_24px.svg"></md-icon>
                             </md-button>
@@ -227,9 +228,8 @@
                 </div>
             </md-grid-tile>
 
-
             <md-grid-tile class="tools"
-                          md-rowspan="1"
+                          md-rowspan="2"
                           md-colspan="1"
                           md-colspan-sm="1"
                           md-colspan-xs="1">
@@ -245,7 +245,7 @@
                             <span flex></span>
                             <md-button class="md-icon-button"
                                        aria-label="More"
-                                       ng-click="showTabDialog($event)">
+                                       ng-click="showCreatTaskDialog($event)">
 
                                 <md-icon md-svg-icon="assets/icons/ic_add_white_24px.svg"></md-icon>
                             </md-button>
@@ -271,8 +271,8 @@
             </md-grid-tile>
 
             <md-grid-tile class="Equipment"
-                          md-rowspan="1"
-                          md-colspan="2"
+                          md-rowspan="2"
+                          md-colspan="1"
                           md-colspan-sm="1"
                           md-colspan-xs="1">
 
@@ -287,7 +287,7 @@
                             <span flex></span>
                             <md-button class="md-icon-button"
                                        aria-label="More"
-                                       ng-click="showTabDialog($event)">
+                                       ng-click="showCreatTaskDialog($event)">
 
                                 <md-icon md-svg-icon="assets/icons/ic_add_white_24px.svg"></md-icon>
                             </md-button>
@@ -314,7 +314,7 @@
             </md-grid-tile>
 
             <md-grid-tile class="rsvp"
-                          md-rowspan="1"
+                          md-rowspan="2"
                           md-colspan="1"
                           md-colspan-sm="1"
                           md-colspan-xs="1">
@@ -330,7 +330,7 @@
                             <span flex></span>
                             <md-button class="md-icon-button"
                                        aria-label="More"
-                                       ng-click="showTabDialog($event)">
+                                       ng-click="showCreatTaskDialog($event)">
 
                                 <md-icon md-svg-icon="assets/icons/ic_add_white_24px.svg"></md-icon>
                             </md-button>

@@ -4,6 +4,14 @@
 angular.module('ProjectHands')
     .controller('renovationDashboardController', function ($scope, $mdDialog) {
 
+
+        $scope.message = {
+            content: 'a',
+            sender: 'ruby',
+            role: 'manager',
+            imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
+        };
+
         $scope.members = [
             {
                 name: 'ruby',
@@ -117,26 +125,20 @@ angular.module('ProjectHands')
             }
         ];
         
-        var message = {
-            content: 'c',
-            sender: 'ruby',
-            role: 'manager',
-            imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
-        };
-        
-        $scope.send = function () {
+        $scope.sendMessage = function () {
             
-            // var message = {
-            //     content: $scope.message,
-            //     sender: 'ruby',
-            //     role: 'manager',
-            //     imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
-            // };
+            // var con = message.content ;
+            var message = {
+                content: $scope.message.content,
+                sender: 'ruby',
+                role: 'manager',
+                imageUrl: 'https://scontent-cdg2-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12523086_575552755928478_5791044670543493931_n.jpg?oh=fe49cfc91c579a052dec8158b72ab7c1&oe=5780F28B'
+            };
             //$scope.message.content = 'ssss';
 
             // message.content = $scope.message.content ;
             $scope.messages.push(message);
-
+            $scope.message.content.clean ;
         };
 
         $scope.tasks = [
@@ -177,9 +179,9 @@ angular.module('ProjectHands')
             date: 'acacacacac'
         };
 
-        $scope.showTabDialog = function (ev) {
+        $scope.showCreteTaskDialog = function (ev) {
             $mdDialog.show({
-                    controller: DialogController,
+                    controller: CreateTaskDialogController,
                     templateUrl: '/templates/dialogs/create-task-dialog.html',
                     parent: angular.element(document.body),
                     targetEvent: ev,
@@ -189,12 +191,12 @@ angular.module('ProjectHands')
                     // $scope.status = answer;
                     $scope.tasks.push(answer);
                 }, function () {
-                    $scope.status = 'You cancelled the dialog.';
+                    // $scope.status = 'You cancelled the dialog.';
                 });
         };
         
     });
-function DialogController($scope, $mdDialog) {
+function CreateTaskDialogController($scope, $mdDialog) {
 
     var task = {
         creator: 'a',
@@ -224,7 +226,7 @@ function DialogController($scope, $mdDialog) {
     $scope.answer = function (answer) {
 
         task.due_date = $scope.myDate;
-        task.description = $scope.task.description ;
+        task.description = $scope.task.description;
 
         $mdDialog.hide(task);
     };
