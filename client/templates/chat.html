@@ -31,9 +31,13 @@
     <div layout="column" ng-show="isLoggedIn">
         <h1>Room: {{ room | capitalize }}</h1>
         <md-list class="chat-message-list">
-            <md-list-item dir="{{ message.dir }}" ng-repeat="message in history" class="chat-message-wrapper">
-                <div class="md-list-item-text chat-message-text {{ message.dir }}" ng-class="message.class" layout="column">
-                    <div flex><span class="chat-timestamp">{{ message.timestamp }}</span><span class="chat-message-user">{{ message.user }}: </span><span class="chat-message-content">{{ message.content }}</span></div>
+            <md-list-item layout-align="{{ message.align }}" ng-repeat="message in history" class="chat-message-wrapper">
+                <div class="md-list-item-text chat-message-text" ng-class="message.class" layout="column">
+                    <div flex>
+                        <span class="chat-message-user" ng-show="showUsername(message, $index)">{{ message.user }}<br/><hr class="chat-user-divider"/></span>
+                        <span class="chat-message-content">{{ message.content }}</span>
+                        <br/>
+                        <span class="chat-timestamp">{{ message.timestamp }}</span></div>
                 </div>
             </md-list-item>
         </md-list>

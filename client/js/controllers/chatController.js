@@ -19,7 +19,7 @@ angular.module('ProjectHands')
         content: '',
         timestamp: '',
         class: class_message_self,
-        dir: 'ltr'
+        align: 'end'
     };
 
 
@@ -31,9 +31,6 @@ angular.module('ProjectHands')
 
         $scope.isLoggedIn = true;
         $scope.message.user = $scope.login.user;
-        if (isHebrew($scope.message.user))
-            $scope.message.dir = 'rtl';
-
 
         //Join room
         if ($scope.room !== '')
@@ -106,7 +103,7 @@ angular.module('ProjectHands')
 
                 $scope.history.forEach(function (message) {
                     message.class = $scope.login.user === message.user ? class_message_self : class_message_others;
-                    message.dir = isHebrew(message.user) ? 'rtl' : 'ltr';
+                    message.align = $scope.login.user === message.user ? "end" : "start";
 
                     return parseTimestamp(message);
                 });
@@ -116,6 +113,13 @@ angular.module('ProjectHands')
                 console.log('chat query error', error);
             });
     }
+    
+    $scope.showUsername = function(message, index)  {
+        if(index === 0)
+            return true;
+        
+        return (message.user !== $scope.login.user) && (message.user !== $scope.history[index-1].user);
+    };
 
     //Regex for hebrew unicode chars
     function isHebrew(message) {

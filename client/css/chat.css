@@ -3,9 +3,10 @@
     height: 450px;
 }
 
-.chat-message-wrapper {
+md-list-item.chat-message-wrapper {
     min-height: 35px;
-
+    padding-top: 2px;
+    padding-botom: 2px;
 }
 
 .chat-message-wrapper .chat-message-user {
@@ -14,29 +15,13 @@
 
 .chat-message-wrapper .chat-message-content {
     font-size: 1.5rem;
+    padding: 5px;
 }
 
-.chat-message-wrapper .chat-message-text.ltr {
-    padding: 1px 10px;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
-}
-
-.chat-message-wrapper .chat-message-text.rtl {
-    padding: 1px 10px;
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
-}
-
-.chat-message-wrapper .chat-message-text.rtl .chat-timestamp {
-    padding-left: 5px;
-}
-
-.chat-message-wrapper .chat-message-text.ltr .chat-timestamp {
-    padding-right: 5px;
-}
 
 .chat-message-text {
+    min-width: 150px;
+    padding: 1px 10px; 
     overflow: hidden;
     -ms-word-wrap: break-word;
     word-wrap: break-word;
@@ -48,13 +33,22 @@
 }
 
 .chat-message-text.chat-message-self {
+    direction: rtl;
     background: rgba(76, 175, 80, 0.5);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 .chat-message-text.chat-message-others {
     background: rgba(33, 150, 243, 0.5);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .chat-divider {
     margin-top: 10px;
+}
+
+.chat-user-divider {
+    margin: 0;
 }
