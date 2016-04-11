@@ -40,4 +40,9 @@
     border-color: black;
     border-style: solid;
     border-width: 1px;
+	overflow: auto;
+}
+
+md-menu-item > .md-button{
+	display: flex;
 }
