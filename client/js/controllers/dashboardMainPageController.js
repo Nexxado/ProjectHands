@@ -6,7 +6,7 @@ angular.module('ProjectHands')
 			sizeX: 2,
 			sizeY: 1,
 			row: 0,
-			col: 0
+			col: 0,
         },
 		{
 			sizeX: 2,
@@ -42,6 +42,7 @@ angular.module('ProjectHands')
 	];
 
 	$scope.gridsterOpts = {
+
 		columns: 6, // the width of the grid, in columns
 		pushing: false, // whether to push other items out of the way on move or resize
 		floating: false, // whether to automatically float items up so they stack (you can temporarily disable if you are adding unsorted items with ng-repeat)
@@ -62,28 +63,29 @@ angular.module('ProjectHands')
 		minSizeX: 1, // minimum column width of an item
 		maxSizeX: null, // maximum column width of an item
 		minSizeY: 1, // minumum row height of an item
-		maxSizeY: null, // maximum row height of an item
+		maxSizeY: null, // maximum row height of an item 
 		resizable: {
 			enabled: false,
-			handles: ['n', 'e', 's', 'w', 'ne', 'se', 'sw', 'nw'],
 			start: function (event, $element, widget) {
 				console.log("resize started");
 			}, // optional callback fired when resize is started,
 			resize: function (event, $element, widget) {
-				console.log("item was resized!");
+				console.log("resizing");
 			}, // optional callback fired when item is resized,
 			stop: function (event, $element, widget) {
 					console.log("finished resizing");
+					console.log("Draggable is: " + $scope.gridsterOpts.draggable.enabled);
 				} // optional callback fired when item is finished resizing
 		},
 		draggable: {
 			enabled: false, // whether dragging items is supported
-			handle: '.my-class', // optional selector for resize handle
+//			handle: '.my-class', // optional selector for resize handle
 			start: function (event, $element, widget) {
 				console.log("dragging started");
 			}, // optional callback fired when drag is started,
 			drag: function (event, $element, widget) {
-				console.log("item was moved!");
+				console.log("dragging");
+
 			}, // optional callback fired when item is moved,
 			stop: function (event, $element, widget) {
 					console.log("finished dragging");
@@ -94,6 +96,7 @@ angular.module('ProjectHands')
 	$scope.editLayoutEnabled = false;
 
 	$scope.enableEditLayout = function () {
+		console.log("Draggable was: " + $scope.gridsterOpts.draggable.enabled);
 		$scope.editLayoutEnabled = true;
 		$scope.gridsterOpts.draggable.enabled = true;
 		$scope.gridsterOpts.resizable.enabled = true;
@@ -102,6 +105,7 @@ angular.module('ProjectHands')
 		$scope.gridsterOpts.swapping = false;
 	};
 	$scope.disableEditLayout = function () {
+		console.log("Draggable was: " + $scope.gridsterOpts.draggable.enabled);
 		$scope.editLayoutEnabled = false;
 		$scope.gridsterOpts.draggable.enabled = false;
 		$scope.gridsterOpts.resizable.enabled = false;
@@ -117,5 +121,8 @@ angular.module('ProjectHands')
 	};
 	$scope.$on('gridster-mobile-changed', function (gridster) {
 		console.log("mobile mode!!!");
+	});
+	$scope.$on('gridster-draggable-changed', function (gridster) {
+		console.log("draggable changed!");
 	});
 });
