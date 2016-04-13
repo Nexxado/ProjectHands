@@ -3,71 +3,19 @@
 <md-button ng-click="toggleIsMobile()">Is Mobile: {{gridsterOpts.isMobile}}</md-button>
 <md-button ng-click="toggleMobileModeEnabled()">Mobile Mode Enabled: {{gridsterOpts.mobileModeEnabled}}</md-button>
 <div gridster="gridsterOpts">
-    <ul>
+    <ul dir="rtl">
         <li gridster-item="item" ng-model="gridItems[0]" class="grid-item">
-            Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			   Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			   Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			   Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			   Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			   Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
-			Hello
+            <div ng-include="'templates/dashboard/toolbox.html'"></div>
         </li>
         <li gridster-item="item" ng-model="gridItems[1]" class="grid-item">
-            My 
+            <div ng-include="'templates/dashboard/team.html'"></div> 
         </li>
         <li gridster-item="item" ng-model="gridItems[2]" class="grid-item">
-            Name
+            <div ng-include="'templates/dashboard/calendar.html'"></div>
         </li>
         <li gridster-item="item" ng-model="gridItems[3]" class="grid-item">
-            Is
+            <div ng-include="'templates/dashboard/userProfile.html'"></div>
         </li>
-        <li gridster-item="item" ng-model="gridItems[4]" class="grid-item">
-            Dan
-        </li>
-        <li gridster-item="item" ng-model="gridItems[5]" class="grid-item">
-            Biach!
-        </li>
+        
     </ul>
 </div>

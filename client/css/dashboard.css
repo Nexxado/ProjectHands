@@ -2,13 +2,13 @@
     background-color: white;
     width: 100%;
 }
-.dashboard-sidenav-content{
+.dashboard-sidenav-content {
     padding: 0 5px;
-	background-color: #2196F3;
+    background-color: #2196F3;
 }
-.dashboard-navbar-wrapper{
-	background-color: #2196F3;
-	min-height: 100%;
+.dashboard-navbar-wrapper {
+    background-color: #2196F3;
+    min-height: 100%;
 }
 .dashboard-wrapper {
     height: 100%;
@@ -16,67 +16,79 @@
 .sidenav-btn {
     min-width: 100%;
     text-transform: none;
-	background-color: white;
+    background-color: white;
 }
-.dashboard-content{
-	background-color: white;
-	border-top-left-radius: 20px;
-	border-top-right-radius: 20px;
+.dashboard-content {
+    background-color: white;
     border-width: 1px;
     padding: 10px;
-/*    margin: 10px;*/
+    /*    margin: 10px;*/
     width: 100%;
     height: 100%;
 }
-.dashboard-content-wrapper{
-	background-color: #2196F3;
-/*	padding: 10px;*/
-	width: 100%;
-	height: 100%;
+.dashboard-top-rounded-toolbar {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
-
-.grid-item{
-    background-color: antiquewhite;
+.dashboard-content-wrapper {
+    background-color: #2196F3;
+    /*	padding: 10px;*/
+    width: 100%;
+    height: 100%;
+}
+.grid-item {
     border-color: black;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     border-style: solid;
     border-width: 1px;
-	overflow: auto;
+    overflow: auto;
+}
+md-menu-item > .md-button {
+    display: flex;
+}
+.dashboard-layout {
+    height: 100%;
+}
+/*
+.profile-pic {
+    width: 25%;
+    height: 25%;
+}
+.profile-info {
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 20px;
+    width: 50%;
+    height: 190%;
+}
+.profile-card-content {
+    width: 95%;
+    height: 100%;
+}
+*/
+.profile-actions {
+    width: 5%;
+    height: 100%;
+}
+.profile-page {
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    padding: 10px;
 }
 
-md-menu-item > .md-button{
-	display: flex;
+.padding{
+    padding: 15px;
 }
 
-.dashboard-layout{
-	height: 100%;
+.profile-content-item{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.dashboard-list-text {
+    font-family: cursive;
 }
 
-.profile-pic{
-	width: 25%;
-	height: 25%;
-}
-.profile-info{
-	text-align: center;
-	font-family: "Times New Roman", Times, serif;
-	font-size: 20px;
-	width: 50%;
-	height: 190%;
-}
-
-.profile-card-content{
-	width: 95%;
-	height: 100%;
-}
-.profile-actions{
-	width: 5%;
-	height: 100%;
-}
-.profile-title{
-	text-align: center;
-	font-family: "Times New Roman", Times, serif;
-}
-.toolbox-list-item{
-	border-style: solid;
-	border-color: aliceblue;
-	border-width: 1px;
+.dashboard-special-list-item{
+    background-color: whitesmoke;
 }

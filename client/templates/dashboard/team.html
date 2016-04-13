@@ -1,1 +1,38 @@
-Team
+<div ng-cloak layout-gt-sm="row" layout="column">
+    <div flex-gt-sm="50" flex>
+        <md-toolbar layout="row" layout-align="none center" class="md-primary dashboard-top-rounded-toolbar" dir="rtl">
+            <span flex></span>
+            <div class="md-toolbar-tools">
+                <span>{{teams[0].name}}</span>
+            </div>
+        </md-toolbar>
+        <md-content>
+            <md-list class="md-dense">
+                <md-list-item class="md-3-line" dir="rtl">
+                    <div class="md-list-item-text dashboard-list-text" layout="column">
+                        <h3>{{getMemberName(teams[0].manager_id)}}</h3>
+                        <h4>{{teams[0].manager_id}}</h4>
+                        <p>{{getMemberType(teams[0].manager_id)}}</p>
+                        <p>תאריך הצטרפות: {{getMemberJoinDate(teams[0].manager_id) | date}}</p>
+                    </div>
+                    <h2 ng-show="myID == teams[0].manager_id">אני</h2>
+                    <img ng-src="{{getMemberAvatar(teams[0].manager_id)}}" class="md-avatar" alt="{{item.who}}" />
+                </md-list-item>
+                <md-divider></md-divider>
+                <md-list-item class="md-3-line" ng-repeat="memberID in teams[0].members_id" dir="rtl">
+                    <div class="md-list-item-text dashboard-list-text" th:classappend="dashboard-special-list-item" layout="column">
+                        <h3>{{getMemberName(memberID)}}</h3>
+                        <h4>{{memberID}}</h4>
+                        <p>{{getMemberType(memberID)}}</p>
+                        <p>תאריך הצטרפות: {{getMemberJoinDate(memberID) | date}}</p>
+                    </div>
+                    <span flex></span>
+                    <h2 ng-show="myID == memberID">אני</h2>
+                    <img ng-src="{{getMemberAvatar(teams[0].manager_id)}}" class="md-avatar" alt="{{item.who}}" />
+                    <md-divider></md-divider>
+                </md-list-item>
+                <md-divider></md-divider>
+            </md-list>
+        </md-content>
+    </div>
+</div>
