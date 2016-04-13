@@ -1,9 +1,8 @@
 angular.module('ProjectHands')
 
 .controller('DashboardController', function ($scope) {
-
-
-
+    
+    $scope.editLayoutEnabled = false;
     /* Mock Objects creations: */
 
     $scope.myID = "123456197";

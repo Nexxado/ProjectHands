@@ -1,6 +1,45 @@
 angular.module('ProjectHands')
 
 .controller('DashboardMainPageController', function ($scope) {
+    
+    $scope.pagesWidgetsPaths = [];
+    
+    $scope.addPageAsWidget = function(){
+        console.log("sadadsasdas");
+    };
+    
+    $scope.PagesPaths = [
+        {
+            name: "רשימת משימות",
+            path: "'templates/dashboard/tasks.html'"
+        },
+        {
+            name: "שיפוצים מתוכננים",
+            path: "'templates/dashboard/renovations.html'"
+        },
+        {
+            name: "ארגז הכלים",
+            path: "'templates/dashboard/toolbox.html'"
+        },
+        {
+            name: "הצוות שלי",
+            path: "'templates/dashboard/team.html'"
+        },
+        {
+            name: "לוח שנה",
+            path: "'templates/dashboard/calendar.html'"
+        },
+        {
+            name: "פרופיל משתמש",
+            path: "'templates/dashboard/userProfile.html'"
+        },
+        {
+            name: "צ'אט",
+            path: ""
+        },
+    ];
+    
+    $scope.defualtGridSize = [2,1];
 	$scope.gridItems = [
 		{
 			sizeX: 2,
@@ -93,7 +132,7 @@ angular.module('ProjectHands')
 		}
 	};
 
-	$scope.editLayoutEnabled = false;
+	
 
 	$scope.enableEditLayout = function () {
 		console.log("Draggable was: " + $scope.gridsterOpts.draggable.enabled);

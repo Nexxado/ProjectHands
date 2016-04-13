@@ -1,5 +1,5 @@
-<md-button ng-click="enableEditLayout()" ng-show="!editLayoutEnabled">Edit Layout</md-button>
-<md-button ng-click="disableEditLayout()" ng-show="editLayoutEnabled">Stop Editing Layout</md-button>
+<md-button class="md-raised md-primary" ng-click="enableEditLayout()" ng-show="!editLayoutEnabled">Edit Layout</md-button>
+<md-button class="md-raised md-accent" ng-click="disableEditLayout()" ng-show="editLayoutEnabled">Stop Editing Layout</md-button>
 <md-button ng-click="toggleIsMobile()">Is Mobile: {{gridsterOpts.isMobile}}</md-button>
 <md-button ng-click="toggleMobileModeEnabled()">Mobile Mode Enabled: {{gridsterOpts.mobileModeEnabled}}</md-button>
 <div gridster="gridsterOpts">
@@ -8,14 +8,16 @@
             <div ng-include="'templates/dashboard/toolbox.html'"></div>
         </li>
         <li gridster-item="item" ng-model="gridItems[1]" class="grid-item">
-            <div ng-include="'templates/dashboard/team.html'"></div> 
+            <div ng-include="'templates/dashboard/team.html'"></div>
         </li>
+<!--
         <li gridster-item="item" ng-model="gridItems[2]" class="grid-item">
             <div ng-include="'templates/dashboard/calendar.html'"></div>
         </li>
+-->
         <li gridster-item="item" ng-model="gridItems[3]" class="grid-item">
             <div ng-include="'templates/dashboard/userProfile.html'"></div>
         </li>
-        
+
     </ul>
 </div>
