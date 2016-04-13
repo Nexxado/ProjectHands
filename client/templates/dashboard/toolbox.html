@@ -1,7 +1,7 @@
 <div ng-cloak layout-gt-sm="row" layout="column">
     <div flex-gt-sm="50" flex>
         <md-toolbar layout="row" layout-align="none center" class="md-primary dashboard-top-rounded-toolbar">
-            <md-button class="md-icon-button md-primary" ng-click="">
+            <md-button class="md-icon-button md-primary md-raised" ng-click="">
                 <md-icon class="material-icons">add_circle</md-icon>
             </md-button>
             <span flex></span>
@@ -11,7 +11,7 @@
         </md-toolbar>
         <md-content>
             <md-list class="md-dense" flex>
-                <md-list-item class="md-3-line" ng-repeat="tool in tools">
+                <md-list-item class="md-3-line" ng-repeat="tool in getMemberTools(myID)">
                     <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />
                     <div class="md-list-item-text toolbox-list-text" layout="column" dir="rtl">
                         <h3>כלי: {{ tool.name }}</h3>
