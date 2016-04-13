@@ -3,7 +3,7 @@
 <md-button ng-click="toggleIsMobile()">Is Mobile: {{gridsterOpts.isMobile}}</md-button>
 <md-button ng-click="toggleMobileModeEnabled()">Mobile Mode Enabled: {{gridsterOpts.mobileModeEnabled}}</md-button>
 <div gridster="gridsterOpts">
-    <ul>
+    <ul dir="rtl">
         <li gridster-item="item" ng-model="gridItems[0]" class="grid-item">
             <div ng-include="'templates/dashboard/toolbox.html'"></div>
         </li>

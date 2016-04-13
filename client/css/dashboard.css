@@ -50,6 +50,7 @@ md-menu-item > .md-button {
 .dashboard-layout {
     height: 100%;
 }
+/*
 .profile-pic {
     width: 25%;
     height: 25%;
@@ -65,13 +66,24 @@ md-menu-item > .md-button {
     width: 95%;
     height: 100%;
 }
+*/
 .profile-actions {
     width: 5%;
     height: 100%;
 }
-.profile-title {
+.profile-page {
     text-align: center;
     font-family: "Times New Roman", Times, serif;
+    padding: 10px;
+}
+
+.padding{
+    padding: 15px;
+}
+
+.profile-content-item{
+    margin-left: 10px;
+    margin-right: 10px;
 }
 .dashboard-list-text {
     font-family: cursive;

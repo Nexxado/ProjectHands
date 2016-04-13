@@ -317,7 +317,7 @@ angular.module('ProjectHands')
             }
         }
 
-        return "";
+        return "No user found!";
     };
     
       $scope.getMemberAddress = function (id) {
@@ -328,7 +328,7 @@ angular.module('ProjectHands')
             }
         }
 
-        return "";
+        return "No user found!";
     };
     
       $scope.getMemberPhone = function (id) {
@@ -339,7 +339,7 @@ angular.module('ProjectHands')
             }
         }
 
-        return "";
+        return "No user found!";
     };
     
       $scope.getMemberAboutMe = function (id) {
@@ -350,7 +350,7 @@ angular.module('ProjectHands')
             }
         }
 
-        return "";
+        return "No user found!";
     };
     
       $scope.getMemberTotalRenovations = function (id) {
@@ -361,7 +361,7 @@ angular.module('ProjectHands')
             }
         }
 
-        return "";
+        return "No user found!";
     };
     
 });
