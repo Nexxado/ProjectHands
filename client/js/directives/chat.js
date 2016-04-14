@@ -5,6 +5,10 @@ angular.module('ProjectHands')
         restrict: 'E',
         replace: true,
         templateUrl: '/templates/directives/chat.html',
+        scope: {
+            user: '@',
+            rooms: '@'
+        },
         controller: 'ChatController'
     };
 });

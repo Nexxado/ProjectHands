@@ -1,0 +1,39 @@
+<md-content layout-padding>
+
+    <div layout="column">
+        <h1>Room: {{ room | capitalize }}</h1>
+        <md-list class="chat-message-list">
+            <md-list-item layout-align="{{ message.align }}" ng-repeat="message in history" class="chat-message-wrapper">
+                <div class="md-list-item-text chat-message-text" ng-class="message.class" layout="column">
+                    <div flex>
+                        <span class="chat-message-user" ng-show="showUsername(message, $index)">{{ message.user }}<br/><hr class="chat-user-divider"/></span>
+                        <span class="chat-message-content">{{ message.content }}</span>
+                        <br/>
+                        <span class="chat-timestamp">{{ message.timestamp }}</span></div>
+                </div>
+            </md-list-item>
+        </md-list>
+        <md-divider class="chat-divider"></md-divider>
+        <div class="chat-input-wrapper">
+            <form name="ChatMessageForm" ng-submit="sendMessage()" novalidate layout="row" layout-align="center center" layout-padding>
+                <div layout="row" flex>
+                    <md-input-container flex class="md-icon-float md-block">
+                        <label>Write a message...</label>
+                        <input name="message" type="text" ng-model="message.content" required />
+                        <div ng-messages="ChatMessageForm.message.$error">
+                            <div ng-message="required">
+                                This is required
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div>
+                    <md-button type="submit" class="md-accent">
+                        <md-icon class="material-icons">send</md-icon>
+                    </md-button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</md-content>
