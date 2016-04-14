@@ -1,10 +1,33 @@
 angular.module('ProjectHands')
 
 .controller('DashboardController', function ($scope) {
-    
-    $scope.editLayoutEnabled = false;
-    /* Mock Objects creations: */
 
+    $scope.editLayoutEnabled = false;
+    $scope.widgets = [
+        {
+        title: 'Clock Widget',
+        settings: {
+            sizeX: 2,
+            sizeY: 2,
+            minSizeX: 2,
+            minSizeY: 2,
+            template: 'adssadasdas',
+            widgetSettings: {
+                id: 1
+                }
+            }
+        }           
+    ];
+    $scope.widgetsInGrid = [];
+    
+    $scope.addPageToGrid = function (path) {
+        console.log("asas");
+        $scope.widgetsInGrid.push($scope.widgets[0]);
+    };
+
+    $scope.gridItems = [];
+
+    /* Mock Objects creations: */
     $scope.myID = "123456197";
     $scope.tools = [
         {
@@ -318,8 +341,8 @@ angular.module('ProjectHands')
 
         return "No user found!";
     };
-    
-      $scope.getMemberAddress = function (id) {
+
+    $scope.getMemberAddress = function (id) {
         var i;
         for (i in $scope.users) {
             if ($scope.users[i].id == id) {
@@ -329,8 +352,8 @@ angular.module('ProjectHands')
 
         return "No user found!";
     };
-    
-      $scope.getMemberPhone = function (id) {
+
+    $scope.getMemberPhone = function (id) {
         var i;
         for (i in $scope.users) {
             if ($scope.users[i].id == id) {
@@ -340,8 +363,8 @@ angular.module('ProjectHands')
 
         return "No user found!";
     };
-    
-      $scope.getMemberAboutMe = function (id) {
+
+    $scope.getMemberAboutMe = function (id) {
         var i;
         for (i in $scope.users) {
             if ($scope.users[i].id == id) {
@@ -351,8 +374,8 @@ angular.module('ProjectHands')
 
         return "No user found!";
     };
-    
-      $scope.getMemberTotalRenovations = function (id) {
+
+    $scope.getMemberTotalRenovations = function (id) {
         var i;
         for (i in $scope.users) {
             if ($scope.users[i].id == id) {
@@ -362,5 +385,5 @@ angular.module('ProjectHands')
 
         return "No user found!";
     };
-    
+
 });
