@@ -1,18 +1,21 @@
 angular.module('ProjectHands')
 
-.controller('ChatRoomController', function ($scope, $attrs, $timeout, socketio, DatabaseService, COLLECTIONS) {
+.controller('ChatRoomController', function ($scope, $timeout, socketio, DatabaseService, COLLECTIONS) {
 
     //Message Classes
     var class_message_self = 'chat-message-self';
     var class_message_others = 'chat-message-others';
 
 
-    $scope.room = $attrs.room;
-    $scope.user = $attrs.user;
+//    $scope.room = $attrs.room;
+//    $scope.user = $attrs.user;
+//    console.log('chat-room user', $scope.user);
+//    console.log('chat-room room', $scope.room);
+
     $scope.history = [];
 
     $scope.message = {
-        user: $attrs.user,
+        user: $scope.user.name,
         content: '',
         timestamp: '',
         class: class_message_self,
@@ -83,8 +86,8 @@ angular.module('ProjectHands')
                     $scope.history = data[0].messages;
 
                 $scope.history.forEach(function (message) {
-                    message.class = $scope.user === message.user ? class_message_self : class_message_others;
-                    message.align = $scope.user === message.user ? "end" : "start";
+                    message.class = $scope.user.name === message.user ? class_message_self : class_message_others;
+                    message.align = $scope.user.name === message.user ? "end" : "start";
 
                     return parseTimestamp(message);
                 });
@@ -96,7 +99,7 @@ angular.module('ProjectHands')
     }
 
     $scope.showUsername = function(message, index)  {
-        if(message.user === $scope.user)
+        if(message.user === $scope.user.name)
             return false;
 
         if(index === 0)
@@ -111,7 +114,7 @@ angular.module('ProjectHands')
     }
 
     $scope.$watchCollection('history', function(newVal, oldVal, scope) {
-        console.log("History Changed");
+//        console.log("History Changed");
         scrollToBottom(".chat-message-list"); //FIXME might have to change to support multiple tabs
     });
 

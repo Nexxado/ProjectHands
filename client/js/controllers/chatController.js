@@ -1,12 +1,19 @@
 angular.module('ProjectHands')
 
-.controller('ChatController', function($scope, $attrs, $timeout) {
-    
-    $scope.user = $attrs.user;
-    $timeout(function() {
-        $scope.rooms = $attrs.rooms.split(','); //FIXME Delete split() and $timeout() after finishing development
-    });
-    console.log('user', $scope.user);
-    console.log('rooms', $scope.rooms);
+.controller('ChatController', function ($scope) {
+
+    $scope.user = {
+        "_id": "138548975",
+        "name": "פנחס נשכותי",
+        "type": "volunteer",
+        "joined_date": "15/05/2004",
+        "tools": [
+
+        ]
+    };
+    $scope.rooms = ["ren1_chat", "chatty"];
+
+//    console.log('user', $scope.user);
+//    console.log('rooms', $scope.rooms);
 
 });

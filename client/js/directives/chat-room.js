@@ -7,7 +7,7 @@ angular.module('ProjectHands')
         templateUrl: '/templates/directives/chat-room.html',
         scope: {
             room: '@',
-            user: '@'
+            user: '='
         },
         controller: 'ChatRoomController'
     };

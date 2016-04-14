@@ -93,7 +93,7 @@ angular.module('ProjectHands')
 
     .state('chat', { //TODO Delete once chat development done.
         url: '/chat',
-        template: '<chat user="test" rooms="kobe,chaty"></chat>'
+        template: '<chat></chat>'
     })
 
     .state('renovation_dashboard', {
