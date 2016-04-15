@@ -1,7 +1,12 @@
 .toolbar-logo {
+/*    float: left;*/
+    height: 50px;
+    font-size: 18px;
+    line-height: 20px;
     padding: 3px 15px;
 }
 
 .toolbar-logo img {
     width: 48px;
+    border-radius: 6px;
 }

@@ -1,8 +1,7 @@
 <md-content layout-padding>
-
-    <div layout="column">
-        <h1>Chat</h1>
-    </div>
-
-    <chat-room ng-repeat="room in rooms" room="{{room}}" user="user"></chat-room>
+    <md-tabs md-selected="selectedTab"  md-dynamic-height md-border-bottom md-swipe-content>
+        <md-tab ng-repeat="room in rooms" label="{{room}}">
+            <chat-room room="{{room}}" user="user"></chat-room>
+        </md-tab>
+    </md-tabs>
 </md-content>

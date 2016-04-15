@@ -10,12 +10,6 @@ angular.module('ProjectHands')
         controller: 'HomeController'
     })
 
-    .state('profile', {
-        url: '/profile',
-        templateUrl: 'templates/profile.html'
-
-    })
-
     .state('dashboard', {
         url: '/dashboard',
         templateUrl: 'templates/dashboard/dashboard.html',
