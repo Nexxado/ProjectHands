@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                     <a class="sidenav-btn">
-                        <md-checkbox ng-model="widgets[5].active" aria-label="Chat Widget"></md-checkbox><span flex></span> צ'אט
+                        <md-checkbox ng-model="widgets[5].active" aria-label="Profile Widget"></md-checkbox><span flex></span> פרופיל משתמש
 
                     </a>
                 </tr>
@@ -71,14 +71,6 @@
         <div ng-include="'templates/dashboard/calendar.html'"></div>
     </li>
     <li gridster-item="item" ng-model="widgets[5]" class="grid-item" ng-if="widgets[5].active">
-        <div ng-include="'templates/dashboard/chat.html'"></div>
+        <div ng-include="'templates/dashboard/userProfile.html'"></div>
     </li>
 </div>
-
-
-<!--
- <tr>
-                    <p> משימות <span flex></span>
-                        <md-checkbox ng-model="widgets[0].active" aria-label="Tasks Widget"></md-checkbox>
-                    </p>
-                </tr>-->

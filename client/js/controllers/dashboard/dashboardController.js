@@ -56,7 +56,7 @@ angular.module('ProjectHands')
             active: false
         },
         {
-            title: 'Chat Widget',
+            title: 'Profile Widget',
             settings: {
                 sizeX: 2,
                 sizeY: 2,
