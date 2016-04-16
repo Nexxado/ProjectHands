@@ -39,6 +39,12 @@
 
                     </a>
                 </tr>
+                <tr>
+                    <a class="sidenav-btn">
+                        <md-checkbox ng-model="widgets[6].active" aria-label="Chat Widget"></md-checkbox><span flex></span> צ'אט
+
+                    </a>
+                </tr>
             </table>
         </md-menu-item>
 
@@ -72,5 +78,8 @@
     </li>
     <li gridster-item="item" ng-model="widgets[5]" class="grid-item" ng-if="widgets[5].active">
         <div ng-include="'templates/dashboard/userProfile.html'"></div>
+    </li>
+        <li gridster-item="item" ng-model="widgets[6]" class="grid-item" ng-if="widgets[6].active">
+        <chat user="getMemberName(myID)" rooms="rooms"></chat>
     </li>
 </div>

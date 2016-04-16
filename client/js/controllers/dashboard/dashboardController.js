@@ -4,6 +4,7 @@ angular.module('ProjectHands')
 
     $scope.editLayoutEnabled = false;
     
+    /*Widgets properties*/
     $scope.widgets = [
         {
             title: 'Tasks Widget',
@@ -64,9 +65,20 @@ angular.module('ProjectHands')
                 minSizeY: 2
             },
             active: false
+        },
+        {
+            title: 'Chat Widget',
+            settings: {
+                sizeX: 2,
+                sizeY: 2,
+                minSizeX: 2,
+                minSizeY: 2
+            },
+            active: false
         }
     ];
     
+    /*Grister Settings*/
     $scope.gridsterOpts = {
 
 		columns: 6, // the width of the grid, in columns
@@ -113,7 +125,7 @@ angular.module('ProjectHands')
 	};
 
 	
-
+    /*Gridster Functions*/
 	$scope.enableEditLayout = function () {
 		$scope.editLayoutEnabled = true;
 		$scope.gridsterOpts.draggable.enabled = true;
@@ -143,6 +155,8 @@ angular.module('ProjectHands')
     
     /* Mock Objects creations: */
     $scope.myID = "123456197";
+    
+    $scope.rooms = ["General", "Reno1", "Reno2"];
     $scope.tools = [
         {
             name: "פטיש",
@@ -402,6 +416,7 @@ angular.module('ProjectHands')
         }
     ];
 
+    //Mock functions
     $scope.getMemberName = function (id) {
         var i;
         for (i in $scope.users) {
@@ -499,5 +514,5 @@ angular.module('ProjectHands')
 
         return "No user found!";
     };
-
+    /*End of Mock Object Creations*/
 });

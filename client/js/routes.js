@@ -85,7 +85,7 @@ angular.module('ProjectHands')
         templateUrl: 'templates/dashboard/join-requests.html'
     })
 
-    .state('chat', { //TODO Delete once chat development done.
+    .state('dashboard.chat', { //TODO Delete once chat development done.
         url: '/chat',
         template: '<chat></chat>'
     })
