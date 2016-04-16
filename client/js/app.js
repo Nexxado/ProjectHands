@@ -6,6 +6,7 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
         .primaryPalette('blue')
         .accentPalette('orange');
 
+    //Decoration for ExceptionHandler
     $provide.decorator('$exceptionHandler', function($delegate) {
         return function(exception, cause) {
 
