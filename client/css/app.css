@@ -1,5 +1,32 @@
-@media (max-width: 768px) {
-    [class*="col-"] {
-        margin: 15px 0;
-    }
+#main-view {
+    height: 100%;
+}
+
+.white {
+    color: white !important;
+}
+
+
+
+/***********************/
+/***** RTL Classes *****/
+/***********************/
+md-input-container.rtl label {
+    right: 0;
+    left: auto;
+    -webkit-transform-origin: right top !important;
+    transform-origin: right top !important;
+    unicode-bidi: embed;
+    padding-right: 3px;
+    padding-left: 0;
+}
+md-input-container.rtl {
+    direction: rtl;
+}
+md-input-container.md-icon-float.rtl {
+    transition: margin-top 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)
+}
+
+md-icon.rtl {
+    transform: scale(-1);
 }

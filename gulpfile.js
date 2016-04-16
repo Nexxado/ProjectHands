@@ -32,7 +32,7 @@ gulp.task('watch', ['browserSync', 'jshint', 'mocha'], function () {
 
 gulp.task('browserSync', function () {
     browserSync.init({
-        proxy: "localhost:8081"
+        proxy: "localhost:8080"
     });
 });
 

@@ -10,11 +10,11 @@ md-list-item.chat-message-wrapper {
 }
 
 .chat-message-wrapper .chat-message-user {
-    font-size: 1.8rem;
+    font-size: 1.2rem;
 }
 
 .chat-message-wrapper .chat-message-content {
-    font-size: 1.5rem;
+    font-size: 1rem;
     padding: 5px;
 }
 
@@ -28,8 +28,10 @@ md-list-item.chat-message-wrapper {
 }
 
 .chat-message-text .chat-timestamp {
-    font-size: 1.1rem;
+    font-size: 0.6rem;
     font-style: italic;
+    display: block;
+    margin-top: 10px;
 }
 
 .chat-message-text.chat-message-self {
@@ -50,5 +52,12 @@ md-list-item.chat-message-wrapper {
 }
 
 .chat-user-divider {
-    margin: 0;
+    margin: 5px 0;
+    color: white;
+}
+
+.chat-input-wrapper {
+    position: relative; 
+    bottom: 0; 
+    margin-top: 10px;
 }

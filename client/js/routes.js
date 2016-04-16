@@ -10,12 +10,6 @@ angular.module('ProjectHands')
         controller: 'HomeController'
     })
 
-    .state('profile', {
-        url: '/profile',
-        templateUrl: 'templates/profile.html'
-
-    })
-
     .state('dashboard', {
         url: '/dashboard',
         templateUrl: 'templates/dashboard/dashboard.html',
@@ -91,10 +85,9 @@ angular.module('ProjectHands')
         templateUrl: 'templates/dashboard/join-requests.html'
     })
 
-    .state('chat', {
+    .state('chat', { //TODO Delete once chat development done.
         url: '/chat',
-        templateUrl: 'templates/chat.html',
-        controller: 'ChatController'
+        template: '<chat></chat>'
     })
 
     .state('renovation_dashboard', {
