@@ -1,25 +1,84 @@
 <md-button class="md-raised md-primary" ng-click="enableEditLayout()" ng-show="!editLayoutEnabled">Edit Layout</md-button>
 <md-button class="md-raised md-accent" ng-click="disableEditLayout()" ng-show="editLayoutEnabled">Stop Editing Layout</md-button>
-<md-button ng-click="addPageToGrid('templates/dashboard/toolbox.html')">a</md-button>
+<md-menu ng-hide="!editLayoutEnabled">
+    <md-button ng-click="$mdOpenMenu($event)" aria-label="Open sample menu"> חלונות להוספה </md-button>
+    <md-menu-content>
+        <md-menu-item layout="column" layout-align="center center" style="height:100%">
+            <table style="width:100%">
+                <tr>
+                    <a class="sidenav-btn">
+                        <md-checkbox ng-model="widgets[0].active" aria-label="Tasks Widget"></md-checkbox><span flex></span> משימות </a>
+                </tr>
+                <tr>
+                    <a class="sidenav-btn">
+                        <md-checkbox ng-model="widgets[1].active" aria-label="Renovations Widget"></md-checkbox><span flex></span> שיפוצים מתוכננים
+
+                    </a>
+                </tr>
+                <tr>
+                    <a class="sidenav-btn">
+                        <md-checkbox ng-model="widgets[2].active" aria-label="Toolbox Widget"></md-checkbox><span flex></span> ארגז הכלים
+
+                    </a>
+                </tr>
+                <tr>
+                    <a class="sidenav-btn">
+                        <md-checkbox ng-model="widgets[3].active" aria-label="Team Widget"></md-checkbox><span flex></span> הצוות שלי
+
+                    </a>
+                </tr>
+                <tr>
+                    <a class="sidenav-btn">
+                        <md-checkbox ng-model="widgets[4].active" aria-label="Calendar Widget"></md-checkbox><span flex></span> לוח שנה
+
+                    </a>
+                </tr>
+                <tr>
+                    <a class="sidenav-btn">
+                        <md-checkbox ng-model="widgets[5].active" aria-label="Chat Widget"></md-checkbox><span flex></span> צ'אט
+
+                    </a>
+                </tr>
+            </table>
+        </md-menu-item>
+
+    </md-menu-content>
+</md-menu>
+
+<!--Checking Mobile Mode for Debugging \/ -->
+<!--
 <md-button ng-click="toggleIsMobile()">Is Mobile: {{gridsterOpts.isMobile}}</md-button>
 <md-button ng-click="toggleMobileModeEnabled()">Mobile Mode Enabled: {{gridsterOpts.mobileModeEnabled}}</md-button>
-<div gridster="gridsterOpts">
-    <ul dir="rtl" id="dashboard-grid-list" ng-repeat="widget in widgets">
-
-
-    </ul>
-</div>
-<!--
-        <li gridster-item="item" ng-model="gridItems[0]" class="grid-item">
-            <div ng-include="'templates/dashboard/toolbox.html'"></div>
-        </li>
-        <li gridster-item="item" ng-model="gridItems[1]" class="grid-item">
-            <div ng-include="'templates/dashboard/team.html'"></div>
-        </li>
-        <li gridster-item="item" ng-model="gridItems[2]" class="grid-item">
-            <div ng-include="'templates/dashboard/calendar.html'"></div>
-        </li>
-        <li gridster-item="item" ng-model="gridItems[3]" class="grid-item">
-            <div ng-include="'templates/dashboard/userProfile.html'"></div>
-        </li>
 -->
+<!--Checking Mobile Mode for Debugging /\ -->
+
+
+
+<div gridster="gridsterOpts">
+    <li gridster-item="item" ng-model="widgets[0]" class="grid-item" ng-if="widgets[0].active">
+        <div ng-include="'templates/dashboard/tasks.html'"></div>
+    </li>
+    <li gridster-item="item" ng-model="widgets[1]" class="grid-item" ng-if="widgets[1].active">
+        <div ng-include="'templates/dashboard/renovations.html'"></div>
+    </li>
+    <li gridster-item="item" ng-model="widgets[2]" class="grid-item" ng-if="widgets[2].active">
+        <div ng-include="'templates/dashboard/toolbox.html'"></div>
+    </li>
+    <li gridster-item="item" ng-model="widgets[3]" class="grid-item" ng-if="widgets[3].active">
+        <div ng-include="'templates/dashboard/team.html'"></div>
+    </li>
+    <li gridster-item="item" ng-model="widgets[4]" class="grid-item" ng-if="widgets[4].active">
+        <div ng-include="'templates/dashboard/calendar.html'"></div>
+    </li>
+    <li gridster-item="item" ng-model="widgets[5]" class="grid-item" ng-if="widgets[5].active">
+        <div ng-include="'templates/dashboard/chat.html'"></div>
+    </li>
+</div>
+
+
+<!--
+ <tr>
+                    <p> משימות <span flex></span>
+                        <md-checkbox ng-model="widgets[0].active" aria-label="Tasks Widget"></md-checkbox>
+                    </p>
+                </tr>-->

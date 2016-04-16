@@ -17,13 +17,14 @@
     min-width: 100%;
     text-transform: none;
     background-color: white;
+    display: flex;
 }
 .dashboard-content {
     background-color: white;
     border-width: 1px;
     padding: 10px;
     /*    margin: 10px;*/
-    width: 100%;
+    width: 98%;
     height: 100%;
 }
 .dashboard-top-rounded-toolbar {

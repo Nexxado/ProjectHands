@@ -1,4 +1,4 @@
-angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages', 'ngMaterial', 'ui.router', 'ct.ui.router.extras', 'ui.bootstrap', 'gridster', 'ui.calendar'])
+angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages', 'ngMaterial', 'ui.router', 'ct.ui.router.extras', 'gridster', 'ui.calendar'])
 
 
 .config(function ($mdThemingProvider) {
