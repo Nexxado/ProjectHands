@@ -115,7 +115,7 @@ angular.module('ProjectHands')
 
     $scope.$watchCollection('history', function(newVal, oldVal, scope) {
 //        console.log("History Changed");
-        scrollToBottom(".chat-message-list"); //FIXME might have to change to support multiple tabs
+        scrollToBottom(".chat-message-list");
     });
 
 

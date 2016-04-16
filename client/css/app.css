@@ -1,6 +1,16 @@
 #main-view {
     height: 100%;
 }
+
+.white {
+    color: white !important;
+}
+
+
+
+/***********************/
+/***** RTL Classes *****/
+/***********************/
 md-input-container.rtl label {
     right: 0;
     left: auto;
@@ -19,7 +29,4 @@ md-input-container.md-icon-float.rtl {
 
 md-icon.rtl {
     transform: scale(-1);
-}
-.white {
-    color: white !important;
 }
