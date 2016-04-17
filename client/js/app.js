@@ -33,7 +33,7 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     $rootScope.constructionToast = function (position) {
         $mdToast.show(
             $mdToast.simple()
-            .textContent('Under Construction')
+            .textContent('האתר תחת בניה')
             .position(position)
             .parent('#main-view')
             .capsule(true)

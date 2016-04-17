@@ -1,9 +1,9 @@
-<md-button class="md-raised md-primary" ng-click="enableEditLayout()" ng-show="!editLayoutEnabled">Edit Layout</md-button>
-<md-button class="md-raised md-accent" ng-click="disableEditLayout()" ng-show="editLayoutEnabled">Stop Editing Layout</md-button>
+<md-button class="md-raised md-primary" ng-click="enableEditLayout()" ng-show="!editLayoutEnabled">התאמה אישית</md-button>
+<md-button class="md-raised md-accent" ng-click="disableEditLayout()" ng-show="editLayoutEnabled">סיום</md-button>
 <md-menu ng-hide="!editLayoutEnabled">
     <md-button ng-click="$mdOpenMenu($event)" aria-label="Open sample menu"> חלונות להוספה </md-button>
     <md-menu-content>
-        <md-menu-item layout="column" layout-align="center center" style="height:100%">
+        <md-menu-item layout="column" layout-align="center center" style="height:100%; overflow: hidden">
             <table style="width:100%">
                 <tr>
                     <a class="sidenav-btn">

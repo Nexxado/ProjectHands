@@ -5,6 +5,7 @@
 .dashboard-sidenav-content {
     padding: 0 5px;
     background-color: #2196F3;
+    overflow: hidden;
 }
 .dashboard-navbar-wrapper {
     background-color: #2196F3;

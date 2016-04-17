@@ -30,3 +30,8 @@ md-input-container.md-icon-float.rtl {
 md-icon.rtl {
     transform: scale(-1);
 }
+
+md-toast {
+    direction: rtl;
+    text-align: center;
+}
