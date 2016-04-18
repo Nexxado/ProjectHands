@@ -1,0 +1,45 @@
+var router = require('express').Router();
+var userUtils = require('../userUtils');
+
+
+//var config = require('.../config.json');
+
+
+function writeToClient(response, data) {
+
+
+    if (data !== null)
+    {
+            response.send(data);
+    }
+    else
+    {
+        response.send("login Error");
+    }
+
+}
+
+// Example : http://localhost:8080/database/query/{"username":"ihabzh" ,"time": "12:01" , "key": "66"}&key":%20"66"%7D&a196c048361fb127a4a1f6d1f95afd0254b7d700cef7b3df49727c78f1853a4f1fb8964e3fc52cc6503f8379d29f842a0101188e4ea80227a06ded9952fd5fa9
+router.get("/login/:credentials&:hash", function (request, response)
+{
+    try {
+        var credentials =  JSON.parse(request.params.credentials);
+        var key  = request.params.hash;
+        
+        // we get the user password from the DB
+       userUtils.login(credentials,key,function (result) {
+           writeToClient(response, result);
+
+       })
+
+    } catch (error) {
+        writeToClient(response, "Request Error , check input data");
+        debug("The error is : ", error);
+    }
+
+});
+
+
+
+
+module.exports = router;

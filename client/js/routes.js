@@ -22,6 +22,13 @@ angular.module('ProjectHands')
 
     })
 
+        .state('login', {
+            url: '/login',
+            templateUrl: 'templates/directives/login.html',
+            controller: 'loginController'
+            
+        })
+        
     .state('dashboard.main-page', {
         url: '/main-page',
         templateUrl: 'templates/dashboard/main-page.html',

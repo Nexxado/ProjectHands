@@ -9,6 +9,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client')); //Static route for client side
 app.use('/vendor', express.static(__dirname + '/../node_modules/')); //Static Route for node_modules
 app.use('/database', require('./routes/database'));
+app.use('/users', require('./routes/users'));
 
 
 app.io = require('./socketio');

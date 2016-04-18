@@ -87,7 +87,7 @@ router.post("/update", function (request, response) {
 
 });
 
-
+// Example : http://localhost:8080/database/query/users&{"username":"ihab"}
 router.get("/query/:collection&:query", function (request, response) {
 
     try {
