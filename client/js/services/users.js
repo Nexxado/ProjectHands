@@ -32,10 +32,8 @@ angular.module('ProjectHands')
             text = username + time + random + password;
             var key = password;
           // create hash
-            var hash = crypto.createHmac('sha512', key);
-            hash.update(text);
-            var value = hash.digest('hex');
-            console.log(value);
+            //var val1 = CryptoJS.HmacSHA512("sdasd");
+            var value=CryptoJS.HmacSHA512(text,key);
             return value;
         }
 

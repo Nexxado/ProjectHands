@@ -31,7 +31,6 @@ function hashSha512(username,time,random,password)
     var hash = crypto.createHmac('sha512', key);
     hash.update(text);
     var value = hash.digest('hex');
-    console.log(value);
     return value;
 }
 module.exports = {

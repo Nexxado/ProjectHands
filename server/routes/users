@@ -2,9 +2,6 @@ var router = require('express').Router();
 var userUtils = require('../userUtils');
 
 
-//var config = require('.../config.json');
-
-
 function writeToClient(response, data) {
 
 
@@ -28,6 +25,7 @@ router.get("/login/:credentials&:hash", function (request, response)
         
         // we get the user password from the DB
        userUtils.login(credentials,key,function (result) {
+
            writeToClient(response, result);
 
        })
