@@ -2,7 +2,7 @@ angular.module('ProjectHands')
 
     .factory('DatabaseService', function ($resource) {
 
-        var baseUrl = '/database';
+        var baseUrl = '/api/database';
 
     
         function remove(collection, query) {

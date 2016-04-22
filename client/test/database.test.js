@@ -19,7 +19,7 @@ describe('DatabaseService', function () {
 
 
     it('Query', function () {
-        $httpBackend.expectGET(encodeURI('/database/query/chats&{"_id":"test"}'))
+        $httpBackend.expectGET(encodeURI('/api/database/query/chats&{"_id":"test"}'))
             .respond(200, [{
                 _id: 'test',
                 message: [
@@ -38,7 +38,7 @@ describe('DatabaseService', function () {
 
     
     it('Insert', function () {
-        $httpBackend.expectPOST('/database/insert', { "collection": "chats", "data": "{\"user\":\"test\"}"})
+        $httpBackend.expectPOST('/api/database/insert', { "collection": "chats", "data": "{\"user\":\"test\"}"})
             .respond(200, {
                 result: {
                     ok: 1,
@@ -52,7 +52,7 @@ describe('DatabaseService', function () {
     });
     
     it('Remove', function () {
-        $httpBackend.expectDELETE(encodeURI('/database/delete/users&{"user":"test"}'))
+        $httpBackend.expectDELETE(encodeURI('/api/database/delete/users&{"user":"test"}'))
             .respond(200, {
                     ok: 1,
                     n: 1
@@ -65,7 +65,7 @@ describe('DatabaseService', function () {
     });
     
     it('Update', function () {
-        $httpBackend.expectPOST('/database/update', { "collection": "users",
+        $httpBackend.expectPOST('/api/database/update', { "collection": "users",
                                                      "data": "{\"user\":\"test2\"}", 
                                                      "query": "{\"user\":\"test\"}",
                                                      "options": "{}"})
