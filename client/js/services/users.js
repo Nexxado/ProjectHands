@@ -1,21 +1,44 @@
 
 angular.module('ProjectHands')
 
-    .factory("UsersService", function ($resource) {
+    .factory("UsersService", function ($resource , $cookies) {
 
         var baseUrl = '/users';
 
 
 
-        function login(username, timeStamp,key,hash) {
+
+        /**
+         *
+         * sends login request to the server api and receives a hash in the result
+         * @param username : the user username
+         * @param timeStamp : the time of the request
+         * @param key :  the user password
+         * @param hash : the sha512 hmac key
+         * @returns {*}
+         */
+        function login(username, timeStamp,random,hashedKey) {
             var credentials={};
             credentials.username=username;
             credentials.time=timeStamp;
-            credentials.key=key;
+            credentials.random=random;
 
-            return $resource(baseUrl + '/login/:credentials&:hash').get({credentials: JSON.stringify(credentials), hash: hash});
+            return $resource(baseUrl + '/login/:credentials&:hash').get({credentials: JSON.stringify(credentials), hash: hashedKey});
 
         }
+
+        function cookieWrite(key,value)
+        {
+
+            var now = new Date();
+            now.setTime(now.getTime() +3600);
+            $cookies.put(key,value ,{   expires: now });
+        }
+        function cookieRead(key)
+        {
+            return $cookies.get(key);
+        }
+
 
         /**
          * used to verify the user credentials
@@ -29,17 +52,18 @@ angular.module('ProjectHands')
         function hashSha512(username,time,random,password)
         {
             // generate a hash from string
-            text = username + time + random + password;
+            var textToBeHashed = username + time + random + password;
             var key = password;
           // create hash
-            //var val1 = CryptoJS.HmacSHA512("sdasd");
-            var value=CryptoJS.HmacSHA512(text,key);
-            return value;
+            var hashedValue=CryptoJS.HmacSHA512(textToBeHashed,key);
+            return hashedValue;
         }
 
         return {
 
             login: login,
-            hashSha512:hashSha512
+            hashSha512:hashSha512,
+            cookieWrite:cookieWrite,
+            cookieRead:cookieRead
         };
     });

@@ -1,3 +1,12 @@
+/**
+ * The matter of mongoUtils is to provide CRUD methods towards the DB such:
+ * 1- insert
+ * 2- update
+ * 3- delete
+ * 4- query
+ */
+
+
 var MongoClient = require('mongodb').MongoClient;
 var _db;
 
@@ -56,8 +65,8 @@ module.exports = {
      * update data in the collection
      * @param collectionName : the collection the data exists in
      * @param query : the search criteria
-     * @param updatedData : the new data to be replaced by
-     * @param isUpdateAll : true to update all the matches , false to update the first match
+     * @param updatedData : the new data to be replaced by yjr new data, {$set:{THE DATA}} to update and not to override
+     * @param options : check mongo update options
      * callback will be executed when finish , and with null if any errors
      * */
     update(collectionName ,query, updatedData, options, callback)

@@ -24,6 +24,7 @@
     "angular": "^1.5.2",
     "angular-animate": "^1.5.3",
     "angular-aria": "^1.5.3",
+    "angular-cookies": "^1.5.2",
     "angular-gridster": "^0.13.3",
     "angular-material": "^1.0.7",
     "angular-messages": "^1.5.3",
@@ -43,7 +44,9 @@
     "mongodb": "^2.1.7",
     "shrinkwrap": "^0.4.0",
     "socket.io": "^1.4.5",
-    "ui-router-extras": "^0.1.2"
+    "ui-router-extras": "^0.1.2",
+    "Cookies":"^0.6.1",
+    "nodemailer":"^2.3.2"
   },
   "devDependencies": {
     "angular-mocks": "^1.5.3",
