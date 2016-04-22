@@ -1,6 +1,6 @@
 var router = require('express').Router();
-var userUtils = require('../utils/user');
-var debug = require('debug')('routes/user');
+var userUtils = require('../utils/auth');
+var debug = require('debug')('routes/auth');
 var Cookies = require('cookies');
 var emailUtils = require('../utils/email');
 

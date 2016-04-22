@@ -1,11 +1,9 @@
 
 angular.module('ProjectHands')
 
-    .factory("UsersService", function ($resource , $cookies) {
+    .factory("Auth", function ($resource , $cookies) {
 
-        var baseUrl = '/users';
-
-
+        var baseUrl = '/api/auth';
 
 
         /**
@@ -55,7 +53,7 @@ angular.module('ProjectHands')
             var textToBeHashed = username + time + random + password;
             var key = password;
           // create hash
-            var hashedValue=CryptoJS.HmacSHA512(textToBeHashed,key);
+            var hashedValue = CryptoJS.HmacSHA512(textToBeHashed,key);
             return hashedValue;
         }
 
