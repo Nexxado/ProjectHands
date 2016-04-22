@@ -43,7 +43,7 @@ router.get("/login/:credentials&:hash", function (request, response)
 
            writeToClient(response, result.isAllowed);
 
-       })
+       });
 
     } catch (error) {
         writeToClient(response, "Request Error , check input data");
@@ -60,7 +60,7 @@ router.get("/signup/:credentials", function (request, response)
 
         userUtils.signUp(credentials,function (result) {
 
-            if(result!=null) // user data inserted successfully
+            if(result) // user data inserted successfully
             {
                 emailUtils.confirmationEmail(credentials.email,credentials.username);
                 writeToClient(response, result);
@@ -73,7 +73,7 @@ router.get("/signup/:credentials", function (request, response)
             }
 
 
-        })
+        });
 
     } catch (error) {
         writeToClient(response, "Request Error , check input data");
@@ -93,7 +93,7 @@ router.get("/roles/:exec&:target&:role", function (request, response)
         userUtils.setUserRole(role,executerUsername,targetUsername,function (result) {
             var message ="Cant change the role.";
 
-            if(result!=null)
+            if(result)
             {
                 message=result.toString();
             }
@@ -102,7 +102,7 @@ router.get("/roles/:exec&:target&:role", function (request, response)
 
 
 
-        })
+        });
 
     } catch (error) {
         writeToClient(response, "Request Error , check input data");

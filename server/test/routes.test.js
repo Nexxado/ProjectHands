@@ -19,3 +19,29 @@ describe('Loading Express', function () {
             .expect(404, done);
     });
 });
+
+describe('API Routes', function () {
+
+    describe('User', function () {
+
+        it('Login', function (done) {
+            request(server)
+                .get('/api/user/login/cred&hash')
+                .expect(200, done);
+        });
+
+        it('Sign Up', function (done) {
+            request(server)
+                .get('/api/user/signup/cred')
+                .expect(200, done);
+        });
+
+        it('Roles', function (done) {
+            request(server)
+                .get('/api/user/roles/initiator&target&role')
+                .expect(200, done);
+        });
+
+    });
+
+});

@@ -68,7 +68,7 @@ module.exports = {
     {
         //we need to check that who sent the request has admin role
         mongoUtils.query("users",{username : executerUsername},function (result) {
-            if(result !== null || result.length === 1)
+            if(result || result.length === 1)
             {
                 var executerPermission= result[0].role;
                 // if targetUsername dose not  exist , no thing will be changed
@@ -112,7 +112,7 @@ module.exports = {
         mongoUtils.query("users",{username:credentials.username},function (result) {
             var msgAndToken={isAllowed:"Not Allowed",token:""}; // the final result to the user
             // the result is array ,the matching user should be at 0, so we will fetch the password
-            if(result.length==1 && result[0].password!==undefined)// exactly 1 match and the password exists
+            if(result.length === 1 && result[0].password)// exactly 1 match and the password exists
             {
                 var password = result[0].password; // the password attribute
                 // now we want to do the has
