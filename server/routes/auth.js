@@ -10,9 +10,9 @@ function writeToClient(response, data) {
     debug('writing to client', data);
     
     if (data) {
-        response.send({data});
+        response.send(data);
     } else {
-        response.send("login Error");
+        response.status(400).send("login Error");
     }
 }
 
@@ -27,7 +27,9 @@ router.get("/login/:credentials&:hash", function (request, response) {
         //we get the user password from the DB
         authUtils.login(credentials, key, function (result) {
             
-            if (result.isAllowed === "Allowed") {
+            var data = undefined;
+            
+            if (result.access === "Allowed") {
                 var cookie = new cookies(request, response, {
                     keys: [serverKey]
                 });
@@ -43,9 +45,11 @@ router.get("/login/:credentials&:hash", function (request, response) {
                     maxAge: 3600
                 });
 //                emailUtils.confirmationEmail("", credentials.username);
-            }
+                data = {access: result.access};
+            
+            } 
 
-            writeToClient(response, result.isAllowed);
+            writeToClient(response, data);
 
         });
 

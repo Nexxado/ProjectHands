@@ -1,20 +1,34 @@
-<md-content>
-    <div>
-        <table>
-            <tr>
-                <td>Username :</td>
-                <td>
-                    <input type="text" ng-model="username"> </td>
-            </tr>
-            <tr>
-                <td>password :</td>
-                <td>
-                    <input type="text" ng-model="password"> </td>
-            </tr>
-        </table>
-        <input type="button" value="login" ng-click="foo()"> {{username}}
-        <br/> Status : {{status}}
-
-
+<md-content layout-padding flex="30" flex-offset="35" id="loginToastsAnchor">
+    <div layout="column" layout-align="center center">
+        <h1>דף כניסה</h1>
     </div>
+    
+    <form name="LoginForm" ng-submit="login()" layout="column" novalidate>
+        <md-input-container class="md-icon-float md-block rtl">
+            <label>אימייל</label>
+            <input type="text" name="email" ng-model="email" ng-pattern="regexEmail" required />
+            <md-icon class="material-icons">email</md-icon>
+            <div ng-messages="LoginForm.email.$error">
+                <div ng-message="required">
+                    שדה חובה
+                </div>
+                <div ng-message="pattern">
+                    אימייל שגוי
+                </div>
+            </div>
+        </md-input-container>
+        <md-input-container class="md-icon-float md-block rtl">
+            <label>סיסמה</label>
+            <input type="text" name="password" ng-model="password" required />
+            <md-icon class="material-icons">lock_outline</md-icon>
+            <div ng-messages="LoginForm.password.$error">
+                <div ng-message="required">
+                    שדה חובה
+                </div>
+            </div>
+        </md-input-container>
+        <div>
+            <md-button type="submit" class="md-accent md-raised white">כניסה</md-button>
+        </div>
+    </form>
 </md-content>

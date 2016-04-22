@@ -14,7 +14,7 @@ angular.module('ProjectHands')
      * @param hash : the sha512 hmac key
      * @returns {*}
      */
-    var login = function (username, password) {
+    function login(username, password) {
         
         var random = Math.floor(Math.random() * 1000000);
         var timeStamp = new Date().getTime();
@@ -22,7 +22,7 @@ angular.module('ProjectHands')
         var hashedKey = hashSha512(username, password, timeStamp, random);
         
         var credentials = {
-            username: username,
+            email: username,
             time: timeStamp,
             random: random
         };
@@ -32,12 +32,12 @@ angular.module('ProjectHands')
             hash: hashedKey
         });
 
-    };
+    }
 
 
-    var cookieRead = function (key) {
+    function cookieRead(key) {
         return $cookies.get(key);
-    };
+    }
 
 
     /**
@@ -49,7 +49,7 @@ angular.module('ProjectHands')
      * @param password : the hash secret key
      * @return : a SHA512 key that will be compared with user hash
      * **/
-    var hashSha512 = function (username, password, time, random) {
+    function hashSha512(username, password, time, random) {
         
         // generate a hash from string
         var textToBeHashed = username + time + random + password;
@@ -57,7 +57,7 @@ angular.module('ProjectHands')
         // create hash
         var hashedValue = CryptoJS.HmacSHA512(textToBeHashed, key);
         return hashedValue;
-    };
+    }
 
     return {
         login: login,

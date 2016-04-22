@@ -1,22 +1,33 @@
 angular.module('ProjectHands')
 
-.controller('LoginController', function ($scope, Auth) {
+.controller('LoginController', function ($scope, Auth, $mdToast) {
 
-    $scope.username = 'test';
+    $scope.regexEmail = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+    $scope.email = 'test@gmail.com';
     $scope.password = '1234';
     $scope.status = '';
 
-    $scope.foo = function () {
+    $scope.login = function () {
 
-        
-        Auth.login($scope.username, $scope.password).$promise
+        if ($scope.LoginForm.$invalid)
+            return;
+
+        Auth.login($scope.email, $scope.password).$promise
             .then(function (data) {
                 console.log('auth data', data);
-                $scope.status = data.data;
+                $scope.status = data.access;
 
             })
             .catch(function (error) {
-                window.alert('login error ', error);
+                console.log('login error ', error);
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('האימייל או הסיסמה אינם נכונים')
+                    .position('top')
+                    .parent('#loginToastsAnchor')
+                    .capsule(true)
+                    .hideDelay(2000)
+                );
             });
 
 

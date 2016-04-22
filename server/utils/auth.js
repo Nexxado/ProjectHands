@@ -63,25 +63,21 @@ module.exports = {
      */
     setUserRole: function (role, executerUsername, targetUsername, callback) {
         //we need to check that who sent the request has admin role
-        mongoUtils.query(collections.users, { username: executerUsername }, function (result) {
+        mongoUtils.query(collections.users, { email: executerUsername }, function (result) {
             if (result || result.length === 1) {
                 var executerPermission = result[0].role;
-                // if targetUsername dose not  exist , no thing will be changed
+                // if targetUsername dose not  exist , nothing will be changed
                 if (executerPermission === roles.ADMIN) {
-                    mongoUtils.update(collections.users, {
-                        username: targetUsername
-                    }, {
-                        $set: {
-                            role: role
-                        }
-                    }, {}, callback);
+                    mongoUtils.update(collections.users, 
+                                      { email: targetUsername }, 
+                                      { $set: { role: role } },
+                                      {}, 
+                                      callback);
                     return;
-
                 }
             }
             callback(null);
         });
-
     },
 
     /**
@@ -103,36 +99,28 @@ module.exports = {
      */
     login: function (credentials, key, callback) {
         
-        debug('Login args', credentials, key);
+        debug('Login credentials', credentials);
         
-        mongoUtils.query(collections.users, { name: credentials.username }, function (result) {
+        mongoUtils.query(collections.users, { email: credentials.email }, function (result) {
             var msgAndToken = {
-                isAllowed: "Not Allowed",
+                access: "Not Allowed",
                 token: ""
             }; // the final result to the user
             // the result is array ,the matching user should be at 0, so we will fetch the password
             if (result.length === 1 && result[0].password) {// exactly 1 match and the password exists
                 
                 var password = result[0].password; // the password attribute
-                // now we want to do the has
-                var hashResult = hashSha512(credentials.username, credentials.time, credentials.random, password);
+                // now we want to do the hash
+                var hashResult = hashSha512(credentials.email, credentials.time, credentials.random, password);
                 // now id the has var is equal to hashResult user is allowed to login
                 if (hashResult === key) {
-                    var token = hashSha512(credentials.username, "50:99", credentials.random, password);
+                    var token = hashSha512(credentials.email, "50:99", credentials.random, password);
                     debug('token', token);
-                    msgAndToken = {
-                        isAllowed: "Allowed",
-                        token: token
-                    };
+                    msgAndToken.access = "Allowed"; //TODO replace with role
+                    msgAndToken.token = token;
                 }
-
-
             }
             callback(msgAndToken);
-
         });
-
     }
-
-
 };
