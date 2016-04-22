@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var app = require('../server/app');
-var mongoUtil = require('../server/mongoUtils');
+var mongoUtil = require('../server/utils/mongo');
 var config = require('../config.json');
 var debug = require('debug')('bin/www');
 
