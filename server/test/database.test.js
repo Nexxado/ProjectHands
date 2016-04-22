@@ -11,10 +11,15 @@ describe('Database Endpoints', function () {
 
     it('Insert', function (done) {
         request(server)
-            .post('/api/database/insert/')
+            .post('/api/database/insert')
             .field('collection', 'users')
             .field('data', '{name: "tester"}')
-            .expect(200, done);
+            .expect(200)
+            .end(function (err, res) {
+                if (err)
+                    return done(err);
+                done();
+            });
     });
 
     it('Delete', function (done) {
@@ -27,12 +32,17 @@ describe('Database Endpoints', function () {
 
     it('Update', function (done) {
         request(server)
-            .post('/api/database/update/')
+            .post('/api/database/update')
             .field('collection', 'users')
             .field('query', '{name: "tester"}')
             .field('data', '{email: "newmail@provider.com"}')
             .field('options', '{}')
-            .expect(200, done);
+            .expect(200)
+            .end(function (err, res) {
+                if (err)
+                    return done(err);
+                done();
+            });
     });
 
 });

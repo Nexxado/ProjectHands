@@ -5,7 +5,8 @@
  */
 
 var nodemailer = require('nodemailer');
-const  email = "projhands@gmail.com";
+var debug = require('debug')('utils/email');
+const email = "projhands@gmail.com";
 const password = "projecthands123456";
 
 var transporter = nodemailer.createTransport('smtps://'+email+':'+password+'@smtp.gmail.com');
@@ -29,7 +30,7 @@ function sendMail (to,subject,content)
         if(error){
             return console.log(error);
         }
-        console.log('Message sent: ' + info.response);
+        debug('Message sent: ' + info.response);
     });
 }
 module.exports =

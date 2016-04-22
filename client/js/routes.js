@@ -15,6 +15,12 @@ angular.module('ProjectHands')
         templateUrl: 'templates/renovation_dashboard.html',
         controller: 'renovationDashboardController'
     })
+    
+    .state('login', {
+        url: '/login',
+        templateUrl: 'templates/login.html',
+        controller: 'LoginController'
+    })
 
     .state('about', {
         url: '/about',

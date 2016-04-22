@@ -27,6 +27,13 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     TEAMS: 'teams'
 })
 
+.constant('ROLES', {
+    ADMIN: "admin",
+    MANAGER: "manager",
+    TEAM_LEAD: "teamLead",
+    VOLUNTEER: "volunteer"
+})
+
 //DEV Global Methods
 .run(function ($rootScope, $mdToast) {
 

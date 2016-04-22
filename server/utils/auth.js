@@ -13,20 +13,17 @@
  * */
 
 
-var crypto = require('crypto-js');
+var crypto = require('crypto');
 var mongoUtils = require('./mongo');
-
+var debug = require('debug')('utils/auth');
+var config = require('../../config');
+var collections = config.collections;
+var roles = config.roles;
 
 /**
  * Defines the Roles that are in the system
  * @type {{ADMIN: string, MANAGER: string, TEAM_LEAD: string, VOLUNTEER: string}}
  */
-const Roles={
-    ADMIN:"admin",
-    MANAGER:"manager",
-    TEAM_LEAD:"teamLead",
-    VOLUNTEER : "volunteer"
-};
 
 /**
  * used to verify the user credentials
@@ -37,8 +34,7 @@ const Roles={
  * @param password : the hash secret key
  * @return : a SHA512 key that will be compared with user hash
  * **/
-function hashSha512(username,time,random,password)
-{
+function hashSha512(username, time, random, password) {
     // generate a hash from string <textToBeHashed>
     var textToBeHashed = username + time + random + password;
     var key = password;
@@ -48,13 +44,14 @@ function hashSha512(username,time,random,password)
     var hashedValue = hashObj.digest('hex');
     return hashedValue;
 }
+
 module.exports = {
 
     /**
      * The roles passed to export
      * @link Roles : contains the Roles in the system
      */
-    roles : Roles,
+    roles: roles,
 
     /**
      * This method will change the user role
@@ -64,26 +61,25 @@ module.exports = {
      * @link  mongoUtils.update : to update the targetUsername role
      * @link mongoUtils.query : to check the  executerUsername role
      */
-    setUserRole:function(role ,executerUsername,targetUsername,callback)
-    {
+    setUserRole: function (role, executerUsername, targetUsername, callback) {
         //we need to check that who sent the request has admin role
-        mongoUtils.query("users",{username : executerUsername},function (result) {
-            if(result || result.length === 1)
-            {
-                var executerPermission= result[0].role;
+        mongoUtils.query(collections.users, { username: executerUsername }, function (result) {
+            if (result || result.length === 1) {
+                var executerPermission = result[0].role;
                 // if targetUsername dose not  exist , no thing will be changed
-                if(executerPermission==Roles.ADMIN)
-                {
-                        mongoUtils.update("users",{username:targetUsername},{$set: { role:role }},{},callback);
-                        return;
+                if (executerPermission === roles.ADMIN) {
+                    mongoUtils.update(collections.users, {
+                        username: targetUsername
+                    }, {
+                        $set: {
+                            role: role
+                        }
+                    }, {}, callback);
+                    return;
 
                 }
             }
-
             callback(null);
-
-
-
         });
 
     },
@@ -93,12 +89,9 @@ module.exports = {
      * @param userObject : the user details from the Client
      * @param callback : methods will be executed when the user is inserted(Success/Fail)
      */
-    signUp: function(userObject , callback)
-    {
-        mongoUtils.insert("users",userObject,callback);
+    signUp: function (userObject, callback) {
+        mongoUtils.insert(collections.users, userObject, callback);
     },
-
-
 
 
     /**
@@ -108,30 +101,38 @@ module.exports = {
      * @param key : the user hash value that been generated from the Client side
      * @param callback : the function that the data will be sent to
      */
-    login : function (credentials ,key, callback) {
-        mongoUtils.query("users",{username:credentials.username},function (result) {
-            var msgAndToken={isAllowed:"Not Allowed",token:""}; // the final result to the user
+    login: function (credentials, key, callback) {
+        
+        debug('Login args', credentials, key);
+        
+        mongoUtils.query(collections.users, { name: credentials.username }, function (result) {
+            var msgAndToken = {
+                isAllowed: "Not Allowed",
+                token: ""
+            }; // the final result to the user
             // the result is array ,the matching user should be at 0, so we will fetch the password
-            if(result.length === 1 && result[0].password)// exactly 1 match and the password exists
-            {
+            if (result.length === 1 && result[0].password) {// exactly 1 match and the password exists
+                
                 var password = result[0].password; // the password attribute
                 // now we want to do the has
-                var hashResult = hashSha512(credentials.username,credentials.time,credentials.random,password);
+                var hashResult = hashSha512(credentials.username, credentials.time, credentials.random, password);
                 // now id the has var is equal to hashResult user is allowed to login
-                if(hashResult === key)
-                {
-                    var token = hashSha512(credentials.username,"50:99",credentials.random,password);
-                    msgAndToken={isAllowed:"Allowed",token:token};
+                if (hashResult === key) {
+                    var token = hashSha512(credentials.username, "50:99", credentials.random, password);
+                    debug('token', token);
+                    msgAndToken = {
+                        isAllowed: "Allowed",
+                        token: token
+                    };
                 }
 
 
             }
-           callback(msgAndToken);
+            callback(msgAndToken);
 
         });
 
     }
 
-    
-};
 
+};
