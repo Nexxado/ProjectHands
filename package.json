@@ -35,6 +35,7 @@
     "angular-ui-router": "^0.2.18",
     "body-parser": "^1.15.0",
     "bootstrap": "^3.3.6",
+    "cookies":"^0.6.1",
     "crypto-js": "^3.1.6",
     "express": "^4.13.4",
     "fullcalendar": "^2.7.0-beta",
@@ -42,11 +43,10 @@
     "jquery": "^2.2.2",
     "moment": "^2.12.0",
     "mongodb": "^2.1.7",
+    "nodemailer":"^2.3.2",
     "shrinkwrap": "^0.4.0",
     "socket.io": "^1.4.5",
-    "ui-router-extras": "^0.1.2",
-    "Cookies":"^0.6.1",
-    "nodemailer":"^2.3.2"
+    "ui-router-extras": "^0.1.2"
   },
   "devDependencies": {
     "angular-mocks": "^1.5.3",
