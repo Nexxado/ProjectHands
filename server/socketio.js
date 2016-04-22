@@ -2,7 +2,7 @@ var io = require('socket.io')({
     transports: ['websocket','xhr-polling']
 });
 var config = require('../config.json');
-var mongoUtils = require('./mongoUtils');
+var mongoUtils = require('./utils/mongo');
 var debug = require('debug')('server/socketio');
  
 

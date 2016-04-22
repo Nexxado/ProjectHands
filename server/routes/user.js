@@ -1,8 +1,8 @@
 var router = require('express').Router();
-var userUtils = require('../userUtils');
-var debug = require('debug')('routes/users');
-var Cookies = require( "cookies" );
-var emailUtils = require('../emailUtils');
+var userUtils = require('../utils/user');
+var debug = require('debug')('routes/user');
+var Cookies = require('cookies');
+var emailUtils = require('../utils/email');
 
 function writeToClient(response, data) {
 

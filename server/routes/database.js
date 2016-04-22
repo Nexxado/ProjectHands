@@ -1,5 +1,5 @@
 var router = require('express').Router();
-var mongoUtils = require('../mongoUtils');
+var mongoUtils = require('../utils/mongo');
 var debug = require('debug')('routes/database');
 
 

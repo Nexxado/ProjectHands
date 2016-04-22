@@ -13,8 +13,8 @@
  * */
 
 
-var crypto = require('crypto');
-var mongoUtils = require('./mongoUtils');
+var crypto = require('crypto-js');
+var mongoUtils = require('./mongo');
 
 
 /**
