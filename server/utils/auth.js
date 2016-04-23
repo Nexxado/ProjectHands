@@ -109,14 +109,16 @@ module.exports = {
             // the result is array ,the matching user should be at 0, so we will fetch the password
             if (result.length === 1 && result[0].password) {// exactly 1 match and the password exists
                 
-                var password = result[0].password; // the password attribute
+                var user = result[0];
+                var password = user.password; // the password attribute
                 // now we want to do the hash
                 var hashResult = hashSha512(credentials.email, credentials.time, credentials.random, password);
                 // now id the has var is equal to hashResult user is allowed to login
                 if (hashResult === key) {
                     var token = hashSha512(credentials.email, "50:99", credentials.random, password);
                     debug('token', token);
-                    msgAndToken.access = "Allowed"; //TODO replace with role
+                    debug('result', user);
+                    msgAndToken.access = user.role;
                     msgAndToken.token = token;
                 }
             }

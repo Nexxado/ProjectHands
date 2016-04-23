@@ -28,8 +28,8 @@ router.get("/login/:credentials&:hash", function (request, response) {
         authUtils.login(credentials, key, function (result) {
             
             var data = undefined;
-            
-            if (result.access === "Allowed") {
+            debug('result', result);
+            if (result.access !== "Not Allowed") {
                 var cookie = new cookies(request, response, {
                     keys: [serverKey]
                 });
@@ -40,7 +40,7 @@ router.get("/login/:credentials&:hash", function (request, response) {
                     signed: true,
                     maxAge: 3600
                 });
-                cookie.set("access", "allowed", { //TODO change "allowed" to role permissions
+                cookie.set("access", result.access, {
                     signed: true,
                     maxAge: 3600
                 });
