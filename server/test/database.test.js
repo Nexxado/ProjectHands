@@ -1,8 +1,20 @@
 var request = require('supertest');
 var server = require('../app');
 var mongoUtils = require('../utils/mongo');
+var crypto = require('crypto');
 var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
+
+function hashSha512(username, time, random, password) {
+    // generate a hash from string <textToBeHashed>
+    var textToBeHashed = username + time + random + password;
+    var key = password;
+    // create hash
+    var hashObj = crypto.createHmac('sha512', key);
+    hashObj.update(textToBeHashed);
+    var hashedValue = hashObj.digest('hex');
+    return hashedValue;
+}
 
 describe('Database API', function () {
 
@@ -131,13 +143,23 @@ describe('Database API', function () {
         });
 
         it('Login', function (done) {
+
+            var random = Math.floor(Math.random() * 1000000);
+            var timeStamp = new Date().getTime();
+
+            var hashedKey = hashSha512("signupmocha@gmail.com", timeStamp, random, "1234");
+
+            var credentials = {
+                email: "signupmocha@gmail.com",
+                time: timeStamp,
+                random: random,
+                remember: false
+            };
+
             request(server)
                 .get('/api/auth/login/' +
-                    JSON.stringify({
-                        email: "route@gmail.com",
-                        password: "1234"
-                    }) +
-                    '&a1b2c3d4')
+                    JSON.stringify(credentials) +
+                    '&' + hashedKey)
                 .expect(200, done);
         });
 
