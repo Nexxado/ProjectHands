@@ -1,31 +1,37 @@
 var router = require('express').Router();
+var cookies = require('cookies');
+var HttpStatus = require('http-status-codes');
 var authUtils = require('../utils/auth');
 var debug = require('debug')('routes/auth');
-var cookies = require('cookies');
 var emailUtils = require('../utils/email');
 var config = require('../../config.json');
 var serverKey = config.key;
 var ROLES = config.ROLES;
 
-function writeToClient(response, data) {
+function writeToClient(response, data, status) {
 
     var isError = JSON.stringify(data).match(/error/i) !== null;
     debug('writing to client', data);
     debug('is data error?', isError);
 
     if (isError) {
-        response.status(400).send(data);
+        if(!status)
+            status = HttpStatus.BAD_REQUEST;
+        response.status(status).send(data);
         return;
     }
 
-    response.send(data);
+    if(typeof data === 'object')
+        response.json(data);
+    else
+        response.send(data);
 }
 
 // Example : http://localhost:8080/database/query/{"username":"ihabzh" ,"time": "12:01" , "random": "66"}&key":%20"66"%7D&a196c048361fb127a4a1f6d1f95afd0254b7d700cef7b3df49727c78f1853a4f1fb8964e3fc52cc6503f8379d29f842a0101188e4ea80227a06ded9952fd5fa9
-router.get("/login/:credentials&:hash", function (request, response) {
+router.post("/login", function (request, response) {
     try {
-        var credentials = JSON.parse(request.params.credentials);
-        var key = request.params.hash;
+        var credentials = JSON.parse(request.body.credentials);
+        var key = request.body.hash;
 
         //Var cookie = request.cookie;
 
@@ -33,7 +39,7 @@ router.get("/login/:credentials&:hash", function (request, response) {
         authUtils.login(credentials, key, function (result) {
 
             debug('login result', result);
-            if (result.access !== "Not Allowed") {
+            if (result.user !== "Not Allowed") {
                 var cookie = new cookies(request, response, {
                     keys: [serverKey]
                 });
@@ -50,18 +56,16 @@ router.get("/login/:credentials&:hash", function (request, response) {
                 }
 
                 cookie.set("token", token, options);
-                cookie.set("access", result.access, options);
+                cookie.set("access", result.user.role, options);
                 //                emailUtils.confirmationEmail("", credentials.username);
-                var data = {
-                    access: result.access
-                };
-                writeToClient(response, data);
+
+                writeToClient(response, result.user);
                 return;
             }
 
 //            debug('cookies', cookies.get('access', {signed: true}));
 
-            writeToClient(response, "Error: Login Failed");
+            writeToClient(response, "Error: Login Failed", HttpStatus.UNAUTHORIZED);
 
         });
 
@@ -86,12 +90,12 @@ router.post("/signup", function (request, response) {
                 writeToClient(response, result);
 
             } else {
-                writeToClient(response, "Error: Sign-Up Failed, please try again");
+                writeToClient(response, "Error: Sign-Up Failed, please try again", HttpStatus.BAD_REQUEST);
             }
         });
 
     } catch (error) {
-        writeToClient(response, "Error: Sign-Up Request Failed, check input data");
+        writeToClient(response, "Error: Sign-Up Request Failed", HttpStatus.BAD_REQUEST);
         debug("SignUp error: ", error);
     }
 
@@ -126,7 +130,7 @@ router.get("/roles/:exec&:target&:role", function (request, response) {
         });
 
     } catch (error) {
-        writeToClient(response, "Error: Roles Request Failed, check input data");
+        writeToClient(response, "Error: Roles Request Failed, check input data", HttpStatus.BAD_REQUEST);
         debug("Roles error:", error);
     }
 

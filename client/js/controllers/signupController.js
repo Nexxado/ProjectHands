@@ -1,9 +1,9 @@
 angular.module('ProjectHands')
 
-.controller('SignupController', function ($scope, Auth, $mdToast) {
+.controller('SignupController', function ($scope, AuthService, $mdToast) {
 
     $scope.user = {
-        email: '1234@gmail.com',
+        email: 'signup@gmail.com',
         password: '1234',
         _id: '222222222',
         name: "signup testing"
@@ -14,7 +14,7 @@ angular.module('ProjectHands')
         if ($scope.SignupForm.$invalid)
             return;
 
-        Auth.signup($scope.user).$promise
+        AuthService.signup($scope.user).$promise
             .then(function (data) {
                 console.log('data', data);
             }).catch(function (error) {

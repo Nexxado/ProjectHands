@@ -1,6 +1,6 @@
 angular.module('ProjectHands')
 
-.factory("Auth", function ($resource, $cookies) {
+.factory("AuthService", function ($resource, $cookies, $http, $q, $window) {
 
     var baseUrl = '/api/auth';
 
@@ -20,7 +20,6 @@ angular.module('ProjectHands')
         var timeStamp = new Date().getTime();
 
         var hashedKey = hashSha512(username, password, timeStamp, random);
-
         var credentials = {
             email: username,
             time: timeStamp,
@@ -28,12 +27,13 @@ angular.module('ProjectHands')
             remember: rememberMe
         };
 
-        return $resource(baseUrl + '/login/:credentials&:hash').get({
+        return $resource(baseUrl + '/login').save({
             credentials: JSON.stringify(credentials),
-            hash: hashedKey
+            hash: encodeURI(hashedKey)
         });
 
     }
+
 
     function signup(user) {
         return $resource(baseUrl + '/signup').save({

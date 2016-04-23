@@ -102,8 +102,9 @@ module.exports = {
         debug('Login credentials', credentials);
         
         mongoUtils.query(COLLECTIONS.USERS, { email: credentials.email }, function (result) {
-            var msgAndToken = {
-                access: "Not Allowed",
+
+            var userAndToken = {
+                user: "Not Allowed",
                 token: ""
             }; // the final result to the user
             // the result is array ,the matching user should be at 0, so we will fetch the password
@@ -118,11 +119,11 @@ module.exports = {
                     var token = hashSha512(credentials.email, "50:99", credentials.random, password);
                     debug('token', token);
                     debug('result', user);
-                    msgAndToken.access = user.role;
-                    msgAndToken.token = token;
+                    userAndToken.user = user;
+                    userAndToken.token = token;
                 }
             }
-            callback(msgAndToken);
+            callback(userAndToken);
         });
     }
 };

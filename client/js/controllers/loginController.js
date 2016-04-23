@@ -1,11 +1,10 @@
 angular.module('ProjectHands')
 
-.controller('LoginController', function ($scope, Auth, $mdToast) {
+.controller('LoginController', function ($scope, $rootScope, $mdToast, AuthService, AUTH_EVENTS) {
 
 
     $scope.email = 'test@gmail.com';
     $scope.password = '1234';
-    $scope.status = '';
     $scope.rememberMe = false;
 
     $scope.login = function () {
@@ -13,14 +12,16 @@ angular.module('ProjectHands')
         if ($scope.LoginForm.$invalid)
             return;
 
-        Auth.login($scope.email, $scope.password, $scope.rememberMe).$promise
+        AuthService.login($scope.email, $scope.password, $scope.rememberMe)
+            .$promise
             .then(function (data) {
                 console.log('auth data', data);
-                $scope.status = data.access;
+                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
 
             })
             .catch(function (error) {
                 console.log('login error ', error);
+                $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                 $mdToast.show(
                     $mdToast.simple()
                     .textContent('האימייל או הסיסמה אינם נכונים')

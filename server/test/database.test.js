@@ -157,10 +157,15 @@ describe('Database API', function () {
             };
 
             request(server)
-                .get('/api/auth/login/' +
-                    JSON.stringify(credentials) +
-                    '&' + hashedKey)
-                .expect(200, done);
+                .post('/api/auth/login')
+                .send({
+                    credentials: JSON.stringify(credentials),
+                    hash: hashedKey
+                })
+                .expect(200)
+                .end(function (err, result) {
+                    done();
+                });
         });
 
 

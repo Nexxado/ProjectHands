@@ -24,7 +24,7 @@
 
 </head>
 
-<body>
+<body ng-controller="ApplicationController">
 	<toolbar></toolbar>
 	<!-- Main Content -->
 	<div ui-view id="main-view"></div>
@@ -62,6 +62,7 @@
 <script src="modules/dashboard/routes.js"></script>
 
 <!-- Controllers -->
+<script src="js/controllers/applicationController.js"></script>
 <script src="js/controllers/homeController.js"></script>
 <script src="js/controllers/aboutController.js"></script>
 <script src="js/controllers/chatController.js"></script>

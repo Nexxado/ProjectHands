@@ -1,16 +1,17 @@
 var router = require('express').Router();
+var HttpStatus = require('http-status-codes');
 var mongoUtils = require('../utils/mongo');
 var debug = require('debug')('routes/database');
 
 
-function writeToClient(response, data, isObject) {
+function writeToClient(response, data, status) {
     
     var isError = JSON.stringify(data).match(/error/i) !== null;
     debug('writetoclient data', data);
-    debug('writetoclient isObject', isObject);
+    debug('is data error?', isError);
     
     if(isError) {
-        response.status(500).send("DB Error");
+        response.status(status).send("DB Error");
         return;
     }
 
@@ -32,7 +33,7 @@ router.post("/insert", function (request, response) {
             writeToClient(response, result);
         });
     } catch (error) {
-        writeToClient(response, "Request Error");
+        writeToClient(response, "Request Error", HttpStatus.INTERNAL_SERVER_ERROR);
         debug("The error is : ", error);
     }
 
@@ -51,8 +52,9 @@ router.delete("/delete/:collection&:query", function (request, response) {
         mongoUtils.delete(colName, query, function (result) {
             writeToClient(response, result);
         });
+
     } catch (error) {
-        writeToClient(response, "Request Error");
+        writeToClient(response, "Request Error", HttpStatus.INTERNAL_SERVER_ERROR);
         debug("The error is : ", error);
     }
 
@@ -75,8 +77,9 @@ router.post("/update", function (request, response) {
             writeToClient(response, result);
 
         });
+
     } catch (error) {
-        writeToClient(response, "Request Error");
+        writeToClient(response, "Request Error", HttpStatus.INTERNAL_SERVER_ERROR);
         debug("The error is : ", error);
     }
 
@@ -99,7 +102,7 @@ router.get("/query/:collection&:query", function (request, response) {
         });
 
     } catch (error) {
-        writeToClient(response, "Request Error");
+        writeToClient(response, "Request Error", HttpStatus.INTERNAL_SERVER_ERROR);
         debug("The error is : ", error);
     }
 
