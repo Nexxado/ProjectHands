@@ -26,8 +26,9 @@ describe('Loading Express', function () {
 describe('API Routes', function () {
 
     before(function (done) {
-        mongoUtils.connect(config.mongoDBUrl);
-        setTimeout(function () {
+        var DB_URL = process.env.MONGODB_URL || config.mongoDBUrl;
+        mongoUtils.connect(DB_URL);
+        setTimeout(function () { //Timeout to let DB finish connecting
             done();
         }, 1000);
     });
@@ -49,6 +50,7 @@ describe('API Routes', function () {
                 email: "route@gmail.com"
             }, function () {});
 
+            //Delete user after signup
             mongoUtils.delete(COLLECTIONS.USERS, {
                 _id: "123123123"
             }, function() {});
