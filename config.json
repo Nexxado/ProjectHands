@@ -1,16 +1,17 @@
 {
     "mongoDBUrl" : "mongodb://localhost:27017/hands",
     "key": "serverTestKey",
-    "collections": {
-        "users": "users",
-        "renovations": "renovations",
-        "teams": "teams",
-        "chats": "chats"
+    "COLLECTIONS": {
+        "USERS": "users",
+        "RENOVATIONS": "renovations",
+        "TEAMS": "teams",
+        "CHATS": "chats"
     },
-    "roles": {
+    "ROLES": {
         "ADMIN": "admin",
         "MANAGER": "manager",
         "TEAM_LEAD": "teamLead",
-        "VOLUNTEER": "volunteer"
+        "VOLUNTEER": "volunteer",
+        "GUEST": "guest"
     }
 }

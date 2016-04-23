@@ -22,6 +22,12 @@ angular.module('ProjectHands')
         controller: 'LoginController'
     })
 
+    .state('signup', {
+        url: '/signup',
+        templateUrl: 'templates/signup.html',
+        controller: 'SignupController'
+    })
+
     .state('about', {
         url: '/about',
         templateUrl: 'templates/about/index.html',

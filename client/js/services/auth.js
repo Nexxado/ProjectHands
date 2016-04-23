@@ -15,12 +15,12 @@ angular.module('ProjectHands')
      * @returns {*}
      */
     function login(username, password) {
-        
+
         var random = Math.floor(Math.random() * 1000000);
         var timeStamp = new Date().getTime();
-        
+
         var hashedKey = hashSha512(username, password, timeStamp, random);
-        
+
         var credentials = {
             email: username,
             time: timeStamp,
@@ -34,7 +34,18 @@ angular.module('ProjectHands')
 
     }
 
+    function signup(user) {
+        return $resource(baseUrl + '/signup').save({
+            user: JSON.stringify(user)
+        });
+    }
 
+
+    /**
+     * Get a saved cookie
+     * @param   {string} key : The cookie's identifier
+     * @returns {object}     : The cookie
+     */
     function cookieRead(key) {
         return $cookies.get(key);
     }
@@ -50,7 +61,7 @@ angular.module('ProjectHands')
      * @return : a SHA512 key that will be compared with user hash
      * **/
     function hashSha512(username, password, time, random) {
-        
+
         // generate a hash from string
         var textToBeHashed = username + time + random + password;
         var key = password;
@@ -60,8 +71,8 @@ angular.module('ProjectHands')
     }
 
     return {
+        signup: signup,
         login: login,
-        hashSha512: hashSha512,
         cookieRead: cookieRead
     };
 });

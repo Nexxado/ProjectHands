@@ -3,22 +3,24 @@ var authUtils = require('../utils/auth');
 var debug = require('debug')('routes/auth');
 var cookies = require('cookies');
 var emailUtils = require('../utils/email');
-var serverKey = require('../../config.json').key;
+var config = require('../../config.json');
+var serverKey = config.key;
+var ROLES = config.ROLES;
 
-function writeToClient(response, data) {
+function writeToClient(response, data, error) {
     
     debug('writing to client', data);
     
-    if (data) {
+    if (!error) {
         response.send(data);
     } else {
-        response.status(400).send("login Error");
+        response.status(400).send(data);
     }
 }
 
 // Example : http://localhost:8080/database/query/{"username":"ihabzh" ,"time": "12:01" , "random": "66"}&key":%20"66"%7D&a196c048361fb127a4a1f6d1f95afd0254b7d700cef7b3df49727c78f1853a4f1fb8964e3fc52cc6503f8379d29f842a0101188e4ea80227a06ded9952fd5fa9
 router.get("/login/:credentials&:hash", function (request, response) {
-    try {
+//    try {
         var credentials = JSON.parse(request.params.credentials);
         var key = request.params.hash;
 
@@ -27,8 +29,7 @@ router.get("/login/:credentials&:hash", function (request, response) {
         //we get the user password from the DB
         authUtils.login(credentials, key, function (result) {
             
-            var data = undefined;
-            debug('result', result);
+            debug('login result', result);
             if (result.access !== "Not Allowed") {
                 var cookie = new cookies(request, response, {
                     keys: [serverKey]
@@ -45,44 +46,44 @@ router.get("/login/:credentials&:hash", function (request, response) {
                     maxAge: 3600
                 });
 //                emailUtils.confirmationEmail("", credentials.username);
-                data = {access: result.access};
-            
+                var data = {access: result.access};
+                writeToClient(response, data);
+                return;
             } 
 
-            writeToClient(response, data);
+            writeToClient(response, "Login Error", true);
 
         });
 
-    } catch (error) {
-        writeToClient(response, "Request Error , check input data");
-        debug("The error is : ", error);
-    }
+//    } catch (error) {
+//        writeToClient(response, "Request Error , check input data");
+//        debug("Login error: ", error);
+//    }
 
 });
 
 
-router.get("/signup/:credentials", function (request, response) {
+router.post("/signup", function (request, response) {
     try {
-        var credentials = JSON.parse(request.params.credentials);
+        var user = JSON.parse(request.body.user);
+        user.role = ROLES.GUEST;
 
-        authUtils.signUp(credentials, function (result) {
+        authUtils.signUp(user, function (result) {
 
-            if (result) // user data inserted successfully
-            {
-                emailUtils.confirmationEmail(credentials.email, credentials.username);
+            debug('signup result', result);
+            if (result) {// user data inserted successfully
+//                emailUtils.confirmationEmail(credentials.email, credentials.name); //FIXME send confirmation email on signup
                 writeToClient(response, result);
 
             } else {
-                writeToClient(response, "Error has accord in the sign up process , please try again");
-
+                writeToClient(response, "Error in the sign up process , please try again", true);
             }
-
-
         });
 
     } catch (error) {
-        writeToClient(response, "Request Error , check input data");
-        debug("The error is : ", error);
+        console.log('try error');
+        writeToClient(response, "Request Error , check input data", true);
+        debug("SignUp error: ", error);
     }
 
 });

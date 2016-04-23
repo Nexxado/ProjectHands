@@ -48,7 +48,7 @@ module.exports = {
         {
             if(error)
             {
-                // debug(error);
+                debug('error', error);
                 callback(null);
 
             }

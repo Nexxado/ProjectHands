@@ -17,8 +17,8 @@ var crypto = require('crypto');
 var mongoUtils = require('./mongo');
 var debug = require('debug')('utils/auth');
 var config = require('../../config');
-var collections = config.collections;
-var roles = config.roles;
+var COLLECTIONS = config.COLLECTIONS;
+var ROLES = config.ROLES;
 
 /**
  * Defines the Roles that are in the system
@@ -51,7 +51,7 @@ module.exports = {
      * The roles passed to export
      * @link Roles : contains the Roles in the system
      */
-    roles: roles,
+    roles: ROLES,
 
     /**
      * This method will change the user role
@@ -63,12 +63,12 @@ module.exports = {
      */
     setUserRole: function (role, executerUsername, targetUsername, callback) {
         //we need to check that who sent the request has admin role
-        mongoUtils.query(collections.users, { email: executerUsername }, function (result) {
+        mongoUtils.query(COLLECTIONS.USERS, { email: executerUsername }, function (result) {
             if (result || result.length === 1) {
                 var executerPermission = result[0].role;
                 // if targetUsername dose not  exist , nothing will be changed
-                if (executerPermission === roles.ADMIN) {
-                    mongoUtils.update(collections.users, 
+                if (executerPermission === ROLES.ADMIN) {
+                    mongoUtils.update(COLLECTIONS.USERS,
                                       { email: targetUsername }, 
                                       { $set: { role: role } },
                                       {}, 
@@ -86,7 +86,7 @@ module.exports = {
      * @param callback : methods will be executed when the user is inserted(Success/Fail)
      */
     signUp: function (userObject, callback) {
-        mongoUtils.insert(collections.users, userObject, callback);
+        mongoUtils.insert(COLLECTIONS.USERS, userObject, callback);
     },
 
 
@@ -101,7 +101,7 @@ module.exports = {
         
         debug('Login credentials', credentials);
         
-        mongoUtils.query(collections.users, { email: credentials.email }, function (result) {
+        mongoUtils.query(COLLECTIONS.USERS, { email: credentials.email }, function (result) {
             var msgAndToken = {
                 access: "Not Allowed",
                 token: ""
