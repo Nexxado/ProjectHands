@@ -2,6 +2,9 @@ language: node_js
 node_js:
   - "4"
   
+services:
+  - mongodb
+  
 script: 
   - karma start --browsers Firefox --single-run
   - mocha server/test

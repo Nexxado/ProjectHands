@@ -1,5 +1,5 @@
 {
-    "mongoDBUrl" : "mongodb://localhost:27017/hands",
+    "mongoDBUrl" : "mongodb://127.0.0.1:27017/hands",
     "key": "serverTestKey",
     "COLLECTIONS": {
         "USERS": "users",

@@ -26,8 +26,7 @@ describe('Loading Express', function () {
 describe('API Routes', function () {
 
     before(function (done) {
-        var DB_URL = process.env.MONGODB_URL || config.mongoDBUrl;
-        mongoUtils.connect(DB_URL);
+        mongoUtils.connect(config.mongoDBUrl);
         setTimeout(function () { //Timeout to let DB finish connecting
             done();
         }, 1000);
