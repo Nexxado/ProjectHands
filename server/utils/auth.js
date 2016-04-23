@@ -16,7 +16,7 @@
 var crypto = require('crypto');
 var mongoUtils = require('./mongo');
 var debug = require('debug')('utils/auth');
-var config = require('../../config');
+var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
 var ROLES = config.ROLES;
 

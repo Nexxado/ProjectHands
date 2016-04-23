@@ -13,15 +13,14 @@ angular.module('ProjectHands')
             return;
 
         AuthService.login($scope.email, $scope.password, $scope.rememberMe)
-            .$promise
             .then(function (data) {
                 console.log('auth data', data);
-                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+//                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
 
             })
             .catch(function (error) {
                 console.log('login error ', error);
-                $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+//                $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                 $mdToast.show(
                     $mdToast.simple()
                     .textContent('האימייל או הסיסמה אינם נכונים')
