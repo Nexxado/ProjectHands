@@ -6,13 +6,14 @@ angular.module('ProjectHands')
     $scope.email = 'test@gmail.com';
     $scope.password = '1234';
     $scope.status = '';
+    $scope.rememberMe = false;
 
     $scope.login = function () {
 
         if ($scope.LoginForm.$invalid)
             return;
 
-        Auth.login($scope.email, $scope.password).$promise
+        Auth.login($scope.email, $scope.password, $scope.rememberMe).$promise
             .then(function (data) {
                 console.log('auth data', data);
                 $scope.status = data.access;

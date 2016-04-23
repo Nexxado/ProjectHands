@@ -14,7 +14,7 @@ angular.module('ProjectHands')
      * @param hash : the sha512 hmac key
      * @returns {*}
      */
-    function login(username, password) {
+    function login(username, password, rememberMe) {
 
         var random = Math.floor(Math.random() * 1000000);
         var timeStamp = new Date().getTime();
@@ -24,7 +24,8 @@ angular.module('ProjectHands')
         var credentials = {
             email: username,
             time: timeStamp,
-            random: random
+            random: random,
+            remember: rememberMe
         };
 
         return $resource(baseUrl + '/login/:credentials&:hash').get({

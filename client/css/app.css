@@ -11,6 +11,8 @@
 /***********************/
 /***** RTL Classes *****/
 /***********************/
+
+/* INPUT */
 md-input-container.rtl label {
     right: 0;
     left: auto;
@@ -41,6 +43,24 @@ md-input-container.md-icon-float.rtl > md-icon {
     right: 2px;
     left: auto;
 }
+
+
+/* CHECKBOX */
+md-checkbox.rtl {
+    direction: rtl;
+}
+
+md-checkbox.rtl .md-container {
+    left: auto;
+    right: 0;
+}
+
+md-checkbox.rtl .md-label {
+    margin-left: 0;
+    margin-right: 30px;
+}
+
+
 
 md-icon.rtl {
     transform: scale(-1);

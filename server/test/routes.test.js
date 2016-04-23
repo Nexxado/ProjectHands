@@ -81,11 +81,13 @@ describe('API Routes', function () {
                 .expect(400, done);
         });
 
-        //        it('Roles', function (done) {
-        //            request(server)
-        //                .get('/api/auth/roles/initiator&target&role')
-        //                .expect(200, done);
-        //        });
+
+
+//        it('Roles', function (done) {
+//            request(server)
+//                .get('/api/auth/roles/initiator&target&role')
+//                .expect(200, done);
+//        });
 
     });
 
