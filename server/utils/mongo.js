@@ -49,7 +49,7 @@ module.exports = {
             if(error)
             {
                 debug('error', error);
-                callback(null);
+                callback(error);
 
             }
             else
@@ -75,7 +75,7 @@ module.exports = {
             if (error)
             {
                 debug(error);
-                callback(null);
+                callback(error);
                 return;
             }
             else if (result)
@@ -104,7 +104,7 @@ module.exports = {
             if(error)
             {
                 debug(error);
-                callback(null);
+                callback(error);
 
             }
             else
@@ -131,7 +131,7 @@ module.exports = {
             if(error)
             {
                 debug(error);
-                callback(null);
+                callback(error);
             }
             else
             {

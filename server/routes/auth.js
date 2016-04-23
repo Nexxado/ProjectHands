@@ -7,15 +7,18 @@ var config = require('../../config.json');
 var serverKey = config.key;
 var ROLES = config.ROLES;
 
-function writeToClient(response, data, error) {
+function writeToClient(response, data) {
 
+    var isError = JSON.stringify(data).match(/error/i) !== null;
     debug('writing to client', data);
+    debug('is data error?', isError);
 
-    if (!error) {
-        response.send(data);
-    } else {
+    if (isError) {
         response.status(400).send(data);
+        return;
     }
+
+    response.send(data);
 }
 
 // Example : http://localhost:8080/database/query/{"username":"ihabzh" ,"time": "12:01" , "random": "66"}&key":%20"66"%7D&a196c048361fb127a4a1f6d1f95afd0254b7d700cef7b3df49727c78f1853a4f1fb8964e3fc52cc6503f8379d29f842a0101188e4ea80227a06ded9952fd5fa9
@@ -58,13 +61,13 @@ router.get("/login/:credentials&:hash", function (request, response) {
 
 //            debug('cookies', cookies.get('access', {signed: true}));
 
-            writeToClient(response, "Login Error", true);
+            writeToClient(response, "Error: Login Failed");
 
         });
 
     } catch (error) {
-        writeToClient(response, "Request Error , check input data");
-        debug("Login error: ", error);
+        writeToClient(response, "Error: Login Request Failed, check input data");
+        debug("Login error:", error);
     }
 
 });
@@ -83,12 +86,12 @@ router.post("/signup", function (request, response) {
                 writeToClient(response, result);
 
             } else {
-                writeToClient(response, "Error in the sign up process , please try again", true);
+                writeToClient(response, "Error: Sign-Up Failed, please try again");
             }
         });
 
     } catch (error) {
-        writeToClient(response, "Request Error , check input data", true);
+        writeToClient(response, "Error: Sign-Up Request Failed, check input data");
         debug("SignUp error: ", error);
     }
 
@@ -123,8 +126,8 @@ router.get("/roles/:exec&:target&:role", function (request, response) {
         });
 
     } catch (error) {
-        writeToClient(response, "Request Error , check input data");
-        debug("The error is : ", error);
+        writeToClient(response, "Error: Roles Request Failed, check input data");
+        debug("Roles error:", error);
     }
 
 });
