@@ -6,11 +6,14 @@
             <md-button ui-sref="home">פרויקט ידיים</md-button>
             <span flex></span>
             <!-- Buttons -->
-            <md-button ui-sref="signup">
+            <md-button ui-sref="signup" ng-hide="isLoggedIn">
                 הרשמה
             </md-button>
-            <md-button ui-sref="login">
+            <md-button ui-sref="login" ng-hide="isLoggedIn">
                 כניסה
+            </md-button>
+            <md-button ng-click="logout()" ng-show="isLoggedIn">
+                יציאה
             </md-button>
             <md-button ng-click="constructionToast('top right')">
                 עלינו

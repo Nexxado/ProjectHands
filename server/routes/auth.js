@@ -59,7 +59,7 @@ router.post("/login", function (request, response) {
 
                 var token = jwt.sign(user, serverSecret, options);
                 cookie.set(config.cookieTokenKey, 'JWT ' + token, {signed: true});
-                writeToClient(response, token);
+                writeToClient(response, { success: true, name: user.name});
                 return;
             }
 
