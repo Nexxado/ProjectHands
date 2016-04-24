@@ -101,12 +101,11 @@ module.exports = {
         
         debug('Login credentials', credentials);
         
-        mongoUtils.query(COLLECTIONS.USERS, { email: credentials.email }, function (result) {
+        mongoUtils.query(COLLECTIONS.USERS, { email: credentials.email }, function (error, result) {
 
-            var userAndToken = {
-                user: "Not Allowed",
-                token: ""
-            }; // the final result to the user
+            if(error)
+                return callback(error, result);
+
             // the result is array ,the matching user should be at 0, so we will fetch the password
             if (result.length === 1 && result[0].password) {// exactly 1 match and the password exists
                 
@@ -115,15 +114,13 @@ module.exports = {
                 // now we want to do the hash
                 var hashResult = hashSha512(credentials.email, credentials.time, credentials.random, password);
                 // now id the has var is equal to hashResult user is allowed to login
+//                debug('hash', hashResult, '\nkey', key);
                 if (hashResult === key) {
-                    var token = hashSha512(credentials.email, "50:99", credentials.random, password);
-                    debug('token', token);
                     debug('result', user);
-                    userAndToken.user = user;
-                    userAndToken.token = token;
+                    return callback(error, user);
                 }
             }
-            callback(userAndToken);
+            callback(error, null);
         });
     }
 };

@@ -49,13 +49,13 @@ module.exports = {
             if(error)
             {
                 debug('error', error);
-                callback(error);
+                callback(error, result);
 
             }
             else
             {
                 debug('Inserted %d document into the %s collection. The document inserted is ', result.insertedCount,collectionName , result);
-                callback(result);
+                callback(error, result);
             }
 
         });
@@ -75,7 +75,7 @@ module.exports = {
             if (error)
             {
                 debug(error);
-                callback(error);
+                callback(error, result);
                 return;
             }
             else if (result)
@@ -86,7 +86,7 @@ module.exports = {
                 debug('No document found with defined "find" criteria!');
 
             }
-            callback(result);
+            callback(error, result);
 
         });
 
@@ -104,13 +104,13 @@ module.exports = {
             if(error)
             {
                 debug(error);
-                callback(error);
+                callback(error, result);
 
             }
             else
             {
                 debug("Removed  %d doc(s)",result.result.n);
-                callback(result);
+                callback(error, result);
             }
 
 
@@ -131,12 +131,12 @@ module.exports = {
             if(error)
             {
                 debug(error);
-                callback(error);
+                callback(error, result);
             }
             else
             {
                 debug("The result is : ",result);
-                callback(result);
+                callback(error, result);
             }
         });
     }

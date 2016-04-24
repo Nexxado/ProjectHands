@@ -4,14 +4,13 @@ var mongoUtils = require('../utils/mongo');
 var debug = require('debug')('routes/database');
 
 
-function writeToClient(response, data, status) {
-    
-    var isError = JSON.stringify(data).match(/error/i) !== null;
+function writeToClient(response, data, error, status) {
+
     debug('writetoclient data', data);
-    debug('is data error?', isError);
+    debug('is data error?', error);
     
-    if(isError) {
-        response.status(status).send("DB Error");
+    if(error) {
+        response.status(status).send(error);
         return;
     }
 
@@ -29,7 +28,10 @@ router.post("/insert", function (request, response) {
     try {
         var colName = request.body.collection;
         var dataObj = JSON.parse(request.body.data);
-        mongoUtils.insert(colName, dataObj, function (result) {
+        mongoUtils.insert(colName, dataObj, function (error, result) {
+            if(error)
+                return writeToClient(response, result, error, HttpStatus.INTERNAL_SERVER_ERROR);
+
             writeToClient(response, result);
         });
     } catch (error) {
@@ -49,7 +51,10 @@ router.delete("/delete/:collection&:query", function (request, response) {
 
         var colName = request.params.collection;
         var query = JSON.parse(request.params.query);
-        mongoUtils.delete(colName, query, function (result) {
+        mongoUtils.delete(colName, query, function (error, result) {
+            if(error)
+                return writeToClient(response, result, error, HttpStatus.INTERNAL_SERVER_ERROR);
+
             writeToClient(response, result);
         });
 
@@ -73,9 +78,11 @@ router.post("/update", function (request, response) {
         var query = JSON.parse(request.body.query);
         var options = JSON.parse(request.body.options);
         var data = JSON.parse(request.body.data);
-        mongoUtils.update(colName, query, data, options, function (result) {
-            writeToClient(response, result);
+        mongoUtils.update(colName, query, data, options, function (error, result) {
+            if(error)
+                return writeToClient(response, result, error, HttpStatus.INTERNAL_SERVER_ERROR);
 
+            writeToClient(response, result);
         });
 
     } catch (error) {
@@ -95,8 +102,11 @@ router.get("/query/:collection&:query", function (request, response) {
 
         var colName = request.params.collection;
         var query = JSON.parse(request.params.query);
-        mongoUtils.query(colName, query, function (result) {
+        mongoUtils.query(colName, query, function (error, result) {
             debug('query callback result', result);
+            if(error)
+                return writeToClient(response, result, error, HttpStatus.INTERNAL_SERVER_ERROR);
+
             writeToClient(response, result);
 
         });

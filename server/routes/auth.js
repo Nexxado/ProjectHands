@@ -1,23 +1,25 @@
 var router = require('express').Router();
-var cookies = require('cookies');
+var Cookie = require('cookies');
 var HttpStatus = require('http-status-codes');
+var jwt = require('jsonwebtoken');
+var passport = require('passport');
 var authUtils = require('../utils/auth');
 var debug = require('debug')('routes/auth');
 var emailUtils = require('../utils/email');
 var config = require('../../config.json');
-var serverKey = config.key;
+var serverSecret = process.env.SERVER_SECRET || config.serverSecret;
+var cookieSecret = process.env.COOKIE_SECRET || config.cookieSecret;
 var ROLES = config.ROLES;
 
-function writeToClient(response, data, status) {
+function writeToClient(response, data, error, status) {
 
-    var isError = JSON.stringify(data).match(/error/i) !== null;
     debug('writing to client', data);
-    debug('is data error?', isError);
+    debug('is data error?', error);
 
-    if (isError) {
+    if (error) {
         if(!status)
             status = HttpStatus.BAD_REQUEST;
-        response.status(status).send(data);
+        response.status(status).send(error);
         return;
     }
 
@@ -26,6 +28,7 @@ function writeToClient(response, data, status) {
     else
         response.send(data);
 }
+
 
 // Example : http://localhost:8080/database/query/{"username":"ihabzh" ,"time": "12:01" , "random": "66"}&key":%20"66"%7D&a196c048361fb127a4a1f6d1f95afd0254b7d700cef7b3df49727c78f1853a4f1fb8964e3fc52cc6503f8379d29f842a0101188e4ea80227a06ded9952fd5fa9
 router.post("/login", function (request, response) {
@@ -36,44 +39,56 @@ router.post("/login", function (request, response) {
         //Var cookie = request.cookie;
 
         //we get the user password from the DB
-        authUtils.login(credentials, key, function (result) {
+        authUtils.login(credentials, key, function (error, user) {
 
-            debug('login result', result);
-            if (result.user !== "Not Allowed") {
-                var cookie = new cookies(request, response, {
-                    keys: [serverKey]
+            debug('login result', user);
+            debug('login error', error);
+            if (user) {
+                var cookie = new Cookie(request, response, { //TODO add options for secure when server will run on HTTPS
+                    keys: [cookieSecret]
                 });
-                //var cookie = co.get("token");
 
-                var token = result.token.substring(3, 70);
-                var age = (3600 * 1000); //hour in milliseconds
                 var options = {
-                    signed: true
+                    algorithm: 'HS512'
                 };
+
                 if(!credentials.remember) {
                     debug('remember = false');
-                    options.maxAge = age;
+                    options.expiresIn = '1h'; //TODO change to longer time
                 }
 
-                cookie.set("token", token, options);
-                cookie.set("access", result.user.role, options);
-                //                emailUtils.confirmationEmail("", credentials.username);
-
-                writeToClient(response, result.user);
+                var token = jwt.sign(user, serverSecret, options);
+                cookie.set(config.cookieTokenKey, 'JWT ' + token, {signed: true});
+                writeToClient(response, token);
                 return;
             }
 
-//            debug('cookies', cookies.get('access', {signed: true}));
-
-            writeToClient(response, "Error: Login Failed", HttpStatus.UNAUTHORIZED);
-
+            writeToClient(response, null, "Error: Login Failed", HttpStatus.UNAUTHORIZED);
         });
 
     } catch (error) {
-        writeToClient(response, "Error: Login Request Failed, check input data");
+        writeToClient(response, null, "Error: Login Request Failed, check input data");
         debug("Login error:", error);
     }
 
+});
+
+
+router.get('/logout', function(request, response) {
+    if(request && request.cookies) {
+        var token = request.cookies[config.cookieTokenKey];
+
+        if(token) {
+            var cookie = new Cookie(request, response, { //TODO add options for secure when server will run on HTTPS
+                keys: [cookieSecret]
+            });
+
+            cookie.set(config.cookieTokenKey, "", { maxAge: 0 });
+            return writeToClient(response, { success: true });
+        }
+    }
+
+    writeToClient(response, null, "Error: User is not logged in", HttpStatus.BAD_REQUEST);
 });
 
 
@@ -82,58 +97,54 @@ router.post("/signup", function (request, response) {
         var user = JSON.parse(request.body.user);
         user.role = ROLES.GUEST;
 
-        authUtils.signUp(user, function (result) {
+        authUtils.signUp(user, function (error, result) {
 
             debug('signup result', result);
-            if (result) { // user data inserted successfully
-                //                emailUtils.confirmationEmail(credentials.email, credentials.name); //FIXME send confirmation email on signup
-                writeToClient(response, result);
+            debug('signup error', error);
+            if (error) { // user data inserted successfully
+                debug('signup sending error');//                emailUtils.confirmationEmail(credentials.email, credentials.name); //FIXME send confirmation email on signup
+                return writeToClient(response, result, error, HttpStatus.BAD_REQUEST);
 
-            } else {
-                writeToClient(response, "Error: Sign-Up Failed, please try again", HttpStatus.BAD_REQUEST);
             }
+            writeToClient(response, result);
         });
 
     } catch (error) {
-        writeToClient(response, "Error: Sign-Up Request Failed", HttpStatus.BAD_REQUEST);
+        writeToClient(response, null, "Error: Sign-Up Request Failed", HttpStatus.BAD_REQUEST);
         debug("SignUp error: ", error);
     }
 
 });
 
-router.get('/access', function (request, response) {
-    try {
-
-    } catch (error) {
-
-    }
+router.get('/authenticate', passport.authenticate('jwt', { session: false}), function(request, response) {
+    writeToClient(response, { success: true });
 });
 
-router.get("/roles/:exec&:target&:role", function (request, response) {
-    try {
-        var role = request.params.role;
-        var executerUsername = request.params.exec;
-        var targetUsername = request.params.target;
-
-
-        authUtils.setUserRole(role, executerUsername, targetUsername, function (result) {
-            var message = "Cant change the role.";
-
-            if (result) {
-                message = result.toString();
-            }
-
-            writeToClient(response, message);
-
-
-
-        });
-
-    } catch (error) {
-        writeToClient(response, "Error: Roles Request Failed, check input data", HttpStatus.BAD_REQUEST);
-        debug("Roles error:", error);
-    }
-
-});
+//router.get("/roles/:exec&:target&:role", function (request, response) {
+//    try {
+//        var role = request.params.role;
+//        var executerUsername = request.params.exec;
+//        var targetUsername = request.params.target;
+//
+//
+//        authUtils.setUserRole(role, executerUsername, targetUsername, function (result) {
+//            var message = "Cant change the role.";
+//
+//            if (result) {
+//                message = result.toString();
+//            }
+//
+//            writeToClient(response, message);
+//
+//
+//
+//        });
+//
+//    } catch (error) {
+//        writeToClient(response, null, "Error: Roles Request Failed, check input data", HttpStatus.BAD_REQUEST);
+//        debug("Roles error:", error);
+//    }
+//
+//});
 
 module.exports = router;

@@ -1,40 +1,9 @@
 angular.module('ProjectHands')
 
-.factory("AuthService", function ($resource, $cookies, $http, $q, $window) {
+.factory("AuthService", function ($resource, $cookies, $http, $q) {
 
     var baseUrl = '/api/auth';
-
-
-    /**
-     *
-     * sends login request to the server api and receives a hash in the result
-     * @param username : the user username
-     * @param timeStamp : the time of the request
-     * @param key :  the user password
-     * @param hash : the sha512 hmac key
-     * @returns {*}
-     */
-    //    function login(username, password, rememberMe) {
-    //
-    //            var random = Math.floor(Math.random() * 1000000);
-    //            var timeStamp = new Date().getTime();
-    //
-    //            var hashedKey = hashSha512(username, password, timeStamp, random);
-    //            var credentials = {
-    //                email: username,
-    //                time: timeStamp,
-    //                random: random,
-    //                remember: rememberMe
-    //            };
-    //
-    //        return $resource(baseUrl + '/login').save({
-    //            credentials: JSON.stringify(credentials),
-    //            hash: encodeURI(hashedKey)
-    //        });
-    //
-    //    }
-
-    var userInfo;
+    var cookieTokenKey = "token";
 
     function login(username, password, rememberMe) {
         var deferred = $q.defer();
@@ -56,13 +25,10 @@ angular.module('ProjectHands')
             })
             .then(function (result) {
                 console.log('result', result);
-                userInfo = result.data; //TODO replace with JWT token
-                //                userInfo = {
-                //                    accessToken: result.data.access_token,
-                //                    userName: result.data.userName
-                //                };
-                $window.sessionStorage["userInfo"] = JSON.stringify(userInfo);
-                deferred.resolve(userInfo);
+                var token = result.data;
+
+                deferred.resolve(token);
+
             }, function (error) {
                 console.log('error', error);
                 deferred.reject(error);
@@ -71,15 +37,19 @@ angular.module('ProjectHands')
         return deferred.promise;
     }
 
-    function getUserInfo() {
-        return userInfo;
-    }
 
+    function logout() {
+        return $resource(baseUrl + '/logout').get();
+    }
 
     function signup(user) {
         return $resource(baseUrl + '/signup').save({
             user: JSON.stringify(user)
         });
+    }
+
+    function authenticate() {
+        return $resource(baseUrl + '/authenticate').get();
     }
 
 
@@ -115,7 +85,8 @@ angular.module('ProjectHands')
     return {
         signup: signup,
         login: login,
-        getUserInfo: getUserInfo,
+        logout: logout,
+        authenticate: authenticate,
         cookieRead: cookieRead
     };
 });

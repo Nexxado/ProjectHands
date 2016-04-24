@@ -32,7 +32,7 @@ io.on("connection", function (socket) {
                          {"_id": room}, 
                          {$push: {"messages": message}}, 
                          {upsert: true}, 
-                         function(result) {
+                         function(error, result) {
                             debug('update chat', JSON.stringify(result));
         });
         
