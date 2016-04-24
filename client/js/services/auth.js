@@ -49,6 +49,7 @@ angular.module('ProjectHands')
     }
 
     function authenticate() {
+//        return $http.get(baseUrl + '/authenticate');
         return $resource(baseUrl + '/authenticate').get();
     }
 

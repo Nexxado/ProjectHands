@@ -9,7 +9,7 @@ angular.module('ProjectHands')
         $window.sessionStorage[isLoggedKey] = true;
     };
 
-    this.endSession = function () {
+    this.clearSession = function () {
         $rootScope.isLoggedIn = false;
         $window.sessionStorage[isLoggedKey] = '';
     };

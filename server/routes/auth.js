@@ -117,7 +117,7 @@ router.post("/signup", function (request, response) {
 });
 
 router.get('/authenticate', passport.authenticate('jwt', { session: false}), function(request, response) {
-    writeToClient(response, { success: true });
+    writeToClient(response, { success: true, role: request.user.role });
 });
 
 //router.get("/roles/:exec&:target&:role", function (request, response) {

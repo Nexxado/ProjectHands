@@ -31,7 +31,8 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     ADMIN: "admin",
     MANAGER: "manager",
     TEAM_LEAD: "teamLead",
-    VOLUNTEER: "volunteer"
+    VOLUNTEER: "volunteer",
+    GUEST: "guest"
 })
 
 .constant('AUTH_EVENTS', {
@@ -43,36 +44,40 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     notAuthorized: 'auth-not-authorized'
 })
 
-.run(function ($rootScope, $state, AuthService, AUTH_EVENTS, SessionService, $mdToast) {
+.run(function ($rootScope, $state, AuthService, AUTH_EVENTS, SessionService, $mdToast, $q, ROLES) {
 
     //Email Regex according to RFC 5322. - http://emailregex.com/
     $rootScope.regexEmail = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
     $rootScope.rootToastAnchor = '#main-view';
     SessionService.getSession(); //Restore session on page refresh
 
+    var ROLES_HIERARCHY = [ROLES.GUEST, ROLES.VOLUNTEER, ROLES.TEAM_LEAD, ROLES.MANAGER, ROLES.ADMIN];
 
-    var openStates = ['login', 'signup', 'home'];
 
-    //Listen on State change and prevent if user doesn't have authorization or isnt open state
-    $rootScope.$on('$stateChangeStart', function (event, toState) {
-//        console.log('toState', toState);
-//        console.log('is open?', openStates.indexOf(toState.name));
+    /**
+     * Authenticating user based on role
+     * @param   {string} role : The lowest role in the hierarchy that is allowed
+     * @returns {object} A resolved/rejected promise based on authentication
+     */
+    $rootScope.authenticate = function (role) {
+        console.log('Lowest Authorized Role', role);
+        var deferred = $q.defer();
+        AuthService.authenticate()
+            .$promise
+            .then(function (result) {
+                console.log('authenticate result', result);
+                if(ROLES_HIERARCHY.indexOf(result.role) <= ROLES_HIERARCHY.indexOf(role))
+                    deferred.reject('No Permission');
+                else
+                    deferred.resolve(result);
+            })
+            .catch(function (error) {
+                console.log('authenticate error', error);
+                deferred.reject("Authenticate ERROR");
+            });
 
-        if (openStates.indexOf(toState.name) === -1) {
-
-            AuthService.authenticate()
-                .$promise
-                .then(function (result) {
-//                    console.log('authenticate result', result);
-                })
-                .catch(function (error) {
-//                    console.log('authenticate error', error);
-                    $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-                    event.preventDefault();
-                    $state.go('home');
-                });
-        }
-    });
+        return deferred.promise;
+    };
 
     /********************************************/
     /***** Application Wide Event Listeners *****/
@@ -84,13 +89,25 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     });
 
     $rootScope.$on(AUTH_EVENTS.logoutSuccess, function (event) {
-        SessionService.endSession();
+        SessionService.clearSession();
         $state.go('home');
         $rootScope.makeToast('להתראות!', 'body', 'top');
     });
 
-    $rootScope.$on(AUTH_EVENTS.notAuthorized, function(event) {
+    $rootScope.$on(AUTH_EVENTS.notAuthorized, function (event) {
+        $state.go('login');
         $rootScope.makeToast('אינך מורשה לעשות זאת', $rootScope.rootToastAnchor, 'top right');
+    });
+
+
+    //Listen on State change and prevent if user doesn't have authorization or isnt open state
+    $rootScope.$on('$stateChangeStart', function (event, toState) {
+        console.log('stateChangeStart');
+    });
+
+    $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
+        //here you can go to whatever state you want, and you also have a lot of information to save if needed
+        console.log('stateChangeError');
     });
 
     /**************************************/
@@ -106,7 +123,7 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
             })
             .catch(function (error) {
                 console.log(error);
-                SessionService.endSession();
+                SessionService.clearSession();
                 $rootScope.makeToast('יציאה נכשלה', $rootScope.rootToastAnchor, 'top right');
             });
     };

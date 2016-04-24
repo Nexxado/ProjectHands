@@ -1,7 +1,7 @@
 angular.module('ProjectHands.dashboard')
 
 .config(function ($stateProvider, $urlRouterProvider) {
-    
+
     $stateProvider.state('dashboard', {
         url: '/dashboard',
         templateUrl: 'modules/dashboard/templates/dashboard.html',
@@ -10,10 +10,14 @@ angular.module('ProjectHands.dashboard')
             default: {
                 state: 'dashboard.main-page'
             }
+        },
+        resolve: {
+            auth: function($rootScope, ROLES) {
+                return $rootScope.authenticate(ROLES.VOLUNTEER);
+            }
         }
-
     })
-        
+
     .state('dashboard.main-page', {
         url: '/main-page',
         templateUrl: 'modules/dashboard/templates/main-page.html',
