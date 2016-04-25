@@ -1,4 +1,4 @@
-angular.module('ProjectHands')
+angular.module('ProjectHands.auth')
 
 .controller('SignupController', function ($scope, AuthService) {
 

@@ -1,4 +1,4 @@
-angular.module('ProjectHands')
+angular.module('ProjectHands.auth')
 
 .controller('LoginController', function ($scope, $rootScope, AuthService, AUTH_EVENTS) {
 

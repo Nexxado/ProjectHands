@@ -1,4 +1,4 @@
-angular.module('ProjectHands')
+angular.module('ProjectHands.auth')
 
 .factory("AuthService", function ($resource, $cookies, $q) {
 

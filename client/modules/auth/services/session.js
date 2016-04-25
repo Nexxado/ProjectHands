@@ -1,4 +1,4 @@
-angular.module('ProjectHands')
+angular.module('ProjectHands.auth')
 
 .service('SessionService', function ($window, $rootScope) {
 
