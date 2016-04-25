@@ -107,20 +107,9 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
         $rootScope.makeToast('אינך מורשה לעשות זאת', $rootScope.rootToastAnchor, 'top right');
     });
 
-
-    //Listen on State change and prevent if user doesn't have authorization or isnt open state
-    $rootScope.$on('$stateChangeStart', function (event, toState) {
-        console.log('stateChangeStart');
-    });
-
-    $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
-        //here you can go to whatever state you want, and you also have a lot of information to save if needed
-        console.log('stateChangeError');
-    });
-
     /**************************************/
     /***** Application Wide Functions *****/
-
+    /**************************************/
     //TODO move these to service
 
     $rootScope.logout = function () {
