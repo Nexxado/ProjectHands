@@ -44,7 +44,7 @@ router.post("/login", function (request, response) {
 
                 var token = jwt.sign(user, serverSecret, options);
                 cookie.set(config.cookieTokenKey, 'JWT ' + token, {signed: true});
-                writeToClient(response, { success: true, name: user.name});
+                writeToClient(response, { success: true, name: user.name, role: user.role });
                 return;
             }
 
@@ -112,6 +112,8 @@ router.post("/signup", function (request, response) {
 
 /**
  * Account Activation route - Activate a temporary account, activation via Email with JWT
+ * onerror : redirect to error page with error message
+ * onsuccess : redirect to home page
  */
 router.get('/activation/:token', function(request, response) {
 
@@ -135,7 +137,7 @@ router.get('/activation/:token', function(request, response) {
 
 
             debug('activation result', result);
-            response.redirect('/');
+            response.redirect('/signup/activated');
         });
     });
 });

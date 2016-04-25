@@ -88,7 +88,11 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     /********************************************/
     $rootScope.$on(AUTH_EVENTS.loginSuccess, function (event, args) {
         SessionService.startSession(args.userName);
-        $state.go('dashboard.main-page')
+        var toState = 'dashboard.main-page';
+        if(ROLES_HIERARCHY.indexOf(args.role) < 1)
+            toState = 'home';
+
+        $state.go(toState)
             .then(function () {
                 $rootScope.makeToast('ברוך הבא ' + args.userName, '#main-view', 'top right');
             });

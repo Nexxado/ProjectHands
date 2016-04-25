@@ -1,6 +1,6 @@
 angular.module('ProjectHands')
 
-.factory("AuthService", function ($resource, $cookies, $http, $q) {
+.factory("AuthService", function ($resource, $cookies, $q) {
 
     var baseUrl = '/api/auth';
     var cookieTokenKey = "token";
@@ -19,15 +19,15 @@ angular.module('ProjectHands')
             remember: rememberMe
         };
 
-        $http.post(baseUrl + '/login', {
+        $resource(baseUrl + '/login').save({
                 credentials: JSON.stringify(credentials),
                 hash: encodeURI(hashedKey)
             })
+            .$promise
             .then(function (result) {
                 console.log('result', result);
-                var token = result.data;
 
-                deferred.resolve(token);
+                deferred.resolve(result);
 
             }, function (error) {
                 console.log('error', error);

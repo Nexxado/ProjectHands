@@ -1,8 +1,9 @@
 angular.module('ProjectHands')
 
-.controller('SignupController', function ($scope, AuthService, $mdToast) {
+.controller('SignupController', function ($scope, AuthService) {
 
-    $scope.user = {
+    $scope.signupSuccess = false;
+    $scope.user = { //TODO clear placeholder data
         email: 'signup@gmail.com',
         password: '1234',
         _id: '222222222',
@@ -13,12 +14,14 @@ angular.module('ProjectHands')
 
         if ($scope.SignupForm.$invalid)
             return;
-        //TODO do something on successful/failure
+
         AuthService.signup($scope.user).$promise
             .then(function (data) {
                 console.log('data', data);
+                $scope.signupSuccess = data.success;
             }).catch(function (error) {
                 console.log('error', error);
+                $scope.makeToast(error.data.errMessage, 'md-content', 'bottom right');
             });
     };
 });

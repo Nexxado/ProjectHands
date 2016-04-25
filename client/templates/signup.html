@@ -1,8 +1,8 @@
-<md-content flex-gt-xs="30" flex-offset-gt-xs="35">
+<md-content flex-gt-sm="40" flex-offset-gt-sm="30" layout-padding ng-hide="signupSuccess">
     <div layout="column" layout-align="center center">
         <h1>דף הרשמה</h1>
     </div>
-    <form name="SignupForm" ng-submit="signup()" layout="column" novalidate>
+    <form name="SignupForm" ng-submit="signup()" layout="column" novalidate >
         <md-input-container class="md-icon-float md-block rtl">
             <label>אימייל</label>
             <input type="text" name="email" ng-model="user.email" ng-pattern="regexEmail" required />
@@ -57,4 +57,11 @@
             <md-button type="submit" class="md-accent md-raised white">הירשם</md-button>
         </div>
     </form>
+</md-content>
+<md-content ng-show="signupSuccess">
+    <div layout="column" layout-align="center center" layout-padding>
+        <h1>ההרשמה בוצעה בהצלחה</h1>
+        <h3>בדוק את האימייל שלך בכדי להמשיך בתהליך</h3>
+        <md-button class="md-primary md-raised" ui-sref="home" style="width: 20%;">חזרה לדף הבית</md-button>
+    </div>
 </md-content>

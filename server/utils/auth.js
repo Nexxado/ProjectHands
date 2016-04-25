@@ -86,6 +86,8 @@ module.exports = {
      * @param callback : methods will be executed when the user is inserted(Success/Fail)
      */
     signUp: function (user, callback) {
+
+        //Set TTL on collection's documents with field "createdAt"
         mongoUtils.getCollection(COLLECTIONS.SIGNUPS).ensureIndex({ "createdAt": 1 },
                                                                   { expireAfterSeconds: 86400 }, // 24 hours
                                                                  function(error, indexName) {
@@ -93,9 +95,15 @@ module.exports = {
             debug('ensureIndex error', error);
         });
 
-        user.createdAt = new Date();
+        //Check if user already exists
+        mongoUtils.query(COLLECTIONS.USERS, { $or: [{ email: user.email }, { _id: user._id }] }, function(error, result) {
+            if(result && result.length)
+                return callback({ errMessage: "Account Already Exists" }, null);
 
-        mongoUtils.insert(COLLECTIONS.SIGNUPS, user, callback);
+            user.createdAt = new Date();
+
+            mongoUtils.insert(COLLECTIONS.SIGNUPS, user, callback);
+        });
     },
 
 

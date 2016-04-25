@@ -15,7 +15,7 @@ angular.module('ProjectHands')
         templateUrl: 'templates/renovation_dashboard.html',
         controller: 'renovationDashboardController'
     })
-    
+
     .state('login', {
         url: '/login',
         templateUrl: 'templates/login.html',
@@ -28,16 +28,29 @@ angular.module('ProjectHands')
         controller: 'SignupController'
     })
 
+    .state('signup.activated', {
+        url: '/activated',
+        views: {
+            '@': {
+                template: '<div layout="column" layout-align="center center" layout-padding dir="rtl">' +
+                    '<h1>חשבונך הופעל בהצלחה!</h1>' +
+                    '<md-button class="md-primary md-raised" ui-sref="login" style="width: 20%;">היכנס לחשבון שלך</md-button>' +
+                    '</div>'
+            }
+        }
+    })
+
     .state('error', {
         url: '/error/:errMessage',
         templateUrl: 'templates/error.html',
-        controller: function($scope, $stateParams) {
+        controller: function ($scope, $stateParams) {
             $scope.errMessage = $scope.toTitleCase(decodeURI($stateParams.errMessage));
         },
         params: {
             errMessage: 'Unknown Error'
         }
     })
+
 
     .state('about', {
         url: '/about',
