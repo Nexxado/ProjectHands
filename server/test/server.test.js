@@ -13,10 +13,10 @@ describe('Loading Express', function () {
             .get('/vendor/angular/angular.min.js')
             .expect(200, done);
     });
-    it('404 everything else', function (done) {
+    it('Redirects on everything else', function (done) {
         request(server)
             .get('/foo/bar')
-            .expect(404, done);
+            .expect(200, done);
     });
 });
 
