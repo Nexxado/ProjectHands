@@ -13,7 +13,7 @@ angular.module('ProjectHands')
 
         if ($scope.SignupForm.$invalid)
             return;
-
+        //TODO do something on successful/failure
         AuthService.signup($scope.user).$promise
             .then(function (data) {
                 console.log('data', data);

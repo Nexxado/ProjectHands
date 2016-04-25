@@ -99,6 +99,11 @@ module.exports = {
     },
 
 
+    /**
+     * Activate a temporary user account
+     * @param   {object}   user     : Object with the user details
+     * @param   {function} callback : Function to be executed on completion
+     */
     activateAccount: function(user, callback) {
         mongoUtils.delete(COLLECTIONS.SIGNUPS, user, function(error, result) {
             if(error)

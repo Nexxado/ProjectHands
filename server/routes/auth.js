@@ -13,7 +13,9 @@ var cookieSecret = process.env.COOKIE_SECRET || config.cookieSecret;
 var ROLES = config.ROLES;
 
 
-// Example : http://localhost:8080/database/query/{"username":"ihabzh" ,"time": "12:01" , "random": "66"}&key":%20"66"%7D&a196c048361fb127a4a1f6d1f95afd0254b7d700cef7b3df49727c78f1853a4f1fb8964e3fc52cc6503f8379d29f842a0101188e4ea80227a06ded9952fd5fa9
+/*
+ * User Login - match user password hash to hash in DB, set JWT cookie if successful.
+ */
 router.post("/login", function (request, response) {
     try {
         var credentials = JSON.parse(request.body.credentials);
@@ -56,7 +58,9 @@ router.post("/login", function (request, response) {
 
 });
 
-
+/*
+ * User logout - Clear JWT cookie
+ */
 router.get('/logout', function(request, response) {
     if(request && request.cookies) {
         var token = request.cookies[config.cookieTokenKey];
@@ -75,6 +79,9 @@ router.get('/logout', function(request, response) {
 });
 
 //FIXME handle password and remove it before sending token in email!!!
+/*
+ * User SignUp - create a temp account on sign up, send activation email with token
+ */
 router.post("/signup", function (request, response) {
     try {
         var user = JSON.parse(request.body.user);
@@ -102,6 +109,10 @@ router.post("/signup", function (request, response) {
 
 });
 
+
+/**
+ * Account Activation route - Activate a temporary account, activation via Email with JWT
+ */
 router.get('/activation/:token', function(request, response) {
 
     debug('activation token', request.params.token);
@@ -129,6 +140,9 @@ router.get('/activation/:token', function(request, response) {
     });
 });
 
+/**
+ * Authenticate user - return user role if allowed, otherwise unauthorized
+ */
 router.get('/authenticate', passport.authenticate('jwt', { session: false}), function(request, response) {
     writeToClient(response, { success: true, role: request.user.role });
 });
