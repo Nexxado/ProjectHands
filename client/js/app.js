@@ -70,7 +70,7 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
             .$promise
             .then(function (result) {
                 console.log('authenticate result', result);
-                if(ROLES_HIERARCHY.indexOf(result.role) <= ROLES_HIERARCHY.indexOf(authorizedRole))
+                if (ROLES_HIERARCHY.indexOf(result.role) <= ROLES_HIERARCHY.indexOf(authorizedRole))
                     deferred.reject('No Permission');
                 else
                     deferred.resolve(result);
@@ -86,16 +86,20 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     /********************************************/
     /***** Application Wide Event Listeners *****/
     /********************************************/
-    $rootScope.$on(AUTH_EVENTS.loginSuccess, function (event) {
-        SessionService.startSession();
-        $state.go('dashboard');
-        $rootScope.makeToast('ברוך הבא!', 'body', 'top');
+    $rootScope.$on(AUTH_EVENTS.loginSuccess, function (event, args) {
+        SessionService.startSession(args.userName);
+        $state.go('dashboard.main-page')
+            .then(function () {
+                $rootScope.makeToast('ברוך הבא ' + args.userName, '#main-view', 'top right');
+            });
     });
 
     $rootScope.$on(AUTH_EVENTS.logoutSuccess, function (event) {
         SessionService.clearSession();
-        $state.go('home');
-        $rootScope.makeToast('להתראות!', 'body', 'top');
+        $state.go('home')
+            .then(function () {
+                $rootScope.makeToast('להתראות!', '#main-view', 'top right');
+            });
     });
 
     $rootScope.$on(AUTH_EVENTS.notAuthorized, function (event) {
@@ -116,7 +120,9 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
 
     /**************************************/
     /***** Application Wide Functions *****/
-    /**************************************/
+
+    //TODO move these to service
+
     $rootScope.logout = function () {
         AuthService.logout()
             .$promise
@@ -141,6 +147,12 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
             .capsule(true)
             .hideDelay(2000)
         );
+    };
+
+    $rootScope.toTitleCase = function(str) {
+        return str.replace(/\w\S*/g, function (txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
     };
 
     /**

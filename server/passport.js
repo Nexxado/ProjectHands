@@ -31,7 +31,6 @@ module.exports = function(passport) {
             name: jwt_payload.name,
             role: jwt_payload.role,
             email: jwt_payload.email,
-            joined_date: jwt_payload.joined_date,
         };
 
         mongoUtils.query(USERS, query, function(error, result) {

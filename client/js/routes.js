@@ -1,6 +1,6 @@
 angular.module('ProjectHands')
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
     $urlRouterProvider.otherwise('/home');
 
@@ -26,6 +26,17 @@ angular.module('ProjectHands')
         url: '/signup',
         templateUrl: 'templates/signup.html',
         controller: 'SignupController'
+    })
+
+    .state('error', {
+        url: '/error/:errMessage',
+        templateUrl: 'templates/error.html',
+        controller: function($scope, $stateParams) {
+            $scope.errMessage = $scope.toTitleCase(decodeURI($stateParams.errMessage));
+        },
+        params: {
+            errMessage: 'Unknown Error'
+        }
     })
 
     .state('about', {
@@ -54,4 +65,5 @@ angular.module('ProjectHands')
         templateUrl: 'templates/about/contact.html'
     });
 
+    $locationProvider.html5Mode(true);
 });

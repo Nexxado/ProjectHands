@@ -16,7 +16,7 @@ angular.module('ProjectHands')
         AuthService.login($scope.email, $scope.password, $scope.rememberMe)
             .then(function (data) {
                 console.log('auth data', data);
-                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess, {userName: data.name});
                 $scope.email = '';
                 $scope.password = '';
                 $scope.LoginForm.$setPristine();

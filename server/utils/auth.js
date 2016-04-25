@@ -57,7 +57,7 @@ module.exports = {
      * This method will change the user role
      * @param role : the role that we wan to assign to this person
      * @param executerUsername : who issued the role change
-     * @param targetUsername :the user that his role will be changed
+     * @param targetUsername : the user that his role will be changed
      * @link  mongoUtils.update : to update the targetUsername role
      * @link mongoUtils.query : to check the  executerUsername role
      */
@@ -82,11 +82,32 @@ module.exports = {
 
     /**
      * Insert a user to the DataBase
-     * @param userObject : the user details from the Client
+     * @param user : the user details from the Client
      * @param callback : methods will be executed when the user is inserted(Success/Fail)
      */
-    signUp: function (userObject, callback) {
-        mongoUtils.insert(COLLECTIONS.USERS, userObject, callback);
+    signUp: function (user, callback) {
+        mongoUtils.getCollection(COLLECTIONS.SIGNUPS).ensureIndex({ "createdAt": 1 },
+                                                                  { expireAfterSeconds: 86400 }, // 24 hours
+                                                                 function(error, indexName) {
+            debug('ensureIndex indexName', indexName);
+            debug('ensureIndex error', error);
+        });
+
+        user.createdAt = new Date();
+
+        mongoUtils.insert(COLLECTIONS.SIGNUPS, user, callback);
+    },
+
+
+    activateAccount: function(user, callback) {
+        mongoUtils.delete(COLLECTIONS.SIGNUPS, user, function(error, result) {
+            if(error)
+                return debug('Failed to delete user from signups');
+
+            debug('deleted user from signups');
+        });
+
+        mongoUtils.insert(COLLECTIONS.USERS, user, callback);
     },
 
 

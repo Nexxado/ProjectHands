@@ -74,7 +74,7 @@ router.get('/logout', function(request, response) {
     writeToClient(response, null, "Error: User is not logged in", HttpStatus.BAD_REQUEST);
 });
 
-
+//FIXME handle password and remove it before sending token in email!!!
 router.post("/signup", function (request, response) {
     try {
         var user = JSON.parse(request.body.user);
@@ -85,11 +85,14 @@ router.post("/signup", function (request, response) {
             debug('signup result', result);
             debug('signup error', error);
             if (error) { // user data inserted successfully
-                debug('signup sending error');//                emailUtils.confirmationEmail(credentials.email, credentials.name); //FIXME send confirmation email on signup
+                debug('signup sending error');
                 return writeToClient(response, null, error, HttpStatus.BAD_REQUEST);
 
             }
             writeToClient(response, { success: true });
+            var token = jwt.sign(user, serverSecret, { algorithm: 'HS512' });
+            var link = 'http://' + request.hostname + '/api/auth/activation/' + token;
+            emailUtils.activationEmail(user.email, user.name, link);
         });
 
     } catch (error) {
@@ -97,6 +100,33 @@ router.post("/signup", function (request, response) {
         debug("SignUp error: ", error);
     }
 
+});
+
+router.get('/activation/:token', function(request, response) {
+
+    debug('activation token', request.params.token);
+    jwt.verify(request.params.token, serverSecret, { algorithm: 'HS512' }, function(error, decoded) {
+        delete decoded.createdAt;
+        delete decoded.iat;
+        debug('activation error', error);
+        debug('activation decoded', decoded);
+
+        if(error)
+            return response.redirect(encodeURI('/error/invalid token'));
+
+        authUtils.activateAccount(decoded, function(error, result) {
+            if(error) {
+                if(error.errmsg.indexOf('duplicate') !== -1)
+                    return response.redirect(encodeURI('/error/account already activated'));
+
+                return response.redirect(encodeURI('/error/account activation failed'));
+            }
+
+
+            debug('activation result', result);
+            response.redirect('/');
+        });
+    });
 });
 
 router.get('/authenticate', passport.authenticate('jwt', { session: false}), function(request, response) {

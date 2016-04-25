@@ -120,7 +120,7 @@ describe('Database API', function () {
             }, function () {});
 
             //Delete user after signup
-            mongoUtils.delete(COLLECTIONS.USERS, {
+            mongoUtils.delete(COLLECTIONS.SIGNUPS, {
                 _id: "123123123"
             }, function () {});
         });
@@ -147,10 +147,10 @@ describe('Database API', function () {
             var random = Math.floor(Math.random() * 1000000);
             var timeStamp = new Date().getTime();
 
-            var hashedKey = hashSha512("signupmocha@gmail.com", timeStamp, random, "1234");
+            var hashedKey = hashSha512("route@gmail.com", timeStamp, random, "1234");
 
             var credentials = {
-                email: "signupmocha@gmail.com",
+                email: "route@gmail.com",
                 time: timeStamp,
                 random: random,
                 remember: false
