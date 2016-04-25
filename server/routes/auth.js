@@ -6,28 +6,11 @@ var passport = require('passport');
 var authUtils = require('../utils/auth');
 var debug = require('debug')('routes/auth');
 var emailUtils = require('../utils/email');
+var writeToClient = require('../utils/writeToClient');
 var config = require('../../config.json');
 var serverSecret = process.env.SERVER_SECRET || config.serverSecret;
 var cookieSecret = process.env.COOKIE_SECRET || config.cookieSecret;
 var ROLES = config.ROLES;
-
-function writeToClient(response, data, error, status) {
-
-    debug('writing to client', data);
-    debug('is data error?', error);
-
-    if (error) {
-        if(!status)
-            status = HttpStatus.BAD_REQUEST;
-        response.status(status).send(error);
-        return;
-    }
-
-    if(typeof data === 'object')
-        response.json(data);
-    else
-        response.send(data);
-}
 
 
 // Example : http://localhost:8080/database/query/{"username":"ihabzh" ,"time": "12:01" , "random": "66"}&key":%20"66"%7D&a196c048361fb127a4a1f6d1f95afd0254b7d700cef7b3df49727c78f1853a4f1fb8964e3fc52cc6503f8379d29f842a0101188e4ea80227a06ded9952fd5fa9
@@ -103,10 +86,10 @@ router.post("/signup", function (request, response) {
             debug('signup error', error);
             if (error) { // user data inserted successfully
                 debug('signup sending error');//                emailUtils.confirmationEmail(credentials.email, credentials.name); //FIXME send confirmation email on signup
-                return writeToClient(response, result, error, HttpStatus.BAD_REQUEST);
+                return writeToClient(response, null, error, HttpStatus.BAD_REQUEST);
 
             }
-            writeToClient(response, result);
+            writeToClient(response, { success: true });
         });
 
     } catch (error) {

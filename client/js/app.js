@@ -2,6 +2,7 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
 
 
 .config(function ($mdThemingProvider, $provide) {
+    //Set Angular-Material Theme
     $mdThemingProvider.theme('default')
         .primaryPalette('blue')
         .accentPalette('orange');
@@ -20,6 +21,9 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     });
 })
 
+/**************************************/
+/***** Application Wide Constants *****/
+/**************************************/
 .constant('COLLECTIONS', {
     RENOVATIONS: 'renovations',
     CHATS: 'chats',
@@ -59,21 +63,21 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
      * @param   {string} role : The lowest role in the hierarchy that is allowed
      * @returns {object} A resolved/rejected promise based on authentication
      */
-    $rootScope.authenticate = function (role) {
-        console.log('Lowest Authorized Role', role);
+    $rootScope.authenticate = function (authorizedRole) {
+        console.log('Lowest Authorized Role', authorizedRole);
         var deferred = $q.defer();
         AuthService.authenticate()
             .$promise
             .then(function (result) {
                 console.log('authenticate result', result);
-                if(ROLES_HIERARCHY.indexOf(result.role) <= ROLES_HIERARCHY.indexOf(role))
+                if(ROLES_HIERARCHY.indexOf(result.role) <= ROLES_HIERARCHY.indexOf(authorizedRole))
                     deferred.reject('No Permission');
                 else
                     deferred.resolve(result);
             })
             .catch(function (error) {
                 console.log('authenticate error', error);
-                deferred.reject("Authenticate ERROR");
+                deferred.reject("Not Logged in");
             });
 
         return deferred.promise;
@@ -139,6 +143,12 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
         );
     };
 
+    /**
+     * Invoke Angular-Material's Toast
+     * @param {string} message  : The message to be shown in the toast
+     * @param {string} anchor   : Element selector of the element the toast will attach to.
+     * @param {string} position : The position of the toast in relation to the anchor element
+     */
     $rootScope.makeToast = function (message, anchor, position) {
         $mdToast.show(
             $mdToast.simple()

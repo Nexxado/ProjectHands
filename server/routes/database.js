@@ -2,23 +2,8 @@ var router = require('express').Router();
 var HttpStatus = require('http-status-codes');
 var mongoUtils = require('../utils/mongo');
 var debug = require('debug')('routes/database');
+var writeToClient = require('../utils/writeToClient');
 
-
-function writeToClient(response, data, error, status) {
-
-    debug('writetoclient data', data);
-    debug('is data error?', error);
-    
-    if(error) {
-        response.status(status).send(error);
-        return;
-    }
-
-    if(typeof data === 'object')
-        response.json(data);
-    else
-        response.send(data);
-}
 
 router.post("/insert", function (request, response) {
 
