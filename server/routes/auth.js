@@ -42,6 +42,7 @@ router.post("/login", function (request, response) {
                     options.expiresIn = '2h'; //TODO change to longer time
                 }
 
+                delete user.password;
                 var token = jwt.sign(user, serverSecret, options);
                 cookie.set(config.cookieToken, 'JWT ' + token, {signed: true});
                 cookie.set(config.cookieSession, JSON.stringify({user: user.name, email: user.email, role: user.role}), { signed: true, httpOnly: false });

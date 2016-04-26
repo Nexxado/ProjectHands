@@ -26,6 +26,7 @@ module.exports = function(passport) {
     options.jwtFromRequest = cookieExtractor;
     passport.use(new JwtStrategy(options, function(jwt_payload, done) {
 
+        debug('passport payload', jwt_payload);
         var query = {
             _id: jwt_payload._id,
             name: jwt_payload.name,
