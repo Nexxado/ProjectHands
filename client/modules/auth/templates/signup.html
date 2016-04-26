@@ -29,7 +29,7 @@
         </md-input-container>
         <md-input-container class="md-icon-float md-block rtl">
             <label>תעודת זהות</label>
-            <input type="text" name="id" ng-model="user._id" minlength="9" maxlength="9" md-maxlength="9" required />
+            <input type="text" ng-pattern="/^[0-9]+$/" name="id" ng-model="user._id" minlength="9" maxlength="9" md-maxlength="9" required />
             <md-icon class="material-icons">perm_identity</md-icon>
             <div ng-messages="SignupForm.id.$error">
                 <div ng-message="required">
@@ -40,6 +40,9 @@
                 </div>
                 <div ng-message="minlength">
                     דרושים 9 ספרות
+                </div>
+                <div ng-message="pattern">
+                    רק ספרות חוקיות
                 </div>
             </div>
         </md-input-container>
