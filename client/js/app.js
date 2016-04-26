@@ -70,13 +70,16 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
             .$promise
             .then(function (result) {
                 console.log('authenticate result', result);
-                if (ROLES_HIERARCHY.indexOf(result.role) <= ROLES_HIERARCHY.indexOf(authorizedRole))
+                if (ROLES_HIERARCHY.indexOf(result.role) <= ROLES_HIERARCHY.indexOf(authorizedRole)) {
                     deferred.reject('No Permission');
+                    $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+                }
                 else
                     deferred.resolve(result);
             })
             .catch(function (error) {
                 console.log('authenticate error', error);
+                $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
                 deferred.reject("Not Logged in");
             });
 
@@ -107,8 +110,16 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     });
 
     $rootScope.$on(AUTH_EVENTS.notAuthorized, function (event) {
-        $state.go('login');
+//        $state.go('login');
         $rootScope.makeToast('אינך מורשה לעשות זאת', $rootScope.rootToastAnchor, 'top right');
+    });
+
+    $rootScope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
+        SessionService.clearSession();
+        $state.go('login')
+            .then(function() {
+            $rootScope.makeToast('Session Expired, Please login again', $rootScope.rootToastAnchor, 'top right');
+        });
     });
 
     /**************************************/

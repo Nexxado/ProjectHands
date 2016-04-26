@@ -39,7 +39,7 @@ router.post("/login", function (request, response) {
 
                 if(!credentials.remember) {
                     debug('remember = false');
-                    options.expiresIn = '1h'; //TODO change to longer time
+                    options.expiresIn = '2h'; //TODO change to longer time
                 }
 
                 var token = jwt.sign(user, serverSecret, options);
@@ -145,8 +145,22 @@ router.get('/activation/:token', function(request, response) {
 /**
  * Authenticate user - return user role if allowed, otherwise unauthorized
  */
-router.get('/authenticate', passport.authenticate('jwt', { session: false}), function(request, response) {
-    writeToClient(response, { success: true, role: request.user.role });
+router.get('/authenticate', function(request, response, next) {
+
+    passport.authenticate('jwt', { session: false}, function(error, user, info) {
+
+        debug('error', error);
+        debug('user', user);
+        debug('info', info);
+
+        if(error)
+            return writeToClient(response, null, error, HttpStatus.UNAUTHORIZED);
+
+        if(!user)
+            return writeToClient(response, null, info, HttpStatus.BAD_REQUEST);
+
+        writeToClient(response, { success: true, role: user.role });
+    })(request, response, next);
 });
 
 //router.get("/roles/:exec&:target&:role", function (request, response) {
