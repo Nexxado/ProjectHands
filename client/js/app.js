@@ -90,7 +90,7 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     /***** Application Wide Event Listeners *****/
     /********************************************/
     $rootScope.$on(AUTH_EVENTS.loginSuccess, function (event, args) {
-        SessionService.startSession(args.userName);
+        SessionService.startSession();
         var toState = 'dashboard.main-page';
         if(ROLES_HIERARCHY.indexOf(args.role) < 1)
             toState = 'home';
@@ -120,6 +120,12 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
             .then(function() {
             $rootScope.makeToast('Session Expired, Please login again', $rootScope.rootToastAnchor, 'top right');
         });
+    });
+
+    //Check if user is authenticated when State changed.
+    $rootScope.$on('$stateChangeSuccess', function(event) {
+        if($rootScope.isLoggedIn && !SessionService.getSession())
+            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
     });
 
     /**************************************/

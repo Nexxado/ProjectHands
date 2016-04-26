@@ -1,25 +1,38 @@
 angular.module('ProjectHands.auth')
 
-.service('SessionService', function ($window, $rootScope) {
+.service('SessionService', function ($rootScope, $cookies) {
 
-    var isLoggedKey = "isLogged";
-    var userInfoKey = "userInfo";
+    var cookieKey = "session";
 
-    this.startSession = function (userName) {
+    this.startSession = function () {
+
+        var userInfo = $cookies.getObject(cookieKey);
+        if(!userInfo) {
+            this.clearSession();
+            return;
+        }
+
         $rootScope.isLoggedIn = true;
-        $rootScope.userName = userName;
-        $window.sessionStorage[isLoggedKey] = true;
-        $window.sessionStorage[userInfoKey] = userName;
+        $rootScope.userName = userInfo.name;
+        $rootScope.userEmail = userInfo.email;
     };
 
     this.clearSession = function () {
         $rootScope.isLoggedIn = false;
-        $window.sessionStorage[isLoggedKey] = '';
-        $window.sessionStorage[userInfoKey] = '';
+        $rootScope.userName = null;
+        $rootScope.userEmail = null;
     };
 
     this.getSession = function () {
-        $rootScope.isLoggedIn = $window.sessionStorage[isLoggedKey];
-        $rootScope.userName = $window.sessionStorage[userInfoKey];
+        var userInfo = $cookies.getObject(cookieKey);
+        if(!userInfo) {
+            this.clearSession();
+            return false;
+        }
+
+        $rootScope.isLoggedIn = true;
+        $rootScope.userName = userInfo.name;
+        $rootScope.userEmail = userInfo.email;
+        return true;
     };
 });

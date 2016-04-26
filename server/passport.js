@@ -9,7 +9,7 @@ var USERS = config.COLLECTIONS.USERS;
 var cookieExtractor = function(req) {
     var token = null;
     if (req && req.cookies) {
-        token = req.cookies[config.cookieTokenKey];
+        token = req.cookies[config.cookieToken];
         if(token)
             token = token.split(' ')[1];
 //        debug('cookieExtractor token', token);

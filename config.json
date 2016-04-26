@@ -2,7 +2,8 @@
     "mongoDBUrl" : "mongodb://127.0.0.1:27017/hands",
     "serverSecret": "serverTestKey",
     "cookieSecret": "cookieTestKey",
-    "cookieTokenKey": "token",
+    "cookieToken": "token",
+    "cookieSession": "session",
     "COLLECTIONS": {
         "USERS": "users",
         "RENOVATIONS": "renovations",

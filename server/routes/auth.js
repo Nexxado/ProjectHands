@@ -43,7 +43,8 @@ router.post("/login", function (request, response) {
                 }
 
                 var token = jwt.sign(user, serverSecret, options);
-                cookie.set(config.cookieTokenKey, 'JWT ' + token, {signed: true});
+                cookie.set(config.cookieToken, 'JWT ' + token, {signed: true});
+                cookie.set(config.cookieSession, JSON.stringify({user: user.name, email: user.email, role: user.role}), { signed: true, httpOnly: false });
                 writeToClient(response, { success: true, name: user.name, role: user.role });
                 return;
             }
@@ -63,14 +64,16 @@ router.post("/login", function (request, response) {
  */
 router.get('/logout', function(request, response) {
     if(request && request.cookies) {
-        var token = request.cookies[config.cookieTokenKey];
+        var token = request.cookies[config.cookieToken];
 
         if(token) {
             var cookie = new Cookie(request, response, { //TODO add options for secure when server will run on HTTPS
                 keys: [cookieSecret]
             });
 
-            cookie.set(config.cookieTokenKey, "", { maxAge: 0 });
+            //Delete cookies
+            cookie.set(config.cookieToken, null, { signed: true });
+            cookie.set(config.cookieSession, null, { signed: true });
             return writeToClient(response, { success: true });
         }
     }
