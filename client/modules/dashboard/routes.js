@@ -33,6 +33,14 @@ angular.module('ProjectHands.dashboard')
         url: '/renovations',
         templateUrl: 'modules/dashboard/templates/renovations.html'
     })
+    
+    .state('dashboard.renovation', {
+        url: '/renovations/:renoId',
+        templateUrl: 'modules/dashboard/templates/renovation-page/renovation-page.html',
+        controller: function($scope, $stateParams){
+            $scope.renoId = $stateParams.renoId;
+        }
+    })
 
     .state('dashboard.toolbox', {
         url: '/toolbox',

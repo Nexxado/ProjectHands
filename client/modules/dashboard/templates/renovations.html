@@ -1,6 +1,18 @@
 <md-toolbar layout="row" layout-align="none center" class="md-primary dashboard-top-rounded-toolbar">
-            <span flex></span>
-            <div class="md-toolbar-tools" dir="rtl">
-                <span>שיפוצים מתוכננים</span>
+    <span flex></span>
+    <div class="md-toolbar-tools" dir="rtl">
+        <span>שיפוצים מתוכננים</span>
+    </div>
+</md-toolbar>
+
+<md-content>
+    <md-list flex>
+        <md-list-item class="md-3-line" ng-repeat="renovation in renovations" ui-sref="dashboard.renovation({renoId: renovation.id})">
+            <div class="md-list-item-text hebrew-text" layout="column" dir="rtl">
+                <h3>{{ renovation.address }}</h3>
+                <h4>{{ renovation.id }}</h4>
+                <p>{{ renovation.team.name }}</p>
             </div>
-        </md-toolbar>
+        </md-list-item>
+    </md-list>
+</md-content>

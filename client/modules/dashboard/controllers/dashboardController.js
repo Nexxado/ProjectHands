@@ -155,7 +155,7 @@ angular.module('ProjectHands.dashboard')
     
     /* Mock Objects creations: */
     $scope.myID = "123456197";
-    
+   
     $scope.rooms = ["General", "Reno1", "Reno2"];
     $scope.tools = [
         {
@@ -383,6 +383,30 @@ angular.module('ProjectHands.dashboard')
         }
     ];
 
+     
+    $scope.renovations = [
+        {
+            address: "חטיבת הצנחנים 2, מודיעין",
+            id:01,
+            team: $scope.teams[0]
+        },
+        {
+            address: "חטיבת הצנחנים 3, מודיעין",
+            id:02,
+            team: $scope.teams[1]
+        },
+        {
+            address: "חטיבת הצנחנים 4, מודיעין",
+            id:03,
+            team: $scope.teams[0]
+        },
+        {
+            address: "חטיבת הצנחנים 5, מודיעין",
+            id:04,
+            team: $scope.teams[1]
+        }
+    ];
+    
     $scope.messages = [
         {
             id: "ren1_chat",
