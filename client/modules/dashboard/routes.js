@@ -35,10 +35,12 @@ angular.module('ProjectHands.dashboard')
     })
     
     .state('dashboard.renovation', {
-        url: '/renovations/:renoId',
+        url: '/renovations/:city&:street&:houseNum',
         templateUrl: 'modules/dashboard/templates/renovation-page/renovation-page.html',
         controller: function($scope, $stateParams){
-            $scope.renoId = $stateParams.renoId;
+            $scope.city = $stateParams.city;
+            $scope.street = $stateParams.street;
+            $scope.houseNum = $stateParams.houseNum;
         }
     })
 

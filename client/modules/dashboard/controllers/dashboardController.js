@@ -383,26 +383,43 @@ angular.module('ProjectHands.dashboard')
         }
     ];
 
-     
+    $scope.address = {
+        city:"",
+        street:"",
+        houseNum: ""
+    };
+    
     $scope.renovations = [
         {
-            address: "חטיבת הצנחנים 2, מודיעין",
-            id:01,
+            address: {
+                city:"מודיעין",
+                street:"חטיבת הצנחנים",
+                houseNum: "2"  
+            },
             team: $scope.teams[0]
         },
         {
-            address: "חטיבת הצנחנים 3, מודיעין",
-            id:02,
+            address: {
+                city:"חירייה",
+                street:"השחום",
+                houseNum: "5"  
+            },
             team: $scope.teams[1]
         },
         {
-            address: "חטיבת הצנחנים 4, מודיעין",
-            id:03,
+            address: {
+                city:"ירושלים",
+                street:"הדביל",
+                houseNum: "21"  
+            },
             team: $scope.teams[0]
         },
         {
-            address: "חטיבת הצנחנים 5, מודיעין",
-            id:04,
+            address: {
+                city:"קשקבל",
+                street:"הגבינות",
+                houseNum: "65"  
+            },
             team: $scope.teams[1]
         }
     ];
@@ -441,6 +458,9 @@ angular.module('ProjectHands.dashboard')
     ];
 
     //Mock functions
+//    $scope.getRenovationByID(renoId){
+//        
+//    }
     $scope.getMemberName = function (id) {
         var i;
         for (i in $scope.users) {
