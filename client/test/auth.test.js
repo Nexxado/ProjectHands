@@ -38,8 +38,9 @@ describe('AuthService', function () {
     });
     
     it('Login', function() {
-        $httpBackend.expectPOST('/api/auth/login').respond({success: true, role: 'admin'});
+        $httpBackend.expectPOST('/api/auth/login').respond();
         var result;
+
         $AuthService.login(mockUser.email, mockUser.password, false)
             .then(function(data) {
                 result = data;
@@ -48,8 +49,11 @@ describe('AuthService', function () {
         $rootScope.$apply(); // promises are resolved/dispatched only on next $digest cycle
         $httpBackend.flush();
         
-        expect(result.success).toEqual(true);
-        expect(result.role).toEqual('admin');
+        var credentials = JSON.parse(result.credentials);
+        expect(credentials.email).toEqual(mockUser.email);
+        expect(credentials.remember).toEqual(false);
+        expect(result.hash.length).toEqual(128);
+        expect(result.hash).toEqual(jasmine.stringMatching(/^[0-9, a-z]+$/));
     });
 
 });

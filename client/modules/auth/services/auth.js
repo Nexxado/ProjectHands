@@ -8,7 +8,7 @@ angular.module('ProjectHands.auth')
     function login(username, password, rememberMe) {
         var deferred = $q.defer();
 
-        var random = Number.MAX_VALUE; //Math.floor(Math.random() * 1000000);
+        var random = Math.floor(Math.random() * Number.MAX_VALUE);
         var timeStamp = new Date().getTime();
 
         var hashedKey = hashSha512(username, password, timeStamp, random);
