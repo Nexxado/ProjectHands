@@ -38,7 +38,9 @@ describe('DatabaseService', function () {
 
     
     it('Insert', function () {
-        $httpBackend.expectPOST('/api/database/insert', { "collection": "chats", "data": "{\"user\":\"test\"}"})
+        $httpBackend.expectPOST('/api/database/insert', 
+                                JSON.stringify({ collection: 'chats', 
+                                                data: JSON.stringify({user: 'test' })}))
             .respond(200, {
                 result: {
                     ok: 1,
@@ -65,10 +67,10 @@ describe('DatabaseService', function () {
     });
     
     it('Update', function () {
-        $httpBackend.expectPOST('/api/database/update', { "collection": "users",
-                                                     "data": "{\"user\":\"test2\"}", 
-                                                     "query": "{\"user\":\"test\"}",
-                                                     "options": "{}"})
+        $httpBackend.expectPOST('/api/database/update', JSON.stringify({ collection: "users", 
+                                                     query: JSON.stringify({user: "test"}),
+                                                     data: JSON.stringify({user: "test2"}),
+                                                     options: "{}"}))
             .respond(200, {
                 ok: 1,
                 n: 1,

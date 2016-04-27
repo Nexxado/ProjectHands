@@ -8,7 +8,7 @@ angular.module('ProjectHands.auth')
     function login(username, password, rememberMe) {
         var deferred = $q.defer();
 
-        var random = Math.floor(Math.random() * 1000000);
+        var random = Number.MAX_VALUE; //Math.floor(Math.random() * 1000000);
         var timeStamp = new Date().getTime();
 
         var hashedKey = hashSha512(username, password, timeStamp, random);
@@ -25,12 +25,11 @@ angular.module('ProjectHands.auth')
             })
             .$promise
             .then(function (result) {
-                console.log('result', result);
-
+//                console.log('result', result);
                 deferred.resolve(result);
 
             }, function (error) {
-                console.log('error', error);
+//                console.log('error', error);
                 deferred.reject(error);
             });
 
