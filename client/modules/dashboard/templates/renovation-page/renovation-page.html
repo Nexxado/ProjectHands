@@ -6,11 +6,36 @@
 </md-toolbar>
 <div layout="row">
     <div layout="column" class="grid-item">
-        <chat user="getMemberName(myID)" rooms="rooms"></chat>
+        <chat user="getMemberName(myID)" rooms="renovationRooms"></chat>
     </div>
-<!--
-    <div class="grid-item">
-    
+    <div class="renovation-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2848.1677792216697!2d34.99999188673667!3d31.904929403828792!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1502cdb687a74b15%3A0x9bb5207a84b99291!2z15fXmNeZ15HXqiDXlNem16DXl9eg15nXnSAyLCDXnteV15PXmdei15nXnyDXnteb15HXmdedINeo16LXldeq!5e0!3m2!1siw!2sil!4v1461780210508" width="500px" height="500px" frameborder="0" style="border:0" allowfullscreen></iframe>
     </div>
--->
+    <div class="grid-item" flex>
+        <md-list>
+            <md-list-item class="md-3-line md-raised" ng-repeat="tool in getRenovation(city,street,houseNum).toolsNeeded">
+                <div class="md-list-item-text hebrew-text" layout="column" dir="rtl">
+                    <h3>{{tool.name}}</h3>
+                    <h4>{{ tool.quantity }}</h4>
+                </div>
+                <md-divider></md-divider>
+            </md-list-item>
+        </md-list>
+    </div>
+
+</div>
+<div layout="row">
+    <div class="grid-item" flex>
+        <md-list>
+            <md-list-item class="md-3-line md-raised" ng-repeat="task in getRenovation(city,street,houseNum).tasks">
+                <div class="md-list-item-text hebrew-text" layout="column" dir="rtl">
+                    <h2>{{task.title}}</h2>
+                    <h3>{{ task.description }}</h3>
+                    <h4>לבצע עד: {{task.deadline | date}}</h4>
+<!--                    <h2>המבצע: {{task.assignee}}</h2>-->
+                </div>
+                <md-divider></md-divider>
+            </md-list-item>
+        </md-list>
+    </div>
 </div>
