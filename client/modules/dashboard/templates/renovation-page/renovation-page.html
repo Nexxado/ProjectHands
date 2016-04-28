@@ -32,10 +32,44 @@
                     <h2>{{task.title}}</h2>
                     <h3>{{ task.description }}</h3>
                     <h4>לבצע עד: {{task.deadline | date}}</h4>
-<!--                    <h2>המבצע: {{task.assignee}}</h2>-->
+                    <!--                    <h2>המבצע: {{task.assignee}}</h2>-->
                 </div>
                 <md-divider></md-divider>
             </md-list-item>
         </md-list>
+    </div>
+    <div>
+        <md-toolbar layout="row" layout-align="none center" class="md-primary dashboard-top-rounded-toolbar" dir="rtl">
+            <span flex></span>
+            <div class="md-toolbar-tools">
+                <span>{{renovationTeam.id}}</span>
+            </div>
+        </md-toolbar>
+        <md-content>
+            <md-list class="md-dense">
+                <md-list-item class="md-3-line" dir="rtl">
+                    <div class="md-list-item-text dashboard-list-text" layout="column">
+                        <h3>{{getMemberName(renovationTeam.manager_id)}}</h3>
+                        <h4>{{renovationTeam.manager_id}}</h4>
+                        <p>{{getMemberType(renovationTeam.manager_id)}}</p>
+                    </div>
+                    <h2 ng-show="myID == renovationTeam.manager_id">אני</h2>
+                    <img ng-src="{{getMemberAvatar(renovationTeam.manager_id)}}" class="md-avatar" alt="{{item.who}}" />
+                </md-list-item>
+                <md-divider></md-divider>
+                <md-list-item class="md-3-line" ng-repeat="memberID in renovationTeam.members_id" dir="rtl">
+                    <div class="md-list-item-text dashboard-list-text" th:classappend="dashboard-special-list-item" layout="column">
+                        <h3>{{getMemberName(memberID)}}</h3>
+                        <h4>{{memberID}}</h4>
+                        <p>{{getMemberType(memberID)}}</p>
+                    </div>
+                    <span flex></span>
+                    <h2 ng-show="myID == memberID">אני</h2>
+                    <img ng-src="{{getMemberAvatar(renovationTeam.manager_id)}}" class="md-avatar" alt="{{item.who}}" />
+                    <md-divider></md-divider>
+                </md-list-item>
+                <md-divider></md-divider>
+            </md-list>
+        </md-content>
     </div>
 </div>

@@ -148,14 +148,18 @@ angular.module('ProjectHands.dashboard')
 
     /* Mock Objects creations: */
     $scope.myID = "123456197";
-
+    $scope.renovationTeam = "";
     $scope.rooms = ["General", "Reno1", "Reno2"];
     $scope.renovationRooms = ["a"];
     $scope.addRenoRoom = function (roomName) {
         $scope.renovationRooms = [];
         $scope.renovationRooms.push(roomName);
     };
-
+    
+    $scope.assingVarsForRenovation = function(city, street, houseNum){
+        console.log("asdasdasdasd");
+        $scope.renovationTeam = $scope.getRenovation(city, street, houseNum);
+    };
     $scope.tools = [
         {
             name: "פטיש",

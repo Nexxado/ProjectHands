@@ -7,7 +7,7 @@
 
 <md-content>
     <md-list flex>
-        <md-list-item class="md-3-line" ng-repeat="renovation in renovations" ui-sref="dashboard.renovation({city: renovation.address.city, street: renovation.address.street, houseNum: renovation.address.houseNum})" ng-click="addRenoRoom(renovation.address.street + ' ' + renovation.address.houseNum + ', ' +  renovation.address.city)">
+        <md-list-item class="md-3-line" ng-repeat="renovation in renovations" ui-sref="dashboard.renovation({city: renovation.address.city, street: renovation.address.street, houseNum: renovation.address.houseNum})" ng-click="addRenoRoom(renovation.address.street + ' ' + renovation.address.houseNum + ', ' +  renovation.address.city) ; assingVarsForRenovation(renovation.address.city, renovation.address.street, renovation.address.houseNum)">
             <div class="md-list-item-text hebrew-text" layout="column" dir="rtl">
                 <h3>{{ renovation.address.street }} {{renovation.address.houseNum}}, {{renovation.address.city}}</h3>
                 <h4>{{ renovation.id }}</h4>
