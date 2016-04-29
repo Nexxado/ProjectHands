@@ -51,9 +51,8 @@ describe('AuthService', function () {
         
         var credentials = JSON.parse(result.credentials);
         expect(credentials.email).toEqual(mockUser.email);
+        expect(credentials.password).toEqual(mockUser.password);
         expect(credentials.remember).toEqual(false);
-        expect(result.hash.length).toEqual(128);
-        expect(result.hash).toEqual(jasmine.stringMatching(/^[0-9, a-z]+$/));
     });
 
 });

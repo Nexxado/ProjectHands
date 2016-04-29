@@ -26,6 +26,10 @@ router.post("/login", function (request, response) {
 
             debug('login result', user);
             debug('login error', error);
+
+            if(error)
+                return writeToClient(response, null, error, HttpStatus.INTERNAL_SERVER_ERROR);
+
             if (user) {
                 var cookie = new Cookie(request, response, { //TODO add options for secure when server will run on HTTPS
                     keys: [cookieSecret]

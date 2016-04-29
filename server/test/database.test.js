@@ -1,9 +1,11 @@
 var request = require('supertest');
+var bcrypt = require('bcrypt');
 var server = require('../app');
 var mongoUtils = require('../utils/mongo');
 var crypto = require('crypto');
 var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
+var saltRounds = 10;
 
 function hashSha512(username, time, random, password) {
     // generate a hash from string <textToBeHashed>
@@ -108,7 +110,7 @@ describe('Database API', function () {
             mongoUtils.insert(COLLECTIONS.USERS, {
                 "_id": "000000000",
                 "name": "Route Test",
-                "password": "1234",
+                "password": bcrypt.hashSync('1234', saltRounds),
                 "role": "admin",
                 "email": "route@gmail.com",
             }, function () {});
@@ -144,15 +146,9 @@ describe('Database API', function () {
 
         it('Login', function (done) {
 
-            var random = Math.floor(Math.random() * 1000000);
-            var timeStamp = new Date().getTime();
-
-            var hashedKey = hashSha512("route@gmail.com", timeStamp, random, "1234");
-
             var credentials = {
                 email: "route@gmail.com",
-                time: timeStamp,
-                random: random,
+                password: "1234",
                 remember: false
             };
 
@@ -160,12 +156,8 @@ describe('Database API', function () {
                 .post('/api/auth/login')
                 .send({
                     credentials: JSON.stringify(credentials),
-                    hash: hashedKey
                 })
-                .expect(200)
-                .end(function (err, result) {
-                    done();
-                });
+                .expect(200, done);
         });
 
 
