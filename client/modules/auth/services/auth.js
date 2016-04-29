@@ -8,20 +8,14 @@ angular.module('ProjectHands.auth')
     function login(username, password, rememberMe) {
         var deferred = $q.defer();
 
-        var random = Math.floor(Math.random() * Number.MAX_VALUE);
-        var timeStamp = new Date().getTime();
-
-        var hashedKey = hashSha512(username, password, timeStamp, random);
         var credentials = {
             email: username,
-            time: timeStamp,
-            random: random,
+            password: password,
             remember: rememberMe
         };
 
         $resource(baseUrl + '/login').save({
-                credentials: JSON.stringify(credentials),
-                hash: encodeURI(hashedKey)
+                credentials: JSON.stringify(credentials)
             })
             .$promise
             .then(function (result) {
@@ -48,7 +42,6 @@ angular.module('ProjectHands.auth')
     }
 
     function authenticate(authorizedRole) {
-//        return $http.get(baseUrl + '/authenticate');
         return $resource(baseUrl + '/authenticate/:role').get({role: authorizedRole});
     }
 

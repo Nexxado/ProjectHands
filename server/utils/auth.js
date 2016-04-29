@@ -20,6 +20,9 @@ var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
 var ROLES = config.ROLES;
 
+var bcrypt = require('bcrypt');
+var saltRounds = 10; // will do 2^rounds
+
 /**
  * Defines the Roles that are in the system
  * @type {{ADMIN: string, MANAGER: string, TEAM_LEAD: string, VOLUNTEER: string}}
@@ -102,7 +105,16 @@ module.exports = {
 
             user.createdAt = new Date();
 
-            mongoUtils.insert(COLLECTIONS.SIGNUPS, user, callback);
+            bcrypt.hash(user.password, saltRounds, function(error, hash) {
+
+                debug('bcrypt hash error', error);
+                debug('bcrypt hash hash', hash);
+                if(error)
+                    return callback({ errMessage: "Failed to hash password" }, null);
+
+                user.password = hash;
+                mongoUtils.insert(COLLECTIONS.SIGNUPS, user, callback);
+            });
         });
     },
 
@@ -115,9 +127,9 @@ module.exports = {
     activateAccount: function(user, callback) {
         mongoUtils.delete(COLLECTIONS.SIGNUPS, user, function(error, result) {
             if(error)
-                return debug('Failed to delete user from signups');
-
-            debug('deleted user from signups');
+                debug('Failed to delete user from signups');
+            else
+                debug('deleted user from signups');
         });
 
         mongoUtils.insert(COLLECTIONS.USERS, user, callback);
@@ -131,7 +143,7 @@ module.exports = {
      * @param key : the user hash value that been generated from the Client side
      * @param callback : the function that the data will be sent to
      */
-    login: function (credentials, key, callback) {
+    login: function (credentials, callback) {
         
         debug('Login credentials', credentials);
         
@@ -140,21 +152,22 @@ module.exports = {
             if(error)
                 return callback(error, result);
 
-            // the result is array ,the matching user should be at 0, so we will fetch the password
-            if (result.length === 1 && result[0].password) {// exactly 1 match and the password exists
+            if(result.length > 1)
+                return callback("Found more than 1 user", null);
+
+            debug('login query result', result);
+            var user = result[0];
+
+            bcrypt.compare(credentials.password, user.password, function(error, result) {
                 
-                var user = result[0];
-                var password = user.password; // the password attribute
-                // now we want to do the hash
-                var hashResult = hashSha512(credentials.email, credentials.time, credentials.random, password);
-                // now id the has var is equal to hashResult user is allowed to login
-//                debug('hash', hashResult, '\nkey', key);
-                if (hashResult === key) {
-                    debug('result', user);
-                    return callback(error, user);
-                }
-            }
-            callback(error, null);
+                debug('bcrypt compare error', error);
+                debug('bcrypt compare result', result);
+
+                if(!result)
+                    user = null;
+
+                callback(error, user);
+            });
         });
     }
 };

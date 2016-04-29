@@ -20,12 +20,9 @@ var ROLES_HIERARCHY = [ROLES.GUEST, ROLES.VOLUNTEER, ROLES.TEAM_LEAD, ROLES.MANA
 router.post("/login", function (request, response) {
     try {
         var credentials = JSON.parse(request.body.credentials);
-        var key = request.body.hash;
-
-        //Var cookie = request.cookie;
 
         //we get the user password from the DB
-        authUtils.login(credentials, key, function (error, user) {
+        authUtils.login(credentials, function (error, user) {
 
             debug('login result', user);
             debug('login error', error);
@@ -43,7 +40,7 @@ router.post("/login", function (request, response) {
                     options.expiresIn = '2h'; //TODO change to longer time
                 }
 
-                delete user.password;
+                delete user.password; //remove password so token won't contain it
                 var token = jwt.sign(user, serverSecret, options);
                 cookie.set(config.cookieToken, 'JWT ' + token, {signed: true});
                 cookie.set(config.cookieSession, JSON.stringify({user: user.name, email: user.email, role: user.role}), { signed: true, httpOnly: false });
@@ -102,6 +99,7 @@ router.post("/signup", function (request, response) {
 
             }
             writeToClient(response, { success: true });
+            delete user.password; //remove password so token won't contain it
             var token = jwt.sign(user, serverSecret, { algorithm: 'HS512' });
             var link = 'http://' + request.hostname + '/api/auth/activation/' + token;
             emailUtils.activationEmail(user.email, user.name, link);

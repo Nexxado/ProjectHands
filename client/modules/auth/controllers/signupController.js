@@ -64,6 +64,6 @@ angular.module('ProjectHands.auth')
         }
 
 
-        return !!(sum % 10);
+        return !(sum % 10);
     }
 });
