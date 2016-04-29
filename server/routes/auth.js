@@ -11,6 +11,7 @@ var config = require('../../config.json');
 var serverSecret = process.env.SERVER_SECRET || config.serverSecret;
 var cookieSecret = process.env.COOKIE_SECRET || config.cookieSecret;
 var ROLES = config.ROLES;
+var ROLES_HIERARCHY = [ROLES.GUEST, ROLES.VOLUNTEER, ROLES.TEAM_LEAD, ROLES.MANAGER, ROLES.ADMIN];
 
 
 /*
@@ -149,19 +150,23 @@ router.get('/activation/:token', function(request, response) {
 /**
  * Authenticate user - return user role if allowed, otherwise unauthorized
  */
-router.get('/authenticate', function(request, response, next) {
+router.get('/authenticate/:role', function(request, response, next) {
 
     passport.authenticate('jwt', { session: false}, function(error, user, info) {
 
         debug('error', error);
         debug('user', user);
         debug('info', info);
+        debug('role', request.params.role);
 
         if(error)
-            return writeToClient(response, null, error, HttpStatus.UNAUTHORIZED);
+            return writeToClient(response, null, error, HttpStatus.BAD_REQUEST);
 
         if(!user)
-            return writeToClient(response, null, info, HttpStatus.BAD_REQUEST);
+            return writeToClient(response, null, 'User Not Logged In', HttpStatus.UNAUTHORIZED);
+
+        if (ROLES_HIERARCHY.indexOf(user.role) <= ROLES_HIERARCHY.indexOf(request.params.role))
+            return writeToClient(response, null, 'Not Allowed', HttpStatus.FORBIDDEN);
 
         writeToClient(response, { success: true, role: user.role });
     })(request, response, next);

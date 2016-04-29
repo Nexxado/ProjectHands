@@ -47,9 +47,9 @@ angular.module('ProjectHands.auth')
         });
     }
 
-    function authenticate() {
+    function authenticate(authorizedRole) {
 //        return $http.get(baseUrl + '/authenticate');
-        return $resource(baseUrl + '/authenticate').get();
+        return $resource(baseUrl + '/authenticate/:role').get({role: authorizedRole});
     }
 
 

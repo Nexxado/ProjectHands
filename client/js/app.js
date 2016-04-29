@@ -66,21 +66,22 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     $rootScope.authenticate = function (authorizedRole) {
         console.log('Lowest Authorized Role', authorizedRole);
         var deferred = $q.defer();
-        AuthService.authenticate()
+
+        AuthService.authenticate(authorizedRole)
             .$promise
             .then(function (result) {
                 console.log('authenticate result', result);
-                if (ROLES_HIERARCHY.indexOf(result.role) <= ROLES_HIERARCHY.indexOf(authorizedRole)) {
-                    deferred.reject('No Permission');
-                    $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-                }
-                else
-                    deferred.resolve(result);
+                deferred.resolve(result);
+
             })
             .catch(function (error) {
                 console.log('authenticate error', error);
-                $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-                deferred.reject("Not Logged in");
+                if(error.status === 401)
+                    $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+                else if(error.status === 403)
+                    $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+
+                deferred.reject("Not Allowed");
             });
 
         return deferred.promise;
@@ -97,7 +98,7 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
 
         $state.go(toState)
             .then(function () {
-                $rootScope.makeToast('ברוך הבא ' + args.userName, '#main-view', 'top right');
+                $rootScope.makeToast('ברוך הבא ' + args.userName, $rootScope.rootToastAnchor, 'top right');
             });
     });
 
@@ -105,20 +106,20 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
         SessionService.clearSession();
         $state.go('home')
             .then(function () {
-                $rootScope.makeToast('להתראות!', '#main-view', 'top right');
+                $rootScope.makeToast('להתראות!', $rootScope.rootToastAnchor, 'top right');
             });
     });
 
     $rootScope.$on(AUTH_EVENTS.notAuthorized, function (event) {
 //        $state.go('login');
-        $rootScope.makeToast('אינך מורשה לעשות זאת', $rootScope.rootToastAnchor, 'top right');
+        $rootScope.makeToast('אין מספיק הרשאות', $rootScope.rootToastAnchor, 'top right');
     });
 
     $rootScope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
         SessionService.clearSession();
         $state.go('login')
             .then(function() {
-            $rootScope.makeToast('Session Expired, Please login again', $rootScope.rootToastAnchor, 'top right');
+            $rootScope.makeToast('Please login', $rootScope.rootToastAnchor, 'top right');
         });
     });
 
