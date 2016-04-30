@@ -8,7 +8,7 @@
     "test": "karma start --singleRun && mocha server/test",
     "debug": "set DEBUG=*,-express*,-socket.io*,-engine*,-send*,-body-parser* && node bin/www",
     "nodemon": "set DEBUG=*,-express*,-socket.io*,-engine*,-send*,-body-parser*,-nodemon* && nodemon ./bin/www -w ./server -i ./server/test",
-    "azure-log": "azure site log tail project-hands"
+    "azure-log": "azure site log tail projecthands"
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
     "angular-ui-bootstrap": "^1.2.4",
     "angular-ui-calendar": "^1.0.2",
     "angular-ui-router": "^0.2.18",
+    "bcrypt": "^0.8.6",
     "body-parser": "^1.15.0",
     "bootstrap": "^3.3.6",
     "cookie-parser": "^1.4.1",
