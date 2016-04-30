@@ -124,10 +124,10 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     });
 
     //Check if user is authenticated when State changed.
-    $rootScope.$on('$stateChangeSuccess', function(event) {
-        if($rootScope.isLoggedIn && !SessionService.getSession())
-            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-    });
+//    $rootScope.$on('$stateChangeSuccess', function(event) {
+//        if($rootScope.isLoggedIn && !SessionService.getSession())
+//            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+//    });
 
     /**************************************/
     /***** Application Wide Functions *****/

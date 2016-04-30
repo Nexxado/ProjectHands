@@ -15,7 +15,9 @@ angular.module('ProjectHands.auth')
         };
 
         $resource(baseUrl + '/login').save({
-                credentials: JSON.stringify(credentials)
+//                credentials: JSON.stringify(credentials)
+                email: username,
+                password: password
             })
             .$promise
             .then(function (result) {
@@ -44,17 +46,7 @@ angular.module('ProjectHands.auth')
     function authenticate(authorizedRole) {
         return $resource(baseUrl + '/authenticate/:role').get({role: authorizedRole});
     }
-
-
-    /**
-     * Get a saved cookie
-     * @param   {string} key : The cookie's identifier
-     * @returns {object}     : The cookie
-     */
-    function cookieRead(key) {
-        return $cookies.get(key);
-    }
-
+    
 
     /**
      * used to verify the user credentials
@@ -79,7 +71,6 @@ angular.module('ProjectHands.auth')
         signup: signup,
         login: login,
         logout: logout,
-        authenticate: authenticate,
-        cookieRead: cookieRead
+        authenticate: authenticate
     };
 });

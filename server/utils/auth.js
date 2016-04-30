@@ -143,11 +143,13 @@ module.exports = {
      * @param key : the user hash value that been generated from the Client side
      * @param callback : the function that the data will be sent to
      */
-    login: function (credentials, callback) {
+    login: function (email, password, callback) {
         
-        debug('Login credentials', credentials);
+        debug('Login email', email);
+        debug('Login password', password);
         
-        mongoUtils.query(COLLECTIONS.USERS, { email: credentials.email }, function (error, result) {
+        
+        mongoUtils.query(COLLECTIONS.USERS, { email: email }, function (error, result) {
 
             if(error)
                 return callback(error, result);
@@ -158,7 +160,7 @@ module.exports = {
             debug('login query result', result);
             var user = result[0];
 
-            bcrypt.compare(credentials.password, user.password, function(error, result) {
+            bcrypt.compare(password, user.password, function(error, result) {
                 
                 debug('bcrypt compare error', error);
                 debug('bcrypt compare result', result);

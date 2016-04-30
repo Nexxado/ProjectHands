@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var app = express();
 var bodyParser = require('body-parser');
 var passport = require('passport');
@@ -6,9 +7,15 @@ var cookieParser = require('cookie-parser');
 var cookieSecret = process.env.COOKIE_SECRET || require('../config.json').cookieSecret;
 
 app.use(cookieParser());
+app.use(session({ 
+    secret: 'projecthands session secret',
+    resave: false,
+    saveUninitialized: false
+}));
 app.use(passport.initialize());
+app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json()); 
 
 require('./passport')(passport);
 
