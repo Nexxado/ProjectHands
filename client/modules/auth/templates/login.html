@@ -19,8 +19,7 @@
         </md-input-container>
         <md-input-container class="md-icon-float md-block rtl">
             <label>סיסמה</label>
-            <!-- TODO change type to password -->
-            <input type="text" name="password" ng-model="password" required />
+            <input type="password" name="password" ng-model="password" required />
             <md-icon class="material-icons">lock_outline</md-icon>
             <div ng-messages="LoginForm.password.$error">
                 <div ng-message="required">
@@ -28,7 +27,7 @@
                 </div>
             </div>
         </md-input-container>
-        <md-checkbox class="md-primary rtl" ng-model="rememberMe">זכור אותי</md-checkbox>
+<!--        <md-checkbox class="md-primary rtl" ng-model="rememberMe">זכור אותי</md-checkbox>-->
         <div>
             <md-button type="submit" class="md-accent md-raised white">כניסה</md-button>
         </div>

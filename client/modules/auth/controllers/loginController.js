@@ -5,8 +5,8 @@ angular.module('ProjectHands.auth')
     var toastAnchor = '#loginToastsAnchor';
 
     //TODO clear placeholder data
-    $scope.email = 'test@gmail.com';
-    $scope.password = '1234';
+    $scope.email = '';
+    $scope.password = '';
     $scope.rememberMe = false;
 
     $scope.login = function () {
