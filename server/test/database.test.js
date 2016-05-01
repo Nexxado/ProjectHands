@@ -146,16 +146,17 @@ describe('Database API', function () {
 
         it('Login', function (done) {
 
-            var credentials = {
-                email: "route@gmail.com",
-                password: "1234",
-                remember: false
-            };
+//            var credentials = {
+//                email: "route@gmail.com",
+//                password: "1234",
+//                remember: false
+//            };
 
             request(server)
                 .post('/api/auth/login')
                 .send({
-                    credentials: JSON.stringify(credentials),
+                    email: "route@gmail.com",
+                    password: "1234"
                 })
                 .expect(200, done);
         });

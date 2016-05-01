@@ -49,10 +49,8 @@ describe('AuthService', function () {
         $rootScope.$apply(); // promises are resolved/dispatched only on next $digest cycle
         $httpBackend.flush();
         
-        var credentials = JSON.parse(result.credentials);
-        expect(credentials.email).toEqual(mockUser.email);
-        expect(credentials.password).toEqual(mockUser.password);
-        expect(credentials.remember).toEqual(false);
+        expect(result.email).toEqual(mockUser.email);
+        expect(result.password).toEqual(mockUser.password);
     });
 
 });
