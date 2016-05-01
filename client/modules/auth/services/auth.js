@@ -3,16 +3,16 @@ angular.module('ProjectHands.auth')
 .factory("AuthService", function ($resource, $cookies, $q) {
 
     var baseUrl = '/api/auth';
-    var cookieTokenKey = "token";
+//    var cookieTokenKey = "token";
 
     function login(username, password, rememberMe) {
         var deferred = $q.defer();
 
-        var credentials = {
-            email: username,
-            password: password,
-            remember: rememberMe
-        };
+//        var credentials = {
+//            email: username,
+//            password: password,
+//            remember: rememberMe
+//        };
 
         $resource(baseUrl + '/login').save({
 //                credentials: JSON.stringify(credentials)
@@ -32,6 +32,9 @@ angular.module('ProjectHands.auth')
         return deferred.promise;
     }
 
+    function isLoggedIn() {
+        return $resource(baseUrl + '/isLoggedIn').get();
+    }
 
     function logout() {
         return $resource(baseUrl + '/logout').get();
@@ -70,6 +73,7 @@ angular.module('ProjectHands.auth')
     return {
         signup: signup,
         login: login,
+        isLoggedIn: isLoggedIn,
         logout: logout,
         authenticate: authenticate
     };

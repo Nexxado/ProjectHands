@@ -91,7 +91,7 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     /***** Application Wide Event Listeners *****/
     /********************************************/
     $rootScope.$on(AUTH_EVENTS.loginSuccess, function (event, args) {
-        SessionService.startSession();
+        SessionService.getSession();
         var toState = 'dashboard.main-page';
         if(ROLES_HIERARCHY.indexOf(args.role) < 1)
             toState = 'home';

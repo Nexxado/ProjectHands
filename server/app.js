@@ -4,11 +4,12 @@ var app = express();
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var cookieParser = require('cookie-parser');
-var cookieSecret = process.env.COOKIE_SECRET || require('../config.json').cookieSecret;
+var config = require('../config.json');
+var cookieSecret = process.env.COOKIE_SECRET || config.cookieSecret;
 
 app.use(cookieParser());
 app.use(session({ 
-    secret: 'projecthands session secret',
+    secret: process.env.SESSION_SECRET || config.sessionSecret,
     resave: false,
     saveUninitialized: false
 }));
