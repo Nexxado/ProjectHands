@@ -10,13 +10,15 @@ angular.module('ProjectHands.auth')
         name: "signup testing"
     };
 
+    $scope.toastAnchor = 'form';
+
     $scope.signup = function () {
 
         if ($scope.SignupForm.$invalid)
             return;
 
         if(!isLegalID($scope.user._id)) {
-            $scope.makeToast('תעודת זהות אינה חוקית', 'md-content', 'bottom right');
+            $scope.makeToast('תעודת זהות אינה חוקית', $scope.toastAnchor, 'bottom right');
             return;
         }
 
@@ -26,7 +28,7 @@ angular.module('ProjectHands.auth')
                 $scope.signupSuccess = data.success;
             }).catch(function (error) {
                 console.log('error', error);
-                $scope.makeToast(error.data.errMessage, 'md-content', 'bottom right');
+                $scope.makeToast(error.data.errMessage, $scope.toastAnchor, 'bottom right');
             });
     };
 

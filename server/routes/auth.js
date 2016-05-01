@@ -39,8 +39,12 @@ router.get('/google', passport.authenticate('google', { scope : ['profile', 'ema
 router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/signup' }), 
            function(request, response) {
     
-    debug('google login success');
-    response.redirect('/signup/oauth');
+    debug('google login success', request.user);
+
+    if (ROLES_HIERARCHY.indexOf(request.user.role) < ROLES_HIERARCHY.indexOf(ROLES.VOLUNTEER))
+        return response.redirect('/home');
+    else
+        return response.redirect('/dashboard');
 });
 
 

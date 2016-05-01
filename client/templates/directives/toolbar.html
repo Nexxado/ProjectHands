@@ -12,6 +12,9 @@
             <md-button ui-sref="login" ng-hide="isLoggedIn">
                 כניסה
             </md-button>
+            <md-button ng-click="constructionToast('top right')" ng-show="isLoggedIn">
+                {{ userName }}
+            </md-button>
             <md-button ng-click="logout()" ng-show="isLoggedIn">
                 יציאה
             </md-button>

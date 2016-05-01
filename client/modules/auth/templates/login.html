@@ -1,9 +1,9 @@
-<md-content layout-padding flex-gt-xs="30" flex-offset-gt-xs="35" id="loginToastsAnchor">
+<md-content layout-padding flex-gt-xs="30" flex-offset-gt-xs="35">
     <div layout="column" layout-align="center center">
         <h1>דף כניסה</h1>
     </div>
 
-    <form name="LoginForm" ng-submit="login()" layout="column" novalidate>
+    <form name="LoginForm" ng-submit="login()" layout="column" novalidate id="loginToastsAnchor">
         <md-input-container class="md-icon-float md-block rtl">
             <label>אימייל</label>
             <input type="text" name="email" ng-model="email" ng-pattern="regexEmail" required />
@@ -33,9 +33,11 @@
             <md-button type="submit" class="md-accent md-raised white">כניסה</md-button>
         </div>
         <br/>
-        <!-- Change Button Design -->
-        <div>
-            <md-button href="/api/auth/google" target="_self" class="md-warn md-raised">Sign in with Google</md-button>
-        </div>
     </form>
+    <!-- OAuth Buttons -->
+    <div layout="column" layout-align="center center">
+        <a href="/api/auth/google" target="_self">
+            <img src="/modules/auth/assets/btn_google+_normal.png">
+        </a>
+    </div>
 </md-content>
