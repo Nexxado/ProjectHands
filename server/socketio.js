@@ -1,8 +1,8 @@
 var io = require('socket.io')({
     transports: ['websocket','xhr-polling']
 });
-var config = require('../config.json');
-var mongoUtils = require('./mongoUtils');
+var chatsCollection = require('../config.json').COLLECTIONS.CHATS;
+var mongoUtils = require('./utils/mongo');
 var debug = require('debug')('server/socketio');
  
 
@@ -28,11 +28,11 @@ io.on("connection", function (socket) {
         }
 
         //Saving message to chat history
-        mongoUtils.update(config.collections.chats,
+        mongoUtils.update(chatsCollection,
                          {"_id": room}, 
                          {$push: {"messages": message}}, 
                          {upsert: true}, 
-                         function(result) {
+                         function(error, result) {
                             debug('update chat', JSON.stringify(result));
         });
         

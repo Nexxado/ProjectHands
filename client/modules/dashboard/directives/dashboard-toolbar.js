@@ -1,10 +1,10 @@
-angular.module('ProjectHands')
+angular.module('ProjectHands.dashboard')
 
 .directive('dashboardToolbar', function() {
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'templates/directives/dashboard/dashboard-toolbar.html',
+        templateUrl: 'modules/dashboard/templates/directives/dashboard-toolbar.html',
         controller: function($scope) {
             
         }

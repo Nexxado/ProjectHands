@@ -1,4 +1,4 @@
-angular.module('ProjectHands')
+angular.module('ProjectHands.dashboard')
 
 .controller('DashboardUserProfileController', function ($scope) {
 

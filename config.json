@@ -1,9 +1,22 @@
 {
-    "mongoDBUrl" : "mongodb://localhost:27017/hands",
-    "collections": {
-        "users": "users",
-        "renovations": "renovations",
-        "teams": "teams",
-        "chats": "chats"
+    "mongoDBUrl" : "mongodb://127.0.0.1:27017/hands",
+    "serverSecret": "serverTestKey",
+    "cookieSecret": "cookieTestKey",
+    "sessionSecret": "projecthands session secret",
+    "cookieToken": "token",
+    "cookieSession": "session",
+    "COLLECTIONS": {
+        "USERS": "users",
+        "RENOVATIONS": "renovations",
+        "TEAMS": "teams",
+        "CHATS": "chats",
+        "SIGNUPS": "signup_users"
+    },
+    "ROLES": {
+        "ADMIN": "admin",
+        "MANAGER": "manager",
+        "TEAM_LEAD": "teamLead",
+        "VOLUNTEER": "volunteer",
+        "GUEST": "guest"
     }
 }

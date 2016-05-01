@@ -1,3 +1,12 @@
+/**
+ * The matter of mongoUtils is to provide CRUD methods towards the DB such:
+ * 1- insert
+ * 2- update
+ * 3- delete
+ * 4- query
+ */
+
+
 var MongoClient = require('mongodb').MongoClient;
 var _db;
 
@@ -39,14 +48,14 @@ module.exports = {
         {
             if(error)
             {
-                // debug(error);
-                callback(null);
+                debug('error', error);
+                callback(error, result);
 
             }
             else
             {
                 debug('Inserted %d document into the %s collection. The document inserted is ', result.insertedCount,collectionName , result);
-                callback(result);
+                callback(error, result);
             }
 
         });
@@ -56,8 +65,8 @@ module.exports = {
      * update data in the collection
      * @param collectionName : the collection the data exists in
      * @param query : the search criteria
-     * @param updatedData : the new data to be replaced by
-     * @param isUpdateAll : true to update all the matches , false to update the first match
+     * @param updatedData : the new data to be replaced by yjr new data, {$set:{THE DATA}} to update and not to override
+     * @param options : check mongo update options
      * callback will be executed when finish , and with null if any errors
      * */
     update(collectionName ,query, updatedData, options, callback)
@@ -66,7 +75,7 @@ module.exports = {
             if (error)
             {
                 debug(error);
-                callback(null);
+                callback(error, result);
                 return;
             }
             else if (result)
@@ -77,7 +86,7 @@ module.exports = {
                 debug('No document found with defined "find" criteria!');
 
             }
-            callback(result);
+            callback(error, result);
 
         });
 
@@ -95,13 +104,13 @@ module.exports = {
             if(error)
             {
                 debug(error);
-                callback(null);
+                callback(error, result);
 
             }
             else
             {
                 debug("Removed  %d doc(s)",result.result.n);
-                callback(result);
+                callback(error, result);
             }
 
 
@@ -122,12 +131,12 @@ module.exports = {
             if(error)
             {
                 debug(error);
-                callback(null);
+                callback(error, result);
             }
             else
             {
                 debug("The result is : ",result);
-                callback(result);
+                callback(error, result);
             }
         });
     }

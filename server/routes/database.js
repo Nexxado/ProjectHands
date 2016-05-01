@@ -1,27 +1,10 @@
 var router = require('express').Router();
-var mongoUtils = require('../mongoUtils');
+var HttpStatus = require('http-status-codes');
+var mongoUtils = require('../utils/mongo');
 var debug = require('debug')('routes/database');
+var writeToClient = require('../utils/writeToClient');
 
 
-function writeToClient(response, data, isObject) {
-    
-    debug('writetoclient data', data);
-    debug('writetoclient isObject', isObject);
-    
-    if (data !== null) {
-        if (isObject) {
-            response.json(data);
-            return;
-        } else {
-            response.send(data);
-            return;
-        }
-
-    } else {
-        response.send("DB Error");
-    }
-
-}
 router.post("/insert", function (request, response) {
 
     debug('insert col', request.body.collection);
@@ -30,11 +13,14 @@ router.post("/insert", function (request, response) {
     try {
         var colName = request.body.collection;
         var dataObj = JSON.parse(request.body.data);
-        mongoUtils.insert(colName, dataObj, function (result) {
-            writeToClient(response, result, true);
+        mongoUtils.insert(colName, dataObj, function (error, result) {
+            if(error)
+                return writeToClient(response, result, error, HttpStatus.INTERNAL_SERVER_ERROR);
+
+            writeToClient(response, result);
         });
     } catch (error) {
-        writeToClient(response, "Request Error", false);
+        writeToClient(response, "Request Error", HttpStatus.INTERNAL_SERVER_ERROR);
         debug("The error is : ", error);
     }
 
@@ -44,18 +30,21 @@ router.post("/insert", function (request, response) {
  * http://localhost:8080/api/delete/users?query={%22username%22:%22test%22}
  * */
 router.delete("/delete/:collection&:query", function (request, response) {
-
     try {
         debug('delete col', request.params.collection);
         debug('delete data', request.params.query);
 
         var colName = request.params.collection;
         var query = JSON.parse(request.params.query);
-        mongoUtils.delete(colName, query, function (result) {
-            writeToClient(response, result, true);
+        mongoUtils.delete(colName, query, function (error, result) {
+            if(error)
+                return writeToClient(response, result, error, HttpStatus.INTERNAL_SERVER_ERROR);
+
+            writeToClient(response, result);
         });
+
     } catch (error) {
-        writeToClient(response, "Request Error", false);
+        writeToClient(response, "Request Error", HttpStatus.INTERNAL_SERVER_ERROR);
         debug("The error is : ", error);
     }
 
@@ -74,12 +63,15 @@ router.post("/update", function (request, response) {
         var query = JSON.parse(request.body.query);
         var options = JSON.parse(request.body.options);
         var data = JSON.parse(request.body.data);
-        mongoUtils.update(colName, query, data, options, function (result) {
-            writeToClient(response, result, true);
+        mongoUtils.update(colName, query, data, options, function (error, result) {
+            if(error)
+                return writeToClient(response, result, error, HttpStatus.INTERNAL_SERVER_ERROR);
 
+            writeToClient(response, result);
         });
+
     } catch (error) {
-        writeToClient(response, "Request Error", false);
+        writeToClient(response, "Request Error", HttpStatus.INTERNAL_SERVER_ERROR);
         debug("The error is : ", error);
     }
 
@@ -87,23 +79,25 @@ router.post("/update", function (request, response) {
 
 });
 
-
+// Example : http://localhost:8080/database/query/users&{"username":"ihab"}
 router.get("/query/:collection&:query", function (request, response) {
-
     try {
         debug('query col', request.params.collection);
         debug('query query', request.params.query);
 
         var colName = request.params.collection;
         var query = JSON.parse(request.params.query);
-        mongoUtils.query(colName, query, function (result) {
+        mongoUtils.query(colName, query, function (error, result) {
             debug('query callback result', result);
-            writeToClient(response, result, true);
+            if(error)
+                return writeToClient(response, result, error, HttpStatus.INTERNAL_SERVER_ERROR);
+
+            writeToClient(response, result);
 
         });
 
     } catch (error) {
-        writeToClient(response, "Request Error", false);
+        writeToClient(response, "Request Error", HttpStatus.INTERNAL_SERVER_ERROR);
         debug("The error is : ", error);
     }
 

@@ -2,15 +2,17 @@
 <html lang="en" ng-app="ProjectHands">
 
 <head>
+    <base href="/">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-signin-client_id" content="990301468716-ubc9ojva16mhq03k1sb88k2djruph8is.apps.googleusercontent.com">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Project 'Hands'</title>
 
 	<!-- Vendor -->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link href="/vendor/angular-material/angular-material.css" rel="stylesheet">
-	<link href="/vendor/angular-gridster/dist/angular-gridster.min.css" rel="stylesheet">
+	<link href="vendor/angular-material/angular-material.css" rel="stylesheet">
+	<link href="vendor/angular-gridster/dist/angular-gridster.min.css" rel="stylesheet">
 	<link href="vendor/fullcalendar/dist/fullcalendar.css" rel="stylesheet">
 
     <!-- App -->
@@ -27,7 +29,7 @@
 <body>
 	<toolbar></toolbar>
 	<!-- Main Content -->
-	<div ui-view id="main-view"></div>
+	<main ui-view id="main-view"></main>
 
 </body>
 
@@ -35,51 +37,63 @@
 
 
 <!-- Vendor (3rd party libraries) -->
-<script src="/vendor/jquery/dist/jquery.js"></script>
-<script src="/vendor/angular/angular.min.js"></script>
-<script src="/vendor/angular-aria/angular-aria.min.js"></script>
-<script src="/vendor/angular-animate/angular-animate.min.js"></script>
-<script src="/vendor/angular-messages/angular-messages.min.js"></script>
-<script src="/vendor/angular-resource/angular-resource.min.js"></script>
-<script src="/vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
-<script src="/vendor/ui-router-extras/release/ct-ui-router-extras.min.js"></script>
-<script src="/vendor/angular-material/angular-material.js"></script>
-<script src="/vendor/angular-gridster/dist/angular-gridster.min.js"></script>
-<script src="/vendor/angular-ui-calendar/src/calendar.js"></script>
-<script src="/vendor/javascript-detect-element-resize/jquery.resize.js"></script>
-<script src="/vendor/moment/min/moment.min.js"></script>
-<script src="/vendor/fullcalendar/dist/fullcalendar.min.js"></script>
-<script src="/vendor/fullcalendar/dist/gcal.js"></script>
+<script src="vendor/jquery/dist/jquery.js"></script>
+<script src="vendor/angular/angular.min.js"></script>
+<script src="vendor/angular-aria/angular-aria.min.js"></script>
+<script src="vendor/angular-animate/angular-animate.min.js"></script>
+<script src="vendor/angular-messages/angular-messages.min.js"></script>
+<script src="vendor/angular-resource/angular-resource.min.js"></script>
+<script src="vendor/angular-cookies/angular-cookies.js"></script>
+<script src="vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="vendor/ui-router-extras/release/ct-ui-router-extras.min.js"></script>
+<script src="vendor/angular-material/angular-material.js"></script>
+<script src="vendor/angular-gridster/dist/angular-gridster.min.js"></script>
+<script src="vendor/angular-ui-calendar/src/calendar.js"></script>
+<script src="vendor/javascript-detect-element-resize/jquery.resize.js"></script>
+<script src="vendor/moment/min/moment.min.js"></script>
+<script src="vendor/fullcalendar/dist/fullcalendar.min.js"></script>
+<script src="vendor/fullcalendar/dist/gcal.js"></script>
+<script src="vendor/crypto-js/crypto-js.js"></script>
 <script src="/socket.io/socket.io.js"></script>
+
 
 <!-- App -->
 <script src="js/app.js"></script>
 <script src="js/routes.js"></script>
+<script src="modules/dashboard/dashboard.module.js"></script>
+<script src="modules/dashboard/routes.js"></script>
+<script src="modules/auth/auth.module.js"></script>
+<script src="modules/auth/routes.js"></script>
+<script src="modules/auth/submodules/google.js"></script>
 
 <!-- Controllers -->
 <script src="js/controllers/homeController.js"></script>
 <script src="js/controllers/aboutController.js"></script>
 <script src="js/controllers/chatController.js"></script>
 <script src="js/controllers/chatRoomController.js"></script>
-<script src="js/controllers/dashboard/dashboardController.js"></script>
-<script src="js/controllers/dashboard/dashboardMainPageController.js"></script>
-<script src="js/controllers/dashboard/dashboardUserProfileController.js"></script>
-<script src="js/controllers/dashboard/dashboardToolboxController.js"></script>
 <script src="js/controllers/renovationDashboardController.js"></script>
+<script src="modules/auth/controllers/loginController.js"></script>
+<script src="modules/auth/controllers/signupController.js"></script>
+<script src="modules/dashboard/controllers/dashboardController.js"></script>
+<script src="modules/dashboard/controllers/dashboardMainPageController.js"></script>
+<script src="modules/dashboard/controllers/dashboardUserProfileController.js"></script>
+<script src="modules/dashboard/controllers/dashboardToolboxController.js"></script>
 
 
 <!-- Directives -->
 <script src="js/directives/toolbar.js"></script>
-<script src="js/directives/dashboard/dashboard-toolbar.js"></script>
-<script src="js/directives/dashboard/dashboard-sidenav.js"></script>
-<script src="js/directives/dashboard/dashboard-sidenav-admin.js"></script>
 <script src="js/directives/renovation-dashboard/renovation-members.js"></script>
 <script src="js/directives/chat.js"></script>
 <script src="js/directives/chat-room.js"></script>
+<script src="modules/dashboard/directives/dashboard-toolbar.js"></script>
+<script src="modules/dashboard/directives/dashboard-sidenav.js"></script>
+<script src="modules/dashboard/directives/dashboard-sidenav-admin.js"></script>
 
 <!-- Services -->
 <script src="js/services/socketio.js"></script>
 <script src="js/services/database.js"></script>
+<script src="modules/auth/services/auth.js"></script>
+<script src="modules/auth/services/session.js"></script>
 
 <!-- Filters -->
 <script src="js/filters/capitalize.js"></script>

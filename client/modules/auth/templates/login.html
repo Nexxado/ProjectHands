@@ -1,0 +1,43 @@
+<md-content layout-padding flex-gt-xs="30" flex-offset-gt-xs="35">
+    <div layout="column" layout-align="center center">
+        <h1>דף כניסה</h1>
+    </div>
+
+    <form name="LoginForm" ng-submit="login()" layout="column" novalidate id="loginToastsAnchor">
+        <md-input-container class="md-icon-float md-block rtl">
+            <label>אימייל</label>
+            <input type="text" name="email" ng-model="email" ng-pattern="regexEmail" required />
+            <md-icon class="material-icons">email</md-icon>
+            <div ng-messages="LoginForm.email.$error">
+                <div ng-message="required">
+                    שדה חובה
+                </div>
+                <div ng-message="pattern">
+                    אימייל שגוי
+                </div>
+            </div>
+        </md-input-container>
+        <md-input-container class="md-icon-float md-block rtl">
+            <label>סיסמה</label>
+            <!-- TODO change type to password -->
+            <input type="text" name="password" ng-model="password" required />
+            <md-icon class="material-icons">lock_outline</md-icon>
+            <div ng-messages="LoginForm.password.$error">
+                <div ng-message="required">
+                    שדה חובה
+                </div>
+            </div>
+        </md-input-container>
+        <md-checkbox class="md-primary rtl" ng-model="rememberMe">זכור אותי</md-checkbox>
+        <div>
+            <md-button type="submit" class="md-accent md-raised white">כניסה</md-button>
+        </div>
+        <br/>
+    </form>
+    <!-- OAuth Buttons -->
+    <div layout="column" layout-align="center center">
+        <a href="/api/auth/google" target="_self">
+            <img src="/modules/auth/assets/btn_google+_normal.png">
+        </a>
+    </div>
+</md-content>

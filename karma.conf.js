@@ -27,7 +27,9 @@ module.exports = function(config) {
       'node_modules/moment/min/moment.min.js',
       'node_modules/fullcalendar/dist/fullcalendar.min.js',
       'node_modules/fullcalendar/dist/gcal.js',
-      'client/js/**/*.js',
+      'node_modules/crypto-js/crypto-js.js',
+      'client/**/*.module.js',
+      'client/**/*.js',
       'client/test/*.test.js'
     ],
       
