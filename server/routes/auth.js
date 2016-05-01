@@ -40,6 +40,7 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
            function(request, response) {
     
     debug('google login success');
+    response.redirect('/signup/oauth');
 });
 
 

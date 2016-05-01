@@ -14,6 +14,15 @@ angular.module('ProjectHands.auth')
         controller: 'SignupController'
     })
 
+    .state('signup.oauth', {
+        url: '/oauth',
+        views: {
+            '@': {
+                templateUrl: 'modules/auth/templates/oauthSignup.html'
+            }
+        }
+    })
+
     .state('signup.activated', {
         url: '/activated',
         views: {
