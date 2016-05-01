@@ -116,24 +116,30 @@ router.get('/activation/:token', function(request, response) {
     });
 });
 
-router.get('/authenticate/:role', isAuthorized);
+router.get('/authenticate/:role', isAuthorized());
 
 /**
  * Authenticate user - return user role if allowed, otherwise unauthorized
  */
-function isAuthorized(request, response, next) {
-    if (request.isAuthenticated()) {
+function isAuthorized(role) {
 
-        debug('role', request.params.role);
-        debug('user', request.user);
+    return function(request, response, next) {
+        if (request.isAuthenticated()) {
 
-        if (ROLES_HIERARCHY.indexOf(request.user.role) <= ROLES_HIERARCHY.indexOf(request.params.role))
-            return writeToClient(response, null, 'Not Allowed', HttpStatus.FORBIDDEN);
+            debug('isAuthorized request role', request.params.role);
+            debug('isAuthorized argument role', role);
+            debug('isAuthorized user', request.user);
 
-        return writeToClient(response, { success: true, role: request.user.role });
-    }
+            var roleIndex = role ? ROLES_HIERARCHY.indexOf(role) : ROLES_HIERARCHY.indexOf(request.params.role);
 
-    return writeToClient(response, null, 'User Not Logged In', HttpStatus.UNAUTHORIZED);
+            if (ROLES_HIERARCHY.indexOf(request.user.role) <= roleIndex)
+                return writeToClient(response, null, 'Not Allowed', HttpStatus.FORBIDDEN);
+
+            return writeToClient(response, { success: true, role: request.user.role });
+        }
+
+        return writeToClient(response, null, 'User Not Logged In', HttpStatus.UNAUTHORIZED);
+    };
 }
 
 /**
@@ -146,31 +152,26 @@ function ensureAuthenticated(request, response, next) {
   return writeToClient(response, null, "Error: User is not logged in", HttpStatus.BAD_REQUEST);
 }
 
-//router.get("/roles/:exec&:target&:role", function (request, response) {
-//    try {
-//        var role = request.params.role;
-//        var executerUsername = request.params.exec;
-//        var targetUsername = request.params.target;
-//
-//
-//        authUtils.setUserRole(role, executerUsername, targetUsername, function (result) {
-//            var message = "Cant change the role.";
-//
-//            if (result) {
-//                message = result.toString();
-//            }
-//
-//            writeToClient(response, message);
-//
-//
-//
-//        });
-//
-//    } catch (error) {
-//        writeToClient(response, null, "Error: Roles Request Failed, check input data", HttpStatus.BAD_REQUEST);
-//        debug("Roles error:", error);
-//    }
-//
-//});
+
+router.post('/assignrole', isAuthorized(ROLES.ADMIN), function(request, response, next) {
+
+    if(!request.body.user || !request.body.newrole)
+        return writeToClient(response, 'No user or new role provided', HttpStatus.BAD_REQUEST);
+
+    var user = JSON.parse(request.body.user);
+    var newRole = request.body.newrole;
+
+    authUtils.setUserRole(user, newRole, function(error, result) {
+
+        if(error)
+            return writeToClient(response, null, error, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        debug('assignrole setUserRole error', error);
+        debug('assignrole setUserRole result', result);
+        writeToClient(response, result);
+    });
+
+});
+
 
 module.exports = router;
