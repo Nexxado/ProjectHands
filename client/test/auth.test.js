@@ -18,6 +18,7 @@ describe('AuthService', function () {
             $httpBackend = _$httpBackend_;
         });
         $httpBackend.whenGET('templates/home.html').respond(200); //workaround for ui.router
+        $httpBackend.whenGET('/api/auth/isLoggedIn').respond(200);
     });
 
     afterEach(function () {
