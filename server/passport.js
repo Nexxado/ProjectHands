@@ -57,7 +57,7 @@ module.exports = function (passport) {
     passport.use(new GoogleStrategy({
         clientID: GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE_CLIENT_SECRET,
-        callbackURL: 'http://localhost:8080/api/auth/google/callback'
+        callbackURL: 'http://localhost:8080/api/auth/google/callback' //FIXME change to website url
     }, function (accessToken, refreshToken, profile, done) {
 
         debug('google accessToken', accessToken);
