@@ -53,7 +53,7 @@ module.exports = {
             //Check if user already signed up
             mongoUtils.query(COLLECTIONS.SIGNUPS, { $or: [{ email: user.email }, { _id: user._id }] }, function(error, result) {
                 if(result && result.length)
-                    return callback({errMessage: "Account Already in Signed up"}, null);
+                    return callback({errMessage: "Account Already Signed up"}, null);
 
 
                 user.createdAt = new Date();
@@ -66,6 +66,7 @@ module.exports = {
                         return callback({ errMessage: "Failed to hash password" }, null);
 
                     user.password = hash;
+                    user.approved = false;
                     mongoUtils.insert(COLLECTIONS.SIGNUPS, user, callback);
                 });
             });

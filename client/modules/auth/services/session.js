@@ -14,13 +14,9 @@ angular.module('ProjectHands.auth')
                 $rootScope.isLoggedIn = true;
                 $rootScope.userName = result.name;
                 $rootScope.userEmail = result.email;
-                return true;
             })
             .catch(function(error) {
                 console.log('isLoggedIn error', error);
-                return false;
             });
-
-
     };
 });

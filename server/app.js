@@ -7,6 +7,9 @@ var cookieParser = require('cookie-parser');
 var config = require('../config.json');
 var cookieSecret = process.env.COOKIE_SECRET || config.cookieSecret;
 
+app.use(express.static(__dirname + '/../client')); //Static route for client side
+app.use('/vendor', express.static(__dirname + '/../node_modules/')); //Static Route for node_modules
+
 app.use(cookieParser());
 app.use(session({ 
     secret: process.env.SESSION_SECRET || config.sessionSecret,
@@ -20,8 +23,8 @@ app.use(bodyParser.json());
 
 require('./passport')(passport);
 
-app.use(express.static(__dirname + '/../client')); //Static route for client side
-app.use('/vendor', express.static(__dirname + '/../node_modules/')); //Static Route for node_modules
+
+
 app.use('/api/database', require('./routes/database'));
 app.use('/api/auth', require('./routes/auth'));
 
