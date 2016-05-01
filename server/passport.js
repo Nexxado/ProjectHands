@@ -63,7 +63,8 @@ module.exports = function (passport) {
         
         var serialize = {
             _id: user._id,
-            email: user.email
+            email: user.email,
+            role: user.role
         };
         
         done(null, JSON.stringify(serialize));

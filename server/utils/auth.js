@@ -98,22 +98,30 @@ module.exports = {
             debug('ensureIndex error', error);
         });
 
+
         //Check if user already exists
         mongoUtils.query(COLLECTIONS.USERS, { $or: [{ email: user.email }, { _id: user._id }] }, function(error, result) {
             if(result && result.length)
                 return callback({ errMessage: "Account Already Exists" }, null);
 
-            user.createdAt = new Date();
+            //Check if user already signed up
+            mongoUtils.query(COLLECTIONS.SIGNUPS, { $or: [{ email: user.email }, { _id: user._id }] }, function(error, result) {
+                if(result && result.length)
+                    return callback({errMessage: "Account Already in Signed up"}, null);
 
-            bcrypt.hash(user.password, saltRounds, function(error, hash) {
 
-                debug('bcrypt hash error', error);
-                debug('bcrypt hash hash', hash);
-                if(error)
-                    return callback({ errMessage: "Failed to hash password" }, null);
+                user.createdAt = new Date();
 
-                user.password = hash;
-                mongoUtils.insert(COLLECTIONS.SIGNUPS, user, callback);
+                bcrypt.hash(user.password, saltRounds, function(error, hash) {
+
+                    debug('bcrypt hash error', error);
+                    debug('bcrypt hash hash', hash);
+                    if(error)
+                        return callback({ errMessage: "Failed to hash password" }, null);
+
+                    user.password = hash;
+                    mongoUtils.insert(COLLECTIONS.SIGNUPS, user, callback);
+                });
             });
         });
     },

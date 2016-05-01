@@ -87,6 +87,8 @@ function ensureAuthenticated(request, response, next) {
 }
 
 
+
+
 /*
  * User logout - Clear JWT cookie
  */
@@ -116,7 +118,7 @@ router.get('/logout', function(request, response) {
 router.post("/signup", function (request, response) {
     try {
         var user = JSON.parse(request.body.user);
-        user.role = ROLES.GUEST;
+        user.role = ROLES.ADMIN; //FIXME change initial role to ROLES.GUEST;
 
         authUtils.signUp(user, function (error, result) {
 
@@ -177,27 +179,44 @@ router.get('/activation/:token', function(request, response) {
 /**
  * Authenticate user - return user role if allowed, otherwise unauthorized
  */
-router.get('/authenticate/:role', function(request, response, next) {
+//router.get('/authenticate/:role', function(request, response, next) {
+//
+//    passport.authenticate('jwt', { session: false}, function(error, user, info) {
+//
+//        debug('error', error);
+//        debug('user', user);
+//        debug('info', info);
+//        debug('role', request.params.role);
+//
+//        if(error)
+//            return writeToClient(response, null, error, HttpStatus.BAD_REQUEST);
+//
+//        if(!user)
+//            return writeToClient(response, null, 'User Not Logged In', HttpStatus.UNAUTHORIZED);
+//
+//        if (ROLES_HIERARCHY.indexOf(user.role) <= ROLES_HIERARCHY.indexOf(request.params.role))
+//            return writeToClient(response, null, 'Not Allowed', HttpStatus.FORBIDDEN);
+//
+//        writeToClient(response, { success: true, role: user.role });
+//    })(request, response, next);
+//});
 
-    passport.authenticate('jwt', { session: false}, function(error, user, info) {
+router.get('/authenticate/:role', isAuthorized);
 
-        debug('error', error);
-        debug('user', user);
-        debug('info', info);
+function isAuthorized(request, response, next) {
+    if (request.isAuthenticated()) {
+
         debug('role', request.params.role);
+        debug('user', request.user);
 
-        if(error)
-            return writeToClient(response, null, error, HttpStatus.BAD_REQUEST);
-
-        if(!user)
-            return writeToClient(response, null, 'User Not Logged In', HttpStatus.UNAUTHORIZED);
-
-        if (ROLES_HIERARCHY.indexOf(user.role) <= ROLES_HIERARCHY.indexOf(request.params.role))
+        if (ROLES_HIERARCHY.indexOf(request.user.role) <= ROLES_HIERARCHY.indexOf(request.params.role))
             return writeToClient(response, null, 'Not Allowed', HttpStatus.FORBIDDEN);
 
-        writeToClient(response, { success: true, role: user.role });
-    })(request, response, next);
-});
+        return writeToClient(response, { success: true, role: request.user.role });
+    }
+
+    return writeToClient(response, null, 'User Not Logged In', HttpStatus.UNAUTHORIZED);
+}
 
 //router.get("/roles/:exec&:target&:role", function (request, response) {
 //    try {
