@@ -37,7 +37,7 @@ module.exports = {
     signUp: function (user, callback) {
 
         //Set TTL on collection's documents with field "createdAt"
-        mongoUtils.getCollection(COLLECTIONS.SIGNUPS).ensureIndex({ "createdAt": 1 },
+        mongoUtils.getCollection(COLLECTIONS.SIGNUPS).ensureIndex({ createdAt: 1 },
                                                                   { expireAfterSeconds: 86400 }, // 24 hours
                                                                  function(error, indexName) {
             debug('ensureIndex indexName', indexName);
