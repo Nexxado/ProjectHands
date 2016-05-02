@@ -2,21 +2,10 @@ var request = require('supertest');
 var bcrypt = require('bcrypt');
 var server = require('../app');
 var mongoUtils = require('../utils/mongo');
-var crypto = require('crypto');
 var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
 var saltRounds = 10;
 
-function hashSha512(username, time, random, password) {
-    // generate a hash from string <textToBeHashed>
-    var textToBeHashed = username + time + random + password;
-    var key = password;
-    // create hash
-    var hashObj = crypto.createHmac('sha512', key);
-    hashObj.update(textToBeHashed);
-    var hashedValue = hashObj.digest('hex');
-    return hashedValue;
-}
 
 describe('Database API', function () {
 
@@ -146,12 +135,6 @@ describe('Database API', function () {
 
         it('Login', function (done) {
 
-//            var credentials = {
-//                email: "route@gmail.com",
-//                password: "1234",
-//                remember: false
-//            };
-
             request(server)
                 .post('/api/auth/login')
                 .send({
@@ -160,15 +143,6 @@ describe('Database API', function () {
                 })
                 .expect(200, done);
         });
-
-
-
-        //        it('Roles', function (done) {
-        //            request(server)
-        //                .get('/api/auth/roles/initiator&target&role')
-        //                .expect(200, done);
-        //        });
-
     });
 
 });

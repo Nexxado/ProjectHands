@@ -123,11 +123,6 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
         });
     });
 
-    //Check if user is authenticated when State changed.
-//    $rootScope.$on('$stateChangeSuccess', function(event) {
-//        if($rootScope.isLoggedIn && !SessionService.getSession())
-//            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-//    });
 
     /**************************************/
     /***** Application Wide Functions *****/
@@ -160,6 +155,11 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
         );
     };
 
+    /**
+     * Return a string with every first letter of every word capitalized
+     * @param   {string} str : The string to title case
+     * @returns {string} Title cased string
+     */
     $rootScope.toTitleCase = function(str) {
         return str.replace(/\w\S*/g, function (txt) {
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();

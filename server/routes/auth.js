@@ -34,6 +34,10 @@ router.get('/isLoggedIn', function(request, response) {
     return writeToClient(response, null, "Error: User is not logged in", HttpStatus.BAD_REQUEST);
 });
 
+
+/*
+ * Third party OAuth Login
+ */
 router.get('/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 
 router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/signup' }), 
@@ -136,11 +140,12 @@ router.get('/activation/:token', function(request, response) {
     });
 });
 
-router.get('/authenticate/:role', isAuthorized());
 
 /**
  * Authenticate user - return user role if allowed, otherwise unauthorized
  */
+router.get('/authenticate/:role', isAuthorized());
+
 function isAuthorized(role) {
 
     return function(request, response, next) {
@@ -173,6 +178,9 @@ function ensureAuthenticated(request, response, next) {
 }
 
 
+/*
+* Change a user role - can only be invoked by an admin user.
+*/
 router.post('/assignrole', isAuthorized(ROLES.ADMIN), function(request, response, next) {
 
     if(!request.body.user || !request.body.newrole)

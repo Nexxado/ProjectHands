@@ -17,6 +17,9 @@ var FACEBOOK_CALLBACK_URL = process.env.FACEBOOK_CALLBACK || config.AUTH.faceboo
 
 module.exports = function (passport) {
 
+    /*
+     * Serialize user into session
+     */
     passport.serializeUser(function (user, done) {
         debug('serializeUser: ' + JSON.stringify(user));
         
@@ -28,6 +31,9 @@ module.exports = function (passport) {
         done(null, JSON.stringify(serialize));
     });
 
+    /*
+     * Deserialize user from session
+     */
     passport.deserializeUser(function (serialized, done) {
         debug('deserializeUser: ', JSON.parse(serialized));
         var deserialized = JSON.parse(serialized);
@@ -45,6 +51,9 @@ module.exports = function (passport) {
     });
     
     
+    /*
+     * Strategy used for local login
+     */
     passport.use(new LocalStrategy({ usernameField: 'email' }, function(email, password, done) {
         
         debug('local email', email);
@@ -62,6 +71,9 @@ module.exports = function (passport) {
         });
     }));
 
+    /*
+     * Strategy used for Google Social sign in
+     */
     passport.use(new GoogleStrategy({
         clientID: GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE_CLIENT_SECRET,
@@ -95,8 +107,8 @@ module.exports = function (passport) {
                 }
 
                 return done(null, user);
-            }
-            else {
+
+            } else {  // create new user
                 var newUser = {
                     googleId: profile.id,
                     email: profile.emails[0].value,
@@ -123,6 +135,9 @@ module.exports = function (passport) {
         });
     }));
 
+    /*
+     * Strategy used for Facebook Social sign in
+     */
     passport.use(new FacebookStrategy({
         clientID: FACEBOOK_APP_ID,
         clientSecret: FACEBOOK_APP_SECRET,
@@ -157,8 +172,8 @@ module.exports = function (passport) {
                 }
 
                 return done(null, user);
-            }
-            else {
+
+            } else { // create new user
                 var newUser = {
                     facebookId: profile.id,
                     email: profile.emails[0].value,
