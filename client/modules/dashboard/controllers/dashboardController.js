@@ -1,6 +1,6 @@
 angular.module('ProjectHands.dashboard')
 
-.controller('DashboardController', function ($scope) {
+.controller('DashboardController', function ($scope, DatabaseService, COLLECTIONS) {
 
 	$scope.editLayoutEnabled = false;
 
@@ -148,8 +148,16 @@ angular.module('ProjectHands.dashboard')
 
 	/* Mock Objects creations: */
 
-	/*Logged in User's ID*/
-	$scope.myID = "123456197";
+	DatabaseService.query(COLLECTIONS.USERS, {
+			email: $scope.userEmail
+		}).$promise.then(function (result) {
+			console.log("Result: ", result);
+			$scope.myID = result[0]._id;
+		}).catch(function (error) {
+			console.log("Error: ", error);
+		});
+		/*Logged in User's ID*/
+	$scope.myID = "";
 
 
 	$scope.rooms = ["General"];
@@ -218,7 +226,7 @@ angular.module('ProjectHands.dashboard')
 	/*Users in the system*/
 	$scope.users = [
 		{
-			id: "123456789",
+			id: "111111111",
 			name: "דוד מוזס",
 			type: $scope.userType[0],
 			joined_date: new Date(2000, 01, 01),
