@@ -10,19 +10,19 @@
 
 
         <div layout="row" layout-align="center center">
-            <div class="profile-content-item" layout="column" layout-align="center center">
+            <div class="profile-content-item" layout="column" layout-align="center center" dir="rtl">
                 <div layout="column" layout-align="center center" class="padding">
-                    <span class="md-headline">{{getMemberName(myID)}}</span>
-                    <span class="md-subhead">{{getMemberType(myID)}}</span>
+                    <span class="md-headline">{{getMember(myID).name}}</span>
+                    <span class="md-subhead">{{getMember(myID).type}}</span>
                 </div>
-                <p>{{getMemberAddress(myID)}}</p>
-                <p>טלפון: {{getMemberPhone(myID)}}</p>
-                <p>קצת עליי: {{getMemberAboutMe(myID)}}</p>
-                <p>מס' שיפוצים בהם השתתפתי: {{getMemberTotalRenovations(myID)}}</p>
-                <p>תאריך הצטרפות: {{getMemberJoinDate(myID) | date}}</p>
+                <p>{{getMember(myID).address}}</p>
+                <p>טלפון: {{getMember(myID).phone}}</p>
+                <p>קצת עליי: {{getMember(myID).aboutMe}}</p>
+                <p>מס' שיפוצים בהם השתתפתי: {{getMember(myID).totalRenovations}}</p>
+                <p>תאריך הצטרפות: {{getMember(myID).joined_date | date}}</p>
             </div>
             <div class="profile-pic profile-content-item">
-                <img src="{{getMemberAvatar(myID)}}" alt="Avatar" height="100%" width="100%" />
+                <img src="{{getMember(myID).avatar}}" alt="Avatar" height="100%" width="100%" />
             </div>
         </div>
     </div>
