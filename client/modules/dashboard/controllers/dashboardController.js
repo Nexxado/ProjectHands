@@ -152,12 +152,12 @@ angular.module('ProjectHands.dashboard')
 			email: $scope.userEmail
 		}).$promise.then(function (result) {
 			console.log("Result: ", result);
-			$scope.myID = result[0]._id;
+			$scope.myUser = result[0];
 		}).catch(function (error) {
 			console.log("Error: ", error);
 		});
 		/*Logged in User's ID*/
-	$scope.myID = "";
+	$scope.myUser = "";
 
 
 	$scope.rooms = ["General"];
@@ -639,7 +639,8 @@ angular.module('ProjectHands.dashboard')
 
 	/*Call all the functions inside this once the view is loaded*/
 	$scope.$on('$viewContentLoaded', function () {
-
+		var a = new Date(2013,1,1);
+		console.log(a.toLocaleDateString(['he']));
 	});
 
 	$scope.getMember = function (id) {
