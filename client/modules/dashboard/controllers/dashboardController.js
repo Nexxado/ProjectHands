@@ -11,8 +11,8 @@ angular.module('ProjectHands.dashboard')
             settings: {
                 sizeX: 2,
                 sizeY: 2,
-                minSizeX: 2,
-                minSizeY: 2
+                minSizeX: 1,
+                minSizeY: 1
             },
             active: false
         },
@@ -21,8 +21,8 @@ angular.module('ProjectHands.dashboard')
             settings: {
                 sizeX: 2,
                 sizeY: 2,
-                minSizeX: 2,
-                minSizeY: 2
+                minSizeX: 1,
+                minSizeY: 1
             },
             active: false
         },
@@ -31,8 +31,8 @@ angular.module('ProjectHands.dashboard')
             settings: {
                 sizeX: 2,
                 sizeY: 2,
-                minSizeX: 2,
-                minSizeY: 2
+                minSizeX: 1,
+                minSizeY: 1
             },
             active: false
         },
@@ -41,8 +41,8 @@ angular.module('ProjectHands.dashboard')
             settings: {
                 sizeX: 2,
                 sizeY: 2,
-                minSizeX: 2,
-                minSizeY: 2
+                minSizeX: 1,
+                minSizeY: 1
             },
             active: false
         },
@@ -51,8 +51,8 @@ angular.module('ProjectHands.dashboard')
             settings: {
                 sizeX: 2,
                 sizeY: 2,
-                minSizeX: 2,
-                minSizeY: 2
+                minSizeX: 1,
+                minSizeY: 1
             },
             active: false
         },
@@ -61,8 +61,8 @@ angular.module('ProjectHands.dashboard')
             settings: {
                 sizeX: 2,
                 sizeY: 2,
-                minSizeX: 2,
-                minSizeY: 2
+                minSizeX: 1,
+                minSizeY: 1
             },
             active: false
         },
@@ -71,8 +71,8 @@ angular.module('ProjectHands.dashboard')
             settings: {
                 sizeX: 2,
                 sizeY: 2,
-                minSizeX: 2,
-                minSizeY: 2
+                minSizeX: 1,
+                minSizeY: 1
             },
             active: false
         }
