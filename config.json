@@ -1,10 +1,19 @@
 {
     "mongoDBUrl" : "mongodb://127.0.0.1:27017/hands",
-    "serverSecret": "serverTestKey",
-    "cookieSecret": "cookieTestKey",
-    "sessionSecret": "projecthands session secret",
     "cookieToken": "token",
     "cookieSession": "session",
+    "SECRETS": {
+        "serverSecret": "serverTestKey",
+        "sessionSecret": "projecthands session secret"
+    },
+    "AUTH": {
+        "google_client_id": "990301468716-ubc9ojva16mhq03k1sb88k2djruph8is.apps.googleusercontent.com",
+        "google_client_secret": "SPUQWJcDkLyQ5FHKu_cCLCUg",
+        "google_callback": "http://localhost:8080/api/auth/google/callback",
+        "facebook_app_id": "1078269265566476",
+        "facebook_app_secret": "5deb9c085f1669a0cd8d3150027519d3",
+        "facebook_callback": "http://localhost:8080/api/auth/facebook/callback"
+    },
     "COLLECTIONS": {
         "USERS": "users",
         "RENOVATIONS": "renovations",

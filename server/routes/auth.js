@@ -7,7 +7,7 @@ var debug = require('debug')('routes/auth');
 var emailUtils = require('../utils/email');
 var writeToClient = require('../utils/writeToClient');
 var config = require('../../config.json');
-var serverSecret = process.env.SERVER_SECRET || config.serverSecret;
+var serverSecret = process.env.SERVER_SECRET || config.SECRETS.serverSecret;
 var ROLES = config.ROLES;
 var ROLES_HIERARCHY = [ROLES.GUEST, ROLES.VOLUNTEER, ROLES.TEAM_LEAD, ROLES.MANAGER, ROLES.ADMIN];
 
@@ -39,6 +39,19 @@ router.get('/google', passport.authenticate('google', { scope : ['profile', 'ema
 router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/signup' }), 
            function(request, response) {
     
+    debug('google login success', request.user);
+
+    if (ROLES_HIERARCHY.indexOf(request.user.role) < ROLES_HIERARCHY.indexOf(ROLES.VOLUNTEER))
+        return response.redirect('/home');
+    else
+        return response.redirect('/dashboard');
+});
+
+router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+
+router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/signup' }),
+           function(request, response) {
+
     debug('google login success', request.user);
 
     if (ROLES_HIERARCHY.indexOf(request.user.role) < ROLES_HIERARCHY.indexOf(ROLES.VOLUNTEER))
