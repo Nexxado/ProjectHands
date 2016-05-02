@@ -144,8 +144,8 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
             })
             .catch(function (error) {
                 console.log(error);
-                SessionService.clearSession();
                 $rootScope.makeToast('יציאה נכשלה', $rootScope.rootToastAnchor, 'top right');
+                $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
             });
     };
 

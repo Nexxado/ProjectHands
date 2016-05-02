@@ -46,12 +46,12 @@ module.exports = {
 
 
         //Check if user already exists
-        mongoUtils.query(COLLECTIONS.USERS, { $or: [{ email: user.email }, { _id: user._id }] }, function(error, result) {
+        mongoUtils.query(COLLECTIONS.USERS, { email: user.email }, function(error, result) {
             if(result && result.length)
                 return callback({ errMessage: "Account Already Exists" }, null);
 
             //Check if user already signed up
-            mongoUtils.query(COLLECTIONS.SIGNUPS, { $or: [{ email: user.email }, { _id: user._id }] }, function(error, result) {
+            mongoUtils.query(COLLECTIONS.SIGNUPS, { email: user.email }, function(error, result) {
                 if(result && result.length)
                     return callback({errMessage: "Account Already Signed up"}, null);
 

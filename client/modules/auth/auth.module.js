@@ -1,1 +1,1 @@
-angular.module('ProjectHands.auth', ['directive.g+signin']);
+angular.module('ProjectHands.auth', []);

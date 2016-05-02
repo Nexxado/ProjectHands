@@ -78,6 +78,9 @@ router.post("/signup", function (request, response) {
         var user = JSON.parse(request.body.user);
         user.role = ROLES.ADMIN; //FIXME change initial role to ROLES.GUEST;
 
+        debug('signup user', user);
+        delete user._id; //TODO check why user is receieved with _id = ''
+
         authUtils.signUp(user, function (error, result) {
 
             debug('signup result', result);
@@ -88,7 +91,6 @@ router.post("/signup", function (request, response) {
 
             }
             writeToClient(response, { success: true });
-            delete user.password; //remove password so token won't contain it
             var token = jwt.sign(user, serverSecret, { algorithm: 'HS512' });
             var link = 'http://' + request.hostname + '/api/auth/activation/' + token;
             emailUtils.activationEmail(user.email, user.name, link);

@@ -6,7 +6,7 @@ angular.module('ProjectHands.auth')
     $scope.user = {
         email: '',
         password: '',
-        _id: '',
+        realID: '',
         name: ''
     };
 
@@ -17,7 +17,7 @@ angular.module('ProjectHands.auth')
         if ($scope.SignupForm.$invalid)
             return;
 
-        if(!isLegalID($scope.user._id)) {
+        if(!isLegalID($scope.user.realID)) {
             $scope.makeToast('תעודת זהות אינה חוקית', $scope.toastAnchor, 'bottom right');
             return;
         }
