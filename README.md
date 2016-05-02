@@ -18,6 +18,8 @@ Please visit our wiki for furthur project info:
 
 ### [User Manual](../../wiki/user-manual)
 
+### [Developers Manual](../../wiki/Developers-Manual)
+
 ### [Team Page](../../wiki/team)
 
 ### Project Documents
