@@ -44,11 +44,7 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
            function(request, response) {
     
     debug('google login success', request.user);
-
-    if (ROLES_HIERARCHY.indexOf(request.user.role) < ROLES_HIERARCHY.indexOf(ROLES.VOLUNTEER))
-        return response.redirect('/home');
-    else
-        return response.redirect('/dashboard');
+    response.redirect('/after-auth.html');
 });
 
 router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
@@ -57,11 +53,7 @@ router.get('/facebook/callback', passport.authenticate('facebook', { failureRedi
            function(request, response) {
 
     debug('google login success', request.user);
-
-    if (ROLES_HIERARCHY.indexOf(request.user.role) < ROLES_HIERARCHY.indexOf(ROLES.VOLUNTEER))
-        return response.redirect('/home');
-    else
-        return response.redirect('/dashboard');
+    response.redirect('/after-auth.html');
 });
 
 

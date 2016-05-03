@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- OAuth Login will open a popup and redirect to this page
+         Which will give back focus to main window -->
+    <meta charset="utf-8">
+    <script type="text/javascript">
+        if (window.opener) {
+            window.opener.focus();
+
+            if (window.opener.loginCallBack) {
+                window.opener.loginCallBack();
+            }
+        }
+        window.close();
+
+    </script>
+</head>
+<body>
+
+
+</body>
+</html>
