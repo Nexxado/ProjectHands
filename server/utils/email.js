@@ -53,6 +53,15 @@ module.exports = {
 
         sendMail(to, "Activate Account", body);
     },
+    resetPasswordEmail: function (to, username, link) {
+        var body = '<h1>פרויקט ידיים</h1>' +
+            '<h2>היי ' + username + '</h2>' +
+            '<h3>התקבלה בקשה לאיפוס סיסמה</h3>' +
+            '<p>כדי לאפס את הסיסמה שלך לחץ על הכפתור למטה</p>' +
+            '<a href="' + link + '"><button>אפס את הסיסמה </button></a>';
+
+        sendMail(to, "Activate Account", body);
+    },
 
     /**
      *After user sign up , he will receive this email

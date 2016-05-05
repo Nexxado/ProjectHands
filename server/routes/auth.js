@@ -193,5 +193,53 @@ router.post('/assignrole', isAuthorized(ROLES.ADMIN), function(request, response
 
 });
 
+router.get('/forgot/:email&:phone', function(request, response) {
+
+    email = request.params.email;
+    phone = request.params.phone;
+    authUtils.passwordResetRequest(email,phone,function (error,result) {
+        if(error)
+        {
+            writeToClient(response,null,error,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        else
+        {
+            if(result.startsWith("Wrong"))
+            {
+                writeToClient(response,result,"",HttpStatus.NOT_FOUND);
+            }
+            else {
+                var link = ""; // TODO: add link for reset
+                emailUtils.resetPasswordEmail(email,result,link);
+                writeToClient(response,"Email has been sent to reset the password",HttpStatus.OK);
+
+            }
+        }
+    });
+ד    
+});
+router.get('/reset/:token', function(request, response) {
+
+    debug('reset token', request.params.token);
+    jwt.verify(request.params.token, serverSecret, { algorithm: 'HS512' }, function(error, decoded) {
+        delete decoded.createdAt;
+        delete decoded.iat;
+        debug('activation error', error);
+        debug('activation decoded', decoded);
+
+        if(error)
+            return response.redirect(encodeURI('/error/invalid token'));
+
+        authUtils.setPassword(decoded, function(error, result) {
+            if(error) {
+                    return response.redirect(encodeURI('/error/'+result));
+            }
+
+
+            debug('reset result', result);
+            response.redirect('/login/');
+        });
+    });
+});
 
 module.exports = router;
