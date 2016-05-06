@@ -72,4 +72,3 @@ angular.module('ProjectHands.home')
         }
     };
 });
-
