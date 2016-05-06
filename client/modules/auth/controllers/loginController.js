@@ -42,4 +42,6 @@ angular.module('ProjectHands.auth')
         console.log('loginCallBack');
         SessionService.getSession();
     };
+    
+    
 });
