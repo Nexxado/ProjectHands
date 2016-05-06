@@ -1,7 +1,20 @@
 <md-content>
 
-    <input type = "file" file-model = "myFile"/>
-    <button ng-click = "uploadFile()">upload me</button>
+    <div layout="column" layout-align="center center" layout-padding>
+
+        <div>
+            <input type="file" file-model="myFile"/>
+            <button ng-click="uploadFile()">upload me</button>
+        </div>
+
+        <div>
+
+
+            <img height="100" width="100" ng-repeat="slide in slides"   ng-src="{{slide.image}}"  >
+
+        </div>
+
+    </div>
 
 
 </md-content>

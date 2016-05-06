@@ -1,5 +1,8 @@
 <div class="container slider">
-    <img ng-repeat="slide in slides" class="slide slide-animation" ng-src="{{slide.image}}" ng-hide="!isCurrentSlideIndex($index)">
+    <img ng-repeat="slide in slides"
+         class="slide slide-animation"
+         ng-src="{{slide.image}}"
+         ng-hide="!isCurrentSlideIndex($index)">
 
     <a class="arrow prev" href="#" ng-click="nextSlide()"></a>
     <a class="arrow next" href="#" ng-click="prevSlide()"></a>
