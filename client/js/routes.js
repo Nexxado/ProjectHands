@@ -4,13 +4,13 @@ angular.module('ProjectHands')
 
     $urlRouterProvider.otherwise('/home');
 
-    $stateProvider.state('home', {
-        url: '/home',
-        templateUrl: 'templates/home.html',
-        controller: 'HomeController'
-    })
+    // .state('home', {
+    //     url: '/home',
+    //     templateUrl: 'templates/home.html',
+    //     controller: 'HomeController'
+    // })
 
-    .state('renovation_dashboard', {
+    $stateProvider.state('renovation_dashboard', {
         url: '/renovation_dashboard',
         templateUrl: 'templates/renovation_dashboard.html',
         controller: 'renovationDashboardController'
