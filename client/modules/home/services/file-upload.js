@@ -1,6 +1,7 @@
-angular.module('ProjectHands.auth')
+angular.module('ProjectHands.home')
 
     .service('fileUpload', ['$http', function ($http) {
+
         this.uploadFileToUrl = function (file, uploadUrl) {
             console.log("service uploadFileToUrl");
             var fd = new FormData();

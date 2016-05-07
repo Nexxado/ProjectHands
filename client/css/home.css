@@ -5,6 +5,26 @@
     --dot-border: 3px;
 }
 
+.grid-list {
+
+}
+
+.grid-tile {
+    transition: all 400ms ease-out 50ms;
+    margin: 8px;
+}
+
+.image-container {
+    display: inline-block;
+    position: relative;
+}
+
+.delete-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
 .slider {
     width: 1000px;
     height: 600px;
@@ -58,13 +78,9 @@
     background-image: url(/assets/img/home/paddle_next_fff.png);
 }
 
-
-
 /*---------------------------------------------------------
 NAV
 ---------------------------------------------------------*/
-
-
 
 .nav {
     text-align: center;
@@ -77,7 +93,7 @@ NAV
     height: 48px;
 }
 
-.nonDraggableImage{
+.nonDraggableImage {
     -webkit-user-drag: none;
 }
 
