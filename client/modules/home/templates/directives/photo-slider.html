@@ -2,7 +2,8 @@
     <img ng-repeat="slide in slides"
          class="slide slide-animation"
          ng-src="{{slide.image}}"
-         ng-hide="!isCurrentSlideIndex($index)">
+         ng-hide="!isCurrentSlideIndex($index)"
+         width=1000px height=600px >
 
     <a class="arrow prev" href="#" ng-click="nextSlide()"></a>
     <a class="arrow next" href="#" ng-click="prevSlide()"></a>
@@ -12,7 +13,7 @@
             <ul class="dots">
                 <li class="dot" ng-repeat="slide in slides">
                     <a href="#" ng-class="{'active':isCurrentSlideIndex($index)}"
-                       ng-click="setCurrentSlideIndex($index);">{{slide.description}}</a></li>
+                       ng-click="setCurrentSlideIndex($index);"></a></li>
             </ul>
         </div>
     </nav>
