@@ -4,7 +4,6 @@ angular.module('ProjectHands.auth')
 
     var toastAnchor = '#loginToastsAnchor';
 
-    //TODO clear placeholder data
     $scope.email = '';
     $scope.password = '';
     $scope.rememberMe = false;
