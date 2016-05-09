@@ -19,8 +19,8 @@ angular.module('ProjectHands')
     .state('error', {
         url: '/error/:errMessage',
         templateUrl: 'templates/error.html',
-        controller: function ($scope, $stateParams) {
-            $scope.errMessage = $scope.toTitleCase(decodeURI($stateParams.errMessage));
+        controller: function ($scope, $stateParams, UtilsService) {
+            $scope.errMessage = UtilsService.toTitleCase(decodeURI($stateParams.errMessage));
         },
         params: {
             errMessage: 'Unknown Error'

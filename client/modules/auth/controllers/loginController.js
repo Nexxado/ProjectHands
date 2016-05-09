@@ -1,6 +1,6 @@
 angular.module('ProjectHands.auth')
 
-.controller('LoginController', function ($scope, $rootScope, AuthService, AUTH_EVENTS, SessionService, $window) {
+.controller('LoginController', function ($scope, $rootScope, UtilsService, SessionService, AuthService, AUTH_EVENTS, $window) {
 
     var toastAnchor = '#loginToastsAnchor';
 
@@ -25,7 +25,7 @@ angular.module('ProjectHands.auth')
             .catch(function (error) {
                 console.log('login error ', error);
                 $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-                $rootScope.makeToast('האימייל או הסיסמה אינם נכונים', toastAnchor, 'bottom right');
+                UtilsService.makeToast('האימייל או הסיסמה אינם נכונים', toastAnchor, 'bottom right');
             });
     };
 

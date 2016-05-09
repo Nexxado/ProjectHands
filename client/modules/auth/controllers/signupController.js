@@ -1,6 +1,6 @@
 angular.module('ProjectHands.auth')
 
-.controller('SignupController', function ($scope, AuthService) {
+.controller('SignupController', function ($scope, AuthService, UtilsService) {
 
     $scope.signupSuccess = false;
     $scope.user = {
@@ -18,7 +18,7 @@ angular.module('ProjectHands.auth')
             return;
 
         if(!isLegalID($scope.user.realID)) {
-            $scope.makeToast('תעודת זהות אינה חוקית', $scope.toastAnchor, 'bottom right');
+            UtilsService.makeToast('תעודת זהות אינה חוקית', $scope.toastAnchor, 'bottom right');
             return;
         }
 
@@ -28,7 +28,7 @@ angular.module('ProjectHands.auth')
                 $scope.signupSuccess = data.success;
             }).catch(function (error) {
                 console.log('error', error);
-                $scope.makeToast(error.data.errMessage, $scope.toastAnchor, 'bottom right');
+                UtilsService.makeToast(error.data.errMessage, $scope.toastAnchor, 'bottom right');
             });
     };
 
