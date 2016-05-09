@@ -5,9 +5,10 @@ angular.module('ProjectHands')
         restrict: 'E',
         replace: true,
         templateUrl: '/templates/directives/notifications.html',
-        controller: function($scope, $rootScope) {
+        controller: function($scope, $rootScope, socketio, $timeout) {
 
-            $rootScope.notifications = [];
+            var duration = 5000; //5 seconds
+            $scope.notifications = [];
 
 //            for(var i = 0; i < 20; i++) {
 //                $rootScope.notifications.push({
@@ -17,7 +18,21 @@ angular.module('ProjectHands')
 //            }
 
             $scope.dismiss = function(index) {
+                if(index < 0 || index >= $scope.notifications.length)
+                    return;
+
                 $scope.notifications.splice(index, 1);
+            };
+
+            $rootScope.initNotifications = function() {
+                console.log('INIT NOTIFICATIONS');
+                socketio.on('notification', function(notification) {
+                    $scope.notifications.push(notification);
+
+                    $timeout(function() {
+                        $scope.dismiss($scope.notifications.indexOf(notification));
+                    }, duration);
+                });
             };
         }
     };

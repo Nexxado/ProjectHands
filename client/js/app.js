@@ -48,7 +48,7 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     notAuthorized: 'auth-not-authorized'
 })
 
-.run(function ($rootScope, $state, AuthService, AUTH_EVENTS, SessionService, $mdToast, $q, ROLES) {
+.run(function ($rootScope, $state, AuthService, AUTH_EVENTS, SessionService, $mdToast, $q, ROLES, $timeout) {
 
     //Email Regex according to RFC 5322. - http://emailregex.com/
     $rootScope.regexEmail = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
@@ -94,6 +94,10 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
         var toState = 'dashboard.main-page';
         if(ROLES_HIERARCHY.indexOf(args.role) < 1)
             toState = 'home';
+
+        $timeout(function() {
+            $rootScope.initNotifications();
+        });
 
         $state.go(toState)
             .then(function () {

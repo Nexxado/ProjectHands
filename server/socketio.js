@@ -13,6 +13,7 @@ io.on("connection", function (socket) {
     socket.join(defaultRoom); 
     socket.leave(socket.id); //Leave socket.io default room
 
+//    io.emit('notification', {message: 'User Logged In', timestamp: new Date()}); //Notification Testing
     debug("A user connected");
     socket.on('disconnect', function () {
         debug('user disconnected');
@@ -43,6 +44,7 @@ io.on("connection", function (socket) {
             debug('ERROR: room.join - room is undefined');
         }
 
+        debug('User joined', room);
         socket.join(room);
     });
 
@@ -50,7 +52,13 @@ io.on("connection", function (socket) {
         if(!room) {
             debug('ERROR: room.leave - room is undefined');
         }
+
+        debug('User left', room);
         socket.leave(room);
+    });
+
+    socket.on('client-disconnect', function() {
+        socket.disconnect();
     });
 
 });
