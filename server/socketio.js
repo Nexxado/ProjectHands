@@ -40,7 +40,7 @@ io.on("connection", function (socket) {
 
     socket.on('room.join', function(room) {
         if(!room) {
-            console.error('[socket.io] room.join - room is undefined');
+            debug('ERROR: room.join - room is undefined');
         }
 
         socket.join(room);
@@ -48,7 +48,7 @@ io.on("connection", function (socket) {
 
     socket.on('room.leave', function(room) {
         if(!room) {
-            console.error('[socket.io] room.leave - room is undefined');
+            debug('ERROR: room.leave - room is undefined');
         }
         socket.leave(room);
     });

@@ -98,6 +98,7 @@ angular.module('ProjectHands')
             });
     }
 
+    //Show user names for other users' messages
     $scope.showUsername = function(message, index)  {
         if(message.user === $scope.user.name)
             return false;
@@ -113,6 +114,7 @@ angular.module('ProjectHands')
         return message.match(/[\u0590-\u05FF]+/);
     }
 
+    //Scroll to bottom on new chat message
     $scope.$watchCollection('history', function(newVal, oldVal, scope) {
 //        console.log("History Changed");
         scrollToBottom(".chat-message-list");
