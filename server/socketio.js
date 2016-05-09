@@ -4,22 +4,37 @@ var io = require('socket.io')({
 var chatsCollection = require('../config.json').COLLECTIONS.CHATS;
 var mongoUtils = require('./utils/mongo');
 var debug = require('debug')('server/socketio');
- 
+
+var people = [];
 
 io.on("connection", function (socket) {
 
     var defaultRoom = 'general';
 
     socket.join(defaultRoom); 
-    socket.leave(socket.id); //Leave socket.io default room
+//    socket.leave(socket.id); //Leave socket.io default room
 
-//    io.emit('notification', {message: 'User Logged In', timestamp: new Date()}); //Notification Testing
     debug("A user connected");
     socket.on('disconnect', function () {
-        debug('user disconnected');
+        debug(people[socket.id] + ' disconnected');
+        delete people[socket.id];
+    });
+
+    socket.on('client-disconnect', function() {
+        socket.disconnect();
     });
 
 
+    socket.on('logged-in', function(userData) {
+        people[socket.id] = userData.name;
+        debug(userData.name + ' Logged in');
+        socket.join('notifications-' + userData.role);
+        io.emit('notification', {message: userData.name + ' Logged In', timestamp: new Date().toDateString()}); //FUTURE Notification Testing
+    });
+
+    /*************************/
+    /***** Chat Messages *****/
+    /*************************/
     socket.on('message', function(message, room) {
 
         if(room && room !== '') {
@@ -39,12 +54,15 @@ io.on("connection", function (socket) {
         
     });
 
+    /*****************/
+    /***** Rooms *****/
+    /*****************/
     socket.on('room.join', function(room) {
         if(!room) {
             debug('ERROR: room.join - room is undefined');
         }
 
-        debug('User joined', room);
+        debug(people[socket.id] + ' joined', room);
         socket.join(room);
     });
 
@@ -53,12 +71,8 @@ io.on("connection", function (socket) {
             debug('ERROR: room.leave - room is undefined');
         }
 
-        debug('User left', room);
+        debug(people[socket.id] + ' left', room);
         socket.leave(room);
-    });
-
-    socket.on('client-disconnect', function() {
-        socket.disconnect();
     });
 
 });

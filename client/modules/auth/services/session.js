@@ -17,7 +17,7 @@ angular.module('ProjectHands.auth')
                 console.log('getSession result', result);
 
                 socketio.connect();
-                socketio.emit('room.join', 'notifications-' + result.role); //Join Notification room according to role
+                socketio.emit('logged-in', result);
 
                 $rootScope.isLoggedIn = true;
                 $rootScope.userName = result.name;
