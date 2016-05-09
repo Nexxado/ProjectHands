@@ -9,7 +9,14 @@ angular.module('ProjectHands')
 
             $rootScope.notifications = [];
 
-            $scope.remove = function(index) {
+//            for(var i = 0; i < 20; i++) {
+//                $rootScope.notifications.push({
+//                    timestamp: new Date().toDateString(),
+//                    message: 'Lorem ipsum dolor ' + i
+//                });
+//            }
+
+            $scope.dismiss = function(index) {
                 $scope.notifications.splice(index, 1);
             };
         }

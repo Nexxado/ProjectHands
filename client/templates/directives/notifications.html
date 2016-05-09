@@ -1,0 +1,16 @@
+<div class="notification-container" layout="column">
+    <div class="notification list-slide-left" md-whiteframe="2" ng-repeat="item in notifications" layout="column" layout-padding>
+        <div class="notification-header" layout="row" layout-align="none center" flex>
+            <div>
+                {{ item.timestamp }}
+            </div>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="dismiss($index)">
+                <md-icon class="material-icons">close</md-icon>
+            </md-button>
+        </div>
+        <div>
+            {{ item.message }}
+        </div>
+    </div>
+</div>
