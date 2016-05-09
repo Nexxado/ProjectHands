@@ -149,17 +149,51 @@ angular.module('ProjectHands.dashboard')
 	/* Mock Objects creations: */
 
 	DatabaseService.query(COLLECTIONS.USERS, {
-			email: $scope.userEmail
+		email: $scope.userEmail
+	}).$promise.then(function (result) {
+		console.log("Result: ", result);
+		$scope.myUser = result[0];
+		$scope.getUserTeam($scope.myUser._id);
+	}).catch(function (error) {
+		console.log("Error: ", error);
+	});
+	/*Logged in User's ID*/
+	$scope.myUser = "";
+
+	//FOR SOME REASON THIS IS NOT CALLED!!!!
+	$scope.getMember = function (memberID) {
+		console.log("asdasd ", memberID);
+		DatabaseService.query(COLLECTIONS.USERS, {
+			_id: memberID
 		}).$promise.then(function (result) {
-			console.log("Result: ", result);
-			$scope.myUser = result[0];
+			console.log("MemberID Result: ", result);
+			$scope.teamMembers.push(result[0]);
 		}).catch(function (error) {
 			console.log("Error: ", error);
 		});
-		/*Logged in User's ID*/
-	$scope.myUser = "";
+	};
+	
+	$scope.getUserTeam = function (_id) {
+		DatabaseService.query(COLLECTIONS.TEAMS, {
+			members_id: _id
+		}).$promise.then(function (result) {
+			console.log("Result: ", result);
+			$scope.myTeam = result[0];
+			for (var memberID in $scope.myTeam.members_id) {
+				console.log($scope.myTeam.members_id[memberID]);
+				$scope.getMember($scope.myTeam.members_id[memberID]);
+			}
+			console.log($scope.myTeam.name);
+			console.log($scope.teamMembers);
+		}).catch(function (error) {
+			console.log("Error: ", error);
+		});
+	};
+	
+	$scope.myTeam = "";
 
-
+	
+	$scope.teamMembers = [];
 	$scope.rooms = ["General"];
 	$scope.renovationRooms = ["a"];
 	$scope.addRenoRoom = function (roomName) {
@@ -639,7 +673,7 @@ angular.module('ProjectHands.dashboard')
 
 	/*Call all the functions inside this once the view is loaded*/
 	$scope.$on('$viewContentLoaded', function () {
-		var a = new Date(2013,1,1);
+		var a = new Date(2013, 1, 1);
 		console.log(a.toLocaleDateString(['he']));
 	});
 

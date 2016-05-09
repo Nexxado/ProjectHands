@@ -29,5 +29,22 @@
         "team_id": "team_315568991",
         "pinned": [
 
-        ]
+        ],
+		"toolsNeeded": [
+				{
+					"name": "פטיש",
+					"quantity": "2",
+					"comment": "peter piper picked a pack of pickled peppers"
+		          },
+				{
+					"name": "מקדחה",
+					"quantity": "1",
+					"comment": "peter piper picked a pack of pickled peppers"
+		          },
+				{
+					"name": "ברגים",
+					"quantity": "1230",
+					"comment": "peter piper picked a pack of pickled peppers"
+		          }
+            ]
     }
