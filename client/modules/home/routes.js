@@ -2,6 +2,7 @@ angular.module('ProjectHands.home')
 
 .config(function ($stateProvider, $urlRouterProvider) {
 
+    $urlRouterProvider.otherwise('/home');
     $stateProvider.state('home', {
         url: '/home',
         templateUrl: 'modules/home/templates/home.html',

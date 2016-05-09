@@ -1,15 +1,7 @@
 angular.module('ProjectHands')
 
 .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
-
-    $urlRouterProvider.otherwise('/home');
-
-    // .state('home', {
-    //     url: '/home',
-    //     templateUrl: 'templates/home.html',
-    //     controller: 'HomeController'
-    // })
-
+    
     $stateProvider.state('renovation_dashboard', {
         url: '/renovation_dashboard',
         templateUrl: 'templates/renovation_dashboard.html',
