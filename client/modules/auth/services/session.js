@@ -15,6 +15,7 @@ angular.module('ProjectHands.auth')
         AuthService.isLoggedIn().$promise
             .then(function(result) {
                 console.log('getSession result', result);
+                delete result.success;
 
                 socketio.connect();
                 socketio.emit('logged-in', result);
