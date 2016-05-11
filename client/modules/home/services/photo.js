@@ -2,6 +2,9 @@ angular.module('ProjectHands.home')
 
     .service("PhotoService", function ($resource) {
 
+
+
+        
         var slides = [
             {image: 'assets/img/home/jobs1.jpg', description: 'Image 00'},
             {image: 'assets/img/home/jobs2.jpg', description: 'Image 01'},

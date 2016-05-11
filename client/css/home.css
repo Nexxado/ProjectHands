@@ -106,6 +106,7 @@ NAV
 .nav ul {
     margin: 0;
     width: 100%;
+    padding-left: 0px;
 }
 
 .nav .dot, .nav .dot a {
