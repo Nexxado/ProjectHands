@@ -9,7 +9,7 @@ var writeToClient = require('../utils/writeToClient');
 var config = require('../../config.json');
 var serverSecret = process.env.SERVER_SECRET || config.SECRETS.serverSecret;
 var ROLES = config.ROLES;
-var ROLES_HIERARCHY = Object.keys(ROLES).map(function (key) { return ROLES[key]; }).reverse();
+
 
 
 /*
@@ -134,30 +134,28 @@ router.get('/activation/:token', function(request, response) {
 
 
 /**
- * Authenticate user - return user role if allowed, otherwise unauthorized
+ * Authenticate user - return user role if allowed to access route, otherwise unauthorized
  */
-router.get('/authenticate/:role', isAuthorized());
+router.get('/authenticate/:route', function(request, response) {
+    if (request.isAuthenticated()) {
 
-function isAuthorized(role) {
+        debug('isAuthorized request route', request.params.route);
+        debug('isAuthorized user', request.user);
 
-    return function(request, response, next) {
-        if (request.isAuthenticated()) {
+        authUtils.isAuthorized(request.user.role, request.params.route, function(error, result) {
 
-            debug('isAuthorized request role', request.params.role);
-            debug('isAuthorized argument role', role);
-            debug('isAuthorized user', request.user);
+            if(error)
+                return writeToClient(response, null, error.message, error.code);
 
-            var roleIndex = role ? ROLES_HIERARCHY.indexOf(role) : ROLES_HIERARCHY.indexOf(request.params.role);
-
-            if (ROLES_HIERARCHY.indexOf(request.user.role) <= roleIndex)
-                return writeToClient(response, null, 'Not Allowed', HttpStatus.FORBIDDEN);
 
             return writeToClient(response, { success: true, role: request.user.role });
-        }
+        });
 
+    } else {
         return writeToClient(response, null, 'User Not Logged In', HttpStatus.UNAUTHORIZED);
-    };
-}
+    }
+});
+
 
 /**
  * Make sure user is logged in
@@ -173,10 +171,16 @@ function ensureAuthenticated(request, response, next) {
 /*
 * Change a user role - can only be invoked by an admin user.
 */
-router.post('/assignrole', isAuthorized(ROLES.ADMIN), function(request, response, next) {
+router.post('/assignrole', function(request, response, next) {
 
-    if(!request.body.user || !request.body.newrole)
-        return writeToClient(response, 'No user or new role provided', HttpStatus.BAD_REQUEST);
+    if(!request.isAuthenticated())
+        return writeToClient(response, null, 'User Not Logged In', HttpStatus.UNAUTHORIZED);
+
+    else if(request.user.role !== ROLES.ADMIN)
+        return writeToClient(response, null, 'Not Allowed', HttpStatus.FORBIDDEN);
+
+    else if(!request.body.user || !request.body.newrole)
+        return writeToClient(response, null, 'No user or new role provided', HttpStatus.BAD_REQUEST);
 
     var user = JSON.parse(request.body.user);
     var newRole = request.body.newrole;

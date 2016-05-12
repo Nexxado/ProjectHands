@@ -1,0 +1,6 @@
+[
+	{
+		route: 'dashboard',
+		role: 'volunteer'
+	}
+]

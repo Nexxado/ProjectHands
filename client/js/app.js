@@ -63,11 +63,11 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
      * @param   {string} role : The lowest role in the hierarchy that is allowed
      * @returns {object} A resolved/rejected promise based on authentication
      */
-    $rootScope.authenticate = function (authorizedRole) {
-        console.log('Lowest Authorized Role', authorizedRole);
+    $rootScope.authenticate = function (route) {
+        console.log('Authenticating route', route);
         var deferred = $q.defer();
 
-        AuthService.authenticate(authorizedRole)
+        AuthService.authenticate(route)
             .$promise
             .then(function (result) {
                 console.log('authenticate result', result);

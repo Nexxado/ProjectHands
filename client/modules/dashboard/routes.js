@@ -12,8 +12,8 @@ angular.module('ProjectHands.dashboard')
             }
         },
         resolve: {
-            auth: function($rootScope, ROLES) {
-                return $rootScope.authenticate(ROLES.VOLUNTEER);
+            auth: function($rootScope) {
+                return $rootScope.authenticate('dashboard');
             }
         }
     })
