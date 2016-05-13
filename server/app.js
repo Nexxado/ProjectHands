@@ -41,4 +41,6 @@ app.use(function(request, response) {
 });
 
 app.io = require('./socketio');
+app.iod = require('./delivery');
+
 module.exports = app;
