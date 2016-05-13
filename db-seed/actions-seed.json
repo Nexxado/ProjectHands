@@ -1,6 +1,6 @@
 [
 	{
-		route: 'dashboard',
+		action: 'dashboard',
 		role: 'volunteer'
 	}
 ]

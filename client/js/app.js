@@ -60,14 +60,14 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
 
     /**
      * Authenticating user based on role
-     * @param   {string} role : The lowest role in the hierarchy that is allowed
+     * @param   {string} action : The action the user is trying to perform
      * @returns {object} A resolved/rejected promise based on authentication
      */
-    $rootScope.authenticate = function (route) {
-        console.log('Authenticating route', route);
+    $rootScope.authenticate = function (action) {
+        console.log('Authenticating action', action);
         var deferred = $q.defer();
 
-        AuthService.authenticate(route)
+        AuthService.authenticate(action)
             .$promise
             .then(function (result) {
                 console.log('authenticate result', result);

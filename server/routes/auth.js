@@ -134,21 +134,21 @@ router.get('/activation/:token', function(request, response) {
 
 
 /**
- * Authenticate user - return user role if allowed to access route, otherwise unauthorized
+ * Authenticate user - check if user is allowed to perform action base on user role
  */
-router.get('/authenticate/:route', function(request, response) {
+router.get('/authenticate/:action', function(request, response) {
     if (request.isAuthenticated()) {
 
-        debug('isAuthorized request route', request.params.route);
+        debug('isAuthorized request action', request.params.action);
         debug('isAuthorized user', request.user);
 
-        authUtils.isAuthorized(request.user.role, request.params.route, function(error, result) {
+        authUtils.isAuthorized(request.user.role, request.params.action, function(error, result) {
 
             if(error)
                 return writeToClient(response, null, error.message, error.code);
 
 
-            return writeToClient(response, { success: true, role: request.user.role });
+            return writeToClient(response, result);
         });
 
     } else {

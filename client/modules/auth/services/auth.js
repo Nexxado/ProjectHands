@@ -47,8 +47,8 @@ angular.module('ProjectHands.auth')
         });
     }
 
-    function authenticate(route) {
-        return $resource(baseUrl + '/authenticate/:route').get({route: route});
+    function authenticate(action) {
+        return $resource(baseUrl + '/authenticate/:action').get({action: action});
     }
     
 

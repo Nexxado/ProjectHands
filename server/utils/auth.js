@@ -95,12 +95,12 @@ module.exports = {
     /**
      * Check if a user is authorized to access a certain route
      * @param   {string}   role  : The user's role
-     * @param   {string}   route : The route the user is trying to access
+     * @param   {string}   action : The action the user is trying to perform
      * @returns {function} Invoke callback function with appropriate error and result.
      */
-    isAuthorized: function(role, route, callback) {
+    isAuthorized: function(role, action, callback) {
 
-        mongoUtils.query(COLLECTIONS.ROUTES, { route: route }, function(error, result) {
+        mongoUtils.query(COLLECTIONS.ACTIONS, { action: action }, function(error, result) {
 
             if(error || !result || result.length !== 1)
                 return callback({ message: "Internal Server Error", code: HttpStatus.INTERNAL_SERVER_ERROR}, null);
@@ -108,7 +108,7 @@ module.exports = {
             if (ROLES_HIERARCHY.indexOf(role) < ROLES_HIERARCHY.indexOf(result[0].role))
                 return callback({ message: "Not Allowed", code: HttpStatus.FORBIDDEN}, null);
 
-            return callback(null, result);
+            return callback(null, { success: true, role: role });
         });
 
     },

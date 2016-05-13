@@ -20,7 +20,7 @@
         "TEAMS": "teams",
         "CHATS": "chats",
         "SIGNUPS": "signup_users",
-        "ROUTES": "routes"
+        "ACTIONS": "actions"
     },
     "ROLES": {
         "ADMIN": "admin",
