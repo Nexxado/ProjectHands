@@ -87,7 +87,7 @@ router.post("/signup", function (request, response) {
 
             }
             writeToClient(response, { success: true });
-            var token = jwt.sign(user, serverSecret, { algorithm: 'HS512' });
+            var token = jwt.sign(user, serverSecret, { algorithm: 'HS512' , expiresIn :"1h" });
             var link = 'http://' + request.hostname + '/api/auth/activation/' + token;
             emailUtils.activationEmail(user.email, user.name, link);
         });
@@ -216,10 +216,15 @@ router.get('/forgot/:email&:new_password&:old_password', function(request, respo
             }
             else
             {
-                if(result.length ==1)
+                if(result=!authUtils.messages.PASSWORD_UPDATE_SUCCESS)
                 {
-                    writeToClient(response,"Password has been reset",HttpStatus.OK);
+                    return response.redirect(encodeURI('/error/'+result));
+
                 }
+                //TODO : Redirect to page the that shows that
+                writeToClient(response,result,HttpStatus.OK);
+
+
             }
 
         });
@@ -234,17 +239,19 @@ router.get('/forgot/:email&:new_password&:old_password', function(request, respo
             else
             {
                 /** the result will be the username if there is no errors*/
-
-                if(result.startsWith("Wrong"))
+                const USER_DATA_NOT_EXIST = "Wrong Email.";
+                if(result==USER_DATA_NOT_EXIST)
                 {
                     writeToClient(response,result,"",HttpStatus.NOT_FOUND);
+                    return response.redirect(encodeURI('/error/'+USER_DATA_NOT_EXIST));
                 }
                 else
                 {
-                    var token = jwt.sign({email:email, newPassword : newPassword}, serverSecret, { algorithm: 'HS512' });
+                    var token = jwt.sign({email:email, newPassword : newPassword , iat:Math.floor(Date.now() / 1000)}, serverSecret, { algorithm: 'HS512' });
                     var link = 'http://' + request.hostname + '/api/auth/reset/' + token;
                     emailUtils.resetPasswordEmail(email,result,link);
                     writeToClient(response,"Email has been sent to reset the password",HttpStatus.OK);
+                    //TODO : Redirect to page the that shows that
 
                 }
             }
@@ -258,14 +265,13 @@ router.get('/reset/:token', function(request, response) {
     jwt.verify(request.params.token, serverSecret, { algorithm: 'HS512' }, function(error, decoded) {
         if(error)
             return response.redirect(encodeURI('/error/invalid token'));
-
+        /**iat is a field that is added to be able to calc expire time and such things */
+        delete decoded.iat;
         authUtils.setPassword({email : decoded.email},"",decoded.newPassword,false, function(error, result) {
             if(error)
             {
                 return response.redirect(encodeURI('/error/'+result));
             }
-
-
             debug('reset result', result);
             response.redirect('/login/');
         });

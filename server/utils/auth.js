@@ -9,13 +9,20 @@ var saltRounds = 10; // will do 2^rounds
 
 
 /** CONSTANTS */
-const DB_FETCH_ERROR = "Error has accourd , please  try again";
-const PASSWORD_NOT_MATCH_ERROR = "The password dose not match , please try again";
-const PASSWORD_UPDATING_ERROR = "Error has accourd while updating the password";
-const PASSWORD_UPDATE_SUCCESS = "The password has been changed";
-const USER_DATA_NOT_EXIST = "Wrong Email or Phone number";
+var MESSAGES = {
+     DB_FETCH_ERROR : "Error has accourd , please  try again",
+     PASSWORD_NOT_MATCH_ERROR : "The password dose not match , please try again",
+     PASSWORD_UPDATING_ERROR : "Error has accourd while updating the password",
+     PASSWORD_UPDATE_SUCCESS : "The password has been changed",
+     USER_DATA_NOT_EXIST : "Wrong Email or Phone number"
+}
 
-
+/**
+ *Generates a hash for the given data
+ *
+ * @param password {string}: the data to be hased
+ * @param callback {fucntion(error,result) } : will be executed when finish
+ */
 function doPasswordHash(password,callback)
 {
     bcrypt.hash(password, saltRounds, function(error, hash) {
@@ -32,6 +39,7 @@ module.exports = {
      * @link Roles : contains the Roles in the system
      */
     roles: ROLES,
+    messages:MESSAGES,
 
     /**
      * This method will change the user role
@@ -74,7 +82,7 @@ module.exports = {
 
 
                 user.createdAt = new Date();
-                doPasswordHash(user.passowrd,function (error,hashedPassword) {
+                doPasswordHash(user.password,function (error,hashedPassword) {
                     if(error || hashedPassword==null)
                     {
                         return callback({ errMessage: "Failed to hash password" }, null);
@@ -118,7 +126,7 @@ module.exports = {
         mongoUtils.query(COLLECTIONS.USERS,{email:email},function (error,result) {
             if(error)
             {
-                callback(error,DB_FETCH_ERROR);
+                callback(error,MESSAGES.DB_FETCH_ERROR);
             }
             else
             {
@@ -149,7 +157,7 @@ module.exports = {
         mongoUtils.query(COLLECTIONS.USERS,user,function (error,result) {
             if(error)
             {
-                callback(error,DB_FETCH_ERROR);
+                callback(error,MESSAGES.DB_FETCH_ERROR);
             }
             else
             {
@@ -160,16 +168,14 @@ module.exports = {
                     {
                         if(error)
                         {
-                            callback(error,DB_FETCH_ERROR);
-
+                             callback(error,MESSAGES.DB_FETCH_ERROR);
                         }
                         else if (!isMatch)
                         {
                             /** to change password , the oldPassword must matches the one in the DB*/
-                            callback(error,PASSWORD_NOT_MATCH_ERROR);
-
+                             callback(error,MESSAGES.PASSWORD_NOT_MATCH_ERROR);
                         }
-
+                        return;
                     }
 
                     //updating to new password
@@ -181,22 +187,17 @@ module.exports = {
                         mongoUtils.update(COLLECTIONS.USERS, user, {$set: {password: hashedPassword}}, {}, function (error,result) {
                             if(error)
                             {
-                                callback(error,PASSWORD_UPDATING_ERROR);
+                                callback(error,MESSAGES.PASSWORD_UPDATING_ERROR);
                             }
                             else
                             {
-                                callback(error,PASSWORD_UPDATE_SUCCESS)
+                                callback(error,MESSAGES.PASSWORD_UPDATE_SUCCESS)
                             }
 
                         });
                     });
-
-
                 });
             }
-
-
-
         });
         //token is made
         // sent to the email
