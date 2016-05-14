@@ -60,7 +60,7 @@ module.exports = {
             '<p>כדי לאפס את הסיסמה שלך לחץ על הכפתור למטה</p>' +
             '<a href="' + link + '"><button>אפס את הסיסמה </button></a>';
 
-        sendMail(to, "Activate Account", body);
+        sendMail(to, "Reset Account password", body);
     },
 
     /**

@@ -193,46 +193,76 @@ router.post('/assignrole', isAuthorized(ROLES.ADMIN), function(request, response
 
 });
 
-router.get('/forgot/:email&:phone', function(request, response) {
+/**
+ * will take the email and the phone to ensure that the details are correct
+ * and the new , old password too, to kip the need to open a new page to enter the passwords
+ * the old password is needed if changing password , if forgot option the new password is enough
+ */
+router.get('/forgot/:email&:new_password&:old_password', function(request, response) {
 
     email = request.params.email;
-    phone = request.params.phone;
-    authUtils.passwordResetRequest(email,phone,function (error,result) {
-        if(error)
-        {
-            writeToClient(response,null,error,HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        else
-        {
-            if(result.startsWith("Wrong"))
-            {
-                writeToClient(response,result,"",HttpStatus.NOT_FOUND);
-            }
-            else {
-                var link = ""; // TODO: add link for reset
-                emailUtils.resetPasswordEmail(email,result,link);
-                writeToClient(response,"Email has been sent to reset the password",HttpStatus.OK);
+  //  phone = request.params.phone;
+    newPassword = request.params.new_password;
+    oldPassword = request.params.old_password;
 
+    /** in the case of change password , the user must be logged in*/
+    if(request.isAuthenticated() && oldPassword !=null && oldPassword.length!=0)
+    {
+        authUtils.setPassword({email:email},oldPassword,newPassword,true,function (error,result)
+        {
+            if(error)
+            {
+                writeToClient(response,null,error,HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }
-    });
-ד    
+            else
+            {
+                if(result.length ==1)
+                {
+                    writeToClient(response,"Password has been reset",HttpStatus.OK);
+                }
+            }
+
+        });
+    }
+    else
+    {
+        authUtils.passwordResetRequest(email,function (error,result) {
+            if(error)
+            {
+                writeToClient(response,null,error,HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            else
+            {
+                /** the result will be the username if there is no errors*/
+
+                if(result.startsWith("Wrong"))
+                {
+                    writeToClient(response,result,"",HttpStatus.NOT_FOUND);
+                }
+                else
+                {
+                    var token = jwt.sign({email:email, newPassword : newPassword}, serverSecret, { algorithm: 'HS512' });
+                    var link = 'http://' + request.hostname + '/api/auth/reset/' + token;
+                    emailUtils.resetPasswordEmail(email,result,link);
+                    writeToClient(response,"Email has been sent to reset the password",HttpStatus.OK);
+
+                }
+            }
+        });
+    }
+
 });
 router.get('/reset/:token', function(request, response) {
 
     debug('reset token', request.params.token);
     jwt.verify(request.params.token, serverSecret, { algorithm: 'HS512' }, function(error, decoded) {
-        delete decoded.createdAt;
-        delete decoded.iat;
-        debug('activation error', error);
-        debug('activation decoded', decoded);
-
         if(error)
             return response.redirect(encodeURI('/error/invalid token'));
 
-        authUtils.setPassword(decoded, function(error, result) {
-            if(error) {
-                    return response.redirect(encodeURI('/error/'+result));
+        authUtils.setPassword({email : decoded.email},"",decoded.newPassword,false, function(error, result) {
+            if(error)
+            {
+                return response.redirect(encodeURI('/error/'+result));
             }
 
 

@@ -16,6 +16,15 @@ const PASSWORD_UPDATE_SUCCESS = "The password has been changed";
 const USER_DATA_NOT_EXIST = "Wrong Email or Phone number";
 
 
+function doPasswordHash(password,callback)
+{
+    bcrypt.hash(password, saltRounds, function(error, hash) {
+
+        debug('bcrypt hash error', error);
+        debug('bcrypt hash hash', hash);
+        callback(error,hash)
+    });
+}
 module.exports = {
 
     /**
@@ -65,22 +74,21 @@ module.exports = {
 
 
                 user.createdAt = new Date();
-
-                bcrypt.hash(user.password, saltRounds, function(error, hash) {
-
-                    debug('bcrypt hash error', error);
-                    debug('bcrypt hash hash', hash);
-                    if(error)
+                doPasswordHash(user.passowrd,function (error,hashedPassword) {
+                    if(error || hashedPassword==null)
+                    {
                         return callback({ errMessage: "Failed to hash password" }, null);
 
-                    user.password = hash;
+                    }
+                    user.password = hashedPassword;
                     user.approved = false;
                     mongoUtils.insert(COLLECTIONS.SIGNUPS, user, callback);
+
                 });
-            });
+                });
+
         });
     },
-
 
     /**
      * Activate a temporary user account
@@ -98,17 +106,16 @@ module.exports = {
         mongoUtils.insert(COLLECTIONS.USERS, user, callback);
     },
 
-    //TODO: Check syntax of fetch the query result
     /**
-     * checks whether to send an email reset like or not
+     * checks whether to send an email reset link or not
      * @param email {string} : the user email
      * @param phone {string} : the user phone
      * @param callback
      */
-    passwordResetRequest : function (email,phone,callback) {
+    passwordResetRequest : function (email,callback) {
 
         // validate the data
-        mongoUtils.query(COLLECTIONS.USERS,{email:email,phone:phone},function (error,result) {
+        mongoUtils.query(COLLECTIONS.USERS,{email:email},function (error,result) {
             if(error)
             {
                 callback(error,DB_FETCH_ERROR);
@@ -121,7 +128,7 @@ module.exports = {
                 }
                 else
                 {
-                    callback(error,result.username)
+                    callback(error,result[0].name)
                 }
             }
 
@@ -133,8 +140,9 @@ module.exports = {
      * @param oldPassword {string} : the old password of this user
      * @param newPassword {string} : the new password for this user
      * @param callback {function(error,result)} : method to be executed on completion
+     * @param isChange {boolean } : whether is reset ot change
      */
-    setPassword:function(user,oldPassword,newPassword,callback)
+    setPassword:function(user,oldPassword,newPassword,isChange,callback)
     {
 
         // fetch the user and check that the passwords do match
@@ -146,22 +154,45 @@ module.exports = {
             else
             {
                 // compare the password
-                if(oldPassword!=result.password)
+                bcrypt.compare(oldPassword, result[0].password, function(error, isMatch) {
+
+                    if(isChange)
                     {
-                        callback(error,PASSWORD_NOT_MATCH_ERROR);
+                        if(error)
+                        {
+                            callback(error,DB_FETCH_ERROR);
+
+                        }
+                        else if (!isMatch)
+                        {
+                            /** to change password , the oldPassword must matches the one in the DB*/
+                            callback(error,PASSWORD_NOT_MATCH_ERROR);
+
+                        }
+
                     }
-                //updating to new password
-                mongoUtils.update(COLLECTIONS.USERS, user, {$set: {password: newPassword}}, {}, function (error,result) {
-                if(error)
-                {                        callback(error,PASSWORD_UPDATING_ERROR);
-                }
-                else
-                {
-                    callback(error,PASSWORD_UPDATE_SUCCESS)
-                }
+
+                    //updating to new password
+                    doPasswordHash(newPassword,function (error,hashedPassword)
+                    {
+                        if(error)
+                            callback(error,hashedPassword);
+
+                        mongoUtils.update(COLLECTIONS.USERS, user, {$set: {password: hashedPassword}}, {}, function (error,result) {
+                            if(error)
+                            {
+                                callback(error,PASSWORD_UPDATING_ERROR);
+                            }
+                            else
+                            {
+                                callback(error,PASSWORD_UPDATE_SUCCESS)
+                            }
+
+                        });
+                    });
+
 
                 });
-                
             }
 
 
