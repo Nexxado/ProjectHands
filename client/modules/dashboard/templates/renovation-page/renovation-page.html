@@ -1,3 +1,67 @@
+<div layout="col">
+    <div layout="row" class="renovation-page-tab-wrapper">
+        <div ng-cloak flex>
+            <md-content>
+                <div class="renovation-page-tab-control">
+                    <md-tabs md-dynamic-height md-border-bottom>
+                        <md-tab label="פרטי שיפוץ">
+                            <md-content class="md-padding">
+
+                                <div class="box effect7">
+                                    <h1 class="md-display-2">Tab One</h1>
+                                </div>
+                                <div style="">
+                                    <div class="test2 box effect7 pinned-box">
+                                        <h1>ajsdasjd</h1>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="צוות משפץ">
+                            <md-content class="md-padding">
+                                <h1 class="md-display-2">Tab Two</h1>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="משימות">
+                            <md-content class="md-padding">
+                                <h1 class="md-display-2">Tab Three</h1>
+                            </md-content>
+                        </md-tab>
+                    </md-tabs>
+                </div>
+            </md-content>
+        </div>
+    </div>
+    <!--Chat side tab-->
+    <div class="renovation-page-chat-wrapper">
+        <div ng-cloak flex>
+            <md-content>
+                <div>
+                    <md-tabs md-dynamic-height md-border-bottom>
+                        <md-tab label="one">
+                            <md-content class="md-padding">
+                                <h1 class="md-display-2">Tab One</h1>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="two">
+                            <md-content class="md-padding">
+                                <h1 class="md-display-2">Tab Two</h1>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="three">
+                            <md-content class="md-padding">
+                                <h1 class="md-display-2">Tab Three</h1>
+                            </md-content>
+                        </md-tab>
+                    </md-tabs>
+                </div>
+            </md-content>
+        </div>
+        <chat user="myUser._id" rooms="renovationRooms"></chat>
+    </div>
+</div>
+
+<!--
 <md-toolbar layout="row" layout-align="none center" class="md-primary dashboard-top-rounded-toolbar">
     <span flex></span>
     <div class="md-toolbar-tools" dir="rtl">
@@ -32,13 +96,14 @@
                     <h2>{{task.title}}</h2>
                     <h3>{{ task.description }}</h3>
                     <h4>לבצע עד: {{task.deadline | date}}</h4>
-                    <!--                    <h2>המבצע: {{task.assignee}}</h2>-->
                 </div>
                 <md-divider></md-divider>
             </md-list-item>
         </md-list>
     </div>
-	<!--Team Div-->
+-->
+<!--Team Div-->
+<!--
     <div>
         <md-toolbar layout="row" layout-align="none center" class="md-primary dashboard-top-rounded-toolbar" dir="rtl">
             <span flex></span>
@@ -74,3 +139,4 @@
         </md-content>
     </div>
 </div>
+-->

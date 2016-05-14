@@ -156,10 +156,11 @@ angular.module('ProjectHands.dashboard')
 		console.log("Result: ", result);
 		$scope.myUser = result[0];
 		$scope.getUserTeam($scope.myUser._id);
+        console.log("My user ID is: ", $scope.myUser._id);
 	}).catch(function (error) {
 		console.log("Error: ", error);
 	});
-	/*Logged in User's ID*/
+	/*Logged in User*/
 	$scope.myUser = "";
 
 
@@ -167,7 +168,7 @@ angular.module('ProjectHands.dashboard')
 		DatabaseService.query(COLLECTIONS.TEAMS, {
 			members_id: _id
 		}).$promise.then(function (result) {
-			console.log("Result: ", result);
+			console.log("getUserTeam Result: ", result);
 			$scope.myTeam = result[0];
 			$scope.getTeamMember($scope.myTeam.manager_id);
 			console.log("mamanger ", $scope.myTeam.manager_id);

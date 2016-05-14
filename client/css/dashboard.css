@@ -106,3 +106,66 @@ md-menu-item > .md-button {
     border-width: 1px;
     height: 100%;
 }
+.renovation-page-tab-wrapper{
+    width: 80%;
+    
+}
+.renovation-page-chat-wrapper{
+    width: 20%;
+    
+}
+.renovation-page-tab-control{
+    background-image: url("https://www.hdwallpapers.net/images/google-material-design-wallpaper-for-twitter-header-49-853.jpg");
+    border-top-left-radius: 20px;
+/*    border-top-right-radius: 20px;*/
+    padding-top: 5%;
+}
+
+.box h3{
+	text-align:center;
+	position:relative;
+	top:80px;
+}
+.box {
+	width:70%;
+	height:200px;
+	background:white;
+	margin:40px auto;
+}
+
+/*==================================================
+ * Effect 7
+ * ===============================================*/
+.effect7
+{
+    position:relative;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+.effect7:before, .effect7:after
+{
+	content:"";
+    position:absolute; 
+    z-index:-1;
+    box-shadow:0 0 20px rgba(0,0,0,0.8);
+    top:0;
+    bottom:0;
+    left:10px;
+    right:10px;
+    border-radius:100px / 10px;
+} 
+.effect7:after
+{
+    right:10px; 
+    left:auto; 
+    transform:skew(8deg) rotate(3deg);
+}
+
+.pinned-box{
+    background-image: url("/assets/img/cork-background.jpg");
+}
+.test2{
+    border-color: burlywood;
+    border-width: 7px;
+    border-style: solid;
+    border-radius: 5px;
+}
