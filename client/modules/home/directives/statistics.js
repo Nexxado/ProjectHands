@@ -7,11 +7,12 @@ angular.module('ProjectHands.home')
             templateUrl: 'modules/home/templates/directives/statistics.html',
             controller: function ($scope) {
 
+                //mock obj
                 $scope.statistics = {
-                    renovations : 10,
-                    volunteers : 20,
-                    work_hours : 300,
-                    donations : 20000
+                    renovations : 10+ "- ",
+                    volunteers : " "+20+ "- ",
+                    work_hours : " "+300+ "- ",
+                    donations : " "+20000+ "- "
                 }
 
             }

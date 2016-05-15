@@ -1,26 +1,16 @@
 <md-content>
 
-    <div layout="row" layout-padding layout-wrap layout-fill ng-cloak>
-        <md-whiteframe class="md-whiteframe-8dp sta" layout layout-align="center center">
-            <!--<H1>{{ statistics.renovations }}</H1>-->
-            <H1> Renovations</H1>
-        </md-whiteframe>
+    <div layout="column" layout-padding layout-wrap layout-fill ng-cloak>
+        <md-whiteframe class="md-whiteframe-8dp sta" layout ng-repeat="ad in ads">
 
-        <md-whiteframe class="md-whiteframe-8dp sta" layout layout-align="center center">
-            <H1>{{ statistics.volunteers }}</H1>
-            <H1> Volunteers</H1>
-        </md-whiteframe>
+            <div layout="column" layout-align="start start">
+                <md-content>
+                    <H1 dir="rtl" lang="he">{{ad.header}}</H1>
 
-        <md-whiteframe class="md-whiteframe-8dp sta" layout layout-align="center center">
-            <H1>{{ statistics.work_hours }}</H1>
-            <H1>Work Hours</H1>
-        </md-whiteframe>
+                    <p dir="rtl" lang="he">{{ad.text}}</p>
+                </md-content>
+            </div>
 
-        <md-whiteframe class="md-whiteframe-8dp sta" layout layout-align="center center">
-            <H1>{{ statistics.donations }}</H1>
-            <H1> NIS Donations</H1>
         </md-whiteframe>
     </div>
-
-
 </md-content>
