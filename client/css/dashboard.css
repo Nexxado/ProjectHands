@@ -115,7 +115,7 @@ md-menu-item > .md-button {
     
 }
 .renovation-page-tab-control{
-    background-image: url("https://www.hdwallpapers.net/images/google-material-design-wallpaper-for-twitter-header-49-853.jpg");
+/*    background-image: url("https://www.hdwallpapers.net/images/google-material-design-wallpaper-for-twitter-header-49-853.jpg");*/
     border-top-left-radius: 20px;
 /*    border-top-right-radius: 20px;*/
     padding-top: 5%;
@@ -127,8 +127,8 @@ md-menu-item > .md-button {
 	top:80px;
 }
 .box {
-	width:70%;
-	height:200px;
+/*	width:70%;*/
+/*	height:200px;*/
 	background:white;
 	margin:40px auto;
 }
@@ -163,9 +163,25 @@ md-menu-item > .md-button {
 .pinned-box{
     background-image: url("/assets/img/cork-background.jpg");
 }
-.test2{
+.pinned-frame{
     border-color: burlywood;
     border-width: 7px;
     border-style: solid;
     border-radius: 5px;
+	min-height: 100px;
+	min-weight: 100px;
+	padding: 15px;
+}
+.pinned-message{
+	background-color: #ffffb3;
+	min-height: 50px;
+	min-width: 50px;
+}
+.pinned-wrapper{
+	margin: 10px;
+}
+
+.box-header{
+	box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 1) inset;
+	height: 10%;
 }

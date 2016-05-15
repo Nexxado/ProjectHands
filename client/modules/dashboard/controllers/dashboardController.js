@@ -146,17 +146,16 @@ angular.module('ProjectHands.dashboard')
 	$scope.$on('gridster-mobile-changed', function (gridster) {});
 	$scope.$on('gridster-draggable-changed', function (gridster) {});
 
-	/* Mock Objects creations: */
 
 	$scope.teamMembers = [];
 	
 	DatabaseService.query(COLLECTIONS.USERS, {
 		email: $scope.userEmail
 	}).$promise.then(function (result) {
-		console.log("Result: ", result);
+//		console.log("Result: ", result);
 		$scope.myUser = result[0];
 		$scope.getUserTeam($scope.myUser._id);
-        console.log("My user ID is: ", $scope.myUser._id);
+//        console.log("My user ID is: ", $scope.myUser._id);
 	}).catch(function (error) {
 		console.log("Error: ", error);
 	});
@@ -168,10 +167,10 @@ angular.module('ProjectHands.dashboard')
 		DatabaseService.query(COLLECTIONS.TEAMS, {
 			members_id: _id
 		}).$promise.then(function (result) {
-			console.log("getUserTeam Result: ", result);
+//			console.log("getUserTeam Result: ", result);
 			$scope.myTeam = result[0];
 			$scope.getTeamMember($scope.myTeam.manager_id);
-			console.log("mamanger ", $scope.myTeam.manager_id);
+//			console.log("mamanger ", $scope.myTeam.manager_id);
 			for (var i in $scope.myTeam.members_id) {
 				$scope.getTeamMember($scope.myTeam.members_id[i]);
 			}
@@ -184,13 +183,12 @@ angular.module('ProjectHands.dashboard')
 	$scope.myTeam = "";
 
 	$scope.getTeamMember = function (memberID) {
-		console.log("asdasd ", memberID);
 		DatabaseService.query(COLLECTIONS.USERS, {
 			_id: memberID
 		}).$promise.then(function (result) {
-			console.log("MemberID Result: ", result[0]);
+//			console.log("MemberID Result: ", result[0]);
 			$scope.teamMembers.push(result[0]);
-			console.log($scope.teamMembers);
+//			console.log($scope.teamMembers);
 		}).catch(function (error) {
 			console.log("Error: ", error);
 		});
@@ -202,13 +200,16 @@ angular.module('ProjectHands.dashboard')
 		DatabaseService.query(COLLECTIONS.RENOVATIONS, {
 			team_id: $scope.myTeam._id
 		}).$promise.then(function (result) {
-			console.log("Renovation Result: ", result[0]);
+//			console.log("Renovation Result: ", result[0]);
 			$scope.renovations = result;
 			console.log($scope.renovations);
+//			console.log($scope.renovations);
 		}).catch(function (error) {
 			console.log("Error: ", error);
 		});
 	};
+	
+	
 //	$scope.rooms = ["General"];
 //	$scope.renovationRooms = ["a"];
 //	$scope.addRenoRoom = function (roomName) {

@@ -7,11 +7,13 @@
 
 <md-content>
     <md-list flex>
-        <md-list-item class="md-3-line" ng-repeat="renovation in renovations" ui-sref="dashboard.renovation({city: renovation.address.city, street: renovation.address.street, houseNum: renovation.address.houseNum})" ng-click="addRenoRoom(renovation.address.street + ' ' + renovation.address.houseNum + ', ' +  renovation.address.city) ; assignVarsForRenovation(renovation.address.city, renovation.address.street, renovation.address.houseNum)">
+        <md-list-item class="md-3-line" ng-repeat="renovation in renovations" ui-sref="dashboard.renovation({city: renovation.addr.city, street: renovation.addr.street, num: renovation.addr.num})" ng-click="">
             <div class="md-list-item-text hebrew-text" layout="column" dir="rtl">
-                <h3>{{ renovation.addr.street }} {{renovation.addr.houseNum}}, {{renovation.addr.city}}</h3>
+                <h3>{{ renovation.addr.street }} {{renovation.addr.num}}, {{renovation.addr.city}}</h3>
                 <p>{{ myTeam.name }}</p>
             </div>
         </md-list-item>
     </md-list>
 </md-content>
+
+<!--addRenoRoom(renovation.address.street + ' ' + renovation.address.houseNum + ', ' +  renovation.address.city) ; assignVarsForRenovation(renovation.address.city, renovation.address.street, renovation.address.houseNum)-->

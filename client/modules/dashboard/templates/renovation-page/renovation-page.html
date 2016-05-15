@@ -1,66 +1,80 @@
-<div layout="col">
-    <div layout="row" class="renovation-page-tab-wrapper">
-        <div ng-cloak flex>
-            <md-content>
-                <div class="renovation-page-tab-control">
-                    <md-tabs md-dynamic-height md-border-bottom>
-                        <md-tab label="פרטי שיפוץ">
-                            <md-content class="md-padding">
+<div layout="row" ng-hide="renovationNotFound">
+	<div layout="column" class="renovation-page-tab-wrapper effect7">
+		<div ng-cloak flex>
+			<md-content dir="rtl">
+				<div class="renovation-page-tab-control md-primary">
+					<h1>{{thisRenovation.addr.city}}, {{thisRenovation.addr.street}} {{thisRenovation.addr.num}}</h1>
+					<md-tabs md-dynamic-height md-border-bottom>
+						<md-tab label="פרטי שיפוץ">
+							<md-content class="md-padding">
+								<div ng-cloak>
+									<div layout="column">
+										<div layout="row">
+											<div class="effect7">
+												<div>
+													<h3>משימות</h3>
+												</div>
+												<md-list layout="column">
+													<md-list-item class="md-2-line" ng-repeat="task in thisRenovation.tasks">
+														<md-checkbox ng-model="item.done"></md-checkbox>
+														<div class="md-list-item-text">
+															<h2>{{task.name}}</h2>
+															<p>{{task.description}}</p>
+															<p>{{getMemberByID(task.assigned_id).name}}</p>
+														</div>
+													</md-list-item>
+												</md-list>
+											</div>
+											<div class="effect7">
+												<md-grid-tile-header>
+													<h3>הודעות חשובות</h3>
+												</md-grid-tile-header>
+												<md-list layout="column">
+													<md-list-item class="md-2-line pinned-wrapper" ng-repeat="pinned in thisRenovation.pinned">
+														<div class="md-list-item-text pinned-message effect7">
+															<h2>{{pinned.title}}</h2>
+															<h3>{{pinned.description}}</h3>
+															<p>{{pinned.added_date}}</p>
+														</div>
+													</md-list-item>
+												</md-list>
+											</div>
+										</div>
+										<div class="effect7">
+											<md-grid-tile-header>
+												<h3>מפה</h3>
+											</md-grid-tile-header>
+											<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2848.1677792216697!2d34.99999188673667!3d31.904929403828792!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1502cdb687a74b15%3A0x9bb5207a84b99291!2z15fXmNeZ15HXqiDXlNem16DXl9eg15nXnSAyLCDXnteV15PXmdei15nXnyDXnteb15HXmdedINeo16LXldeq!5e0!3m2!1siw!2sil!4v1461780210508" width="500px" height="500px" frameborder="0" style="border:0" allowfullscreen></iframe>
+										</div>
+									</div>
+								</div>
+							</md-content>
+						</md-tab>
+						<md-tab label="צוות משפץ">
+							<md-content class="md-padding">
+								<h1 class="md-display-2">Tab Two</h1>
+							</md-content>
+						</md-tab>
+						<md-tab label="משימות">
+							<md-content class="md-padding">
+								<h1 class="md-display-2">Tab Three</h1>
+							</md-content>
+						</md-tab>
+					</md-tabs>
+				</div>
+			</md-content>
+		</div>
+	</div>
 
-                                <div class="box effect7">
-                                    <h1 class="md-display-2">Tab One</h1>
-                                </div>
-                                <div style="">
-                                    <div class="test2 box effect7 pinned-box">
-                                        <h1>ajsdasjd</h1>
-                                    </div>
-                                </div>
-                            </md-content>
-                        </md-tab>
-                        <md-tab label="צוות משפץ">
-                            <md-content class="md-padding">
-                                <h1 class="md-display-2">Tab Two</h1>
-                            </md-content>
-                        </md-tab>
-                        <md-tab label="משימות">
-                            <md-content class="md-padding">
-                                <h1 class="md-display-2">Tab Three</h1>
-                            </md-content>
-                        </md-tab>
-                    </md-tabs>
-                </div>
-            </md-content>
-        </div>
-    </div>
-    <!--Chat side tab-->
-    <div class="renovation-page-chat-wrapper">
-        <div ng-cloak flex>
-            <md-content>
-                <div>
-                    <md-tabs md-dynamic-height md-border-bottom>
-                        <md-tab label="one">
-                            <md-content class="md-padding">
-                                <h1 class="md-display-2">Tab One</h1>
-                            </md-content>
-                        </md-tab>
-                        <md-tab label="two">
-                            <md-content class="md-padding">
-                                <h1 class="md-display-2">Tab Two</h1>
-                            </md-content>
-                        </md-tab>
-                        <md-tab label="three">
-                            <md-content class="md-padding">
-                                <h1 class="md-display-2">Tab Three</h1>
-                            </md-content>
-                        </md-tab>
-                    </md-tabs>
-                </div>
-            </md-content>
-        </div>
-        <chat user="myUser._id" rooms="renovationRooms"></chat>
-    </div>
+	<!--Chat side tab-->
+	<div class="renovation-page-chat-wrapper effect7">
+		<chat user="myUser._id" rooms="renovationChatRoom"></chat>
+	</div>
 </div>
-
+<!--Place holder incase renovation wasnt found-->
+<div ng-show="renovationNotFound" layout="row" layout-align="center center">
+	<h1>Renovation not found!</h1>
+</div>
 <!--
 <md-toolbar layout="row" layout-align="none center" class="md-primary dashboard-top-rounded-toolbar">
     <span flex></span>
