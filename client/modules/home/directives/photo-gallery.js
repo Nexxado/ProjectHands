@@ -7,6 +7,8 @@ angular.module('ProjectHands.home')
             templateUrl: 'modules/home/templates/directives/photo-gallery.html',
             controller: function ($scope, fileUpload, PhotoService) {
 
+                
+                
                 $scope.savePhoto = function () {
                     PhotoService.savePhoto();
                 }
@@ -36,6 +38,8 @@ angular.module('ProjectHands.home')
                     var uploadUrl = "/fileUpload";
                     fileUpload.uploadFileToUrl(file, uploadUrl);
                 };
+                
+                
 
             }
         };
