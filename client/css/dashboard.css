@@ -112,7 +112,15 @@ md-menu-item > .md-button {
 }
 .renovation-page-chat-wrapper{
     width: 20%;
+    height: 50%;
+    margin-left: 10px;
+    margin-right: 10px;
     
+}
+.renovation-page-map-wrapper{
+    width: 50%;
+    min-width: 500px;
+    min-height: 500px;
 }
 .renovation-page-tab-control{
 /*    background-image: url("https://www.hdwallpapers.net/images/google-material-design-wallpaper-for-twitter-header-49-853.jpg");*/
@@ -178,10 +186,13 @@ md-menu-item > .md-button {
 	min-width: 50px;
 }
 .pinned-wrapper{
-	margin: 10px;
+	margin-left: 5px;
+    margin-right: 5px;
 }
 
 .box-header{
-	box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 1) inset;
-	height: 10%;
+	margin: 4%; 
+}
+.box-wrapper{
+    margin: 2%;
 }

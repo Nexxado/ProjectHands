@@ -8,18 +8,6 @@
         </md-toolbar>
         <md-content>
             <md-list class="md-dense">
-<!--
-                <md-list-item class="md-3-line" dir="rtl">
-                    <div class="md-list-item-text dashboard-list-text" layout="column">
-                        <h3>{{teamMembers[0].name}}</h3>
-                        <h4>{{teamMembers[0]._id}}</h4>
-                        <p>{{teamMembers[0].role}}</p>
-                        <p>תאריך הצטרפות: {{teamMembers[0].joined_date | date}}</p>
-                    </div>
-                    <h2 ng-show="myID == teams[0].manager_id">אני</h2>
-                    <img ng-src="{{getMember(teams[0].manager_id).avatar}}" class="md-avatar" alt="{{item.who}}" />
-                </md-list-item>
--->
                 <md-divider></md-divider>
                 <md-list-item class="md-3-line" ng-repeat="member in teamMembers" dir="rtl">
                     <div class="md-list-item-text dashboard-list-text" th:classappend="dashboard-special-list-item" layout="column">
