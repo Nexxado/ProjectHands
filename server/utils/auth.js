@@ -9,6 +9,30 @@ var bcrypt = require('bcrypt');
 var saltRounds = 10; // will do 2^rounds
 
 
+/** CONSTANTS */
+var MESSAGES = {
+     DB_FETCH_ERROR : "Error has accourd , please  try again",
+     PASSWORD_NOT_MATCH_ERROR : "The password dose not match , please try again",
+     PASSWORD_UPDATING_ERROR : "Error has accourd while updating the password",
+     PASSWORD_UPDATE_SUCCESS : "The password has been changed",
+     USER_DATA_NOT_EXIST : "Wrong Email or Phone number"
+}
+
+/**
+ *Generates a hash for the given data
+ *
+ * @param password {string}: the data to be hased
+ * @param callback {fucntion(error,result) } : will be executed when finish
+ */
+function doPasswordHash(password,callback)
+{
+    bcrypt.hash(password, saltRounds, function(error, hash) {
+
+        debug('bcrypt hash error', error);
+        debug('bcrypt hash hash', hash);
+        callback(error,hash)
+    });
+}
 module.exports = {
 
     /**
@@ -16,6 +40,7 @@ module.exports = {
      * @link Roles : contains the Roles in the system
      */
     roles: ROLES,
+    messages:MESSAGES,
 
     /**
      * This method will change the user role
@@ -58,22 +83,21 @@ module.exports = {
 
 
                 user.createdAt = new Date();
-
-                bcrypt.hash(user.password, saltRounds, function(error, hash) {
-
-                    debug('bcrypt hash error', error);
-                    debug('bcrypt hash hash', hash);
-                    if(error)
+                doPasswordHash(user.password,function (error,hashedPassword) {
+                    if(error || hashedPassword==null)
+                    {
                         return callback({ errMessage: "Failed to hash password" }, null);
 
-                    user.password = hash;
+                    }
+                    user.password = hashedPassword;
                     user.approved = false;
                     mongoUtils.insert(COLLECTIONS.SIGNUPS, user, callback);
+
                 });
-            });
+                });
+
         });
     },
-
 
     /**
      * Activate a temporary user account
@@ -89,6 +113,97 @@ module.exports = {
         });
 
         mongoUtils.insert(COLLECTIONS.USERS, user, callback);
+    },
+
+    /**
+     * checks whether to send an email reset link or not
+     * @param email {string} : the user email
+     * @param phone {string} : the user phone
+     * @param callback
+     */
+    passwordResetRequest : function (email,callback) {
+
+        // validate the data
+        mongoUtils.query(COLLECTIONS.USERS,{email:email},function (error,result) {
+            if(error)
+            {
+                callback(error,MESSAGES.DB_FETCH_ERROR);
+            }
+            else
+            {
+                if(result.length==0)
+                {
+                    callback(error,USER_DATA_NOT_EXIST)
+                }
+                else
+                {
+                    callback(error,result[0].name)
+                }
+            }
+
+        });
+    },
+    /**
+     * Reset user password to new one
+     * @param user {object} : contains the detail for whom his acount pass will be reset
+     * @param oldPassword {string} : the old password of this user
+     * @param newPassword {string} : the new password for this user
+     * @param callback {function(error,result)} : method to be executed on completion
+     * @param isChange {boolean } : whether is reset ot change
+     */
+    setPassword:function(user,oldPassword,newPassword,isChange,callback)
+    {
+
+        // fetch the user and check that the passwords do match
+        mongoUtils.query(COLLECTIONS.USERS,user,function (error,result) {
+            if(error)
+            {
+                callback(error,MESSAGES.DB_FETCH_ERROR);
+            }
+            else
+            {
+                // compare the password
+                bcrypt.compare(oldPassword, result[0].password, function(error, isMatch) {
+
+                    if(isChange)
+                    {
+                        if(error)
+                        {
+                             callback(error,MESSAGES.DB_FETCH_ERROR);
+                        }
+                        else if (!isMatch)
+                        {
+                            /** to change password , the oldPassword must matches the one in the DB*/
+                             callback(error,MESSAGES.PASSWORD_NOT_MATCH_ERROR);
+                        }
+                        return;
+                    }
+
+                    //updating to new password
+                    doPasswordHash(newPassword,function (error,hashedPassword)
+                    {
+                        if(error)
+                            callback(error,hashedPassword);
+
+                        mongoUtils.update(COLLECTIONS.USERS, user, {$set: {password: hashedPassword}}, {}, function (error,result) {
+                            if(error)
+                            {
+                                callback(error,MESSAGES.PASSWORD_UPDATING_ERROR);
+                            }
+                            else
+                            {
+                                callback(error,MESSAGES.PASSWORD_UPDATE_SUCCESS)
+                            }
+
+                        });
+                    });
+                });
+            }
+        });
+        //token is made
+        // sent to the email
+        // press the link
+        // redirect to change password page
     },
 
 
@@ -116,7 +231,6 @@ module.exports = {
 
     /**
      * Gives a Allowed/NotAllowed for user to login
-     * @link hashSha512 : to generated the hash value from the server side
      * @param credentials : the username , time(the request sent time) , key(random number)
      * @param key : the user hash value that been generated from the Client side
      * @param callback : the function that the data will be sent to

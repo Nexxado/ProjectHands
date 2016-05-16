@@ -50,6 +50,22 @@ angular.module('ProjectHands.auth')
     function authenticate(action) {
         return $resource(baseUrl + '/authenticate/:action').get({action: action});
     }
+    function resetPassword(email,newPassword) {
+        return $resource(baseUrl + '/forgot').save({
+            email: email,
+            new_password:newPassword,
+            old_password:""
+        });
+
+    }
+    function changePassword(email,newPassword,oldPassword) {
+        return $resource(baseUrl + '/forgot').save({
+            email: email,
+            new_password:newPassword,
+            old_password:oldPassword
+        });
+
+    }
     
 
     return {
@@ -57,6 +73,8 @@ angular.module('ProjectHands.auth')
         login: login,
         isLoggedIn: isLoggedIn,
         logout: logout,
-        authenticate: authenticate
+        authenticate: authenticate,
+        resetPassword : resetPassword,
+        changePassword:changePassword
     };
 });
