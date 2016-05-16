@@ -3,7 +3,8 @@ var debug = require('debug')('utils/auth');
 var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
 var ROLES = config.ROLES;
-
+var HttpStatus = require('http-status-codes');
+var ROLES_HIERARCHY = Object.keys(ROLES).map(function (key) { return ROLES[key]; }).reverse();
 var bcrypt = require('bcrypt');
 var saltRounds = 10; // will do 2^rounds
 
@@ -88,6 +89,28 @@ module.exports = {
         });
 
         mongoUtils.insert(COLLECTIONS.USERS, user, callback);
+    },
+
+
+    /**
+     * Check if a user is authorized to access a certain route
+     * @param   {string}   role  : The user's role
+     * @param   {string}   action : The action the user is trying to perform
+     * @returns {function} Invoke callback function with appropriate error and result.
+     */
+    isAuthorized: function(role, action, callback) {
+
+        mongoUtils.query(COLLECTIONS.ACTIONS, { action: action }, function(error, result) {
+
+            if(error || !result || result.length !== 1)
+                return callback({ message: "Internal Server Error", code: HttpStatus.INTERNAL_SERVER_ERROR}, null);
+
+            if (ROLES_HIERARCHY.indexOf(role) < ROLES_HIERARCHY.indexOf(result[0].role))
+                return callback({ message: "Not Allowed", code: HttpStatus.FORBIDDEN}, null);
+
+            return callback(null, { success: true, role: role });
+        });
+
     },
 
 

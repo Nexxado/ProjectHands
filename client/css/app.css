@@ -6,6 +6,28 @@
     color: white !important;
 }
 
+/*************************/
+/***** Notifications *****/
+/*************************/
+.notification-container {
+    position: fixed;
+    padding: 2px;
+    bottom: 10px;
+    left: 10px;
+    z-index: 1;
+    overflow: hidden
+}
+
+.notification {
+    width: 250px;
+    margin: 5px 0;
+    background: white;
+}
+
+.notification .notification-header {
+    padding: 0 0 0 5px;
+    font-size: 12px;
+}
 
 
 /***********************/

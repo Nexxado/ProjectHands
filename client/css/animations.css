@@ -1,0 +1,97 @@
+/**********************************/
+/***** Toggle Visibility Fade *****/
+/**********************************/
+.toggle-fade.ng-hide-add,
+.toggle-fade.ng-hide-remove  {
+    transition: all ease 500ms;
+}
+
+.toggle-fade {
+    opacity: 1;
+}
+
+.toggle-fade.ng-hide {
+    opacity: 0;
+}
+
+/***********************************/
+/***** Slide in\out from Right *****/
+/***********************************/
+.slide-right.ng-enter,
+.slide-right.ng-leave {
+    transition: all 1s ease;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+}
+
+.slide-right.ng-enter {
+    position: absolute;
+    width: 100%;
+    transform: translateX(100%);
+}
+
+.slide-right.ng-enter-active {
+    transform: translateX(0);
+}
+
+.slide-right.ng-leave {
+    position: absolute;
+    width: 100%;
+    transform: translateX(0);
+}
+
+.slide-right.ng-leave-active {
+    transform: translateX(100%);
+}
+
+/**************************************/
+/***** List Animations - ngRepeat *****/
+/**************************************/
+
+
+/***** List item Slide in\out from Right *****/
+.list-slide-right.ng-enter {
+    opacity: 0;
+    transform: translateX(500px);
+    transition: all ease 250ms;
+}
+
+.list-slide-right.ng-enter-active {
+    opacity: 1.0;
+    transform: translateX(0);
+}
+
+.list-slide-right.ng-leave {
+    opacity: 1.0;
+    transform: translateX(0);
+    transition: all ease 250ms;
+}
+
+.list-slide-right.ng-leave-active {
+    opacity: 0;
+    transform: translateX(500px);
+}
+
+
+/***** List item Slide in\out from Left *****/
+.list-slide-left.ng-enter {
+    opacity: 0;
+    transform: translateX(-500px);
+    transition: all ease 250ms;
+}
+
+.list-slide-left.ng-enter-active {
+    opacity: 1.0;
+    transform: translateX(0);
+}
+
+.list-slide-left.ng-leave {
+    opacity: 1.0;
+    transform: translateX(0);
+    transition: all ease 250ms;
+}
+
+.list-slide-left.ng-leave-active {
+    opacity: 0;
+    transform: translateX(-500px);
+}

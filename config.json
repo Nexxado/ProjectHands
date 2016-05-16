@@ -19,7 +19,8 @@
         "RENOVATIONS": "renovations",
         "TEAMS": "teams",
         "CHATS": "chats",
-        "SIGNUPS": "signup_users"
+        "SIGNUPS": "signup_users",
+        "ACTIONS": "actions"
     },
     "ROLES": {
         "ADMIN": "admin",

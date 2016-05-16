@@ -1,6 +1,6 @@
 angular.module('ProjectHands.auth')
 
-.factory("AuthService", function ($resource, $cookies, $q) {
+.factory("AuthService", function ($rootScope, $resource, $cookies, $q, AUTH_EVENTS, UtilsService) {
 
     var baseUrl = '/api/auth';
 
@@ -28,7 +28,17 @@ angular.module('ProjectHands.auth')
     }
 
     function logout() {
-        return $resource(baseUrl + '/logout').get();
+        $resource(baseUrl + '/logout').get().$promise
+            .then(function (result) {
+                console.log(result);
+                $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+
+            })
+            .catch(function (error) {
+                console.log(error);
+                UtilsService.makeToast('יציאה נכשלה', $rootScope.rootToastAnchor, 'top right');
+                $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+            });
     }
 
     function signup(user) {
@@ -37,8 +47,8 @@ angular.module('ProjectHands.auth')
         });
     }
 
-    function authenticate(authorizedRole) {
-        return $resource(baseUrl + '/authenticate/:role').get({role: authorizedRole});
+    function authenticate(action) {
+        return $resource(baseUrl + '/authenticate/:action').get({action: action});
     }
     
 

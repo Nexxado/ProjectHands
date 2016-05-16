@@ -1,6 +1,6 @@
 angular.module('ProjectHands')
 
-.controller('ChatRoomController', function ($scope, $timeout, socketio, DatabaseService, COLLECTIONS) {
+.controller('ChatRoomController', function ($scope, $timeout, socketio, DatabaseService, UtilsService, COLLECTIONS) {
 
     //Message Classes
     var class_message_self = 'chat-message-self';
@@ -60,16 +60,7 @@ angular.module('ProjectHands')
 
     //Change date object to HH:MM format
     function parseTimestamp(message) {
-        var date = new Date(message.timestamp);
-        var minutes = date.getMinutes();
-        var hours = date.getHours();
-        if (minutes < 10)
-            minutes = '0' + minutes;
-        if (hours < 10)
-            hours = '0' + hours;
-
-        message.timestamp = hours + ':' + minutes;
-
+        message.timestamp = UtilsService.parseTimestamp(message.timestamp);
         return message;
     }
 
@@ -98,6 +89,7 @@ angular.module('ProjectHands')
             });
     }
 
+    //Show user names for other users' messages
     $scope.showUsername = function(message, index)  {
         if(message.user === $scope.user.name)
             return false;
@@ -113,6 +105,7 @@ angular.module('ProjectHands')
         return message.match(/[\u0590-\u05FF]+/);
     }
 
+    //Scroll to bottom on new chat message
     $scope.$watchCollection('history', function(newVal, oldVal, scope) {
 //        console.log("History Changed");
         scrollToBottom(".chat-message-list");

@@ -3,8 +3,8 @@ var HttpStatus = require('http-status-codes');
 
 module.exports = function writeToClient(response, data, error, status) {
 
-    debug('writing to client', data);
-    debug('is data error?', error);
+    debug('data', data);
+    debug('error', error);
 
     if (error) {
         if(!status)

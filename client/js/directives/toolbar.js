@@ -5,9 +5,9 @@ angular.module('ProjectHands')
         restrict: 'E',
         replace: true,
         templateUrl: 'templates/directives/toolbar.html',
-        controller: function ($scope) {
+        controller: function ($scope, AuthService) {
 
-            
+            $scope.logout = AuthService.logout;
         }
     };
 });
