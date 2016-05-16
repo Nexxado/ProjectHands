@@ -7,12 +7,17 @@
         <div ng-cloak flex>
             <md-content dir="rtl">
                 <div class="renovation-page-tab-control md-primary">
-                    <h1 class="reno-page-title shadow-text">{{thisRenovation.addr.city}}, {{thisRenovation.addr.street}} {{thisRenovation.addr.num}}</h1>
-                    <md-button layout="row" ng-click="toggleRight()" class="md-primary" style="background-color: white;">
-                        <div>
-                            <i class="material-icons">chat</i> צ'אט
-                        </div>
-                    </md-button>
+                    <div class="renovation-header">
+                        <div class="reno-page-title shadow-text large">{{thisRenovation.addr.city}}, {{thisRenovation.addr.street}} {{thisRenovation.addr.num}}</div>
+                        <span class="shadow-text medium">{{thisRenovation.date | date}}
+                        </span>
+
+                        <md-button layout="row" ng-click="toggleRight()" class="md-primary chat-button">
+                            <div>
+                                <i class="material-icons">chat</i> צ'אט
+                            </div>
+                        </md-button>
+                    </div>
                     <md-tabs md-dynamic-height md-border-bottom class="renovation-tabs">
                         <md-tab label="פרטי שיפוץ">
                             <div ng-controller="AppCtrl as appCtrl" ng-cloak>
@@ -23,7 +28,7 @@
                                                 <h3>משימות</h3>
                                                 <span flex></span>
 
-                                                <md-button ng-click="addTask()" class="md-primary" layout="row" layout-align="center center">
+                                                <md-button ng-click="addTask($event)" class="md-primary" layout="row" layout-align="center center">
                                                     <i class="material-icons">add_circle</i>
                                                 </md-button>
 
@@ -49,7 +54,7 @@
                                                 <h3>הודעות חשובות</h3>
                                                 <span flex></span>
 
-                                                <md-button ng-click="toggleRight()" class="md-primary" layout="row" layout-align="center center">
+                                                <md-button ng-click="constructionToast('top right')" class="md-primary" layout="row" layout-align="center center">
                                                     <i class="material-icons">add_circle</i>
                                                 </md-button>
                                             </div>
@@ -70,10 +75,10 @@
                                                 <h3>התקדמות השיפוץ</h3>
                                                 <span flex></span>
 
-                                                <md-button ng-click="toggleRight()" class="md-primary" layout="row" layout-align="center center">
+                                                <md-button ng-click="constructionToast('top right')" class="md-primary" layout="row" layout-align="center center">
                                                     <i class="material-icons">add_circle</i>
                                                 </md-button>
-                                                <md-button ng-click="toggleRight()" class="md-primary" layout="row" layout-align="center center">
+                                                <md-button ng-click="constructionToast('top right')" class="md-primary" layout="row" layout-align="center center">
                                                     <i class="material-icons">pan_tool</i>
                                                 </md-button>
                                             </div>
@@ -82,8 +87,8 @@
                                                 <h4>50%</h4>
                                             </div>
                                             <div layout="column" layout-align="center center">
-                                            <h3>שלב שעבר: ביקור בית לפני שיפוץ</h3>
-                                            <h3>שלב נוכחי: שיפוץ הבית</h3>
+                                                <h3>שלב שעבר: ביקור בית לפני שיפוץ</h3>
+                                                <h3>שלב נוכחי: שיפוץ הבית</h3>
                                             </div>
                                         </div>
                                     </md-grid-tile>

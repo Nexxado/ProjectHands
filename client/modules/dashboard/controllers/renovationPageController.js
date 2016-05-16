@@ -1,6 +1,6 @@
 angular.module('ProjectHands.dashboard')
 
-.controller('RenovationPageController', function ($scope, $stateParams, $mdSidenav, $mdMedia, $mdDialog) {
+.controller('RenovationPageController', function ($scope, $stateParams, $mdSidenav, $mdMedia, $mdDialog, DatabaseService, COLLECTIONS) {
 
 
     console.log("Testing to see if params arrive safely: ", $stateParams.city, $stateParams.street, $stateParams.num);
@@ -47,29 +47,59 @@ angular.module('ProjectHands.dashboard')
 
     $scope.addTask = function ($event) {
         var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
+        console.log("the event is: ", $event);
         $mdDialog.show({
                 controller: function ($scope, $mdToast, $mdDialog) {
-
+                    $scope.task = {
+                        name: "",
+                        description: "",
+                        assigned_id: "",
+                        done: false
+                    };
                     $scope.cancel = function () {
                         $mdDialog.cancel();
                     };
 
                     $scope.submit = function () {
-
-                        $mdDialog.hide($scope.goal);
+                        if ($scope.AddTaskForm.$invalid) {
+                            return;
+                        }
+                        $mdDialog.hide($scope.task);
                     };
                 },
-                templateUrl: 'addTaskDialog.html',
+                templateUrl: '/modules/dashboard/templates/dialogs/addTaskDialog.html',
                 targetEvent: $event,
                 clickOutsideToClose: false,
                 fullscreen: useFullScreen,
                 locals: {}
             })
-            .then(function () {
+            .then(function (newTask) {
+                var reno = $scope.thisRenovation;
+                console.log(reno, $scope.thisRenovation);
+                DatabaseService.update(
+                        COLLECTIONS.RENOVATIONS, {
+                            addr: {
+                                city: reno.addr.city,
+                                street: reno.addr.street,
+                                num: reno.addr.num
+                            }
+                        }, {
+                            $push: {
+                                "tasks": newTask
+                            }
+                        }, {}
+                    )
+                    .$promise.then(function (result) {
+                        console.log("The result amazingly is: ", result);
+                        $scope.thisRenovation.tasks.push(newTask);
+                    }).catch(function (error) {
+                        console.log("Error: ", error);
+                    });
                 console.log("Dialog finished");
 
             }, function () {
                 console.log('Dialog Canceled.');
             });
     };
+
 });

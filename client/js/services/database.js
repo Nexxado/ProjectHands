@@ -35,6 +35,7 @@ angular.module('ProjectHands')
          * @returns {object}              : Promise to be executed once data is retrieved from the server
          */
         function update(collection, query, data, options) {
+            console.log(collection, query, data, options);
             return $resource(baseUrl + '/update')
                 .save(
                 {

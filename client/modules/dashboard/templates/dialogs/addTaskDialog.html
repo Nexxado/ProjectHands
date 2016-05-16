@@ -1,25 +1,18 @@
 <md-dialog aria-label="Task Dialog" flex="50">
-    <form name="AddTaskForm" ng-submit="submit()">
+    <form name="AddTaskForm" ng-submit="submit()" novalidate>
         <md-toolbar>
-            <div class="md-toolbar-tools">
-                <h2>Add New Task</h2>
+            <div class="md-toolbar-tools" dir="rtl">
+                <h2>הוספת משימה חדשה</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="cancel()">
                     <md-icon class="material-icons">close</md-icon>
                 </md-button>
             </div>
         </md-toolbar>
-        <!--        
-                "name": "Kurkevan",
-                "description": "Bring the fooking Kurkevan",
-                "assigned_id": "138548975",
-                "done": "false"
-
--->
         <md-dialog-content>
             <div class="md-dialog-content">
                 <!-- Input Title -->
-                <md-input-container class="md-block">
+                <md-input-container class="md-block md-icon-float rtl">
                     <label>כותרת</label>
                     <md-icon class="material-icons">title</md-icon>
                     <input type="text" name="title" ng-model="task.name" required>
@@ -31,7 +24,7 @@
                     </div>
                 </md-input-container>
                 <!-- Input Description -->
-                <md-input-container class="md-block">
+                <md-input-container class="md-block md-icon-float rtl">
                     <label>תיאור</label>
                     <md-icon class="material-icons">description</md-icon>
                     <input type="text" name="description" ng-model="task.description" minlength="5" md-maxlength="150" required>
@@ -51,8 +44,8 @@
             </div>
         </md-dialog-content>
         <md-dialog-actions>
-            <md-button ng-click="cancel()" class="md-warn">Cancel</md-button>
-            <md-button type="submit" class="md-primary">Submit</md-button>
+            <md-button ng-click="cancel()" class="md-warn">ביטול</md-button>
+            <md-button type="submit" class="md-primary">אישור</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

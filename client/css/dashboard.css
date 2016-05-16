@@ -53,24 +53,6 @@ md-menu-item > .md-button {
     height: 100%;
 }
 
-/*
-.profile-pic {
-    width: 25%;
-    height: 25%;
-}
-.profile-info {
-    text-align: center;
-    font-family: "Times New Roman", Times, serif;
-    font-size: 20px;
-    width: 50%;
-    height: 190%;
-}
-.profile-card-content {
-    width: 95%;
-    height: 100%;
-}
-*/
-
 .profile-actions {
     width: 5%;
     height: 100%;
@@ -105,7 +87,6 @@ md-menu-item > .md-button {
 }
 .renovation-page-tab-wrapper {
     width: 99%;
-/*    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;*/
 }
 .renovation-page-chat-wrapper {
     width: 5%;
@@ -117,11 +98,23 @@ md-menu-item > .md-button {
     min-width: 500px;
     min-height: 500px;
 }
-.renovation-page-tab-control {
+.renovation-page-tab-control,
+.renovation-page-tab-control .renovation-header{
     border-top-left-radius: 20px;
-    background-image: url("/assets/img/renoPageHeader2.jpg");
     border-top-right-radius: 20px;
-    padding-top: 5%;
+/*    padding-top: 5%;*/
+}
+.renovation-header{
+    background-image: url("/assets/img/renoPageHeader2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+    position: relative;
+}
+.renovation-header .chat-button{
+    position: absolute;
+    bottom: 0;
+    background-color: white;
 }
 .box h3 {
     text-align: center;
@@ -160,6 +153,11 @@ md-menu-item > .md-button {
     left: auto;
     transform: skew(8deg) rotate(3deg);
 }
+
+/*==================================================
+ * End Effect 7
+ * ===============================================*/
+
 .pinned-frame {
     border-color: burlywood;
     border-width: 7px;
@@ -182,9 +180,6 @@ md-menu-item > .md-button {
     /*	margin-left: 5%; */
     margin-right: 5%;
 }
-.reno-page-title {
-    margin: 4%;
-}
 .renovation-tabs {
     background-color: white;
 }
@@ -199,10 +194,16 @@ md-menu-item > .md-button {
     background-color: grey;
 }
 .shadow-text {
-    margin: 50px auto;
+/*    margin: 50px auto;*/
     text-align: center;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     color: white;
     opacity: 1;
+    
+}
+.shadow-text.medium{
+    font: 700 40px 'Bitter';
+}
+.shadow-text.large{
     font: 700 80px 'Bitter';
 }
