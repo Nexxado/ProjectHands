@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en" ng-app="ProjectHands">
 
 <head>
@@ -22,6 +23,7 @@
     <link href="css/chat.css" rel="stylesheet" >
     <link href="css/dashboard.css" rel="stylesheet" >
     <link href="css/renovation_dashboard.css" rel="stylesheet">
+    <link href="css/home.css" rel="stylesheet"/>
 
 
 
@@ -55,6 +57,7 @@
 <script src="vendor/fullcalendar/dist/fullcalendar.min.js"></script>
 <script src="vendor/fullcalendar/dist/gcal.js"></script>
 <script src="vendor/crypto-js/crypto-js.js"></script>
+<script src="js/TweenMax.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 
 
@@ -66,30 +69,36 @@
 <script src="modules/auth/auth.module.js"></script>
 <script src="modules/auth/routes.js"></script>
 <script src="modules/auth/submodules/google.js"></script>
+<script src="modules/home/home.module.js"></script>
+<script src="modules/home/routes.js"></script>
 
 <!-- Controllers -->
-<script src="js/controllers/homeController.js"></script>
-<script src="js/controllers/aboutController.js"></script>
 <script src="js/controllers/chatController.js"></script>
 <script src="js/controllers/chatRoomController.js"></script>
-<script src="js/controllers/renovationDashboardController.js"></script>
 <script src="modules/auth/controllers/loginController.js"></script>
 <script src="modules/auth/controllers/signupController.js"></script>
 <script src="modules/dashboard/controllers/dashboardController.js"></script>
 <script src="modules/dashboard/controllers/dashboardMainPageController.js"></script>
 <script src="modules/dashboard/controllers/dashboardUserProfileController.js"></script>
 <script src="modules/dashboard/controllers/dashboardToolboxController.js"></script>
-
+<script src="modules/home/controllers/homeController.js"></script>
+<script src="modules/home/controllers/homePanelController.js"></script>
+    
 
 <!-- Directives -->
 <script src="js/directives/toolbar.js"></script>
-<script src="js/directives/renovation-dashboard/renovation-members.js"></script>
 <script src="js/directives/chat.js"></script>
 <script src="js/directives/chat-room.js"></script>
+<script src="js/directives/notifications.js"></script>
 <script src="modules/dashboard/directives/dashboard-toolbar.js"></script>
 <script src="modules/dashboard/directives/dashboard-sidenav.js"></script>
 <script src="modules/dashboard/directives/dashboard-sidenav-admin.js"></script>
-<script src="js/directives/notifications.js"></script>
+<script src="modules/home/directives/photo-slider.js"></script>
+<script src="modules/home/directives/photo-gallery.js"></script>
+<script src="modules/home/directives/file-model.js"></script>
+<script src="modules/home/directives/paypal-button.js"></script>
+<script src="modules/home/directives/statistics.js"></script>
+<script src="modules/home/directives/org-ads.js"></script>
 
 <!-- Services -->
 <script src="js/services/utils.js"></script>
@@ -97,6 +106,8 @@
 <script src="js/services/database.js"></script>
 <script src="modules/auth/services/auth.js"></script>
 <script src="modules/auth/services/session.js"></script>
+<script src="modules/home/services/file-upload.js"></script>
+<script src="modules/home/services/photo.js"></script>
 
 <!-- Filters -->
 <script src="js/filters/capitalize.js"></script>

@@ -7,7 +7,7 @@
 var nodemailer = require('nodemailer');
 var debug = require('debug')('utils/email');
 const email = "projhands@gmail.com";
-const password = "projecthands123456";
+const password = "projecthands123456"; //FIXME in production, remove hardcoded password and email.
 
 var transporter = nodemailer.createTransport('smtps://' + email + ':' + password + '@smtp.gmail.com');
 

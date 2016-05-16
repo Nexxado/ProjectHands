@@ -1,0 +1,16 @@
+<md-content>
+
+    <div layout="column" layout-padding layout-wrap layout-fill ng-cloak style="max-width: 1050px">
+        <md-whiteframe class="md-whiteframe-8dp sta" layout ng-repeat="ad in ads">
+
+            <div layout="column" layout-align="start start">
+                <md-content>
+                    <H1 dir="rtl" lang="he">{{ad.header}}</H1>
+
+                    <p dir="rtl" lang="he">{{ad.text}}</p>
+                </md-content>
+            </div>
+
+        </md-whiteframe>
+    </div>
+</md-content>

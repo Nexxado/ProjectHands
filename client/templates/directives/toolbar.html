@@ -15,6 +15,9 @@
             <md-button aria-label="user profile" ng-click="constructionToast('top right')" ng-show="isLoggedIn">
                 {{ userName }}
             </md-button>
+            <md-button class="remove-uppercase" ui-sref="dashboard" ui-sref-active="md-primary md-raised" ng-show="isLoggedIn">
+                Dashboard
+            </md-button>
             <md-button ng-click="logout()" ng-show="isLoggedIn">
                 יציאה
             </md-button>

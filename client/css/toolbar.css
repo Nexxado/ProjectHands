@@ -10,3 +10,7 @@
     width: 48px;
     border-radius: 6px;
 }
+
+.md-button.remove-uppercase span {
+    text-transform: none;
+}

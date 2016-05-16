@@ -41,4 +41,5 @@ app.use(function(request, response) {
 });
 
 app.io = require('./socketio');
+
 module.exports = app;
