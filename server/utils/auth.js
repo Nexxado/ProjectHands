@@ -16,7 +16,7 @@ var MESSAGES = {
      PASSWORD_UPDATING_ERROR : "Error has accourd while updating the password",
      PASSWORD_UPDATE_SUCCESS : "The password has been changed",
      USER_DATA_NOT_EXIST : "Wrong Email or Phone number"
-}
+};
 
 /**
  *Generates a hash for the given data
@@ -30,7 +30,7 @@ function doPasswordHash(password,callback)
 
         debug('bcrypt hash error', error);
         debug('bcrypt hash hash', hash);
-        callback(error,hash)
+        callback(error,hash);
     });
 }
 module.exports = {
@@ -84,7 +84,7 @@ module.exports = {
 
                 user.createdAt = new Date();
                 doPasswordHash(user.password,function (error,hashedPassword) {
-                    if(error || hashedPassword==null)
+                    if(error || !hashedPassword)
                     {
                         return callback({ errMessage: "Failed to hash password" }, null);
 
@@ -131,13 +131,13 @@ module.exports = {
             }
             else
             {
-                if(result.length==0)
+                if(result.length === 0)
                 {
-                    callback(error,USER_DATA_NOT_EXIST)
+                    callback(error, MESSAGES.USER_DATA_NOT_EXIST);
                 }
                 else
                 {
-                    callback(error,result[0].name)
+                    callback(error,result[0].name);
                 }
             }
 
@@ -185,14 +185,14 @@ module.exports = {
                         if(error)
                             callback(error,hashedPassword);
 
-                        mongoUtils.update(COLLECTIONS.USERS, user, {$set: {password: hashedPassword}}, {}, function (error,result) {
+                        mongoUtils.update(COLLECTIONS.USERS, user, {$set: {password: hashedPassword}}, {}, function (error, result) {
                             if(error)
                             {
                                 callback(error,MESSAGES.PASSWORD_UPDATING_ERROR);
                             }
                             else
                             {
-                                callback(error,MESSAGES.PASSWORD_UPDATE_SUCCESS)
+                                callback(error,MESSAGES.PASSWORD_UPDATE_SUCCESS);
                             }
 
                         });

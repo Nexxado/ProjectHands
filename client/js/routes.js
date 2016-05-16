@@ -16,14 +16,17 @@ angular.module('ProjectHands')
         controller: 'renovationDashboardController'
     })
 
-    .state('error', {
-        url: '/error/:errMessage',
-        templateUrl: 'templates/error.html',
+    .state('result', {
+        url: '/result/:type/:message',
+        templateUrl: 'templates/result.html',
         controller: function ($scope, $stateParams, UtilsService) {
-            $scope.errMessage = UtilsService.toTitleCase(decodeURI($stateParams.errMessage));
+            
+            $scope.type = $stateParams.type;
+            $scope.message = UtilsService.toTitleCase(decodeURI($stateParams.message));
         },
         params: {
-            errMessage: 'Unknown Error'
+            type: 'error',
+            message: 'Unknown Error'
         }
     })
 

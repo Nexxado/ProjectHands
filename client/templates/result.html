@@ -1,8 +1,9 @@
 <md-content>
 
     <div layout="column" layout-align="center center" layout-padding>
-        <h1>Oops! An Error Has Occurred</h1>
-        <h3>{{errMessage}}</h3>
+        <h1 ng-show="type === 'error'">Oops! An Error Has Occurred</h1>
+        <h1 ng-show="type === 'info'">Info</h1>
+        <h3>{{message}}</h3>
         <md-button class="md-primary md-raised" ui-sref="home" style="width: 20%;">חזור לעמוד הבית</md-button>
     </div>
 
