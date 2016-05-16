@@ -25,9 +25,41 @@
                 "done": "true"
             }
         ],
-        "chat_id": "ren1_chat",
+        "chat_id": "ירושלים, ישראל זרחי 12",
         "team_id": "team_315568991",
         "pinned": [
+			{
+                "title": "לכל מי שבא היום",
+                "description": "תלכו הביתה",
+                "added_date": "07/04/2016"
+            },
+			{
+                "title": "לזכור לקחת מעיל",
+                "description": "הולך להיות היות קור כלבים",
+                "added_date": "05/04/2016"
+            },
+			{
+                "title": "נגמר המלבדו",
+                "description": "אין עוד מלבדו",
+                "added_date": "02/04/2016"
+            }
 
-        ]
+        ],
+		"toolsNeeded": [
+				{
+					"name": "פטיש",
+					"quantity": "2",
+					"comment": "peter piper picked a pack of pickled peppers"
+		          },
+				{
+					"name": "מקדחה",
+					"quantity": "1",
+					"comment": "peter piper picked a pack of pickled peppers"
+		          },
+				{
+					"name": "ברגים",
+					"quantity": "1230",
+					"comment": "peter piper picked a pack of pickled peppers"
+		          }
+            ]
     }

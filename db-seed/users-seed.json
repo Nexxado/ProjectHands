@@ -1,73 +1,152 @@
 [
-    {
-        "_id": "123456789",
-        "name": "דוד מוזס",
-        "password": "1234",
-        "role": "admin",
-        "email": "dm@gmail.com",
-        "joined_date": "01/01/2001",
-        "tools": [
+	{
+		"_id": "123456789",
+		"name": "דוד מוזס",
+		"password": "1234",
+		"role": "admin",
+		"email": "dm@gmail.com",
+		"joined_date": "01/01/2001",
+		"avatar": "http://icons.iconarchive.com/icons/mattahan/ultrabuuf/256/Comics-Mask-icon.png",
+		"tools": [
 
         ]
-    } , {
-        "_id": "315568991",
-        "name": "יוחאי רשף",
-        "password": "1234",
-        "role": "team manager",
-        "email": "yr@gmail.com",
-        "joined_date": "07/07/1951",
-        "tools": [
+    }, {
+		"_id": "315568991",
+		"name": "יוחאי רשף",
+		"password": "1234",
+		"role": "team manager",
+		"email": "yr@gmail.com",
+		"joined_date": "07/07/1951",
+		"avatar": "http://icons.iconarchive.com/icons/mattahan/ultrabuuf/256/Comics-Mask-icon.png",
+		"tools": [
 
         ]
-    } , {
-        "_id": "504425136",
-        "name": "משתאווה ברנבנק",
-        "password": "1234",
-        "role": "volunteer",
-        "email": "mb@gmail.com",
-        "joined_date": "02/12/1987",
-        "tools": [
+    }, {
+		"_id": "504425136",
+		"name": "משתאווה ברנבנק",
+		"password": "1234",
+		"role": "volunteer",
+		"email": "mb@gmail.com",
+		"joined_date": "02/12/1987",
+		"avatar": "http://icons.iconarchive.com/icons/mattahan/ultrabuuf/256/Comics-Mask-icon.png",
+		"tools": [
 
         ]
-    } , {
-        "_id": "138548975",
-        "name": "פנחס נשכותי",
-        "password": "1234",
-        "role": "volunteer",
-        "email": "pn@gmail.com",
-        "joined_date": "15/05/2004",
-        "tools": [
+    }, {
+		"_id": "138548975",
+		"name": "פנחס נשכותי",
+		"password": "1234",
+		"role": "volunteer",
+		"email": "pn@gmail.com",
+		"joined_date": "15/05/2004",
+		"avatar": "http://icons.iconarchive.com/icons/mattahan/ultrabuuf/256/Comics-Mask-icon.png",
+		"tools": [
 
         ]
-    } , {
-        "_id": "393116710",
-        "name": "אלכס דפקותי",
-        "password": "1234",
-        "role": "volunteer",
-        "email": "ad@gmail.com",
-        "joined_date": "10/09/2011",
-        "tools": [
+    }, {
+		"_id": "393116710",
+		"name": "אלכס דפקותי",
+		"password": "1234",
+		"role": "volunteer",
+		"email": "ad@gmail.com",
+		"joined_date": "10/09/2011",
+		"avatar": "http://icons.iconarchive.com/icons/mattahan/ultrabuuf/256/Comics-Mask-icon.png",
+		"tools": [
 
         ]
-    } , {
-        "_id": "868876951",
-        "name": "מליין סופרי",
-        "password": "1234",
-        "role": "volunteer",
-        "email": "ms@gmail.com",
-        "joined_date": "10/09/2013",
-        "tools": [
+    }, {
+		"_id": "868876951",
+		"name": "מליין סופרי",
+		"password": "1234",
+		"role": "volunteer",
+		"email": "ms@gmail.com",
+		"joined_date": "10/09/2013",
+		"avatar": "http://icons.iconarchive.com/icons/mattahan/ultrabuuf/256/Comics-Mask-icon.png",
+		"tools": [
 
         ]
-    } , {
-        "_id": "111111111",
-        "name": "test",
-        "password": "1234",
-        "role": "admin",
-        "email": "test@gmail.com",
-        "joined_date": "10/09/2013",
-        "tools": [
+    }, {
+		"_id": "111111111",
+		"name": "test",
+		"password": "1234",
+		"role": "admin",
+		"email": "test@gmail.com",
+		"joined_date": "2013-11-08T22:00:00.000Z",
+		"address": "מי ימלל 9, גבורות ישראל",
+		"phone": "059-1472586",
+		"about_me": "אני גבר טילים מהחלל",
+		"total_renovations": "59",
+		"avatar": "http://icons.iconarchive.com/icons/mattahan/ultrabuuf/256/Comics-Mask-icon.png",
+		"tools": [
+			{
+				"name": "מסור",
+				"quantity": 3,
+				"comment": "peter piper picked a pack of pickled peppers"
+		},
+			{
+				"name": "דבק",
+				"quantity": 12,
+				"comment": "peter piper picked a pack of pickled peppers"
+		},
+			{
+				"name": "חול",
+				"quantity": 4,
+				"comment": "peter piper picked a pack of pickled peppers"
+		},
+			{
+				"name": "מברג",
+				"quantity": 2,
+				"comment": "peter piper picked a pack of pickled peppers"
+		}
+
+        ],
+		"renovations": [
+			{
+				"city": "ירושלים",
+				"street": "ישראל זרחי",
+				"houseNum": "12"
+			},
+			{
+				"city": "חירייה",
+				"street": "השחום",
+				"houseNum": "5"
+			},
+			{
+				"city": "ירושלים",
+				"street": "הדביל",
+				"houseNum": "21"
+			},
+			{
+				"city": "קשקבל",
+				"street": "הגבינות",
+				"houseNum": "65"
+			}
+		],
+		"tasks": [
+			{
+				"title": "לשלשל על הרצפה",
+				"description": "זה חשוב מאוד",
+				"deadline": "2018-03-01T22:00:00.000Z"
+			},
+			{
+				"title": "שגדדשג על הרצפה",
+				"description": "שדגשדגשדגשדגשדגדשג",
+				"deadline": "2018-02-02T22:00:00.000Z"
+                }
+		],
+		"calendar_events": [],
+		"layout_settings": {}
+    }, {
+		"_id": "987654388",
+		"name": "Dafuq",
+		"password": "1234",
+		"role": "admin",
+		"email": " dafuq@gmail.com",
+		"joined_date": "10/09/2013",
+		"avatar": "http://icons.iconarchive.com/icons/mattahan/ultrabuuf/256/Comics-Mask-icon.png",
+		"tools": [
 
         ]
     }
+
 ]

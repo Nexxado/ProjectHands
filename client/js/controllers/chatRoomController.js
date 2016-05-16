@@ -13,7 +13,7 @@ angular.module('ProjectHands')
 //    console.log('chat-room room', $scope.room);
 
     $scope.history = [];
-
+	console.log("hahahaha", $scope.user);
     $scope.message = {
         user: $scope.user.name,
         content: '',

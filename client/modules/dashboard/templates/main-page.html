@@ -62,24 +62,24 @@
 
 <div gridster="gridsterOpts">
     <li gridster-item="item" ng-model="widgets[0]" class="grid-item" ng-if="widgets[0].active">
-        <div ng-include="'templates/dashboard/tasks.html'"></div>
+        <div ng-include="'modules/dashboard/templates/tasks.html'"></div>
     </li>
     <li gridster-item="item" ng-model="widgets[1]" class="grid-item" ng-if="widgets[1].active">
-        <div ng-include="'templates/dashboard/renovations.html'"></div>
+        <div ng-include="'modules/dashboard/templates/renovations.html'"></div>
     </li>
     <li gridster-item="item" ng-model="widgets[2]" class="grid-item" ng-if="widgets[2].active">
-        <div ng-include="'templates/dashboard/toolbox.html'"></div>
+        <div ng-include="'modules/dashboard/templates/toolbox.html'"></div>
     </li>
     <li gridster-item="item" ng-model="widgets[3]" class="grid-item" ng-if="widgets[3].active">
-        <div ng-include="'templates/dashboard/team.html'"></div>
+        <div ng-include="'modules/dashboard/templates/team.html'"></div>
     </li>
     <li gridster-item="item" ng-model="widgets[4]" class="grid-item" ng-if="widgets[4].active">
-        <div ng-include="'templates/dashboard/calendar.html'"></div>
+        <div ng-include="'modules/dashboard/templates/calendar.html'"></div>
     </li>
     <li gridster-item="item" ng-model="widgets[5]" class="grid-item" ng-if="widgets[5].active">
-        <div ng-include="'templates/dashboard/userProfile.html'"></div>
+        <div ng-include="'modules/dashboard/templates/userProfile.html'"></div>
     </li>
         <li gridster-item="item" ng-model="widgets[6]" class="grid-item" ng-if="widgets[6].active">
-        <chat user="getMemberName(myID)" rooms="rooms"></chat>
+        <chat user="me" rooms="rooms"></chat>
     </li>
 </div>

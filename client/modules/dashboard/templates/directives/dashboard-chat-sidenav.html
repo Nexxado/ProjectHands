@@ -1,0 +1,18 @@
+<div ng-controller="AppCtrl" layout="column" style="height:500px;" ng-cloak>
+    <section layout="row" flex>
+<!--Add this button wherever you place this controller-->
+<!--
+        <md-button ng-click="toggleRight()" ng-hide="isOpenRight()" class="md-primary">
+            צ'אט
+        </md-button>
+-->
+        <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+            <md-content ng-controller="RightCtrl" layout-padding>
+                <chat user="myUser._id" rooms="renovationChatRoom"></chat>
+                <md-button ng-click="close()" class="md-primary">
+                    סגור
+                </md-button>
+            </md-content>
+        </md-sidenav>
+    </section>
+</div>

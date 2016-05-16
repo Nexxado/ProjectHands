@@ -11,12 +11,12 @@
         </md-toolbar>
         <md-content>
             <md-list class="md-dense" dir="rtl">
-                <md-list-item class="md-3-line" ng-repeat="tool in getMemberTools(myID)">
+                <md-list-item class="md-3-line" ng-repeat="tool in myUser.tools">
                     <span flex layout="row" layout-align="center center" class="padding">
                         <div class="md-list-item-text toolbox-list-text" layout="column" dir="rtl">
-                            <h3>כלי: {{ tool.name }}</h3>
-                            <h4>{{ tool.quantity }}</h4>
-                            <p>{{ tool.comment }}</p>
+                            <h3>{{ tool.name }}</h3>
+                            <h4>כמות: {{ tool.quantity }}</h4>
+                            <p>הערה: {{ tool.comment }}</p>
                         </div>
                         <span layout="row" class="profile-content-item"> לא בשימוש <i class="material-icons">done</i></span>
                         </span>
