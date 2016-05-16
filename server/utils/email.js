@@ -23,11 +23,11 @@ function sendMail(to, subject, content) {
         to: to, // list of receivers
         subject: subject, // Subject line
         text: content, // plaintext body
-        html: '<b dir="rtl"><center>' + content + '<p><img src="cid:logo@projecthands" width="200px" height="200px"><p></center></b>', // html body,
+        html: '<b dir="rtl"><center>' + content + '</center></b>', //+ '<p><img src="cid:logo@projecthands" width="200px" height="200px"><p></center></b>', // html body,
         attachments: [
             {
                 filename: 'logo.jpg',
-                path: process.cwd() + '/documents/logo.jpg',
+//                path: process.cwd() + '/documents/logo.jpg',
                 cid: 'logo@projecthands'
             }
         ]
