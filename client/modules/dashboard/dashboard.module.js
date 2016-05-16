@@ -1,1 +1,1 @@
-angular.module('ProjectHands.dashboard', []);
+angular.module('ProjectHands.dashboard', ['ngMaterial']);

@@ -1,59 +1,101 @@
 <div layout="row" ng-hide="renovationNotFound">
-    <div layout="column" class="renovation-page-tab-wrapper effect7">
+    <!--
+    
+-->
+
+    <div layout="column" class="renovation-page-tab-wrapper">
         <div ng-cloak flex>
             <md-content dir="rtl">
                 <div class="renovation-page-tab-control md-primary">
-                    <h1 class="box-header">{{thisRenovation.addr.city}}, {{thisRenovation.addr.street}} {{thisRenovation.addr.num}}</h1>
-                    <md-tabs md-dynamic-height md-border-bottom>
+                    <h1 class="reno-page-title shadow-text">{{thisRenovation.addr.city}}, {{thisRenovation.addr.street}} {{thisRenovation.addr.num}}</h1>
+                    <md-button layout="row" ng-click="toggleRight()" class="md-primary" style="background-color: white;">
+                        <div>
+                            <i class="material-icons">chat</i> צ'אט
+                        </div>
+                    </md-button>
+                    <md-tabs md-dynamic-height md-border-bottom class="renovation-tabs">
                         <md-tab label="פרטי שיפוץ">
-                            <md-content class="md-padding">
-                                <div ng-cloak>
-                                    <div layout="column">
-                                        <div layout="row">
-                                            <div class="effect7 box-wrapper">
-                                                <div>
-                                                    <h3>משימות</h3>
-                                                </div>
-                                                <div>
-                                                    <md-list layout="column">
-                                                        <md-list-item class="md-2-line" ng-repeat="task in thisRenovation.tasks" layout="row" layout-align="center center">
-                                                            <md-checkbox ng-model="item.done"></md-checkbox>
-                                                            <span flex></span>
-                                                            <div class="md-list-item-text box-header">
-                                                                <h2>{{task.name}}</h2>
-                                                                <p>{{task.description}}</p>
-                                                                <p>{{getMemberByID(task.assigned_id).name}}</p>
-                                                            </div>
-                                                        </md-list-item>
-                                                    </md-list>
-                                                </div>
+                            <div ng-controller="AppCtrl as appCtrl" ng-cloak>
+                                <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px" style="padding:10px;">
+                                    <md-grid-tile class="" md-rowspan="5" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
+                                        <div class="box-wrapper">
+                                            <div layout="row" class="box-header">
+                                                <h3>משימות</h3>
+                                                <span flex></span>
+
+                                                <md-button ng-click="addTask()" class="md-primary" layout="row" layout-align="center center">
+                                                    <i class="material-icons">add_circle</i>
+                                                </md-button>
+
                                             </div>
-                                            <div class="effect7 box-wrapper">
-                                                <div class="box-header">
-                                                    <h3>הודעות חשובות</h3>
-                                                </div>
+                                            <div>
                                                 <md-list layout="column">
-                                                    <md-list-item class="md-2-line pinned-wrapper" ng-repeat="pinned in thisRenovation.pinned">
-                                                        <div class="md-list-item-text pinned-message effect7" style="padding:20px; margin:10px;">
-                                                            <h2>{{pinned.title}}</h2>
-                                                            <h3>{{pinned.description}}</h3>
-                                                            <p>{{pinned.added_date}}</p>
+                                                    <md-list-item class="md-2-line" ng-repeat="task in thisRenovation.tasks" layout="row" layout-align="center center">
+                                                        <md-checkbox ng-model="item.done"></md-checkbox>
+                                                        <span flex></span>
+                                                        <div class="md-list-item-text box-header">
+                                                            <h2>{{task.name}}</h2>
+                                                            <p>{{task.description}}</p>
+                                                            <p>{{getMemberByID(task.assigned_id).name}}</p>
                                                         </div>
                                                     </md-list-item>
                                                 </md-list>
                                             </div>
                                         </div>
-                                        <div layout="column" class="effect7 box-wrapper renovation-page-map-wrapper">
-                                            <div>
-                                                <h3 style="margin: 25px;">מפה</h3>
+                                    </md-grid-tile>
+                                    <md-grid-tile class="" md-rowspan="3" md-colspan="2">
+                                        <div class="box-wrapper">
+                                            <div layout="row" class="box-header">
+                                                <h3>הודעות חשובות</h3>
+                                                <span flex></span>
+
+                                                <md-button ng-click="toggleRight()" class="md-primary" layout="row" layout-align="center center">
+                                                    <i class="material-icons">add_circle</i>
+                                                </md-button>
                                             </div>
-                                            <div layout="row" layout-align="center center" style="height: 100%; padding:20px;">
-                                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2848.1677792216697!2d34.99999188673667!3d31.904929403828792!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1502cdb687a74b15%3A0x9bb5207a84b99291!2z15fXmNeZ15HXqiDXlNem16DXl9eg15nXnSAyLCDXnteV15PXmdei15nXnyDXnteb15HXmdedINeo16LXldeq!5e0!3m2!1siw!2sil!4v1461780210508" width="90%" height="400px" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                            <md-list layout="column">
+                                                <md-list-item class="md-2-line pinned-wrapper" ng-repeat="pinned in thisRenovation.pinned">
+                                                    <div class="md-list-item-text pinned-message effect7" style="padding:20px; margin:10px;">
+                                                        <h2>{{pinned.title}}</h2>
+                                                        <h3>{{pinned.description}}</h3>
+                                                        <p>{{pinned.added_date}}</p>
+                                                    </div>
+                                                </md-list-item>
+                                            </md-list>
+                                        </div>
+                                    </md-grid-tile>
+                                    <md-grid-tile class="" md-rowspan="2" md-colspan="2">
+                                        <div class="box-wrapper" layout="column">
+                                            <div layout="row" class="box-header">
+                                                <h3>התקדמות השיפוץ</h3>
+                                                <span flex></span>
+
+                                                <md-button ng-click="toggleRight()" class="md-primary" layout="row" layout-align="center center">
+                                                    <i class="material-icons">add_circle</i>
+                                                </md-button>
+                                                <md-button ng-click="toggleRight()" class="md-primary" layout="row" layout-align="center center">
+                                                    <i class="material-icons">pan_tool</i>
+                                                </md-button>
+                                            </div>
+                                            <div style="height:75%;" layout="column" layout-align="center center">
+                                                <md-progress-circular md-mode="determinate" value="50"></md-progress-circular>
+                                                <h4>50%</h4>
+                                            </div>
+                                            <div layout="column" layout-align="center center">
+                                            <h3>שלב שעבר: ביקור בית לפני שיפוץ</h3>
+                                            <h3>שלב נוכחי: שיפוץ הבית</h3>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </md-content>
+                                    </md-grid-tile>
+                                    <md-grid-tile class="" md-rowspan="2" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
+                                        <div layout="column" class="box-wrapper">
+                                            <div layout="row" layout-align="center center" style="height: 100%; padding:1px;">
+                                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2848.1677792216697!2d34.99999188673667!3d31.904929403828792!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1502cdb687a74b15%3A0x9bb5207a84b99291!2z15fXmNeZ15HXqiDXlNem16DXl9eg15nXnSAyLCDXnteV15PXmdei15nXnyDXnteb15HXmdedINeo16LXldeq!5e0!3m2!1siw!2sil!4v1461780210508" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                            </div>
+                                        </div>
+                                    </md-grid-tile>
+                                </md-grid-list>
+                            </div>
                         </md-tab>
                         <md-tab label="צוות משפץ">
                             <md-content class="md-padding">
@@ -88,102 +130,17 @@
 
                             </md-content>
                         </md-tab>
-                        <md-tab label="שלבים מתוכננים">
-                            <md-content class="md-padding">
-                                <h1 class="md-display-2">TODO LATER</h1>
-                            </md-content>
-                        </md-tab>
                     </md-tabs>
+
                 </div>
             </md-content>
         </div>
     </div>
 
     <!--Chat side tab-->
-    <div class="renovation-page-chat-wrapper effect7">
-        <chat user="myUser._id" rooms="renovationChatRoom"></chat>
-    </div>
+    <dashboard-chat-sidenav></dashboard-chat-sidenav>
 </div>
 <!--Place holder incase renovation wasnt found-->
 <div ng-show="renovationNotFound" layout="row" layout-align="center center">
     <h1>Renovation not found!</h1>
 </div>
-<!--
-<md-toolbar layout="row" layout-align="none center" class="md-primary dashboard-top-rounded-toolbar">
-    <span flex></span>
-    <div class="md-toolbar-tools" dir="rtl">
-        <h1>{{street}} {{houseNum}}, {{city}}</h1>
-    </div>
-</md-toolbar>
-<div layout="row">
-    <div layout="column" class="grid-item">
-        <chat user="getMemberName(myID)" rooms="renovationRooms"></chat>
-    </div>
-    <div class="renovation-map">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2848.1677792216697!2d34.99999188673667!3d31.904929403828792!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1502cdb687a74b15%3A0x9bb5207a84b99291!2z15fXmNeZ15HXqiDXlNem16DXl9eg15nXnSAyLCDXnteV15PXmdei15nXnyDXnteb15HXmdedINeo16LXldeq!5e0!3m2!1siw!2sil!4v1461780210508" width="500px" height="500px" frameborder="0" style="border:0" allowfullscreen></iframe>
-    </div>
-    <div class="grid-item" flex>
-        <md-list>
-            <md-list-item class="md-3-line md-raised" ng-repeat="tool in getRenovation(city,street,houseNum).toolsNeeded">
-                <div class="md-list-item-text hebrew-text" layout="column" dir="rtl">
-                    <h3>{{tool.name}}</h3>
-                    <h4>{{ tool.quantity }}</h4>
-                </div>
-                <md-divider></md-divider>
-            </md-list-item>
-        </md-list>
-    </div>
-
-</div>
-<div layout="row">
-    <div class="grid-item" flex>
-        <md-list>
-            <md-list-item class="md-3-line md-raised" ng-repeat="task in getRenovation(city,street,houseNum).tasks">
-                <div class="md-list-item-text hebrew-text" layout="column" dir="rtl">
-                    <h2>{{task.title}}</h2>
-                    <h3>{{ task.description }}</h3>
-                    <h4>לבצע עד: {{task.deadline | date}}</h4>
-                </div>
-                <md-divider></md-divider>
-            </md-list-item>
-        </md-list>
-    </div>
--->
-<!--Team Div-->
-<!--
-    <div>
-        <md-toolbar layout="row" layout-align="none center" class="md-primary dashboard-top-rounded-toolbar" dir="rtl">
-            <span flex></span>
-            <div class="md-toolbar-tools">
-                <span>צוות אחראי: {{renovationTeam.name}}</span>
-            </div>
-        </md-toolbar>
-        <md-content>
-            <md-list class="md-dense">
-                <md-list-item class="md-3-line" dir="rtl">
-                    <div class="md-list-item-text dashboard-list-text" layout="column">
-                        <h3>{{getMemberName(renovationTeam.manager_id)}}</h3>
-                        <h4>{{renovationTeam.manager_id}}</h4>
-                        <p>{{getMemberType(renovationTeam.manager_id)}}</p>
-                    </div>
-                    <h2 ng-show="myID == renovationTeam.manager_id">אני</h2>
-                    <img ng-src="{{getMemberAvatar(renovationTeam.manager_id)}}" class="md-avatar" alt="{{item.who}}" />
-                </md-list-item>
-                <md-divider></md-divider>
-                <md-list-item class="md-3-line" ng-repeat="memberID in renovationTeam.members_id" dir="rtl">
-                    <div class="md-list-item-text dashboard-list-text" th:classappend="dashboard-special-list-item" layout="column">
-                        <h3>{{getMemberName(memberID)}}</h3>
-                        <h4>{{memberID}}</h4>
-                        <p>{{getMemberType(memberID)}}</p>
-                    </div>
-                    <span flex></span>
-                    <h2 ng-show="myID == memberID">אני</h2>
-                    <img ng-src="{{getMemberAvatar(renovationTeam.manager_id)}}" class="md-avatar" alt="{{item.who}}" />
-                    <md-divider></md-divider>
-                </md-list-item>
-                <md-divider></md-divider>
-            </md-list>
-        </md-content>
-    </div>
-</div>
--->
