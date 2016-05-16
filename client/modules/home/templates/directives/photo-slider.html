@@ -1,4 +1,4 @@
-<div class="container slider">
+<div class="container slider" ng-mouseenter="isMouseOver = true" ng-mouseleave="isMouseOver = false" >
     <img ng-repeat="slide in slides"
          class="slide slide-animation"
          ng-src="{{slide.image}}"

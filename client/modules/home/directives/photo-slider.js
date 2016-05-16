@@ -5,7 +5,7 @@ angular.module('ProjectHands.home')
             restrict: 'E',
             replace: true,
             templateUrl: 'modules/home/templates/directives/photo-slider.html',
-            controller: function ($scope) {
+            controller: function ($scope, $interval) {
 
                 $scope.slides = [
                     {image: 'assets/img/home/jobs1.jpg', description: 'Image 00'},
@@ -40,6 +40,14 @@ angular.module('ProjectHands.home')
                     $scope.direction = 'right';
                     $scope.currentIndex = ($scope.currentIndex > 0) ? --$scope.currentIndex : $scope.slides.length - 1;
                 };
+
+                $scope.isMouseOver = false;
+                var interval = 10000 / 3;
+
+                $interval(function () {
+                    if ($scope.isMouseOver===false)
+                        $scope.nextSlide();
+                }, interval);//
             }
         };
     }).animation('.slide-animation', function () {
