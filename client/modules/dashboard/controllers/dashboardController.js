@@ -152,10 +152,9 @@ angular.module('ProjectHands.dashboard')
 	DatabaseService.query(COLLECTIONS.USERS, {
 		email: $scope.userEmail
 	}).$promise.then(function (result) {
-//		console.log("Result: ", result);
 		$scope.myUser = result[0];
-		$scope.getUserTeam($scope.myUser._id);
-//        console.log("My user ID is: ", $scope.myUser._id);
+//		$scope.getUserTeam($scope.myUser._id);
+        $scope.getUserTeam('111111111'); //FIXME Delete and uncomment above line
 	}).catch(function (error) {
 		console.log("Error: ", error);
 	});
