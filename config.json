@@ -20,7 +20,8 @@
         "TEAMS": "teams",
         "CHATS": "chats",
         "SIGNUPS": "signup_users",
-        "ACTIONS": "actions"
+        "ACTIONS": "actions",
+        "IMAGES": "images"
     },
     "ROLES": {
         "ADMIN": "admin",
