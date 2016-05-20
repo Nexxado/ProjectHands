@@ -69,6 +69,7 @@ angular.module('ProjectHands.auth', [])
 
             $timeout(function() {
                 $rootScope.initNotifications();
+                $rootScope.initChat();
             });
 
             $state.go(toState)

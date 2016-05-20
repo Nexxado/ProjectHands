@@ -31,12 +31,21 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     TEAMS: 'teams'
 })
 
-.run(function ($rootScope, $state, AuthService, AUTH_EVENTS, SessionService, UtilsService, $mdToast, $q, ROLES, $timeout) {
+.run(function ($rootScope, $mdToast, socketio) {
 
 
     /********************************************/
     /***** Application Wide Event Listeners *****/
     /********************************************/
+    $rootScope.initChat = function() {
+        console.info('INIT CHAT');
+        socketio.on('online-users', function (data) {
+            console.log('online-users', data.room, data.users);
+            //TODO update online users per room
+        });
+
+        //TODO Init chat here!!!
+    };
 
 
     /*************************/

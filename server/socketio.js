@@ -8,23 +8,37 @@ var debug = require('debug')('server/socketio');
 var ROLES = config.ROLES;
 var ROLES_HIERARCHY = Object.keys(ROLES).map(function (key) { return ROLES[key]; }).reverse();
 
+var defaultRoom = 'general';
 var peopleOnline = [];
+var rooms = [];
+rooms[defaultRoom] = [];
 
 io.on("connection", function (socket) {
 
     debug("A user connected");
-    var defaultRoom = 'general';
-    socket.join(defaultRoom); 
+    socket.join(defaultRoom);
 //    socket.leave(socket.id); //Leave socket.io default room
 
+    function removeUserFromRooms(name) {
+        for(var room in rooms) {
+            var index = rooms[room].indexOf(name);
+
+            if(index > -1)
+                rooms[room].splice(index, 1);
+        }
+    }
 
     /**********************/
     /***** Connection *****/
     /**********************/
     socket.on('disconnect', function () {
         if(peopleOnline[socket.id]) {
-            debug(peopleOnline[socket.id].name + ' disconnected');
+            var username = peopleOnline[socket.id].name;
+            debug(username + ' disconnected');
+            removeUserFromRooms(username);
             delete peopleOnline[socket.id];
+            // debug('peopleOnline', peopleOnline);
+            // debug('rooms', rooms);
 
         } else {
              debug("A user disconnected");
@@ -34,7 +48,10 @@ io.on("connection", function (socket) {
 
     socket.on('logged-in', function(user) {
         peopleOnline[socket.id] = user;
+        rooms[defaultRoom].push(user.name);
         debug(user.name + ' Logged in');
+        // debug('peopleOnline', peopleOnline);
+        // debug('rooms', rooms);
 
         socket.join('notifications-' + user.role); //Join notification-role room.
         io.emit('notification', {message: user.name + ' Logged In', timestamp: new Date().toDateString()}); //FUTURE Notification Testing
@@ -105,8 +122,13 @@ io.on("connection", function (socket) {
             debug('ERROR: room.join - room is undefined');
         }
 
-        debug(peopleOnline[socket.id] + ' joined', room);
+        if(!rooms[room])
+            rooms[room] = [];
+
+        rooms[room].push(peopleOnline[socket.id].name);
         socket.join(room);
+        socket.emit('online-users', {room: room, users: rooms[room]});
+        debug(peopleOnline[socket.id].name + ' joined', room);
     });
 
     socket.on('room.leave', function(room) {
@@ -114,8 +136,10 @@ io.on("connection", function (socket) {
             debug('ERROR: room.leave - room is undefined');
         }
 
-        debug(peopleOnline[socket.id] + ' left', room);
+        rooms[room].splice(rooms[room].indexOf(peopleOnline[socket.id].name), 1);
         socket.leave(room);
+        socket.emit('online-users', {room: room, users: rooms[room]});
+        debug(peopleOnline[socket.id].name + ' left', room);
     });
 
 });

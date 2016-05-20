@@ -25,7 +25,7 @@ angular.module('ProjectHands')
             };
 
             $rootScope.initNotifications = function() {
-                console.log('INIT NOTIFICATIONS');
+                console.info('INIT NOTIFICATIONS');
                 socketio.on('notification', function(notification) {
 
                     $timeout(function() { //Apply message on next digest cycle
