@@ -8,6 +8,8 @@ var ROLES_HIERARCHY = Object.keys(ROLES).map(function (key) { return ROLES[key];
 var bcrypt = require('bcrypt');
 var saltRounds = 10; // will do 2^rounds
 
+var validate = require('./validation');
+
 
 /** CONSTANTS */
 var MESSAGES = {
@@ -61,6 +63,11 @@ module.exports = {
      * @param callback : methods will be executed when the user is inserted(Success/Fail)
      */
     signUp: function (user, callback) {
+
+        if(!validate.email(user.email))
+            return callback({ errMessage: "Invalid Email" }, null);
+        if(!validate.id(user.realID))
+            return callback({ errMessage: "Invalid ID" }, null);
 
         //Set TTL on collection's documents with field "createdAt"
         mongoUtils.getCollection(COLLECTIONS.SIGNUPS).ensureIndex({ createdAt: 1 },

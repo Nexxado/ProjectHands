@@ -70,8 +70,12 @@ router.get('/logout', ensureAuthenticated, function(request, response) {
  * User SignUp - create a temp account on sign up, send activation email with token
  */
 router.post("/signup", function (request, response) {
+
     try {
         var user = JSON.parse(request.body.user);
+        if(!user || !user.email || !user.password)
+            return writeToClient(response, null, "Please Provide all required fields", HttpStatus.BAD_REQUEST);
+
         user.role = ROLES.ADMIN; //FIXME change initial role to ROLES.GUEST;
 
         debug('signup user', user);
