@@ -14,6 +14,6 @@ angular.module('ProjectHands')
 //    $scope.rooms = ["ren1_chat", "chatty"];
 
 //    console.log('user', $scope.user);
-//    console.log('rooms', $scope.rooms);
+   console.log('chat rooms', $scope.rooms);
 
 });

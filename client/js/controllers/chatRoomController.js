@@ -10,7 +10,7 @@ angular.module('ProjectHands')
 //    $scope.room = $attrs.room;
 //    $scope.user = $attrs.user;
 //    console.log('chat-room user', $scope.user);
-//    console.log('chat-room room', $scope.room);
+   console.log('chat-room room', $scope.room);
 
     $scope.history = [];
 	console.log("hahahaha", $scope.user);
