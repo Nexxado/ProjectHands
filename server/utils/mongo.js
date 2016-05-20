@@ -29,8 +29,7 @@ module.exports = {
     /**
      * @param collectionName : the name of the wanted collection
      * */
-    getCollection(collectionName)
-    {
+    getCollection: function(collectionName) {
         return _db.collection(collectionName);
 
 
@@ -42,7 +41,7 @@ module.exports = {
      * @param data : the data to be inserted to that collection
      * callback will be executed when finish , and with null if any errors
      * */
-    insert(collectionName,data,callback)
+    insert: function(collectionName,data,callback)
     {
         _db.collection(collectionName).insert(data,function(error,result)
         {
@@ -69,7 +68,7 @@ module.exports = {
      * @param options : check mongo update options
      * callback will be executed when finish , and with null if any errors
      * */
-    update(collectionName ,query, updatedData, options, callback)
+    update: function(collectionName ,query, updatedData, options, callback)
     {
         _db.collection(collectionName).update(query, updatedData, options, function (error, result) {
             if (error)
@@ -97,7 +96,7 @@ module.exports = {
      * @param query : the search criteria
      * callback will be executed when finish , and with null if any errors
      * */
-    delete(collectionName,query,callback)
+    delete: function(collectionName,query,callback)
     {
         _db.collection(collectionName).remove(query ,function (error,result)
         {
@@ -124,7 +123,7 @@ module.exports = {
      * @param callback : method that will be executed when data is retrieved
      * callback will be executed when finish , and with null if any errors
      * */
-    query(collectionName,query,callback)
+    query: function(collectionName,query,callback)
     {
         _db.collection(collectionName).find(query).toArray(function (error,result)
         {

@@ -1,10 +1,20 @@
 var express = require('express');
 var session = require('express-session');
+var MongoDBStore = require('connect-mongodb-session')(session);
 var app = express();
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var config = require('../config.json');
+var store = new MongoDBStore(
+    {
+        uri: process.env.MONGODB_URL || config.mongoDBUrl,
+        collection: 'sessions'
+    });
+
+store.on('error', function(error) {
+    debug('Mongo SessionStore error:', error);
+});
 
 app.use(express.static(__dirname + '/../client')); //Static route for client side
 app.use('/vendor', express.static(__dirname + '/../node_modules/')); //Static Route for node_modules
@@ -12,6 +22,10 @@ app.use('/vendor', express.static(__dirname + '/../node_modules/')); //Static Ro
 app.use(cookieParser());
 app.use(session({ 
     secret: process.env.SESSION_SECRET || config.SECRETS.sessionSecret,
+    store: store,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+    },
     resave: false,
     saveUninitialized: false
 }));
