@@ -2,28 +2,32 @@ angular.module('ProjectHands.auth')
 
 .service('SessionService', function ($rootScope, AuthService, AUTH_EVENTS, socketio) {
 
+    var self = this;
+
     this.clearSession = function () {
 
         socketio.disconnect();
 
         $rootScope.isLoggedIn = false;
-        $rootScope.userName = null;
-        $rootScope.userEmail = null;
+        $rootScope.user = undefined;
+    };
+
+    this.startSession = function(user) {
+        console.log('startSession user', user);
+
+        socketio.connect();
+        socketio.emit('logged-in', user);
+        
+        $rootScope.isLoggedIn = true;
+        $rootScope.user = user;
+        $rootScope.$broadcast(AUTH_EVENTS.loginSuccess, user);
     };
 
     this.getSession = function () {
         AuthService.isLoggedIn().$promise
             .then(function(result) {
                 console.log('getSession result', result);
-                delete result.success;
-
-                socketio.connect();
-                socketio.emit('logged-in', result);
-
-                $rootScope.isLoggedIn = true;
-                $rootScope.userName = result.name;
-                $rootScope.userEmail = result.email;
-                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess, {userName: result.name, role: result.role});
+                self.startSession(result);
             })
             .catch(function(error) {
                 console.log('isLoggedIn error', error);

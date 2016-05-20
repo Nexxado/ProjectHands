@@ -31,10 +31,6 @@ io.on("connection", function (socket) {
         }
     });
 
-    socket.on('client-disconnect', function() {
-        socket.disconnect();
-    });
-
 
     socket.on('logged-in', function(userData) {
         people[socket.id] = userData;

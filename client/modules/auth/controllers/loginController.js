@@ -4,6 +4,7 @@ angular.module('ProjectHands.auth')
 
     var toastAnchor = '#loginToastsAnchor';
 
+    /***** Form Model *****/
     $scope.email = '';
     $scope.password = '';
     $scope.rememberMe = false;
@@ -16,11 +17,9 @@ angular.module('ProjectHands.auth')
         AuthService.login($scope.email, $scope.password, $scope.rememberMe)
             .then(function (data) {
                 console.log('auth data', data);
-                SessionService.getSession();
-                $scope.email = '';
-                $scope.password = '';
-                $scope.LoginForm.$setPristine();
-                $scope.LoginForm.$setUntouched();
+                SessionService.startSession(data);
+                resetForm();
+
             })
             .catch(function (error) {
                 console.log('login error ', error);
@@ -29,6 +28,9 @@ angular.module('ProjectHands.auth')
             });
     };
 
+    /********************************/
+    /***** OAuth2 Login Methods *****/
+    /********************************/
     $scope.loginGoogle = function() {
         $window.open('/api/auth/google','',' scrollbars=yes,menubar=no,width=500, resizable=yes,toolbar=no,location=no,status=no');
     };
@@ -41,6 +43,15 @@ angular.module('ProjectHands.auth')
         console.log('loginCallBack');
         SessionService.getSession();
     };
+
+
     
+    function resetForm() {
+        $scope.email = '';
+        $scope.password = '';
+        $scope.LoginForm.$setPristine();
+        $scope.LoginForm.$setUntouched();
+        $scope.rememberMe = false;
+    }
     
 });
