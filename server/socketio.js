@@ -8,7 +8,7 @@ var debug = require('debug')('server/socketio');
 var ROLES = config.ROLES;
 var ROLES_HIERARCHY = Object.keys(ROLES).map(function (key) { return ROLES[key]; }).reverse();
 
-var people = [];
+var peopleOnline = [];
 
 io.on("connection", function (socket) {
 
@@ -22,9 +22,9 @@ io.on("connection", function (socket) {
     /***** Connection *****/
     /**********************/
     socket.on('disconnect', function () {
-        if(people[socket.id]) {
-            debug(people[socket.id].name + ' disconnected');
-            delete people[socket.id];
+        if(peopleOnline[socket.id]) {
+            debug(peopleOnline[socket.id].name + ' disconnected');
+            delete peopleOnline[socket.id];
 
         } else {
              debug("A user disconnected");
@@ -32,12 +32,12 @@ io.on("connection", function (socket) {
     });
 
 
-    socket.on('logged-in', function(userData) {
-        people[socket.id] = userData;
-        debug(userData.name + ' Logged in');
+    socket.on('logged-in', function(user) {
+        peopleOnline[socket.id] = user;
+        debug(user.name + ' Logged in');
 
-        socket.join('notifications-' + userData.role);
-        io.emit('notification', {message: userData.name + ' Logged In', timestamp: new Date().toDateString()}); //FUTURE Notification Testing
+        socket.join('notifications-' + user.role); //Join notification-role room.
+        io.emit('notification', {message: user.name + ' Logged In', timestamp: new Date().toDateString()}); //FUTURE Notification Testing
     });
 
     /*************************/
@@ -48,8 +48,8 @@ io.on("connection", function (socket) {
     socket.on('notification-user', function(userEmail) {
 
         var userSockId;
-        for(var sockId in people) {
-            if(people[sockId].email === userEmail)
+        for(var sockId in peopleOnline) {
+            if(peopleOnline[sockId].email === userEmail)
                 userSockId = sockId;
         }
         if(!userSockId) {
@@ -57,7 +57,7 @@ io.on("connection", function (socket) {
             return;
         }
 
-        io.sockets.to(userSockId).emit('notification', { message: people[socket.id].name + ' poked you!', timestamp: new Date().toDateString() }); //FIXME change timestamp format
+        io.sockets.to(userSockId).emit('notification', { message: peopleOnline[socket.id].name + ' poked you!', timestamp: new Date().toDateString() }); //FIXME change timestamp format
     });
 
 
@@ -105,7 +105,7 @@ io.on("connection", function (socket) {
             debug('ERROR: room.join - room is undefined');
         }
 
-        debug(people[socket.id] + ' joined', room);
+        debug(peopleOnline[socket.id] + ' joined', room);
         socket.join(room);
     });
 
@@ -114,7 +114,7 @@ io.on("connection", function (socket) {
             debug('ERROR: room.leave - room is undefined');
         }
 
-        debug(people[socket.id] + ' left', room);
+        debug(peopleOnline[socket.id] + ' left', room);
         socket.leave(room);
     });
 
