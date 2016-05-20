@@ -66,6 +66,8 @@ module.exports = {
 
         if(!validate.email(user.email))
             return callback({ errMessage: "Invalid Email" }, null);
+        if(!validate.password(user.password))
+            return callback({ errMessage: "Invalid Password" }, null);
         if(!validate.id(user.realID))
             return callback({ errMessage: "Invalid ID" }, null);
 
@@ -246,7 +248,8 @@ module.exports = {
         
         debug('Login email', email);
         debug('Login password', password);
-        
+        if(!validate.email(email) || !validate.password(password))
+            return callback("Invalid email or password", null);
         
         mongoUtils.query(COLLECTIONS.USERS, { email: email }, function (error, result) {
 

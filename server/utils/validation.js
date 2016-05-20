@@ -47,6 +47,7 @@ module.exports = {
     },
 
     password: function(password) {
+        return true;
         //TODO Implement password constraints
     }
 
