@@ -1,5 +1,29 @@
 <md-content flex-gt-sm="40" flex-offset-gt-sm="30" layout-padding>
     <div layout="column" layout-align="center center">
-        <h1>oAuth Sign Up</h1>
+        <h1>Complete Sign-up Process</h1>
     </div>
+    <form name="OAuthSignupForm" ng-submit="submit()" layout="column" novalidate>
+        <md-input-container class="md-icon-float md-block rtl">
+            <label>תעודת זהות</label>
+            <input type="text" ng-pattern="/^[0-9]+$/" name="id" ng-model="info.realID" minlength="9" maxlength="9" md-maxlength="9" required />
+            <md-icon class="material-icons">perm_identity</md-icon>
+            <div ng-messages="OAuthSignupForm.id.$error">
+                <div ng-message="required">
+                    שדה חובה
+                </div>
+                <div ng-message="maxlength">
+                    דרושים 9 ספרות
+                </div>
+                <div ng-message="minlength">
+                    דרושים 9 ספרות
+                </div>
+                <div ng-message="pattern">
+                    רק ספרות חוקיות
+                </div>
+            </div>
+        </md-input-container>
+        <div>
+            <md-button type="submit" class="md-accent md-raised white">הירשם</md-button>
+        </div>
+    </form>
 </md-content>

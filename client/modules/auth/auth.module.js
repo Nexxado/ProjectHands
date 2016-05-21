@@ -20,7 +20,12 @@ angular.module('ProjectHands.auth', [])
         notAuthorized: 'auth-not-authorized'
     })
 
-    .run(function ($rootScope, $state, AuthService, AUTH_EVENTS, SessionService, UtilsService, $q, ROLES, $timeout) {
+    .constant('ROUTE_ERRORS', {
+        alreadyLoggedIn: 'User Already Logged In',
+        notAllowed: 'Not Allowed'
+    })
+
+    .run(function ($rootScope, $state, AuthService, AUTH_EVENTS, ROUTE_ERRORS, SessionService, UtilsService, $q, ROLES, $timeout) {
 
         //Email Regex according to RFC 5322. - http://emailregex.com/
         $rootScope.regexEmail = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
@@ -32,10 +37,14 @@ angular.module('ProjectHands.auth', [])
         var guestRedirectState = 'home';
 
 
+        /*********************************/
+        /***** Route Resolve Methods *****/
+        /*********************************/
+
         /**
          * Authenticating user based on role
          * @param   {string} action : The action the user is trying to perform
-         * @returns {object} A resolved/rejected promise based on authentication
+         * @returns {promise} A resolved/rejected promise based on authentication
          */
         $rootScope.authenticate = function (action) {
             console.log('Authenticating action', action);
@@ -55,9 +64,24 @@ angular.module('ProjectHands.auth', [])
                     else if(error.status === 403)
                         $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
 
-                    deferred.reject("Not Allowed");
+                    deferred.reject(ROUTE_ERRORS.notAllowed);
                 });
 
+            return deferred.promise;
+        };
+
+
+        /**
+         * Check if user is already logged in
+         * @returns {promise} A resolved/rejected promise
+         */
+        $rootScope.alreadyLoggedIn = function() {
+            var deferred = $q.defer();
+            if($rootScope.isLoggedIn === false)
+                deferred.resolve();
+            else
+                deferred.reject(ROUTE_ERRORS.alreadyLoggedIn);
+            // console.info('alreadyLoggedIn', deferred.promise);
             return deferred.promise;
         };
 
@@ -65,6 +89,14 @@ angular.module('ProjectHands.auth', [])
         /***** Application Wide Event Listeners *****/
         /********************************************/
         $rootScope.$on(AUTH_EVENTS.loginSuccess, function (event, user) {
+            console.info('AUTH_EVENTS.loginSuccess');
+            if(typeof user.signup_complete === 'boolean' && user.signup_complete === false) {
+                return $state.go('signup_oauth');
+                    // .then(function () {
+                    //     UtilsService.makeToast('w00t w00t', $rootScope.rootToastAnchor, 'top right');
+                    // });
+            }
+
             var toState = ROLES_HIERARCHY.indexOf(user.role) > 0 ? defaultRedirectState : guestRedirectState;
 
             $timeout(function() {
@@ -72,13 +104,15 @@ angular.module('ProjectHands.auth', [])
                 $rootScope.initChat();
             });
 
-            $state.go(toState)
-                .then(function () {
-                    UtilsService.makeToast('ברוך הבא ' + user.name, $rootScope.rootToastAnchor, 'top right');
-                });
+            if($state.is('login'))
+                $state.go(toState)
+                    .then(function () {
+                        UtilsService.makeToast('ברוך הבא ' + user.name, $rootScope.rootToastAnchor, 'top right');
+                    });
         });
 
         $rootScope.$on(AUTH_EVENTS.logoutSuccess, function (event) {
+            console.info('AUTH_EVENTS.logoutSuccess');
             SessionService.clearSession();
             $state.go('home')
                 .then(function () {
@@ -92,11 +126,22 @@ angular.module('ProjectHands.auth', [])
         });
 
         $rootScope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
+            console.info('AUTH_EVENTS.notAuthenticated');
             SessionService.clearSession();
             $state.go('login')
                 .then(function() {
                     UtilsService.makeToast('Please login', $rootScope.rootToastAnchor, 'top right');
                 });
         });
+
+        $rootScope.$on('$stateChangeError', function(event) {
+            console.info('stateChangeError', arguments);
+            var error = arguments[5];
+            if(error === 'Already Logged In')
+                $state.go('home')
+                    .then(function(){
+                        UtilsService.makeToast('אין מספיק הרשאות', $rootScope.rootToastAnchor, 'top right');
+                    })
+        })
 
     });

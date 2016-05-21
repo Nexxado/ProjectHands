@@ -114,6 +114,7 @@ module.exports = function (passport) {
                     email: profile.emails[0].value,
                     name: profile.name.givenName + ' ' + profile.name.familyName,
                     role: ROLES.ADMIN, //FIXME change initial role to ROLES.GUEST;
+                    signup_complete: false,
                     approved: false
                 };
 
@@ -179,6 +180,7 @@ module.exports = function (passport) {
                     email: profile.emails[0].value,
                     name: profile.name.givenName + ' ' + profile.name.familyName,
                     role: ROLES.ADMIN, //FIXME change initial role to ROLES.GUEST;
+                    signup_complete: false,
                     approved: false
                 };
 

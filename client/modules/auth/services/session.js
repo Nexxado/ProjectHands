@@ -31,6 +31,7 @@ angular.module('ProjectHands.auth')
             })
             .catch(function(error) {
                 console.log('isLoggedIn error', error);
+                self.clearSession();
 //                $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
             });
     };

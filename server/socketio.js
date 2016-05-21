@@ -54,7 +54,8 @@ io.on("connection", function (socket) {
         // debug('rooms', rooms);
 
         socket.join('notifications-' + user.role); //Join notification-role room.
-        io.emit('notification', {message: user.name + ' Logged In', timestamp: new Date().toDateString()}); //FUTURE Notification Testing
+        socket.emit('online-users', {room: defaultRoom, users: rooms[defaultRoom]});
+        io.emit('notification', {message: user.name + ' Logged In', timestamp: new Date().toDateString()}); //FIXME Notification Testing
     });
 
     /*************************/

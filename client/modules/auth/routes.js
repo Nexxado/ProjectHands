@@ -5,20 +5,41 @@ angular.module('ProjectHands.auth')
     $stateProvider.state('login', {
         url: '/login',
         templateUrl: 'modules/auth/templates/login.html',
-        controller: 'LoginController'
+        controller: 'LoginController',
+        resolve: {
+            logged_in: function($rootScope) {
+                return $rootScope.alreadyLoggedIn();
+            }
+        }
     })
 
     .state('signup', {
         url: '/signup',
         templateUrl: 'modules/auth/templates/signup.html',
-        controller: 'SignupController'
+        controller: 'SignupController',
+        resolve: {
+            logged_in: function($rootScope) {
+                return $rootScope.alreadyLoggedIn();
+            }
+        }
     })
 
-    .state('signup.oauth', {
-        url: '/oauth',
-        views: {
-            '@': {
-                templateUrl: 'modules/auth/templates/oauthSignup.html'
+    .state('signup_oauth', {
+        url: '/signup/oauth',
+        controller: 'OAuthSignupController',
+        templateUrl: 'modules/auth/templates/oauthSignup.html',
+        resolve: {
+            signup_complete: function($rootScope, $q) {
+                var deferred = $q.defer();
+                if(typeof $rootScope.user.signup_complete === 'boolean' && $rootScope.user.signup_complete === false)
+                    deferred.resolve('OK');
+                else {
+                    deferred.reject('Sign Up Process Already Completed');
+                    $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+                }
+
+                // console.info('signup_complete', deferred.promise);
+                return deferred.promise;
             }
         }
     })

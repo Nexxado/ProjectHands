@@ -4,7 +4,9 @@ var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
 var ROLES = config.ROLES;
 var HttpStatus = require('http-status-codes');
-var ROLES_HIERARCHY = Object.keys(ROLES).map(function (key) { return ROLES[key]; }).reverse();
+var ROLES_HIERARCHY = Object.keys(ROLES).map(function (key) {
+    return ROLES[key];
+}).reverse();
 var bcrypt = require('bcrypt');
 var saltRounds = 10; // will do 2^rounds
 
@@ -13,89 +15,84 @@ var validate = require('./validation');
 
 /** CONSTANTS */
 var MESSAGES = {
-     DB_FETCH_ERROR : "Error has accourd , please  try again",
-     PASSWORD_NOT_MATCH_ERROR : "The password dose not match , please try again",
-     PASSWORD_UPDATING_ERROR : "Error has accourd while updating the password",
-     PASSWORD_UPDATE_SUCCESS : "The password has been changed",
-     USER_DATA_NOT_EXIST : "Wrong Email or Phone number"
+    DB_FETCH_ERROR: "Error has accourd , please  try again",
+    PASSWORD_NOT_MATCH_ERROR: "The password dose not match , please try again",
+    PASSWORD_UPDATING_ERROR: "Error has accourd while updating the password",
+    PASSWORD_UPDATE_SUCCESS: "The password has been changed",
+    USER_DATA_NOT_EXIST: "Wrong Email or Phone number"
 };
 
 /**
  *Generates a hash for the given data
  *
  * @param password {string}: the data to be hased
- * @param callback {fucntion(error,result) } : will be executed when finish
+ * @param callback {function(error,result) } : will be executed when finish
  */
-function doPasswordHash(password,callback)
-{
-    bcrypt.hash(password, saltRounds, function(error, hash) {
+function doPasswordHash(password, callback) {
+    bcrypt.hash(password, saltRounds, function (error, hash) {
 
         debug('bcrypt hash error', error);
         debug('bcrypt hash hash', hash);
-        callback(error,hash);
+        callback(error, hash);
     });
 }
 module.exports = {
 
     /**
      * The roles passed to export
-     * @link Roles : contains the Roles in the system
+     * @link ROLES : contains the Roles in the system
      */
     roles: ROLES,
-    messages:MESSAGES,
+    messages: MESSAGES,
 
     /**
-     * This method will change the user role
-     * @param role : the role that we wan to assign to this person
-     * @param executerUsername : who issued the role change
-     * @param targetUsername : the user that his role will be changed
-     * @link  mongoUtils.update : to update the targetUsername role
-     * @link mongoUtils.query : to check the  executerUsername role
+     * @param user {object}
+     * @param newRole {string}
+     * @param callback {function}
      */
     setUserRole: function (user, newRole, callback) {
         //we need to check that who sent the request has admin role
-        mongoUtils.update(COLLECTIONS.USERS, user, {$set: {role: newRole}}, {}, callback);
+        mongoUtils.update(COLLECTIONS.USERS, {email: user.email}, {$set: {role: newRole}}, {}, callback);
     },
 
     /**
      * Insert a user to the DataBase
-     * @param user : the user details from the Client
-     * @param callback : methods will be executed when the user is inserted(Success/Fail)
+     * @param user {object} : the user details from the Client
+     * @param callback {function} : methods will be executed when the user is inserted(Success/Fail)
      */
     signUp: function (user, callback) {
 
-        if(!validate.email(user.email))
-            return callback({ errMessage: "Invalid Email" }, null);
-        if(!validate.password(user.password))
-            return callback({ errMessage: "Invalid Password" }, null);
-        if(!validate.id(user.realID))
-            return callback({ errMessage: "Invalid ID" }, null);
+        if (!validate.email(user.email))
+            return callback({errMessage: "Invalid Email"}, null);
+        if (!validate.password(user.password))
+            return callback({errMessage: "Invalid Password"}, null);
+        if (!validate.id(user.realID))
+            return callback({errMessage: "Invalid ID"}, null);
 
         //Set TTL on collection's documents with field "createdAt"
-        mongoUtils.getCollection(COLLECTIONS.SIGNUPS).ensureIndex({ createdAt: 1 },
-                                                                  { expireAfterSeconds: 86400 }, // 24 hours
-                                                                 function(error, indexName) {
-            debug('ensureIndex indexName', indexName);
-            debug('ensureIndex error', error);
-        });
+        mongoUtils.getCollection(COLLECTIONS.SIGNUPS).ensureIndex({createdAt: 1},
+            {expireAfterSeconds: 86400}, // 24 hours
+            function (error, indexName) {
+                debug('ensureIndex indexName', indexName);
+                debug('ensureIndex error', error);
+            });
 
 
         //Check if user already exists
-        mongoUtils.query(COLLECTIONS.USERS, { email: user.email }, function(error, result) {
-            if(result && result.length)
-                return callback({ errMessage: "Account Already Exists" }, null);
+        mongoUtils.query(COLLECTIONS.USERS, {email: user.email}, function (error, result) {
+            if (result && result.length)
+                return callback({errMessage: "Account Already Exists"}, null);
 
             //Check if user already signed up
-            mongoUtils.query(COLLECTIONS.SIGNUPS, { email: user.email }, function(error, result) {
-                if(result && result.length)
+            mongoUtils.query(COLLECTIONS.SIGNUPS, {email: user.email}, function (error, result) {
+                if (result && result.length)
                     return callback({errMessage: "Account Already Signed up"}, null);
 
 
                 user.createdAt = new Date();
-                doPasswordHash(user.password,function (error,hashedPassword) {
-                    if(error || !hashedPassword)
-                    {
-                        return callback({ errMessage: "Failed to hash password" }, null);
+                doPasswordHash(user.password, function (error, hashedPassword) {
+                    if (error || !hashedPassword) {
+                        return callback({errMessage: "Failed to hash password"}, null);
 
                     }
                     user.password = hashedPassword;
@@ -103,19 +100,26 @@ module.exports = {
                     mongoUtils.insert(COLLECTIONS.SIGNUPS, user, callback);
 
                 });
-                });
+            });
 
         });
     },
 
+
+    oauthSignup: function (user, info, callback) {
+
+        info.signup_complete = true;
+        mongoUtils.update(COLLECTIONS.USERS, {email: user.email}, {$set: info}, {}, callback)
+    },
+
     /**
      * Activate a temporary user account
-     * @param   {object}   user     : Object with the user details
-     * @param   {function} callback : Function to be executed on completion
+     * @param user {object} : Object with the user details
+     * @param callback {function} : Function to be executed on completion
      */
-    activateAccount: function(user, callback) {
-        mongoUtils.delete(COLLECTIONS.SIGNUPS, user, function(error, result) {
-            if(error)
+    activateAccount: function (user, callback) {
+        mongoUtils.delete(COLLECTIONS.SIGNUPS, user, function (error, result) {
+            if (error)
                 debug('Failed to delete user from signups');
             else
                 debug('deleted user from signups');
@@ -130,23 +134,19 @@ module.exports = {
      * @param phone {string} : the user phone
      * @param callback
      */
-    passwordResetRequest : function (email,callback) {
+    passwordResetRequest: function (email, callback) {
 
         // validate the data
-        mongoUtils.query(COLLECTIONS.USERS,{email:email},function (error,result) {
-            if(error)
-            {
-                callback(error,MESSAGES.DB_FETCH_ERROR);
+        mongoUtils.query(COLLECTIONS.USERS, {email: email}, function (error, result) {
+            if (error) {
+                callback(error, MESSAGES.DB_FETCH_ERROR);
             }
-            else
-            {
-                if(result.length === 0)
-                {
+            else {
+                if (result.length === 0) {
                     callback(error, MESSAGES.USER_DATA_NOT_EXIST);
                 }
-                else
-                {
-                    callback(error,result[0].name);
+                else {
+                    callback(error, result[0].name);
                 }
             }
 
@@ -160,48 +160,39 @@ module.exports = {
      * @param callback {function(error,result)} : method to be executed on completion
      * @param isChange {boolean } : whether is reset ot change
      */
-    setPassword:function(user,oldPassword,newPassword,isChange,callback)
-    {
+    setPassword: function (user, oldPassword, newPassword, isChange, callback) {
 
         // fetch the user and check that the passwords do match
-        mongoUtils.query(COLLECTIONS.USERS,user,function (error,result) {
-            if(error)
-            {
-                callback(error,MESSAGES.DB_FETCH_ERROR);
+        mongoUtils.query(COLLECTIONS.USERS, user, function (error, result) {
+            if (error) {
+                callback(error, MESSAGES.DB_FETCH_ERROR);
             }
-            else
-            {
+            else {
                 // compare the password
-                bcrypt.compare(oldPassword, result[0].password, function(error, isMatch) {
+                bcrypt.compare(oldPassword, result[0].password, function (error, isMatch) {
 
-                    if(isChange)
-                    {
-                        if(error)
-                        {
-                             callback(error,MESSAGES.DB_FETCH_ERROR);
+                    if (isChange) {
+                        if (error) {
+                            callback(error, MESSAGES.DB_FETCH_ERROR);
                         }
-                        else if (!isMatch)
-                        {
+                        else if (!isMatch) {
                             /** to change password , the oldPassword must matches the one in the DB*/
-                             callback(error,MESSAGES.PASSWORD_NOT_MATCH_ERROR);
+                            callback(error, MESSAGES.PASSWORD_NOT_MATCH_ERROR);
                         }
                         return;
                     }
 
                     //updating to new password
-                    doPasswordHash(newPassword,function (error,hashedPassword)
-                    {
-                        if(error)
-                            callback(error,hashedPassword);
+                    doPasswordHash(newPassword, function (error, hashedPassword) {
+                        if (error)
+                            callback(error, hashedPassword);
 
                         mongoUtils.update(COLLECTIONS.USERS, user, {$set: {password: hashedPassword}}, {}, function (error, result) {
-                            if(error)
-                            {
-                                callback(error,MESSAGES.PASSWORD_UPDATING_ERROR);
+                            if (error) {
+                                callback(error, MESSAGES.PASSWORD_UPDATING_ERROR);
                             }
-                            else
-                            {
-                                callback(error,MESSAGES.PASSWORD_UPDATE_SUCCESS);
+                            else {
+                                callback(error, MESSAGES.PASSWORD_UPDATE_SUCCESS);
                             }
 
                         });
@@ -218,21 +209,22 @@ module.exports = {
 
     /**
      * Check if a user is authorized to access a certain route
-     * @param   {string}   role  : The user's role
-     * @param   {string}   action : The action the user is trying to perform
+     * @param role {string} : The user's role
+     * @param action {string} : The action the user is trying to perform
+     * @param callback {function}
      * @returns {function} Invoke callback function with appropriate error and result.
      */
-    isAuthorized: function(role, action, callback) {
+    isAuthorized: function (role, action, callback) {
 
-        mongoUtils.query(COLLECTIONS.ACTIONS, { action: action }, function(error, result) {
+        mongoUtils.query(COLLECTIONS.ACTIONS, {action: action}, function (error, result) {
 
-            if(error || !result || result.length !== 1)
-                return callback({ message: "Internal Server Error", code: HttpStatus.INTERNAL_SERVER_ERROR}, null);
+            if (error || !result || result.length !== 1)
+                return callback({message: "Internal Server Error", code: HttpStatus.INTERNAL_SERVER_ERROR}, null);
 
             if (ROLES_HIERARCHY.indexOf(role) < ROLES_HIERARCHY.indexOf(result[0].role))
-                return callback({ message: "Not Allowed", code: HttpStatus.FORBIDDEN}, null);
+                return callback({message: "Not Allowed", code: HttpStatus.FORBIDDEN}, null);
 
-            return callback(null, { success: true, role: role });
+            return callback(null, {success: true, role: role});
         });
 
     },
@@ -240,34 +232,34 @@ module.exports = {
 
     /**
      * Gives a Allowed/NotAllowed for user to login
-     * @param credentials : the username , time(the request sent time) , key(random number)
-     * @param key : the user hash value that been generated from the Client side
-     * @param callback : the function that the data will be sent to
+     * @param email {string}
+     * @param password {string}
+     * @param callback {function} : the function that the data will be sent to
      */
     login: function (email, password, callback) {
-        
+
         debug('Login email', email);
         debug('Login password', password);
-        if(!validate.email(email) || !validate.password(password))
+        if (!validate.email(email) || !validate.password(password))
             return callback("Invalid email or password", null);
-        
-        mongoUtils.query(COLLECTIONS.USERS, { email: email }, function (error, result) {
 
-            if(error)
+        mongoUtils.query(COLLECTIONS.USERS, {email: email}, function (error, result) {
+
+            if (error)
                 return callback(error, result);
 
-            if(result.length > 1)
+            if (result.length > 1)
                 return callback("Found more than 1 user", null);
 
             debug('login query result', result);
             var user = result[0];
 
-            bcrypt.compare(password, user.password, function(error, result) {
-                
+            bcrypt.compare(password, user.password, function (error, result) {
+
                 debug('bcrypt compare error', error);
                 debug('bcrypt compare result', result);
 
-                if(!result)
+                if (!result)
                     user = null;
 
                 callback(error, user);
