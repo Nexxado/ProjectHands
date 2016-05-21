@@ -2,7 +2,7 @@
     <h1 ng-show="!rooms.length" style="text-align: center;">אין חדרי צ'אט זמינים כרגע</h1>
     <md-tabs ng-show="rooms.length" md-selected="selectedTab"  md-dynamic-height md-border-bottom md-center-tabs md-swipe-content md-stretch-tabs="always">
         <md-tab ng-repeat="room in rooms" label="{{room}}">
-            <chat-room room="{{room}}" user="user"></chat-room>
+            <chat-room room="{{room}}"></chat-room>
         </md-tab>
     </md-tabs>
 </md-content>

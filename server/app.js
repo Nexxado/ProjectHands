@@ -41,6 +41,7 @@ require('./passport')(passport);
 
 app.use('/api/database', require('./routes/database'));
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/chat', require('./routes/chat'));
 
 
 //Fix express rewrites since UI Router is in html5Mode

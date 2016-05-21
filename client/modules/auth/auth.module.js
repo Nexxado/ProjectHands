@@ -27,14 +27,16 @@ angular.module('ProjectHands.auth', [])
         signupProcessCompleted: 'Sign Up Process Already Completed'
     })
 
-    .run(function ($rootScope, $state, AuthService, AUTH_EVENTS, ROUTE_ERRORS, SessionService, UtilsService, $q, ROLES, $timeout) {
+    .run(function ($rootScope, $state, $location, AuthService, AUTH_EVENTS, ROUTE_ERRORS, SessionService, UtilsService, $q, ROLES, $timeout) {
 
         //Email Regex according to RFC 5322. - http://emailregex.com/
         $rootScope.regexEmail = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
         $rootScope.rootToastAnchor = '#main-view';
         SessionService.getSession(); //Restore session on page refresh
 
-        var ROLES_HIERARCHY = Object.keys(ROLES).map(function (key) { return ROLES[key]; }).reverse();
+        var ROLES_HIERARCHY = Object.keys(ROLES).map(function (key) {
+            return ROLES[key];
+        }).reverse();
         var defaultRedirectState = 'dashboard.main-page';
         var guestRedirectState = 'home';
 
@@ -61,9 +63,9 @@ angular.module('ProjectHands.auth', [])
                 })
                 .catch(function (error) {
                     console.log('authenticate error', error);
-                    if(error.status === 401)
+                    if (error.status === 401)
                         deferred.reject(ROUTE_ERRORS.notLoggedIn);
-                    else if(error.status === 403)
+                    else if (error.status === 403)
                         deferred.reject(ROUTE_ERRORS.notAllowed);
                 });
 
@@ -90,21 +92,21 @@ angular.module('ProjectHands.auth', [])
         /********************************************/
         $rootScope.$on(AUTH_EVENTS.loginSuccess, function (event, user) {
             console.info('AUTH_EVENTS.loginSuccess');
-            if(typeof user.signup_complete === 'boolean' && user.signup_complete === false) {
+            if (typeof user.signup_complete === 'boolean' && user.signup_complete === false) {
                 return $state.go('signup_oauth');
-                    // .then(function () {
-                    //     UtilsService.makeToast('w00t w00t', $rootScope.rootToastAnchor, 'top right');
-                    // });
+                // .then(function () {
+                //     UtilsService.makeToast('w00t w00t', $rootScope.rootToastAnchor, 'top right');
+                // });
             }
 
             var toState = ROLES_HIERARCHY.indexOf(user.role) > 0 ? defaultRedirectState : guestRedirectState;
 
-            $timeout(function() {
+            $timeout(function () {
                 $rootScope.initNotifications();
                 $rootScope.initChat();
             });
 
-            if($state.is('login'))
+            if ($state.is('login'))
                 $state.go(toState)
                     .then(function () {
                         UtilsService.makeToast('ברוך הבא ' + user.name, $rootScope.rootToastAnchor, 'top right');
@@ -123,25 +125,25 @@ angular.module('ProjectHands.auth', [])
         $rootScope.$on(AUTH_EVENTS.notAuthorized, function (event, error) {
             console.info('AUTH_EVENTS.notAuthorized');
             $state.go('home')
-                .then(function(){
+                .then(function () {
                     UtilsService.makeToast(error, $rootScope.rootToastAnchor, 'top right');
                 });
         });
 
-        $rootScope.$on(AUTH_EVENTS.notAuthenticated, function(event, error) {
+        $rootScope.$on(AUTH_EVENTS.notAuthenticated, function (event, error) {
             console.info('AUTH_EVENTS.notAuthenticated');
             SessionService.clearSession();
             $state.go('login')
-                .then(function() {
+                .then(function () {
                     UtilsService.makeToast(error, $rootScope.rootToastAnchor, 'top right');
                 });
         });
 
-        $rootScope.$on('$stateChangeError', function(event) {
+        $rootScope.$on('$stateChangeError', function (event) {
             console.info('stateChangeError', arguments);
             var error = arguments[5];
-            if(error) {
-                switch(error) {
+            if (error) {
+                switch (error) {
                     case ROUTE_ERRORS.notAllowed:
                     case ROUTE_ERRORS.alreadyLoggedIn:
                     case ROUTE_ERRORS.signupProcessCompleted:

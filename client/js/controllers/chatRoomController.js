@@ -1,7 +1,8 @@
 angular.module('ProjectHands')
 
-.controller('ChatRoomController', function ($scope, $timeout, socketio, DatabaseService, UtilsService, COLLECTIONS) {
+.controller('ChatRoomController', function ($scope, $timeout, socketio, ChatService, UtilsService, $rootScope) {
 
+    $scope.user = $rootScope.user;
     //Message Classes
     var class_message_self = 'chat-message-self';
     var class_message_others = 'chat-message-others';
@@ -13,7 +14,6 @@ angular.module('ProjectHands')
    console.log('chat-room room', $scope.room);
 
     $scope.history = [];
-	console.log("hahahaha", $scope.user);
     $scope.message = {
         user: $scope.user.name,
         content: '',
@@ -39,7 +39,7 @@ angular.module('ProjectHands')
         delete message.dir;
         delete message.class;
 
-        socketio.emit('message', message, $scope.room, function (data) {
+        socketio.emit('message', {message: message, room: $scope.room}, function (data) {
             console.log('Ack: ', data);
         });
 
@@ -68,13 +68,11 @@ angular.module('ProjectHands')
     //Get chat history
     function getChatHistory() {
 
-        DatabaseService.query(COLLECTIONS.CHATS, {
-                _id: $scope.room
-            }).$promise
-            .then(function (data) {
-                console.log('data', data);
-                if (data.length > 0)
-                    $scope.history = data[0].messages;
+        ChatService.getChatHistory($scope.room).$promise
+            .then(function (result) {
+                console.log('result', result);
+                if (result.length > 0)
+                    $scope.history = result[0].messages;
 
                 $scope.history.forEach(function (message) {
                     message.class = $scope.user.name === message.user ? class_message_self : class_message_others;

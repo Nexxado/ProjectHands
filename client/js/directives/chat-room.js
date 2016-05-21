@@ -6,8 +6,7 @@ angular.module('ProjectHands')
         replace: true,
         templateUrl: '/templates/directives/chat-room.html',
         scope: {
-            room: '@',
-            user: '='
+            room: '@'
         },
         controller: 'ChatRoomController'
     };

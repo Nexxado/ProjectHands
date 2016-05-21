@@ -4,6 +4,10 @@ angular.module('ProjectHands')
 
         var baseUrl = '/api/database';
 
+        /**
+         * Convenience Service - FOR DEVELOPMENT PURPOSES ONLY!!!
+         * TODO This file will be deleted in production
+         */
     
         /**
          * Remove a document from the database

@@ -96,7 +96,9 @@ io.on("connection", function (socket) {
     /*************************/
     /***** Chat Messages *****/
     /*************************/
-    socket.on('message', function(message, room) {
+    socket.on('message', function(data) {
+        var room = data.room;
+        var message = data.message;
 
         if(room && room !== '') {
             socket.broadcast.to(room).emit('message', message);
@@ -106,7 +108,7 @@ io.on("connection", function (socket) {
 
         //Saving message to chat history
         mongoUtils.update(chatsCollection,
-                         {"_id": room}, 
+                         {_id: room},
                          {$push: {"messages": message}}, 
                          {upsert: true}, 
                          function(error, result) {
