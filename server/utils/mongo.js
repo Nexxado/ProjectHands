@@ -8,9 +8,26 @@
 
 
 var MongoClient = require('mongodb').MongoClient;
+var debug = require('debug')('mongoUtils');
+var COLLECTIONS = require('../../config.json').COLLECTIONS;
 var _db;
 
-var debug = require('debug')('mongoUtils');
+function ensureConstraints() {
+
+    _db.collection(COLLECTIONS.SIGNUPS).ensureIndex({createdAt: 1},
+        {expireAfterSeconds: 86400}, // 24 hours
+        function (error, indexName) {
+            debug('SignUp Expire indexName', indexName);
+            debug('SignUp Expire error', error);
+        });
+
+    _db.collection(COLLECTIONS.USERS).ensureIndex({realID: 1, email: 1},
+        {unique: true, sparse: true},
+        function (error, indexName) {
+            debug('Users indexName', indexName);
+            debug('Users error', error);
+        });
+}
 
 
 module.exports = {
@@ -25,6 +42,7 @@ module.exports = {
             }
             debug("connected to Mongo");
             _db = db;
+            ensureConstraints();
         });
     },
 

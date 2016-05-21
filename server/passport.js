@@ -42,7 +42,10 @@ module.exports = function (passport) {
         };
         
         mongoUtils.query(USERS, query, function(error, result) {
-            
+
+            if(!result || !result[0]) //User not found - Terminate session.
+                return done(error, false);
+
             var user = result[0];
             debug('deserializeUser query error', error);
             debug('deserializeUser query user', user);
@@ -130,8 +133,6 @@ module.exports = function (passport) {
 
                     return done(null, user);
                 });
-                //TODO add new user to signups
-                //let user add details like id, before adding to permanent database
             }
         });
     }));
@@ -196,8 +197,6 @@ module.exports = function (passport) {
 
                     return done(null, user);
                 });
-                //TODO add new user to signups
-                //let user add details like id, before adding to permanent database
             }
         });
 

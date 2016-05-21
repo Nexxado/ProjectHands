@@ -162,6 +162,7 @@ router.get('/activation/:token', function (request, response) {
     jwt.verify(request.params.token, serverSecret, {algorithm: 'HS512'}, function (error, decoded) {
         delete decoded.createdAt;
         delete decoded.iat;
+        delete decoded.exp;
         debug('activation error', error);
         debug('activation decoded', decoded);
 
@@ -170,6 +171,7 @@ router.get('/activation/:token', function (request, response) {
 
         authUtils.activateAccount(decoded, function (error, result) {
             if (error) {
+                debug('activation error', error);
                 if (error.errmsg.indexOf('duplicate') !== -1)
                     return response.redirect(encodeURI('/result/error/account already activated'));
 

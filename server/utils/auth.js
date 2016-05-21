@@ -70,21 +70,21 @@ module.exports = {
             return callback({errMessage: "Invalid ID"}, null);
 
         //Set TTL on collection's documents with field "createdAt"
-        mongoUtils.getCollection(COLLECTIONS.SIGNUPS).ensureIndex({createdAt: 1},
-            {expireAfterSeconds: 86400}, // 24 hours
-            function (error, indexName) {
-                debug('ensureIndex indexName', indexName);
-                debug('ensureIndex error', error);
-            });
+        // mongoUtils.getCollection(COLLECTIONS.SIGNUPS).ensureIndex({createdAt: 1},
+        //     {expireAfterSeconds: 86400}, // 24 hours
+        //     function (error, indexName) {
+        //         debug('ensureIndex indexName', indexName);
+        //         debug('ensureIndex error', error);
+        //     });
 
 
         //Check if user already exists
-        mongoUtils.query(COLLECTIONS.USERS, {email: user.email}, function (error, result) {
+        mongoUtils.query(COLLECTIONS.USERS, {$or: [{email: user.email}, {realID: user.realID}]}, function (error, result) {
             if (result && result.length)
                 return callback({errMessage: "Account Already Exists"}, null);
 
             //Check if user already signed up
-            mongoUtils.query(COLLECTIONS.SIGNUPS, {email: user.email}, function (error, result) {
+            mongoUtils.query(COLLECTIONS.SIGNUPS, {$or: [{email: user.email}, {realID: user.realID}]}, function (error, result) {
                 if (result && result.length)
                     return callback({errMessage: "Account Already Signed up"}, null);
 
