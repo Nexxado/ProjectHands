@@ -206,17 +206,6 @@ router.get('/authenticate/:action', ensureAuthenticated, function (request, resp
 
 
 /**
- * Middleware - Make sure user is logged in
- */
-function ensureAuthenticated(request, response, next) {
-    if (request.isAuthenticated())
-        return next();
-
-    return writeToClient(response, null, "Error: User is not logged in", HttpStatus.UNAUTHORIZED);
-}
-
-
-/**
  * Change a user role - can only be invoked by an admin user.
  */
 router.post('/assignrole', ensureAuthenticated, function (request, response) {
@@ -321,5 +310,16 @@ router.get('/reset/:token', function (request, response) {
         });
     });
 });
+
+
+/**
+ * Middleware - Make sure user is logged in
+ */
+function ensureAuthenticated(request, response, next) {
+    if (request.isAuthenticated())
+        return next();
+
+    return writeToClient(response, null, "Error: User is not logged in", HttpStatus.UNAUTHORIZED);
+}
 
 module.exports = router;

@@ -5,7 +5,7 @@ var debug = require('debug')('routes/database');
 var writeToClient = require('../utils/writeToClient');
 
 
-router.post("/insert", function (request, response) {
+router.post("/insert", ensureAuthenticated, function (request, response) {
 
     debug('insert col', request.body.collection);
     debug('insert data', request.body.data);
@@ -29,7 +29,7 @@ router.post("/insert", function (request, response) {
 /**
  * http://localhost:8080/api/delete/users?query={%22username%22:%22test%22}
  * */
-router.delete("/delete/:collection&:query", function (request, response) {
+router.delete("/delete/:collection&:query", ensureAuthenticated, function (request, response) {
     try {
         debug('delete col', request.params.collection);
         debug('delete data', request.params.query);
@@ -52,7 +52,7 @@ router.delete("/delete/:collection&:query", function (request, response) {
 });
 
 
-router.post("/update", function (request, response) {
+router.post("/update", ensureAuthenticated, function (request, response) {
     debug(request.body.collection);
     debug(request.body.query);
     debug(request.body.data);
@@ -80,7 +80,7 @@ router.post("/update", function (request, response) {
 });
 
 // Example : http://localhost:8080/database/query/users&{"username":"ihab"}
-router.get("/query/:collection&:query", function (request, response) {
+router.get("/query/:collection&:query", ensureAuthenticated, function (request, response) {
     try {
         debug('query col', request.params.collection);
         debug('query query', request.params.query);
@@ -102,5 +102,15 @@ router.get("/query/:collection&:query", function (request, response) {
     }
 
 });
+
+/**
+ * Middleware - Make sure user is logged in
+ */
+function ensureAuthenticated(request, response, next) {
+    if (request.isAuthenticated())
+        return next();
+
+    return writeToClient(response, null, "Error: User is not logged in", HttpStatus.UNAUTHORIZED);
+}
 
 module.exports = router;
