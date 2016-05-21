@@ -21,7 +21,7 @@ module.exports = {
         MongoClient.connect(url, function (err, db) {
             if (err) {
                 debug("Error connecting to Mongo: ", err);
-                return;
+                process.exit();
             }
             debug("connected to Mongo");
             _db = db;
