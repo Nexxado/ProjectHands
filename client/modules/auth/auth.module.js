@@ -79,11 +79,14 @@ angular.module('ProjectHands.auth', [])
          */
         $rootScope.alreadyLoggedIn = function() {
             var deferred = $q.defer();
-            if(typeof $rootScope.isLoggedIn === 'undefined' || $rootScope.isLoggedIn === false)
-                deferred.resolve();
-            else
-                deferred.reject(ROUTE_ERRORS.alreadyLoggedIn);
-            // console.info('alreadyLoggedIn', deferred.promise);
+            AuthService.isLoggedIn().$promise
+                .then(function(result) {
+                    deferred.reject(ROUTE_ERRORS.alreadyLoggedIn);
+                })
+                .catch(function(error) {
+                    deferred.resolve();
+                });
+
             return deferred.promise;
         };
 
