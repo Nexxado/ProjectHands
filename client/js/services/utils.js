@@ -3,7 +3,11 @@ angular.module('ProjectHands')
 .service('UtilsService', function($rootScope, $mdToast) {
 
 
-    //Change date object to HH:MM format
+    /**
+     * Change date object to HH:MM format
+     * @param timestamp {string} : Date Object String
+     * @returns {string}
+     */
     function parseTimestamp(timestamp) {
         var date = new Date(timestamp);
         var minutes = date.getMinutes();

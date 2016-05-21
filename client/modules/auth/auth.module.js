@@ -22,7 +22,9 @@ angular.module('ProjectHands.auth', [])
 
     .constant('ROUTE_ERRORS', {
         alreadyLoggedIn: 'User Already Logged In',
-        notAllowed: 'Not Allowed'
+        notLoggedIn: 'Not Logged In',
+        notAllowed: 'Not Allowed',
+        signupProcessCompleted: 'Sign Up Process Already Completed'
     })
 
     .run(function ($rootScope, $state, AuthService, AUTH_EVENTS, ROUTE_ERRORS, SessionService, UtilsService, $q, ROLES, $timeout) {
@@ -44,7 +46,7 @@ angular.module('ProjectHands.auth', [])
         /**
          * Authenticating user based on role
          * @param   {string} action : The action the user is trying to perform
-         * @returns {promise} A resolved/rejected promise based on authentication
+         * @returns {Function} A resolved/rejected promise based on authentication
          */
         $rootScope.authenticate = function (action) {
             console.log('Authenticating action', action);
@@ -60,11 +62,9 @@ angular.module('ProjectHands.auth', [])
                 .catch(function (error) {
                     console.log('authenticate error', error);
                     if(error.status === 401)
-                        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+                        deferred.reject(ROUTE_ERRORS.notLoggedIn);
                     else if(error.status === 403)
-                        $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-
-                    deferred.reject(ROUTE_ERRORS.notAllowed);
+                        deferred.reject(ROUTE_ERRORS.notAllowed);
                 });
 
             return deferred.promise;
@@ -73,11 +73,11 @@ angular.module('ProjectHands.auth', [])
 
         /**
          * Check if user is already logged in
-         * @returns {promise} A resolved/rejected promise
+         * @returns {Function} A resolved/rejected promise
          */
         $rootScope.alreadyLoggedIn = function() {
             var deferred = $q.defer();
-            if($rootScope.isLoggedIn === false)
+            if(typeof $rootScope.isLoggedIn === 'undefined' || $rootScope.isLoggedIn === false)
                 deferred.resolve();
             else
                 deferred.reject(ROUTE_ERRORS.alreadyLoggedIn);
@@ -120,28 +120,38 @@ angular.module('ProjectHands.auth', [])
                 });
         });
 
-        $rootScope.$on(AUTH_EVENTS.notAuthorized, function (event) {
-//        $state.go('login');
-            UtilsService.makeToast('אין מספיק הרשאות', $rootScope.rootToastAnchor, 'top right');
+        $rootScope.$on(AUTH_EVENTS.notAuthorized, function (event, error) {
+            console.info('AUTH_EVENTS.notAuthorized');
+            $state.go('home')
+                .then(function(){
+                    UtilsService.makeToast(error, $rootScope.rootToastAnchor, 'top right');
+                });
         });
 
-        $rootScope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
+        $rootScope.$on(AUTH_EVENTS.notAuthenticated, function(event, error) {
             console.info('AUTH_EVENTS.notAuthenticated');
             SessionService.clearSession();
             $state.go('login')
                 .then(function() {
-                    UtilsService.makeToast('Please login', $rootScope.rootToastAnchor, 'top right');
+                    UtilsService.makeToast(error, $rootScope.rootToastAnchor, 'top right');
                 });
         });
 
         $rootScope.$on('$stateChangeError', function(event) {
             console.info('stateChangeError', arguments);
             var error = arguments[5];
-            if(error === 'Already Logged In')
-                $state.go('home')
-                    .then(function(){
-                        UtilsService.makeToast('אין מספיק הרשאות', $rootScope.rootToastAnchor, 'top right');
-                    })
+            if(error) {
+                switch(error) {
+                    case ROUTE_ERRORS.notAllowed:
+                    case ROUTE_ERRORS.alreadyLoggedIn:
+                    case ROUTE_ERRORS.signupProcessCompleted:
+                        $rootScope.$broadcast(AUTH_EVENTS.notAuthorized, error);
+                        break;
+                    case ROUTE_ERRORS.notLoggedIn:
+                        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated, error);
+                        break;
+                }
+            }
         })
 
     });

@@ -91,6 +91,9 @@ router.get('/logout', ensureAuthenticated, function (request, response) {
  */
 router.post("/signup", function (request, response) {
 
+    if(request.isAuthenticated())
+        return writeToClient(response, null, "User Already Logged In", HttpStatus.BAD_REQUEST);
+
     try {
         var user = JSON.parse(request.body.user);
         if (!user || !user.email || !user.password)
@@ -105,9 +108,9 @@ router.post("/signup", function (request, response) {
 
             debug('signup result', result);
             debug('signup error', error);
-            if (error) { // user data inserted successfully
+            if (error) {
                 debug('signup sending error');
-                return writeToClient(response, null, error, HttpStatus.BAD_REQUEST);
+                return writeToClient(response, null, error, HttpStatus.INTERNAL_SERVER_ERROR);
 
             }
             writeToClient(response, {success: true});
@@ -129,17 +132,20 @@ router.post('/signup_oauth', ensureAuthenticated, function (request, response) {
 
     if (!request.body.info)
         return writeToClient(response, null, "Please Provide all required fields", HttpStatus.BAD_REQUEST);
-    if(!request.user.signup_complete || !request.user.signup_complete === true)
+    if(typeof request.user.signup_complete === 'undefined' || request.user.signup_complete === true)
         return writeToClient(response, null, "Sign-Up Process has already been completed", HttpStatus.BAD_REQUEST);
 
 
     var info = JSON.parse(request.body.info);
     authUtils.oauthSignup(request.user, info, function (error, result) {
 
+        if(error)
+            return writeToClient(response, null, error, HttpStatus.INTERNAL_SERVER_ERROR);
+
         debug('oauthSignup error', error);
         debug('oauthSignup result', result.result);
         debug('oauthSignup user', request.user);
-        response.sendStatus(200);
+        writeToClient(response, {success: true, message: "Sign-Up Process Completed Successfully"});
     });
 
 });

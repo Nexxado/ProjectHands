@@ -29,14 +29,12 @@ angular.module('ProjectHands.auth')
         controller: 'OAuthSignupController',
         templateUrl: 'modules/auth/templates/oauthSignup.html',
         resolve: {
-            signup_complete: function($rootScope, $q) {
+            signup_complete: function($rootScope, $q, ROUTE_ERRORS) {
                 var deferred = $q.defer();
                 if(typeof $rootScope.user.signup_complete === 'boolean' && $rootScope.user.signup_complete === false)
-                    deferred.resolve('OK');
-                else {
-                    deferred.reject('Sign Up Process Already Completed');
-                    $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-                }
+                    deferred.resolve();
+                else
+                    deferred.reject(ROUTE_ERRORS.signupProcessCompleted);
 
                 // console.info('signup_complete', deferred.promise);
                 return deferred.promise;
