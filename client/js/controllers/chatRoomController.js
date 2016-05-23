@@ -11,9 +11,11 @@ angular.module('ProjectHands')
 //    $scope.room = $attrs.room;
 //    $scope.user = $attrs.user;
 //    console.log('chat-room user', $scope.user);
-   console.log('chat-room room', $scope.room);
+   console.log('chat-room', $scope.room);
 
     $scope.history = [];
+    $scope.users = [];
+    $scope.showUsersList = false;
     $scope.message = {
         user: $scope.user.name,
         content: '',
@@ -21,6 +23,19 @@ angular.module('ProjectHands')
         class: class_message_self,
         align: 'end'
     };
+
+    socketio.on('message', function (message) {
+        $scope.$apply(function () {
+            message.dir = isHebrew(message.user) ? 'rtl' : 'ltr';
+            message.class = class_message_others;
+            $scope.history.push(parseTimestamp(message));
+        });
+    });
+
+    socketio.on('online-users', function (users) {
+        console.log('online-users', $scope.room, users);
+        $scope.users = users;
+    });
 
     socketio.emit('room.join', $scope.room);
     getChatHistory();
@@ -49,13 +64,7 @@ angular.module('ProjectHands')
         $scope.message.content = '';
     };
 
-    socketio.on('message', function (message) {
-        $scope.$apply(function () {
-            message.dir = isHebrew(message.user) ? 'rtl' : 'ltr';
-            message.class = class_message_others;
-            $scope.history.push(parseTimestamp(message));
-        });
-    });
+    
 
 
     //Change date object to HH:MM format

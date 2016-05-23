@@ -39,15 +39,15 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     /********************************************/
     /***** Application Wide Event Listeners *****/
     /********************************************/
-    $rootScope.initChat = function() {
-        console.info('INIT CHAT');
-        socketio.on('online-users', function (data) {
-            console.log('online-users', data.room, data.users);
-            //TODO update online users per room
-        });
-
-        //TODO Init chat here!!!
-    };
+    // $rootScope.initChat = function() {
+    //     console.info('INIT CHAT');
+    //     socketio.on('online-users', function (data) {
+    //         console.log('online-users', data.room, data.users);
+    //         //TODO update online users per room
+    //     });
+    //
+    //     //TODO Init chat here!!!
+    // };
 
 
     /*************************/

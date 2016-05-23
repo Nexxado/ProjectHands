@@ -1,43 +1,53 @@
-<md-content>
-
-    <div layout="column">
-<!--        <h1>Room: {{ room | capitalize }}</h1>-->
-        <md-list class="chat-message-list">
-            <md-list-item layout-align="{{ message.align }}" ng-repeat="message in history" class="chat-message-wrapper">
-                <div class="md-list-item-text chat-message-text" ng-class="message.class" layout="column">
-                    <div flex>
+<md-content class="chat-room">
+    <div layout="row">
+        <div class="chat-container" layout="column" flex>
+            <!--        <h1>Room: {{ room | capitalize }}</h1>-->
+            <md-list class="chat-message-list">
+                <md-list-item layout-align="{{ message.align }}" ng-repeat="message in history"
+                              class="chat-message-wrapper">
+                    <div class="md-list-item-text chat-message-text" ng-class="message.class" layout="column">
+                        <div flex>
                         <span class="chat-message-user center" ng-show="showUsername(message, $index)">
                             {{ message.user }}
                             <hr class="chat-user-divider"/>
                         </span>
-                        <span class="chat-message-content">{{ message.content }}</span>
-                        <br/>
-                        <span class="chat-timestamp">{{ message.timestamp }}</span>
+                            <span class="chat-message-content">{{ message.content }}</span>
+                            <br/>
+                            <span class="chat-timestamp">{{ message.timestamp }}</span>
+                        </div>
                     </div>
-                </div>
-            </md-list-item>
-        </md-list>
-        <md-divider class="chat-divider"></md-divider>
-        <div class="chat-input-wrapper">
-            <form name="ChatMessageForm" ng-submit="sendMessage()" novalidate layout="row" layout-align="center center" layout-padding>
-                <div>
-                    <md-button type="submit" class="md-accent">
-                        <md-icon class="material-icons rtl">send</md-icon>
+                </md-list-item>
+            </md-list>
+            <md-divider class="chat-divider"></md-divider>
+            <div class="chat-input-wrapper">
+                <form name="ChatMessageForm" ng-submit="sendMessage()" novalidate layout="row"
+                      layout-align="center center" layout-padding>
+                    <div>
+                        <md-button type="submit" class="md-accent">
+                            <md-icon class="material-icons rtl">send</md-icon>
+                        </md-button>
+                    </div>
+                    <div layout="row" flex>
+                        <md-input-container flex class="md-icon-float md-block rtl">
+                            <label>כתוב הודעה</label>
+                            <input name="message" type="text" ng-model="message.content" required/>
+                            <div ng-messages="ChatMessageForm.message.$error">
+                                <div ng-message="required">
+                                    שדה חובה
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </form>
+                <div class="chat-buttons">
+                    <md-button ng-click="showUsersList = !showUsersList" class="md-primary">
+                        <md-icon class="material-icons">perm_identity</md-icon>
                     </md-button>
                 </div>
-                <div layout="row" flex>
-                    <md-input-container flex class="md-icon-float md-block rtl">
-                        <label>כתוב הודעה</label>
-                        <input name="message" type="text" ng-model="message.content" required />
-                        <div ng-messages="ChatMessageForm.message.$error">
-                            <div ng-message="required">
-                                שדה חובה
-                            </div>
-                        </div>
-                    </md-input-container>
-                </div>
-            </form>
+            </div>
+        </div>
+        <div class="user-list toggle-slide-right" layout="column" flex="20" ng-show="showUsersList">
+            <div class="user" ng-repeat="user in users">{{ user }}</div>
         </div>
     </div>
-
 </md-content>

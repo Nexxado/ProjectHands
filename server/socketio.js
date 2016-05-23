@@ -23,8 +23,10 @@ io.on("connection", function (socket) {
         for(var room in rooms) {
             var index = rooms[room].indexOf(name);
 
-            if(index > -1)
+            if(index > -1) {
                 rooms[room].splice(index, 1);
+                io.sockets.in(room).emit('online-users', rooms[room]);
+            }
         }
     }
 
@@ -53,8 +55,9 @@ io.on("connection", function (socket) {
         // debug('peopleOnline', peopleOnline);
         // debug('rooms', rooms);
 
-        socket.join('notifications-' + user.role); //Join notification-role room.
-        socket.emit('online-users', {room: defaultRoom, users: rooms[defaultRoom]});
+        // socket.join('notifications-' + user.role); //Join notification-role room.
+        // socket.emit('online-users', {room: defaultRoom, users: rooms[defaultRoom]});
+        io.sockets.in(defaultRoom).emit('online-users', rooms[defaultRoom]);
         io.emit('notification', {message: user.name + ' Logged In', timestamp: new Date().toDateString()}); //FIXME Notification Testing
     });
 
@@ -79,19 +82,19 @@ io.on("connection", function (socket) {
     });
 
 
-    //Notification to all users of specified role and higher.
-    socket.on('notification-role', function(role, message) {
-
-        var index = ROLES_HIERARCHY.indexOf(role);
-        if(index < 0) {
-            debug('ERROR: notification-role - invalid role');
-            return;
-        }
-
-        for(var i = index; i < ROLES_HIERARCHY.length; i++) {
-            socket.broadcast.to('notification-' + ROLES_HIERARCHY[i]).emit('notification', message);
-        }
-    });
+    // //Notification to all users of specified role and higher.
+    // socket.on('notification-role', function(role, message) {
+    //
+    //     var index = ROLES_HIERARCHY.indexOf(role);
+    //     if(index < 0) {
+    //         debug('ERROR: notification-role - invalid role');
+    //         return;
+    //     }
+    //
+    //     for(var i = index; i < ROLES_HIERARCHY.length; i++) {
+    //         socket.broadcast.to('notification-' + ROLES_HIERARCHY[i]).emit('notification', message);
+    //     }
+    // });
 
     /*************************/
     /***** Chat Messages *****/
@@ -130,7 +133,8 @@ io.on("connection", function (socket) {
 
         rooms[room].push(peopleOnline[socket.id].name);
         socket.join(room);
-        socket.emit('online-users', {room: room, users: rooms[room]});
+        // socket.emit('online-users', {room: room, users: rooms[room]});
+        io.sockets.in(room).emit('online-users', rooms[room]);
         debug(peopleOnline[socket.id].name + ' joined', room);
     });
 
@@ -141,7 +145,8 @@ io.on("connection", function (socket) {
 
         rooms[room].splice(rooms[room].indexOf(peopleOnline[socket.id].name), 1);
         socket.leave(room);
-        socket.emit('online-users', {room: room, users: rooms[room]});
+        // socket.emit('online-users', {room: room, users: rooms[room]});
+        io.sockets.in(room).emit('online-users', rooms[room]);
         debug(peopleOnline[socket.id].name + ' left', room);
     });
 

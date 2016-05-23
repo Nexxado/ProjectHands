@@ -1,6 +1,37 @@
+.chat-room {
+    overflow-x: hidden;
+}
+
+.chat-room .chat-input-wrapper .chat-buttons {
+    position: absolute;
+    top: -15px;
+    right: 0;
+}
+
+.chat-room .chat-input-wrapper .chat-buttons button {
+    min-width: 0;
+}
+
+.chat-room .chat-container {
+    position: relative;
+}
+
+.chat-room .user-list {
+    text-align: center;
+    font-size: 1.1rem;
+    border-left: 1px solid rgba(0,0,0,0.1);
+}
+
+.chat-room .user-list .user {
+    margin: 10px 5px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding-bottom: 5px;
+}
+
 .chat-message-list {
     overflow: auto;
-    height: 450px;
+    /*height: 450px;*/
+    height: 50vh;
 }
 
 md-list-item.chat-message-wrapper {

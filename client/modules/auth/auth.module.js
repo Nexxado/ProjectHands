@@ -106,7 +106,7 @@ angular.module('ProjectHands.auth', [])
 
             $timeout(function () {
                 $rootScope.initNotifications();
-                $rootScope.initChat();
+                // $rootScope.initChat();
             });
 
             if ($state.is('login'))
