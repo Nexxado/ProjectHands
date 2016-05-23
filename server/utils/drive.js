@@ -151,8 +151,8 @@ function uploadFile(filePath, album_key) {
             mimeType: mimeType,
             body: fs.createReadStream(filePath) // read streams are awesome!
         }
-    }, function(err, file) {
-        if(err) {
+    }, function (err, file) {
+        if (err) {
             // Handle error
             console.log(err);
         } else {
@@ -166,9 +166,7 @@ function uploadFile(filePath, album_key) {
     });
 }
 
-function setFileShardAnyone(fileId){
-
-    // var fileId = '1sTWaJ_j7PkjzaBWtNc3IzovK5hQf21FbOw9yLeeLPNQ';
+function setFileShardAnyone(fileId) {
     var drive = google.drive({version: 'v3', auth: myAuth});
     drive.permissions.create({
         resource: {
@@ -176,13 +174,15 @@ function setFileShardAnyone(fileId){
             'role': 'reader'
         },
         fileId: fileId,
-        fields: 'id',
-    }, function(err, res) {
+        fields: 'id'
+    }, function (err, res) {
         if (err) {
             // Handle error
             console.log(err);
         } else {
-            console.log('Permission ID: ',  res.id)
+            // downloadFile(fileId);
+            printFileMetadata(fileId);
+            console.log('Permission ID: ', res.id);
             drive.permissions.create({
                 resource: {
                     'type': 'anyone',
@@ -190,13 +190,15 @@ function setFileShardAnyone(fileId){
                     // 'domain': 'appsrocks.com'
                 },
                 fileId: fileId,
-                fields: 'id',
-            }, function(err, res) {
+                fields: 'id'
+            }, function (err, res) {
                 if (err) {
                     // Handle error
                     console.log(err);
                 } else {
-                    console.log('Permission ID: ',  res.id)
+                    // console.log('Permission ID: ', res.id);
+                    console.log('Permission ID: ', res);
+                    // console.log('webContentLink: ', res.webContentLink);
                 }
             });
         }
@@ -221,23 +223,45 @@ function setFileShardAnyone(fileId){
     //     console.log('error:', err, 'updated:', response.shared);
     // });
 }
+/**
+ *
+ * @param fileId google drive file id
+ */
+function printFileMetadata(fileId) {
+    var drive = google.drive({version: 'v3', auth: myAuth});
+
+    drive.files.get({
+        fileId: fileId,
+        fields: ['webContentLink']
+    }, function (err, res) {
+        if (err) {
+            // Handle error
+            console.log(err);
+        } else {
+            //when file created file id saved to list in the  album_key;
+            console.log('res: ', res);
+            console.log('description: ', res.description);
+
+        }
+    });
+}
 
 
 function insertFileIdToDb(fileId, album_key) {
     mongoUtils.insert(COLLECTIONS.IMAGES, {album_key: album_key, file_id: fileId}, function (error, result) {
-        if(error)
+        if (error)
             console.log(err);
         else
             console.log(result);
-        
+
         // getImagesCollection();
         getAlbumImages('asd');
     });
 }
 
 function getImagesCollection() {
-    mongoUtils.query(COLLECTIONS.IMAGES,{} ,function (error, result) {
-        if(error)
+    mongoUtils.query(COLLECTIONS.IMAGES, {}, function (error, result) {
+        if (error)
             console.log(err);
         else
             console.log(result);
@@ -246,8 +270,8 @@ function getImagesCollection() {
 
 function getAlbumImages(albumKey) {
     console.log('getAlbumImages(albumKey) ' + albumKey);
-    mongoUtils.query(COLLECTIONS.IMAGES,{album_key: albumKey} ,function (error, result) {
-        if(error)
+    mongoUtils.query(COLLECTIONS.IMAGES, {album_key: albumKey}, function (error, result) {
+        if (error)
             console.log(err);
         else
             console.log(result);
