@@ -134,39 +134,69 @@ function initAuth(auth) {
     //     }
     // });
 }
+/**
+ * make link to by direct and nod download, remove suffix 'export=download'
+ */
+function fixDirectLink(link) {
+    return link.split('export=download')[0];
+}
 
-function uploadFile(filePath, album_key) {
+/**
+ * Main routin for uploding file upload + set public + return web content link
+ */
+function uploadToDrive(filePath, album_key, callback) {
+    uploadFileToDrive(filePath, album_key, function (err, file) {
+        if (err) {
+            console.log('uploadFileToDrive: ' + err);
+        } else {
+            setFileShardToAnyone(file.id, function (err, res) {
+                if (err) {
+                    console.log('setFileShardToAnyone: ' + err);
+                } else {
+                    getFileWebContentLink(file.id, function (err, res) {
+                        if (err) {
+                            console.log('getFileWebContentLink: ' + err);
+                        } else {
+                            console.log('getFileWebContentLink res: ', res.webContentLink);
+                            callback(err, fixDirectLink(res.webContentLink));
+                        }
+                    });
+
+                }
+            });
+        }
+    })
+}
+
+/**
+ * @param callback : args (err, file) file.id holds the new file id
+ * @param filePath : path in the file system for streaming the file to google drive
+ * @param album_key : for saving the file in the db
+ */
+function uploadFileToDrive(filePath, album_key, callback) {
+
     var fs = require('fs');
     var drive = google.drive({version: 'v3', auth: myAuth});
     var mimeType = mime.lookup(filePath);
 
-    // createFolder(filePath, auth);
-
     drive.files.create({
-        resource: {
-            name: filePath,
-            mimeType: mimeType
-        },
-        media: {
-            mimeType: mimeType,
-            body: fs.createReadStream(filePath) // read streams are awesome!
-        }
-    }, function (err, file) {
-        if (err) {
-            // Handle error
-            console.log(err);
-        } else {
-            //when file created file id saved to list in the  album_key;
-            console.log('file created, File Id: ', file.id);
-            console.log('web view link: ', file.shared);
-            // printFile(file.id, drive);
-            setFileShardAnyone(file.id);
-            // insertFileIdToDb(file.id, album_key);
-        }
-    });
+            resource: {
+                name: filePath,
+                mimeType: mimeType
+            },
+            media: {
+                mimeType: mimeType,
+                body: fs.createReadStream(filePath)
+            }
+        }, callback);
 }
 
-function setFileShardAnyone(fileId) {
+/**
+ * Set file in google drive to by public for everyone with a link
+ * @param callback with (err, res) if file shard  success err=null
+ * @param fileId
+ */
+function setFileShardToAnyone(fileId, callback) {
     var drive = google.drive({version: 'v3', auth: myAuth});
     drive.permissions.create({
         resource: {
@@ -175,75 +205,19 @@ function setFileShardAnyone(fileId) {
         },
         fileId: fileId,
         fields: 'id'
-    }, function (err, res) {
-        if (err) {
-            // Handle error
-            console.log(err);
-        } else {
-            // downloadFile(fileId);
-            printFileMetadata(fileId);
-            console.log('Permission ID: ', res.id);
-            drive.permissions.create({
-                resource: {
-                    'type': 'anyone',
-                    'role': 'reader'
-                    // 'domain': 'appsrocks.com'
-                },
-                fileId: fileId,
-                fields: 'id'
-            }, function (err, res) {
-                if (err) {
-                    // Handle error
-                    console.log(err);
-                } else {
-                    // console.log('Permission ID: ', res.id);
-                    console.log('Permission ID: ', res);
-                    // console.log('webContentLink: ', res.webContentLink);
-                }
-            });
-        }
-    });
-
-
-    // var drive = google.drive({version: 'v3', auth: myAuth});
-    // // update example with metadata update
-    // drive.files.update({
-    //     fileId: fileId,
-    //     resource: {
-    //         title: 'Updated title',
-    //         shared: true
-    //     },
-    //     media: {
-    //         mimeType: 'text/plain',
-    //         body: 'Hello World updated with metadata'
-    //     },
-    //     auth: myAuth
-    // }, function (err, response) {
-    //     console.log('error:', err, 'updated:', response.id);
-    //     console.log('error:', err, 'updated:', response.shared);
-    // });
+    }, callback);
 }
+
 /**
- *
+ * @param callback : with (err, res) and res.webContentLink for getting the link
  * @param fileId google drive file id
  */
-function printFileMetadata(fileId) {
+function getFileWebContentLink(fileId, callback) {
     var drive = google.drive({version: 'v3', auth: myAuth});
-
     drive.files.get({
         fileId: fileId,
         fields: ['webContentLink']
-    }, function (err, res) {
-        if (err) {
-            // Handle error
-            console.log(err);
-        } else {
-            //when file created file id saved to list in the  album_key;
-            console.log('res: ', res);
-            console.log('description: ', res.description);
-
-        }
-    });
+    }, callback);
 }
 
 
@@ -298,7 +272,8 @@ function createFolder(name, auth) {
 }
 
 module.exports = {
-    uploadFile: function (file, album_key) {
-        uploadFile(file, album_key);
+    uploadFile: function (filePath, album_key, callback) {
+        // uploadFileToDrive(filePath, album_key, callback);
+        uploadToDrive(filePath, album_key, callback);
     }
 };

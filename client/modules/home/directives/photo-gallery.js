@@ -29,7 +29,7 @@ angular.module('ProjectHands.home')
                 //     {image: 'assets/img/home/jobs5.jpg', description: 'Image 04'}
                 // ];
                 
-                // $scope.uploadFile = function(){
+                // $scope.uploadFileToDrive = function(){
                 //     var file = $scope.myFile;
                 //
                 //     console.log('file is ' );
