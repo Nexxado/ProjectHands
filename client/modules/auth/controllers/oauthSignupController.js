@@ -7,7 +7,7 @@ angular.module('ProjectHands.auth')
     .controller('OAuthSignupController', function ($scope, AuthService, UtilsService, $state) {
 
         $scope.info = {
-            realID: ''
+            phone: ''
         };
 
         $scope.toastAnchor = 'form';
@@ -17,10 +17,10 @@ angular.module('ProjectHands.auth')
             if ($scope.OAuthSignupForm.$invalid)
                 return;
 
-            if (!AuthService.isLegalID($scope.info.realID)) {
-                UtilsService.makeToast('תעודת זהות אינה חוקית', $scope.toastAnchor, 'bottom right');
-                return;
-            }
+            // if (!AuthService.isLegalID($scope.info.realID)) {
+            //     UtilsService.makeToast('תעודת זהות אינה חוקית', $scope.toastAnchor, 'bottom right');
+            //     return;
+            // }
 
             AuthService.oauthSignup($scope.info).$promise
                 .then(function (result) {

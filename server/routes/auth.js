@@ -96,7 +96,7 @@ router.post("/signup", function (req, res) {
 
     try {
         var user = JSON.parse(req.body.user);
-        if (!user || !user.email || !user.password)
+        if (!user || !user.email || !user.password || !user.name || !user.phone)
             return writeToClient(res, null, "Please Provide all required fields", HttpStatus.BAD_REQUEST);
 
         user.role = ROLES.ADMIN; //FIXME change initial role to ROLES.GUEST;

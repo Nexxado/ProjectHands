@@ -28,21 +28,18 @@
             </div>
         </md-input-container>
         <md-input-container class="md-icon-float md-block rtl">
-            <label>תעודת זהות</label>
-            <input type="text" ng-pattern="/^[0-9]+$/" name="id" ng-model="user.realID" minlength="9" maxlength="9" md-maxlength="9" required />
-            <md-icon class="material-icons">perm_identity</md-icon>
-            <div ng-messages="SignupForm.id.$error">
+            <label>מס' טלפון</label>
+            <input type="text" ng-pattern="/^(0[2-9]\d{7,8})$/" name="phone" ng-model="user.phone" minlength="9" maxlength="10" required />
+            <md-icon class="material-icons">phone</md-icon>
+            <div ng-messages="SignupForm.phone.$error">
                 <div ng-message="required">
                     שדה חובה
                 </div>
-                <div ng-message="maxlength">
-                    דרושים 9 ספרות
-                </div>
                 <div ng-message="minlength">
-                    דרושים 9 ספרות
+                    דרושים לפחות 9 ספרות
                 </div>
                 <div ng-message="pattern">
-                    רק ספרות חוקיות
+                    מספר אינו חוקי
                 </div>
             </div>
         </md-input-container>

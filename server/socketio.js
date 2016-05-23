@@ -5,8 +5,8 @@ var config = require('../config.json');
 var chatsCollection = config.COLLECTIONS.CHATS;
 var mongoUtils = require('./utils/mongo');
 var debug = require('debug')('server/socketio');
-var ROLES = config.ROLES;
-var ROLES_HIERARCHY = Object.keys(ROLES).map(function (key) { return ROLES[key]; }).reverse();
+// var ROLES = config.ROLES;
+// var ROLES_HIERARCHY = Object.keys(ROLES).map(function (key) { return ROLES[key]; }).reverse();
 
 var defaultRoom = 'general';
 var peopleOnline = [];

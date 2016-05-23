@@ -21,7 +21,7 @@ function ensureConstraints() {
             debug('SignUp Expire error', error);
         });
 
-    _db.collection(COLLECTIONS.USERS).ensureIndex({realID: 1, email: 1},
+    _db.collection(COLLECTIONS.USERS).ensureIndex({phone: 1, email: 1},
         {unique: true, sparse: true},
         function (error, indexName) {
             debug('Users indexName', indexName);
@@ -32,6 +32,7 @@ function ensureConstraints() {
 
 module.exports = {
     /**
+     * Connect to MongoDB
      * @param url {string}
      */
     connect: function (url) {
@@ -52,8 +53,6 @@ module.exports = {
      * */
     getCollection: function (collectionName) {
         return _db.collection(collectionName);
-
-
     },
 
     /**

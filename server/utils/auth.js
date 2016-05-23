@@ -66,8 +66,8 @@ module.exports = {
             return callback({errMessage: "Invalid Email"}, null);
         if (!validate.password(user.password))
             return callback({errMessage: "Invalid Password"}, null);
-        if (!validate.id(user.realID))
-            return callback({errMessage: "Invalid ID"}, null);
+        if (!validate.phone(user.phone))
+            return callback({errMessage: "Invalid Phone Number"}, null);
 
         //Set TTL on collection's documents with field "createdAt"
         // mongoUtils.getCollection(COLLECTIONS.SIGNUPS).ensureIndex({createdAt: 1},
@@ -79,12 +79,12 @@ module.exports = {
 
 
         //Check if user already exists
-        mongoUtils.query(COLLECTIONS.USERS, {$or: [{email: user.email}, {realID: user.realID}]}, function (error, result) {
+        mongoUtils.query(COLLECTIONS.USERS, {$or: [{email: user.email}, {phone: user.phone}]}, function (error, result) {
             if (result && result.length)
                 return callback({errMessage: "Account Already Exists"}, null);
 
             //Check if user already signed up
-            mongoUtils.query(COLLECTIONS.SIGNUPS, {$or: [{email: user.email}, {realID: user.realID}]}, function (error, result) {
+            mongoUtils.query(COLLECTIONS.SIGNUPS, {$or: [{email: user.email}, {phone: user.phone}]}, function (error, result) {
                 if (result && result.length)
                     return callback({errMessage: "Account Already Signed up"}, null);
 
