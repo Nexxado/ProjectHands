@@ -159,10 +159,70 @@ function uploadFile(filePath, album_key) {
             //when file created file id saved to list in the  album_key;
             console.log('file created, File Id: ', file.id);
             console.log('web view link: ', file.shared);
+            // printFile(file.id, drive);
+            setFileShardAnyone(file.id);
             // insertFileIdToDb(file.id, album_key);
         }
     });
 }
+
+function setFileShardAnyone(fileId){
+
+    // var fileId = '1sTWaJ_j7PkjzaBWtNc3IzovK5hQf21FbOw9yLeeLPNQ';
+    var drive = google.drive({version: 'v3', auth: myAuth});
+    drive.permissions.create({
+        resource: {
+            'type': 'anyone',
+            'role': 'reader'
+        },
+        fileId: fileId,
+        fields: 'id',
+    }, function(err, res) {
+        if (err) {
+            // Handle error
+            console.log(err);
+        } else {
+            console.log('Permission ID: ',  res.id)
+            drive.permissions.create({
+                resource: {
+                    'type': 'anyone',
+                    'role': 'reader'
+                    // 'domain': 'appsrocks.com'
+                },
+                fileId: fileId,
+                fields: 'id',
+            }, function(err, res) {
+                if (err) {
+                    // Handle error
+                    console.log(err);
+                } else {
+                    console.log('Permission ID: ',  res.id)
+                }
+            });
+        }
+    });
+
+
+    // var drive = google.drive({version: 'v3', auth: myAuth});
+    // // update example with metadata update
+    // drive.files.update({
+    //     fileId: fileId,
+    //     resource: {
+    //         title: 'Updated title',
+    //         shared: true
+    //     },
+    //     media: {
+    //         mimeType: 'text/plain',
+    //         body: 'Hello World updated with metadata'
+    //     },
+    //     auth: myAuth
+    // }, function (err, response) {
+    //     console.log('error:', err, 'updated:', response.id);
+    //     console.log('error:', err, 'updated:', response.shared);
+    // });
+}
+
+
 function insertFileIdToDb(fileId, album_key) {
     mongoUtils.insert(COLLECTIONS.IMAGES, {album_key: album_key, file_id: fileId}, function (error, result) {
         if(error)
