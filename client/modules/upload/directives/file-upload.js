@@ -6,7 +6,9 @@ angular.module('ProjectHands.upload')
             replace: true,
             templateUrl: 'modules/upload/templates/directives/file-upload.html',
             controller: function ($scope, Upload, $timeout) {
-                
+
+                $scope.progress = false;
+
                 $scope.$watch('files', function () {
                     $scope.upload($scope.files);
                 });
@@ -22,6 +24,7 @@ angular.module('ProjectHands.upload')
                         for (var i = 0; i < files.length; i++) {
                             var file = files[i];
                             if (!file.$error) {
+                                $scope.progress = true;
                                 Upload.upload({
                                     url: '/api/upload/uploads',
                                     data: {
@@ -35,6 +38,9 @@ angular.module('ProjectHands.upload')
                                             resp.config.data.file.name +
                                             ', Response: ' + JSON.stringify(resp.data) +
                                             '\n' + $scope.log;
+                                        // $scope.photoSrc = (resp.data).replace(/['"]+/g, '');
+                                        $scope.images = resp.data;
+                                        $scope.progress = false;
                                     });
                                 }, null, function (evt) {
                                     var progressPercentage = parseInt(100.0 *

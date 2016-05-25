@@ -180,15 +180,15 @@ function uploadFileToDrive(filePath, album_key, callback) {
     var mimeType = mime.lookup(filePath);
 
     drive.files.create({
-            resource: {
-                name: filePath,
-                mimeType: mimeType
-            },
-            media: {
-                mimeType: mimeType,
-                body: fs.createReadStream(filePath)
-            }
-        }, callback);
+        resource: {
+            name: filePath,
+            mimeType: mimeType
+        },
+        media: {
+            mimeType: mimeType,
+            body: fs.createReadStream(filePath)
+        }
+    }, callback);
 }
 
 /**
@@ -218,19 +218,6 @@ function getFileWebContentLink(fileId, callback) {
         fileId: fileId,
         fields: ['webContentLink']
     }, callback);
-}
-
-
-function insertFileIdToDb(fileId, album_key) {
-    mongoUtils.insert(COLLECTIONS.IMAGES, {album_key: album_key, file_id: fileId}, function (error, result) {
-        if (error)
-            console.log(err);
-        else
-            console.log(result);
-
-        // getImagesCollection();
-        getAlbumImages('asd');
-    });
 }
 
 function getImagesCollection() {
