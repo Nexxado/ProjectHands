@@ -23,6 +23,13 @@ angular.module('ProjectHands')
     })
 
 
+        .state('status', {
+            url: '/status',
+            templateUrl: 'templates/status.html',
+            controller: 'StatusController'
+        })
+
+
     .state('about', {
         url: '/about',
         templateUrl: 'templates/about/index.html',

@@ -20,7 +20,8 @@
         "TEAMS": "teams",
         "CHATS": "chats",
         "SIGNUPS": "signup_users",
-        "ACTIONS": "actions"
+        "ACTIONS": "actions",
+        "ADMIN": "admin"
     },
     "ROLES": {
         "ADMIN": "admin",
@@ -28,5 +29,9 @@
         "TEAM_LEAD": "teamLead",
         "VOLUNTEER": "volunteer",
         "GUEST": "guest"
+    },
+    "ACL": {
+        "VIEW_DASHBOARD": "acl_view_dashboard",
+        "CHANGE_STATUS": "acl_change_status"
     }
 }

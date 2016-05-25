@@ -1,6 +1,9 @@
 [
 	{
-		action: 'dashboard',
+		action: 'acl_view_dashboard',
 		role: 'volunteer'
+	} , {
+		action: 'acl_change_status',
+		role: 'admin'
 	}
 ]

@@ -20,6 +20,11 @@ angular.module('ProjectHands.auth', [])
         notAuthorized: 'auth-not-authorized'
     })
 
+    .constant('ACL', {
+        VIEW_DASHBOARD: "acl_view_dashboard",
+        CHANGE_STATUS: "acl_change_status"
+    })
+
     .constant('ROUTE_ERRORS', {
         alreadyLoggedIn: 'User Already Logged In',
         notLoggedIn: 'Not Logged In',

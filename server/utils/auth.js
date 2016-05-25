@@ -205,31 +205,7 @@ module.exports = {
         // press the link
         // redirect to change password page
     },
-
-
-    /**
-     * Check if a user is authorized to access a certain route
-     * @param role {string} : The user's role
-     * @param action {string} : The action the user is trying to perform
-     * @param callback {function}
-     * @returns {function} Invoke callback function with appropriate error and result.
-     */
-    isAuthorized: function (role, action, callback) {
-
-        mongoUtils.query(COLLECTIONS.ACTIONS, {action: action}, function (error, result) {
-
-            if (error || !result || result.length !== 1)
-                return callback({message: "Internal Server Error", code: HttpStatus.INTERNAL_SERVER_ERROR}, null);
-
-            if (ROLES_HIERARCHY.indexOf(role) < ROLES_HIERARCHY.indexOf(result[0].role))
-                return callback({message: "Not Allowed", code: HttpStatus.FORBIDDEN}, null);
-
-            return callback(null, {success: true, role: role});
-        });
-
-    },
-
-
+    
     /**
      * Gives a Allowed/NotAllowed for user to login
      * @param email {string}

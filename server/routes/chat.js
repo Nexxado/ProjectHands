@@ -7,9 +7,10 @@ var debug = require('debug')('routes/chat');
 var writeToClient = require('../utils/writeToClient');
 var CHATS = require('../../config.json').COLLECTIONS.CHATS;
 var mongoUtils = require('../utils/mongo');
+var middleware = require('../utils/middleware');
 
 
-router.get('/history/:chatId', ensureAuthenticated, function(req, res) {
+router.get('/history/:chatId', middleware.ensureAuthenticated, function(req, res) {
 
     if(!req.params.chatId)
         return writeToClient(res, null, {errMessage: "Invalid Chat Id"}, HttpStatus.BAD_REQUEST);
@@ -24,16 +25,5 @@ router.get('/history/:chatId', ensureAuthenticated, function(req, res) {
         writeToClient(res, result);
     })
 });
-
-
-/**
- * Middleware - Make sure user is logged in
- */
-function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated())
-        return next();
-
-    return writeToClient(res, null, "Error: User is not logged in", HttpStatus.UNAUTHORIZED);
-}
 
 module.exports = router;

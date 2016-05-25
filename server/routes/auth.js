@@ -7,6 +7,7 @@ var debug = require('debug')('routes/auth');
 var emailUtils = require('../utils/email');
 var writeToClient = require('../utils/writeToClient');
 var config = require('../../config.json');
+var middleware = require('../utils/middleware');
 var serverSecret = process.env.SERVER_SECRET || config.SECRETS.serverSecret;
 var ROLES = config.ROLES;
 
@@ -38,7 +39,7 @@ router.post('/login', passport.authenticate('local'),
 /**
  * check if user is logged in - has an active session
  */
-router.get('/isLoggedIn', ensureAuthenticated, function (req, res) {
+router.get('/isLoggedIn', middleware.ensureAuthenticated, function (req, res) {
     return writeToClient(res, {
         success: true,
         name: req.user.name,
@@ -80,7 +81,7 @@ router.get('/facebook/callback', passport.authenticate('facebook', {failureRedir
 /**
  * User logout - Clear session
  */
-router.get('/logout', ensureAuthenticated, function (req, res) {
+router.get('/logout', middleware.ensureAuthenticated, function (req, res) {
     req.logout();
     return writeToClient(res, {success: true});
 });
@@ -128,7 +129,7 @@ router.post("/signup", function (req, res) {
 /**
  * OAuth sign-up - user provides additional information to complete sign-up process
  */
-router.post('/signup_oauth', ensureAuthenticated, function (req, res) {
+router.post('/signup_oauth', middleware.ensureAuthenticated, function (req, res) {
 
     if (!req.body.info)
         return writeToClient(res, null, "Please Provide all required fields", HttpStatus.BAD_REQUEST);
@@ -189,26 +190,16 @@ router.get('/activation/:token', function (req, res) {
 /**
  * Authenticate user - check if user is allowed to perform action base on user role
  */
-router.get('/authenticate/:action', ensureAuthenticated, function (req, res) {
+router.get('/authenticate/:action', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
 
-    debug('isAuthorized request action', req.params.action);
-    debug('isAuthorized user', req.user);
-
-    authUtils.isAuthorized(req.user.role, req.params.action, function (error, result) {
-
-        if (error)
-            return writeToClient(res, null, error.message, error.code);
-
-
-        return writeToClient(res, result);
-    });
+    res.send({success: true});
 });
 
 
 /**
  * Change a user role - can only be invoked by an admin user.
  */
-router.post('/assignrole', ensureAuthenticated, function (req, res) {
+router.post('/assignrole', middleware.ensureAuthenticated, function (req, res) {
 
     if (!req.body.user || !req.body.newrole)
         return writeToClient(res, null, 'No user or new role provided', HttpStatus.BAD_REQUEST);
@@ -312,14 +303,6 @@ router.get('/reset/:token', function (req, res) {
 });
 
 
-/**
- * Middleware - Make sure user is logged in
- */
-function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated())
-        return next();
 
-    return writeToClient(res, null, "Error: User is not logged in", HttpStatus.UNAUTHORIZED);
-}
 
 module.exports = router;
