@@ -35,7 +35,7 @@ router.post('/update_status', middleware.ensureAuthenticated, middleware.ensureP
 /**
  * Returns current Status
  */
-router.get('/get_status', middleware.ensureAuthenticated, function(req, res) {
+router.get('/get_status', function(req, res) {
 
     mongoUtils.query(COLLECTIONS.ADMIN, {_id: 'status'}, function(error, result) {
         if(error || !result || !result.length)
