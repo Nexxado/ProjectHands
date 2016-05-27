@@ -15,7 +15,7 @@ var SCOPES = [
     ['https://www.googleapis.com/auth/drive.appdata'],
     ['https://www.googleapis.com/auth/drive.apps.readonly'],
     ['https://www.googleapis.com/auth/drive'],
-    [' https://www.googleapis.com/auth/drive.file']];
+    ['https://www.googleapis.com/auth/drive.file']];
 
 var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
     process.env.USERPROFILE) + '/.credentials/';
@@ -145,20 +145,39 @@ function fixDirectLink(link) {
  * Main routin for uploding file upload + set public + return web content link
  */
 function uploadToDrive(filePath, album_key, callback) {
+    var fileId ;
     uploadFileToDrive(filePath, album_key, function (err, file) {
         if (err) {
-            console.log('uploadFileToDrive: ' + err);
+            // console.log('uploadFileToDrive: ' + err);
+
         } else {
+
             setFileShardToAnyone(file.id, function (err, res) {
+                fileId = file.id;
+                console.log('file.id: ' + file.id);
                 if (err) {
-                    console.log('setFileShardToAnyone: ' + err);
+                    // console.log('setFileShardToAnyone: ' + err);
                 } else {
+                    // console.log('setFileShardToAnyone: ' + res);
+                    // deleteFileFormDrive(file.id, function (err, res) {
+                    //     if (err) {
+                    //         console.log('deleteFileFormDrive: err ' + err);
+                    //     } else {
+                    //         console.log('deleteFileFormDrive: res' + res);
+                    //     }
+                    // });
+
                     getFileWebContentLink(file.id, function (err, res) {
                         if (err) {
-                            console.log('getFileWebContentLink: ' + err);
+                            // console.log('getFileWebContentLink: ' + err);
                         } else {
-                            console.log('getFileWebContentLink res: ', res.webContentLink);
-                            callback(err, fixDirectLink(res.webContentLink));
+                            // console.log('getFileWebContentLink res: ', res.webContentLink);
+                            // console.log('getFileWebContentLink permissionsId: ', res.permissionsId);
+                            var mRes = {
+                                file_id: fileId,
+                                web_link: fixDirectLink(res.webContentLink)
+                            };
+                            callback(err, mRes);
                         }
                     });
 
@@ -191,6 +210,12 @@ function uploadFileToDrive(filePath, album_key, callback) {
     }, callback);
 }
 
+function deleteFile(fileId, callback) {
+    var drive = google.drive({version: 'v3', auth: myAuth});
+    drive.files.delete({
+        fileId: fileId
+    }, callback);
+}
 /**
  * Set file in google drive to by public for everyone with a link
  * @param callback with (err, res) if file shard  success err=null
@@ -216,7 +241,7 @@ function getFileWebContentLink(fileId, callback) {
     var drive = google.drive({version: 'v3', auth: myAuth});
     drive.files.get({
         fileId: fileId,
-        fields: ['webContentLink']
+        fields: ['webContentLink', 'permissions/id']
     }, callback);
 }
 
@@ -262,5 +287,8 @@ module.exports = {
     uploadFile: function (filePath, album_key, callback) {
         // uploadFileToDrive(filePath, album_key, callback);
         uploadToDrive(filePath, album_key, callback);
+    },
+    deleteFile: function (fileId, callback) {
+        deleteFile(fileId, callback);
     }
 };

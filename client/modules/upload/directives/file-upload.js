@@ -5,7 +5,7 @@ angular.module('ProjectHands.upload')
             restrict: 'E',
             replace: true,
             templateUrl: 'modules/upload/templates/directives/file-upload.html',
-            controller: function ($scope, Upload, $timeout) {
+            controller: function ($scope, Upload, $timeout, PhotosService) {
 
                 $scope.progress = false;
 
@@ -19,6 +19,18 @@ angular.module('ProjectHands.upload')
                 });
                 $scope.log = '';
 
+                $scope.deletePhoto = function (fileId) {
+                    PhotosService.deletePhoto(fileId)
+                        .then(function (data) {
+                            console.log('deletePhoto data', data);
+
+                        })
+                        .catch(function (error) {
+                            console.log('deletePhoto error ', error);
+                        });
+                }
+
+                 
                 $scope.upload = function (files) {
                     if (files && files.length) {
                         for (var i = 0; i < files.length; i++) {
@@ -33,7 +45,7 @@ angular.module('ProjectHands.upload')
                                         file: file
                                     }
                                 }).then(function (resp) {
-                                    $timeout(function() {
+                                    $timeout(function () {
                                         $scope.log = 'file: ' +
                                             resp.config.data.file.name +
                                             ', Response: ' + JSON.stringify(resp.data) +

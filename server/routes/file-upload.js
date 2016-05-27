@@ -23,11 +23,10 @@ router.post('/uploads', multipartyMiddleware,
             if (err) {
 
             } else {
-                //saveing the img url in the db
-                var webContentLink = res;
-                // var albumKey = albumKey;
+                console.log('uploadFile ' + res);
 
-                saveLink(webContentLink, albumKey, function (err, res) {
+                // saveLink(fileId, webContentLink, album_key, callback)
+                saveLink(res.file_id, res.web_link, albumKey, function (err, res) {
                     if (err) {
 
                     } else {
@@ -44,8 +43,26 @@ router.post('/uploads', multipartyMiddleware,
         });
     });
 
-function saveLink(fileId, album_key, callback) {
-    mongoUtils.insert(COLLECTIONS.IMAGES, {album_key: album_key, file_id: fileId}, callback);
+router.post('/delete', function (request, response) {
+    // We are able to access req.files.file thanks to
+    // the multiparty middleware
+    // var photoUrl = request.body.photo_url;
+
+    var fileId = request.body.file_id;
+    console.log('fileId for delete : ' + fileId);
+    driveUtils.deleteFile(fileId, function (err, res) {
+        if(err){
+            console.log('deleteFile : ' + err);
+        }else {
+            console.log('deleteFile : ' + res);
+        }
+    });
+    writeToClient(response);
+
+});
+
+function saveLink(fileId, webContentLink, album_key, callback) {
+    mongoUtils.insert(COLLECTIONS.IMAGES, {album_key: album_key, web_link: webContentLink, file_id: fileId}, callback);
 }
 /**
  *
@@ -53,7 +70,7 @@ function saveLink(fileId, album_key, callback) {
  * @param callback
  */
 function readAlbumImages(albumKey, callback) {
-    console.log('getAlbumImages(albumKey) ' + albumKey);
+    // console.log('getAlbumImages(albumKey) ' + albumKey);
     mongoUtils.query(COLLECTIONS.IMAGES, {album_key: albumKey}, callback);
 }
 module.exports = router;
