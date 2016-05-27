@@ -1,0 +1,35 @@
+<md-dialog aria-label="Update StatusDialog" flex="25">
+    <form name="UpdateStatusForm" ng-submit="submit()" layout="column" novalidate>
+        <md-toolbar dir="rtl">
+            <div class="md-toolbar-tools">
+                <h2>עדכון סטטוס</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <md-input-container class="md-icon-float md-block rtl">
+                    <label>הודעת סטטוס</label>
+                    <input type="text" name="message" ng-model="newStatus.message" required/>
+                    <md-icon class="material-icons">message</md-icon>
+                    <div ng-messages="UpdateStatusForm.message.$error">
+                        <div ng-message="required">
+                            שדה חובה
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-checkbox style="width: 100%;" class="rtl md-primary" ng-model="newStatus.status" aria-label="status checkbox"
+                             ng-click="updateLabel()">
+                    {{ checkbox_label }}
+                </md-checkbox>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout-align="start">
+            <md-button ng-click="cancel()" class="md-warn">ביטול</md-button>
+            <md-button type="submit" class="md-primary">עדכן סטטוס</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

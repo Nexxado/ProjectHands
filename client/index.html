@@ -4,11 +4,12 @@
 
 <head>
     <base href="/">
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-signin-client_id" content="990301468716-ubc9ojva16mhq03k1sb88k2djruph8is.apps.googleusercontent.com">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Project 'Hands'</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-signin-client_id"
+          content="990301468716-ubc9ojva16mhq03k1sb88k2djruph8is.apps.googleusercontent.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project 'Hands'</title>
 
     <!-- Vendor -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -17,26 +18,23 @@
     <link href="vendor/fullcalendar/dist/fullcalendar.css" rel="stylesheet">
 
     <!-- App -->
-    <link href="css/app.css" rel="stylesheet" >
-    <link href="css/animations.css" rel="stylesheet" >
-    <link href="css/toolbar.css" rel="stylesheet" >
-    <link href="css/chat.css" rel="stylesheet" >
-    <link href="css/dashboard.css" rel="stylesheet" >
-    <link href="css/renovation_dashboard.css" rel="stylesheet">
-    <link href="css/home.css" rel="stylesheet"/>
-
+    <link href="css/app.css" rel="stylesheet">
+    <link href="css/animations.css" rel="stylesheet">
+    <link href="css/toolbar.css" rel="stylesheet">
+    <link href="css/chat.css" rel="stylesheet">
+    <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/home.css" rel="stylesheet">
+    <link href="css/status.css" rel="stylesheet">
 
 
 </head>
 
 <body>
-	<toolbar></toolbar>
-    <notifications></notifications>
-	<!-- Main Content -->
-	<main ui-view id="main-view"></main>
+<toolbar></toolbar>
+<notifications></notifications>
+<!-- Main Content -->
+<main ui-view id="main-view"></main>
 </body>
-
-
 
 
 <!-- Vendor (3rd party libraries) -->
@@ -92,6 +90,7 @@
 <script src="js/directives/chat.js"></script>
 <script src="js/directives/chat-room.js"></script>
 <script src="js/directives/notifications.js"></script>
+<script src="js/directives/adminActions.js"></script>
 <script src="modules/dashboard/directives/dashboard-toolbar.js"></script>
 <script src="modules/dashboard/directives/dashboard-sidenav.js"></script>
 <script src="modules/dashboard/directives/dashboard-sidenav-admin.js"></script>

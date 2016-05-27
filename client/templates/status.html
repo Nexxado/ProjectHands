@@ -1,23 +1,11 @@
 <md-content>
     <div layout="column" layout-align="center center" layout-padding>
         <h1>Status Page</h1>
-        <h2>Status: {{ active }}</h2>
-        <h3>Message: {{ message }}</h3>
-        <form name="UpdateStatusForm" ng-submit="updateStatus()">
-            <md-input-container class="md-icon-float md-block rtl">
-                <label>הודעת סטטוס</label>
-                <input type="text" name="message" ng-model="newStatus.message" required/>
-                <md-icon class="material-icons">message</md-icon>
-                <div ng-messages="UpdateStatusForm.message.$error">
-                    <div ng-message="required">
-                        שדה חובה
-                    </div>
-                </div>
-            </md-input-container>
-            <md-checkbox ng-model="newStatus.status" aria-label="status checkbox">
-                New Status
-            </md-checkbox>
-            <md-button type="submit">Update Status</md-button>
-        </form>
+        <div class="status-indicator" ng-class="active ? 'active' : 'not-active'"></div>
+        <div class="status-message">{{ message }}</div>
+        <!-- Admin Control Panel -->
+        <div admin-actions>
+            <md-button ng-click="updateStatusDialog($event)">עדכן סטטוס</md-button>
+        </div>
     </div>
 </md-content>
