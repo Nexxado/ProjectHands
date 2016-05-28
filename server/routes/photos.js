@@ -30,9 +30,9 @@ router.post('/uploads', multipartyMiddleware,
                     if (err) {
 
                     } else {
-                        readAlbumImages(albumKey, function (err, res) {
+                        getAlbum(albumKey, function (err, res) {
                             writeToClient(response, res);
-                            console.log('readAlbumImages ' + res);
+                            console.log('getAlbum ' + res);
                         })
                     }
                 });
@@ -54,11 +54,30 @@ router.post('/delete', function (request, response) {
         if(err){
             console.log('deleteFile : ' + err);
         }else {
+            deletePhoto(fileId, function (err, res) {
+                if(err){
+                    console.log('deletePhoto err : ' + err);
+                }else{
+                    console.log('deletePhoto res : ' + res);
+                    writeToClient(response);
+                }
+            })
             console.log('deleteFile : ' + res);
         }
     });
-    writeToClient(response);
+});
 
+router.get('/album', function (request, response) {
+    var album = request.query.album;
+    console.log('album : ' + album);
+
+    getAlbum(album, function (err, res) {
+        if(err){
+
+        }else {
+            writeToClient(response, res);
+        }
+    })
 });
 
 function saveLink(fileId, webContentLink, album_key, callback) {
@@ -69,8 +88,11 @@ function saveLink(fileId, webContentLink, album_key, callback) {
  * @param albumKey
  * @param callback
  */
-function readAlbumImages(albumKey, callback) {
+function getAlbum(albumKey, callback) {
     // console.log('getAlbumImages(albumKey) ' + albumKey);
     mongoUtils.query(COLLECTIONS.IMAGES, {album_key: albumKey}, callback);
+}
+function deletePhoto(fileId, callback) {
+    mongoUtils.delete(COLLECTIONS.IMAGES, {file_id: fileId}, callback);
 }
 module.exports = router;

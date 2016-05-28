@@ -25,7 +25,7 @@ require('./passport')(passport);
 
 app.use('/api/database', require('./routes/database'));
 app.use('/api/auth', require('./routes/auth'));
-app.use('/api/upload', require('./routes/file-upload'));
+app.use('/api/photos', require('./routes/photos'));
 
 
 //Fix express rewrites since UI Router is in html5Mode
