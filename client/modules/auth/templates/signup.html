@@ -1,8 +1,20 @@
 <md-content flex-gt-sm="40" flex-offset-gt-sm="30" layout-padding ng-hide="signupSuccess">
     <div layout="column" layout-align="center center">
-        <h1>דף הרשמה</h1>
+        <h1>להתנדבות בפרויקט ידיים</h1>
     </div>
-    <form name="SignupForm" ng-submit="signup()" layout="column" novalidate >
+    <form class="signup-form" name="SignupForm" ng-submit="signup()" layout="column" novalidate >
+        <!-- First name & Last name -->
+        <md-input-container class="md-icon-float md-block rtl">
+            <label>שם פרטי ושם משפחה</label>
+            <input type="text" name="name" ng-model="user.name" required />
+            <md-icon class="material-icons">face</md-icon>
+            <div ng-messages="SignupForm.name.$error">
+                <div ng-message="required">
+                    שדה חובה
+                </div>
+            </div>
+        </md-input-container>
+        <!-- Email -->
         <md-input-container class="md-icon-float md-block rtl">
             <label>אימייל</label>
             <input type="text" name="email" ng-model="user.email" ng-pattern="regexEmail" required />
@@ -16,6 +28,7 @@
                 </div>
             </div>
         </md-input-container>
+        <!-- Password -->
         <md-input-container class="md-icon-float md-block rtl">
             <label>סיסמה</label>
             <!-- TODO add password constraints-->
@@ -27,6 +40,7 @@
                 </div>
             </div>
         </md-input-container>
+        <!-- Phone Number-->
         <md-input-container class="md-icon-float md-block rtl">
             <label>מס' טלפון</label>
             <input type="text" ng-pattern="/^(0[2-9]\d{7,8})$/" name="phone" ng-model="user.phone" minlength="9" maxlength="10" required />
@@ -43,16 +57,68 @@
                 </div>
             </div>
         </md-input-container>
-        <md-input-container class="md-icon-float md-block rtl">
-            <label>שם פרטי ושם משפחה</label>
-            <input type="text" name="name" ng-model="user.name" required />
-            <md-icon class="material-icons">face</md-icon>
-            <div ng-messages="SignupForm.name.$error">
-                <div ng-message="required">
-                    שדה חובה
+        <!-- Volunteer Area -->
+        <div class="volunteer-area">
+            <fieldset dir="rtl" class="required">
+                <legend>אזור בו אתה יכול להתנדב - <b>שדה חובה</b></legend>
+                <div class="fieldset-subheader">ניתן לבחור כמה אזורים</div>
+                <div ng-repeat="area in volunteer_areas">
+                    <md-checkbox class="rtl" ng-model="area.checked" name="volunteer_areas" ng-change="validateArea()">
+                        {{ area.label }}
+                    </md-checkbox>
+                    <md-input-container class="rtl" ng-show="$last">
+                        <input ng-show="$last" type="text" name="other_area" ng-model="area.input" aria-label="area other input" ng-required="$last && area.checked"/>
+                        <div ng-messages="SignupForm.other_area.$error">
+                            <div ng-message="required">
+                                שדה חובה
+                            </div>
+                        </div>
+                    </md-input-container>
                 </div>
-            </div>
+            </fieldset>
+        </div>
+        <!-- Preferred Day -->
+        <div class="preferred-day">
+            <fieldset dir="rtl">
+                <legend>אם יש לך יום קבוע בשבוע שהיית מעדיף - אנא ציין:</legend>
+                <div class="fieldset-subheader">בוקר - 9:00 עד 14:00 אחה"צ - 16:00 עד 21:00</div>
+                <div ng-repeat="day in preferred_day">
+                    <md-checkbox class="rtl" ng-model="day.checked" name="preferred_day">
+                        {{ day.label }}
+                    </md-checkbox>
+                </div>
+            </fieldset>
+        </div>
+        <!-- Team Leader -->
+        <div class="team-leader">
+            <fieldset dir="rtl">
+                <legend>האם את/ה רוצה להיות ראש צוות?</legend>
+                <div class="fieldset-subheader">לראש הצוות יש שני תפקידים עיקריים: לבקר בבית המיועד לשיפוץ ולהכין תוכנית, ולהיות אחראי על התיאומים מול הצוות שלו.</div>
+                <div ng-repeat="option in team_leader">
+                    <md-checkbox class="rtl" ng-model="option.checked" name="team_leader" ng-change="forceOneCheckbox(team_leader, $index)">
+                        {{ option.label }}
+                    </md-checkbox>
+                </div>
+            </fieldset>
+        </div>
+        <!-- Remarks and Suggestions -->
+        <md-input-container class="rtl md-block">
+            <label>הערות או הצעות</label>
+            <textarea ng-model="user.remarks" maxlength="150" rows="5" ng-focus="clearEmptyTextArea()"></textarea>
         </md-input-container>
+        <!-- Extra-->
+        <div class="extra">
+            <div class="header">
+                *** האם יש תחום טכני ספציפי שאתה טוב/מנוסה בו?
+            </div>
+            <div class="subheader">
+                לדוגמא: בנייה בעץ, קרמיקה, חשמל, מנעולים, תריסים, צבע, עיצוב פנים וכו' כל מה שיכול לעזור...
+            </div>
+        </div>
+        <md-input-container class="md-block rtl">
+            <input type="text" name="extra" ng-model="user.extra" aria-label="extra info"/>
+        </md-input-container>
+        <!-- Submit Button-->
         <div>
             <md-button type="submit" class="md-accent md-raised white">הירשם</md-button>
         </div>
