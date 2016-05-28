@@ -4,14 +4,14 @@ var excel = require('../utils/excel')
 
 
 
-/*
- * User Login - match user password hash to hash in DB using passport strategy
- */
-router.post('/import', function(request, response) {
+
+router.get('/import', function(request, response) {
     
     debug('data importing');
 
-    var fullPath = request.body.filepath;
+    //var fullPath = request.body.filepath;
+    var fullPath = "table.xlsx";
+
     excel.importWorkBook(fullPath,function (error,result) {
        if(error )
        {
@@ -23,10 +23,30 @@ router.post('/import', function(request, response) {
 
 });
 
-/*
- * returns if user is logged in
- */
-router.get('/export/:collectionName', function(request, response) {
+
+router.get('/export/:collectionName&:query', function(request, response) {
+
+    try 
+    {
+        var collectionName =  request.params.collectionName;
+      //  var query = JSON.parse(request.body.query);
+        var query = {};
+
+        excel.exportCollection(collectionName,query,response,function (error,result) {
+            if(error)
+            {
+                return response.redirect(encodeURI('/result/error/'+error));
+            }
+
+        });
+    }
+
+    catch (e)
+    {
+        return response.redirect(encodeURI('/result/error/'+e));
+
+    }
+
 
 });
 
