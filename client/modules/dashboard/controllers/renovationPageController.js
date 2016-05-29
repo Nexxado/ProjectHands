@@ -270,7 +270,11 @@ angular.module('ProjectHands.dashboard')
             }).catch(function (error) {
                 console.log("Error: ", error);
             });
+            if ($scope.renovationCurrentStage === "עובד סוציאלי עודכן, יש צורך לשבץ צוות") {
+                $scope.finalizeRenovation();
+            }
         }
+
     };
 
     $scope.nextStage = function () {
@@ -289,4 +293,65 @@ angular.module('ProjectHands.dashboard')
         $scope.renovationCurrentStage = $scope.renovationStages[index];
     };
 
+
+    $scope.minDate = new Date();
+
+    $scope.finalizeRenovation = function ($event) {
+        var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
+        console.log("the event is: ", $event);
+        $mdDialog.show({
+                controller: function ($scope, $mdToast, $mdDialog) {
+                    $scope.renovation = {
+                        team: "",
+                        date: "",
+                    };
+                    $scope.cancel = function () {
+                        $mdDialog.cancel();
+                    };
+
+                    $scope.submit = function () {
+                        if ($scope.AddToolForm.$invalid) {
+                            return;
+                        }
+                        $scope.tempDate = $scope.renovation.date;
+                        $scope.renovation.date = "" + $scope.tempDate.getDate() + "/" + ($scope.tempDate.getMonth() + 1) + "/" + $scope.tempDate.getFullYear();
+                        $scope.team = $scope.team._id;
+                        $mdDialog.hide($scope.renovation);
+                    };
+                },
+                templateUrl: '/modules/dashboard/templates/dialogs/finalizeRenovationDialog.html',
+                targetEvent: $event,
+                clickOutsideToClose: false,
+                fullscreen: useFullScreen,
+                locals: {}
+            })
+            .then(function (renovationAddedDetails) {
+                var reno = $scope.thisRenovation;
+                DatabaseService.update(
+                        COLLECTIONS.RENOVATIONS, {
+                            addr: {
+                                city: reno.addr.city,
+                                street: reno.addr.street,
+                                num: reno.addr.num
+                            }
+                        }, {
+                            $set: {
+                                "team_id": renovationAddedDetails.team,
+                                "date": renovationAddedDetails.date
+                            }
+                        }
+                    )
+                    .$promise.then(function (result) {
+                        console.log("The result is: ", result);
+                        $scope.thisRenovation.date = renovationAddedDetails.date;
+                        $scope.thisRenovation.team_id = renovationAddedDetails.team;
+                    }).catch(function (error) {
+                        console.log("Error: ", error);
+                    });
+                console.log("Dialog finished");
+
+            }, function () {
+                console.log('Dialog Canceled.');
+            });
+    };
 });

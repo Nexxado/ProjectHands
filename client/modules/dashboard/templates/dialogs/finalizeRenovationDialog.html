@@ -1,0 +1,36 @@
+<md-dialog aria-label="FinalizeRenovation Dialog" flex="50">
+    <form name="FinalizeRenovationForm" ng-submit="submit()" novalidate>
+        <md-toolbar>
+            <div class="md-toolbar-tools" dir="rtl">
+                <h2>הקצאת צוות ובחירת תאריך</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <h3>השיפוץ הגיע לשלב בו מוקצה צוות לשיפוץ וניתן להתחיל בתכנונים. לצורך כל עלינו לבחור תאריך וצוות</h3>
+                <!-- Input Title -->
+                <md-input-container class="md-block md-icon-float rtl">
+                    <label>בחירת צוות</label>
+                    <md-icon class="material-icons">title</md-icon>
+                    <md-select ng-model="renovation.team">
+                        <md-option ng-repeat="team in allTeams" value="{{team}}">
+                            {{team}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+<!--                <md-input-container class="md-block md-icon-float rtl">-->
+                    <label>בחירת תאריך</label>
+                    <md-datepicker ng-model="renovation.date" md-min-date="minDate"></md-datepicker>
+<!--                </md-input-container>-->
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button ng-click="cancel()" class="md-warn">ביטול</md-button>
+            <md-button type="submit" class="md-primary">אישור</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

@@ -155,6 +155,8 @@ angular.module('ProjectHands.dashboard')
         $scope.myUser = result[0];
         //		$scope.getUserTeam($scope.myUser._id);
         $scope.getUserTeam('111111111'); //FIXME Delete and uncomment above line
+        $scope.getAllTeams();
+        console.log("teams are: " + $scope.allTeams);
     }).catch(function (error) {
         console.log("Error: ", error);
     });
@@ -263,5 +265,17 @@ angular.module('ProjectHands.dashboard')
             }, function () {
                 console.log('Dialog Canceled.');
             });
+    };
+    
+    $scope.allTeams = [];
+    
+    $scope.getAllTeams = function(){
+        DatabaseService.query(COLLECTIONS.TEAMS, {})
+            .$promise.then(function (result) {
+            console.log("result is: " + result);
+            $scope.allTeams = result;
+        }).catch(function (error) {
+            console.log("Error: ", error);
+        });
     };
 });
