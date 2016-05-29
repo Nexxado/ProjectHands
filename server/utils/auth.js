@@ -194,8 +194,6 @@ module.exports = {
 
         debug('Login email', email);
         debug('Login password', password);
-        if (!validate.email(email) || !validate.password(password))
-            return callback("Invalid email or password", null);
 
         mongoUtils.query(COLLECTIONS.USERS, {email: email}, function (error, result) {
 
