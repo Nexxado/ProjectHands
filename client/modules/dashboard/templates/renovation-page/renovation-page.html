@@ -95,16 +95,29 @@
                                                 <h3>התקדמות השיפוץ</h3>
                                                 <span flex></span>
 
-                                                <md-button ng-click="constructionToast('top right')" class="md-primary" layout="row" layout-align="center center">
+                                                <md-button ng-show="editStagesMode" ng-click="constructionToast('top right')" class="md-primary" layout="row" layout-align="center center">
                                                     <i class="material-icons">add_circle</i>
                                                 </md-button>
-                                                <md-button ng-click="constructionToast('top right')" class="md-primary" layout="row" layout-align="center center">
+                                                <md-button ng-hide="editStagesMode" ng-click="enableEditStages()" class="md-primary" layout="row" layout-align="center center">
+                                                    <i class="material-icons">pan_tool</i>
+                                                </md-button>
+                                                <md-button ng-show="editStagesMode" ng-click="disableEditStages()" class="md-accent" layout="row" layout-align="center center">
                                                     <i class="material-icons">pan_tool</i>
                                                 </md-button>
                                             </div>
                                             <div style="height:75%;" layout="column" layout-align="center center">
                                                 <md-progress-circular md-mode="determinate" value="renovationProgress"></md-progress-circular>
                                                 <h4>{{renovationProgress}}%</h4>
+                                            </div>
+                                            <div layout="row" ng-show="editStagesMode">
+                                                <md-button ng-click="previousStage()" class="md-primary md-icon-button" layout="row" layout-align="center center">
+                                                    <i class="material-icons">keyboard_arrow_right</i>
+                                                </md-button>
+                                                <span flex></span>
+                                                <md-button ng-click="nextStage()" class="md-primary md-icon-button" layout="row" layout-align="center center">
+                                                    <i class="material-icons">keyboard_arrow_left</i>
+                                                </md-button>
+                                            
                                             </div>
                                             <div layout="column" layout-align="center center">
                                                 <h3>שלב נוכחי: {{renovationCurrentStage}}</h3>

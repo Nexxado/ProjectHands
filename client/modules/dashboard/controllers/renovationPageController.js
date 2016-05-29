@@ -32,10 +32,10 @@ angular.module('ProjectHands.dashboard')
     $scope.renovationStages = $scope.thisRenovation.renovation_stages;
     $scope.renovationCurrentStage = $scope.thisRenovation.current_stage;
     $scope.renovationProgress = Math.floor((100 / ($scope.renovationStages.length)) * ($scope.renovationStages.indexOf($scope.renovationCurrentStage) + 1));
-     
+
     console.log("Renovation progress is: ", $scope.renovationProgress);
     console.log("num of stages is: ", $scope.renovationStages.length);
-    
+
     $scope.getMemberByID = function (id) {
         for (var i in $scope.teamMembers) {
             var teamMember = $scope.teamMembers[i];
@@ -45,19 +45,19 @@ angular.module('ProjectHands.dashboard')
         return "User not found!";
     };
 
-    
+
     $scope.editMessagesMode = false;
     $scope.editTasksMode = false;
-    
-    
-    $scope.editMessages = function(){
-         $scope.editMessagesMode = !$scope.editMessagesMode;
+
+
+    $scope.editMessages = function () {
+        $scope.editMessagesMode = !$scope.editMessagesMode;
     };
-    
-    $scope.editTasks = function(){
-         $scope.editTasksMode = !$scope.editTasksMode;
+
+    $scope.editTasks = function () {
+        $scope.editTasksMode = !$scope.editTasksMode;
     };
-    
+
     $scope.openLeftMenu = function () {
         console.log("click aa");
         $mdSidenav('left').toggle().then(function () {
@@ -121,8 +121,8 @@ angular.module('ProjectHands.dashboard')
                 console.log('Dialog Canceled.');
             });
     };
-    
-        $scope.addPinned = function ($event) {
+
+    $scope.addPinned = function ($event) {
         var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
         console.log("the event is: ", $event);
         $mdDialog.show({
@@ -131,7 +131,7 @@ angular.module('ProjectHands.dashboard')
                     $scope.pinned = {
                         title: "",
                         description: "",
-                        added_date: "" + $scope.today.getDate() + "/" + ($scope.today.getMonth()+1) + "/" + $scope.today.getFullYear()
+                        added_date: "" + $scope.today.getDate() + "/" + ($scope.today.getMonth() + 1) + "/" + $scope.today.getFullYear()
                     };
                     console.log($scope.pinned.added_date);
                     $scope.cancel = function () {
@@ -180,7 +180,7 @@ angular.module('ProjectHands.dashboard')
             });
     };
 
-    
+
     $scope.addTool = function ($event) {
         var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
         console.log("the event is: ", $event);
@@ -199,7 +199,7 @@ angular.module('ProjectHands.dashboard')
                         if ($scope.AddToolForm.$invalid) {
                             return;
                         }
-                        if($scope.tool.quantity <= 0 || $scope.tool.quantity === "")
+                        if ($scope.tool.quantity <= 0 || $scope.tool.quantity === "")
                             $scope.tool.quantity = 1;
                         $mdDialog.hide($scope.tool);
                     };
@@ -238,5 +238,55 @@ angular.module('ProjectHands.dashboard')
                 console.log('Dialog Canceled.');
             });
     };
-    
+
+    $scope.editStagesMode = false;
+    $scope.lastStage = "";
+    $scope.enableEditStages = function () {
+        $scope.editStagesMode = true;
+        $scope.lastStage = $scope.renovationCurrentStage;
+    };
+
+    $scope.disableEditStages = function () {
+        $scope.editStagesMode = false;
+        if ($scope.lastStage != $scope.renovationCurrentStage) {
+            var reno = $scope.thisRenovation;
+            console.log("IT WAS CHANGED");
+            console.log("It was: ", $scope.lastStage);
+            console.log("It is now: ", $scope.renovationCurrentStage);
+            DatabaseService.update(
+                COLLECTIONS.RENOVATIONS, {
+                    addr: {
+                        city: reno.addr.city,
+                        street: reno.addr.street,
+                        num: reno.addr.num
+                    }
+                }, {
+                    $set: {
+                        "current_stage": $scope.renovationCurrentStage
+                    }
+                }
+            ).$promise.then(function (result) {
+                console.log("The result is: ", result);
+            }).catch(function (error) {
+                console.log("Error: ", error);
+            });
+        }
+    };
+
+    $scope.nextStage = function () {
+        var index = $scope.renovationStages.indexOf($scope.renovationCurrentStage);
+        index++;
+        if (index >= $scope.renovationStages.length)
+            index = 0;
+        $scope.renovationCurrentStage = $scope.renovationStages[index];
+    };
+
+    $scope.previousStage = function () {
+        var index = $scope.renovationStages.indexOf($scope.renovationCurrentStage);
+        index--;
+        if (index < 0)
+            index = $scope.renovationStages.length - 1;
+        $scope.renovationCurrentStage = $scope.renovationStages[index];
+    };
+
 });
