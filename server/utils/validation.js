@@ -60,6 +60,22 @@ function validateSignup(user) {
 }
 
 
+/**
+ * Validate user info on OAuth sign-up
+ * @param info {Object}
+ * @returns {boolean}
+ */
+function validateOauthSignup(info) {
+    if (!info ||
+        !info.phone || info.phone === '')
+        return false;
+
+    if(!info.area || !info.area.length || (info.team_leader && info.team_leader.length > 1))
+        return false;
+
+    return validatePhone(info.phone);
+}
+
 //Middleware to validate request params according to request path
 validation.validateParams = function(req, res, next) {
     debug('validateParams path', req.path);
@@ -67,6 +83,13 @@ validation.validateParams = function(req, res, next) {
     switch(req.path) {
         case '/signup':
             if(!req.body.user || !validateSignup(JSON.parse(req.body.user)))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please Provide all required fields"});
+            break;
+
+        case '/signup_oauth':
+            if(typeof req.user.signup_complete === 'undefined' || req.user.signup_complete === true)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Sign-Up Process has already been completed"});
+            else if(!req.body.info || !validateOauthSignup(JSON.parse(req.body.info)))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please Provide all required fields"});
             break;
 

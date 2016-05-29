@@ -130,13 +130,7 @@ router.post("/signup", validation.validateParams, function (req, res) {
 /**
  * OAuth sign-up - user provides additional information to complete sign-up process
  */
-router.post('/signup_oauth', middleware.ensureAuthenticated, function (req, res) {
-
-    if (!req.body.info)
-        return writeToClient(res, null, "Please Provide all required fields", HttpStatus.BAD_REQUEST);
-    if(typeof req.user.signup_complete === 'undefined' || req.user.signup_complete === true)
-        return writeToClient(res, null, "Sign-Up Process has already been completed", HttpStatus.BAD_REQUEST);
-
+router.post('/signup_oauth', middleware.ensureAuthenticated, validation.validateParams, function (req, res) {
 
     var info = JSON.parse(req.body.info);
     authUtils.oauthSignup(req.user, info, function (error, result) {
