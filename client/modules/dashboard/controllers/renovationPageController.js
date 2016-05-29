@@ -29,6 +29,13 @@ angular.module('ProjectHands.dashboard')
 
     $scope.renovationChatRoom = [$scope.thisRenovation.chat_id];
 
+    $scope.renovationStages = $scope.thisRenovation.renovation_stages;
+    $scope.renovationCurrentStage = $scope.thisRenovation.current_stage;
+    $scope.renovationProgress = Math.floor((100 / ($scope.renovationStages.length)) * ($scope.renovationStages.indexOf($scope.renovationCurrentStage) + 1));
+     
+    console.log("Renovation progress is: ", $scope.renovationProgress);
+    console.log("num of stages is: ", $scope.renovationStages.length);
+    
     $scope.getMemberByID = function (id) {
         for (var i in $scope.teamMembers) {
             var teamMember = $scope.teamMembers[i];
@@ -38,6 +45,19 @@ angular.module('ProjectHands.dashboard')
         return "User not found!";
     };
 
+    
+    $scope.editMessagesMode = false;
+    $scope.editTasksMode = false;
+    
+    
+    $scope.editMessages = function(){
+         $scope.editMessagesMode = !$scope.editMessagesMode;
+    };
+    
+    $scope.editTasks = function(){
+         $scope.editTasksMode = !$scope.editTasksMode;
+    };
+    
     $scope.openLeftMenu = function () {
         console.log("click aa");
         $mdSidenav('left').toggle().then(function () {
@@ -101,5 +121,122 @@ angular.module('ProjectHands.dashboard')
                 console.log('Dialog Canceled.');
             });
     };
+    
+        $scope.addPinned = function ($event) {
+        var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
+        console.log("the event is: ", $event);
+        $mdDialog.show({
+                controller: function ($scope, $mdToast, $mdDialog) {
+                    $scope.today = new Date();
+                    $scope.pinned = {
+                        title: "",
+                        description: "",
+                        added_date: "" + $scope.today.getDate() + "/" + ($scope.today.getMonth()+1) + "/" + $scope.today.getFullYear()
+                    };
+                    console.log($scope.pinned.added_date);
+                    $scope.cancel = function () {
+                        $mdDialog.cancel();
+                    };
 
+                    $scope.submit = function () {
+                        if ($scope.AddPinnedForm.$invalid) {
+                            return;
+                        }
+                        $mdDialog.hide($scope.pinned);
+                    };
+                },
+                templateUrl: '/modules/dashboard/templates/dialogs/addPinnedDialog.html',
+                targetEvent: $event,
+                clickOutsideToClose: false,
+                fullscreen: useFullScreen,
+                locals: {}
+            })
+            .then(function (newPinned) {
+                var reno = $scope.thisRenovation;
+                console.log(reno, $scope.thisRenovation);
+                DatabaseService.update(
+                        COLLECTIONS.RENOVATIONS, {
+                            addr: {
+                                city: reno.addr.city,
+                                street: reno.addr.street,
+                                num: reno.addr.num
+                            }
+                        }, {
+                            $push: {
+                                "pinned": newPinned
+                            }
+                        }, {}
+                    )
+                    .$promise.then(function (result) {
+                        console.log("The result amazingly is: ", result);
+                        $scope.thisRenovation.pinned.push(newPinned);
+                    }).catch(function (error) {
+                        console.log("Error: ", error);
+                    });
+                console.log("Dialog finished");
+
+            }, function () {
+                console.log('Dialog Canceled.');
+            });
+    };
+
+    
+    $scope.addTool = function ($event) {
+        var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
+        console.log("the event is: ", $event);
+        $mdDialog.show({
+                controller: function ($scope, $mdToast, $mdDialog) {
+                    $scope.tool = {
+                        name: "",
+                        quantity: "",
+                        comment: ""
+                    };
+                    $scope.cancel = function () {
+                        $mdDialog.cancel();
+                    };
+
+                    $scope.submit = function () {
+                        if ($scope.AddToolForm.$invalid) {
+                            return;
+                        }
+                        if($scope.tool.quantity <= 0 || $scope.tool.quantity === "")
+                            $scope.tool.quantity = 1;
+                        $mdDialog.hide($scope.tool);
+                    };
+                },
+                templateUrl: '/modules/dashboard/templates/dialogs/addToolDialog.html',
+                targetEvent: $event,
+                clickOutsideToClose: false,
+                fullscreen: useFullScreen,
+                locals: {}
+            })
+            .then(function (newTool) {
+                var reno = $scope.thisRenovation;
+                console.log(reno, $scope.thisRenovation);
+                DatabaseService.update(
+                        COLLECTIONS.RENOVATIONS, {
+                            addr: {
+                                city: reno.addr.city,
+                                street: reno.addr.street,
+                                num: reno.addr.num
+                            }
+                        }, {
+                            $push: {
+                                "toolsNeeded": newTool
+                            }
+                        }, {}
+                    )
+                    .$promise.then(function (result) {
+                        console.log("The result amazingly is: ", result);
+                        $scope.thisRenovation.toolsNeeded.push(newTool);
+                    }).catch(function (error) {
+                        console.log("Error: ", error);
+                    });
+                console.log("Dialog finished");
+
+            }, function () {
+                console.log('Dialog Canceled.');
+            });
+    };
+    
 });

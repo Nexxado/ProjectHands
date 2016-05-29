@@ -128,6 +128,14 @@ md-menu-item > .md-button {
     margin: 40px auto;
 }
 
+.renovation-task{
+    display: inherit;
+    margin-right: 5%;
+}
+.renovation-inner-grid-list{
+    overflow: scroll;
+}
+
 /*==================================================
  * Effect 7
  * ===============================================*/

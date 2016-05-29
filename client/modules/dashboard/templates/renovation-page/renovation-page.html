@@ -1,8 +1,4 @@
 <div layout="row" ng-hide="renovationNotFound">
-    <!--
-    
--->
-
     <div layout="column" class="renovation-page-tab-wrapper">
         <div ng-cloak flex>
             <md-content dir="rtl">
@@ -22,8 +18,8 @@
                         <md-tab label="פרטי שיפוץ">
                             <div ng-controller="AppCtrl as appCtrl" ng-cloak>
                                 <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px" style="padding:10px;">
-                                    <md-grid-tile class="" md-rowspan="5" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
-                                        <div class="box-wrapper">
+                                    <md-grid-tile class="" md-rowspan="5" md-colspan="2" md-colspan-sm="2" md-rowspan-sm="2" md-colspan-xs="1">
+                                        <div class="box-wrapper renovation-inner-grid-list">
                                             <div layout="row" class="box-header">
                                                 <h3>משימות</h3>
                                                 <span flex></span>
@@ -31,45 +27,69 @@
                                                 <md-button ng-click="addTask($event)" class="md-primary" layout="row" layout-align="center center">
                                                     <i class="material-icons">add_circle</i>
                                                 </md-button>
-
+                                                <md-button ng-hide="editTasksMode" ng-click="editTasks()" class="md-primary" layout="row" layout-align="center center">
+                                                    <i class="material-icons">mode_edit</i>
+                                                </md-button>
+                                                <md-button ng-show="editTasksMode" ng-click="editTasks()" class="md-accent" layout="row" layout-align="center center">
+                                                    <i class="material-icons">mode_edit</i>
+                                                </md-button>
                                             </div>
                                             <div>
-                                                <md-list layout="column">
-                                                    <md-list-item class="md-2-line" ng-repeat="task in thisRenovation.tasks" layout="row" layout-align="center center">
-                                                        <md-checkbox ng-model="item.done"></md-checkbox>
-                                                        <span flex></span>
-                                                        <div class="md-list-item-text box-header">
-                                                            <h2>{{task.name}}</h2>
-                                                            <p>{{task.description}}</p>
-                                                            <p>{{getMemberByID(task.assigned_id).name}}</p>
+                                                <md-list>
+                                                    <md-list-item class="md-2-line" ng-repeat="task in thisRenovation.tasks">
+                                                        <div class=" renovation-task" layout="row" layout-align="center center">
+                                                            <div>
+                                                                <md-button ng-show="editTasksMode" ng-click="" class="md-icon-button" layout="row" layout-align="center center">
+                                                                    <i class="material-icons">close</i>
+                                                                </md-button>
+                                                            </div>
+                                                            <div layout="column">
+                                                                <h2>{{task.name}}</h2>
+                                                                <p>{{task.description}}</p>
+                                                                <p>{{getMemberByID(task.assigned_id).name}}</p>
+                                                            </div>
                                                         </div>
                                                     </md-list-item>
                                                 </md-list>
                                             </div>
                                         </div>
                                     </md-grid-tile>
-                                    <md-grid-tile class="" md-rowspan="3" md-colspan="2">
-                                        <div class="box-wrapper">
+                                    <md-grid-tile class="" md-rowspan="5" md-colspan="2" md-rowspan-sm="2" flex>
+                                        <div class="box-wrapper renovation-inner-grid-list">
                                             <div layout="row" class="box-header">
                                                 <h3>הודעות חשובות</h3>
                                                 <span flex></span>
 
-                                                <md-button ng-click="constructionToast('top right')" class="md-primary" layout="row" layout-align="center center">
+                                                <md-button ng-click="addPinned($event)" class="md-primary" layout="row" layout-align="center center">
                                                     <i class="material-icons">add_circle</i>
+                                                </md-button>
+                                                <md-button ng-hide="editMessagesMode" ng-click="editMessages()" class="md-primary" layout="row" layout-align="center center">
+                                                    <i class="material-icons">mode_edit</i>
+                                                </md-button>
+                                                <md-button ng-show="editMessagesMode" ng-click="editMessages()" class="md-accent" layout="row" layout-align="center center">
+                                                    <i class="material-icons">mode_edit</i>
                                                 </md-button>
                                             </div>
                                             <md-list layout="column">
                                                 <md-list-item class="md-2-line pinned-wrapper" ng-repeat="pinned in thisRenovation.pinned">
-                                                    <div class="md-list-item-text pinned-message effect7" style="padding:20px; margin:10px;">
-                                                        <h2>{{pinned.title}}</h2>
-                                                        <h3>{{pinned.description}}</h3>
-                                                        <p>{{pinned.added_date}}</p>
+                                                    <div class="md-list-item-text pinned-message effect7" style="padding:20px; margin:10px;" layout="column">
+                                                        <div layout="row" ng-show="editMessagesMode">
+                                                            <span flex></span>
+                                                            <md-button ng-click="" class="md-icon-button" layout="row" layout-align="center center">
+                                                                <i class="material-icons">close</i>
+                                                            </md-button>
+                                                        </div>
+                                                        <div>
+                                                            <h2>{{pinned.title}}</h2>
+                                                            <h3>{{pinned.description}}</h3>
+                                                            <p>{{pinned.added_date}}</p>
+                                                        </div>
                                                     </div>
                                                 </md-list-item>
                                             </md-list>
                                         </div>
                                     </md-grid-tile>
-                                    <md-grid-tile class="" md-rowspan="2" md-colspan="2">
+                                    <md-grid-tile class="" md-rowspan="2" md-colspan="2" md-rowspan-sm="2">
                                         <div class="box-wrapper" layout="column">
                                             <div layout="row" class="box-header">
                                                 <h3>התקדמות השיפוץ</h3>
@@ -83,16 +103,15 @@
                                                 </md-button>
                                             </div>
                                             <div style="height:75%;" layout="column" layout-align="center center">
-                                                <md-progress-circular md-mode="determinate" value="50"></md-progress-circular>
-                                                <h4>50%</h4>
+                                                <md-progress-circular md-mode="determinate" value="renovationProgress"></md-progress-circular>
+                                                <h4>{{renovationProgress}}%</h4>
                                             </div>
                                             <div layout="column" layout-align="center center">
-                                                <h3>שלב שעבר: ביקור בית לפני שיפוץ</h3>
-                                                <h3>שלב נוכחי: שיפוץ הבית</h3>
+                                                <h3>שלב נוכחי: {{renovationCurrentStage}}</h3>
                                             </div>
                                         </div>
                                     </md-grid-tile>
-                                    <md-grid-tile class="" md-rowspan="2" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
+                                    <md-grid-tile class="" md-rowspan="2" md-colspan="2" md-colspan-sm="2" md-colspan-xs="1" md-rowspan-sm="2">
                                         <div layout="column" class="box-wrapper">
                                             <div layout="row" layout-align="center center" style="height: 100%; padding:1px;">
                                                 <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2848.1677792216697!2d34.99999188673667!3d31.904929403828792!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1502cdb687a74b15%3A0x9bb5207a84b99291!2z15fXmNeZ15HXqiDXlNem16DXl9eg15nXnSAyLCDXnteV15PXmdei15nXnyDXnteb15HXmdedINeo16LXldeq!5e0!3m2!1siw!2sil!4v1461780210508" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
@@ -134,6 +153,37 @@
                                 </div>
 
                             </md-content>
+                        </md-tab>
+                        <md-tab label="כלים דרושים">
+                            <div ng-cloak layout-gt-sm="row" layout="column">
+                                <div flex-gt-sm="50" flex>
+                                    <md-toolbar layout="row" layout-align="none center" class="md-primary dashboard-top-rounded-toolbar" dir="rtl">
+                                        <div class="md-toolbar-tools">
+                                            <span>כלים דרושים</span>
+                                        </div>
+                                        <span flex></span>
+                                        <md-button class="md-icon-button md-primary md-raised" ng-click="addTool($event)">
+                                            <md-icon class="material-icons">add_circle</md-icon>
+                                        </md-button>
+                                    </md-toolbar>
+                                    <md-content>
+                                        <md-list class="md-dense" dir="rtl">
+                                            <md-list-item class="md-3-line" ng-repeat="tool in thisRenovation.toolsNeeded">
+                                                <span flex layout="row" layout-align="center center" class="padding">
+                        <div class="md-list-item-text toolbox-list-text" layout="column" dir="rtl">
+                            <h3>{{ tool.name }}</h3>
+                            <h4>כמות: {{ tool.quantity }}</h4>
+                            <p>הערה: {{ tool.comment }}</p>
+                        </div>
+                                                </span>
+                                                <md-divider></md-divider>
+                                            </md-list-item>
+                                            <md-divider></md-divider>
+                                        </md-list>
+                                    </md-content>
+                                </div>
+                            </div>
+
                         </md-tab>
                     </md-tabs>
 
