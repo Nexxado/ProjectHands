@@ -1,4 +1,4 @@
-angular.module('ProjectHands.upload')
+angular.module('ProjectHands.photos')
 
     .factory("PhotosService", function ($rootScope, $resource, $cookies, $q, AUTH_EVENTS, UtilsService) {
 

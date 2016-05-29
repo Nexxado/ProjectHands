@@ -1,11 +1,11 @@
-angular.module('ProjectHands.upload')
+angular.module('ProjectHands.photos')
 
-    .directive('fileUpload', function () {
+    .directive('photos', function () {
         return {
             restrict: 'E',
-            scope: { album: '=' ,twoWayBind: "=myTwoWayBind"},
+            scope: { album: '@'},
             replace: true,
-            templateUrl: 'modules/photos/templates/directives/file-photos.html',
+            templateUrl: 'modules/photos/templates/directives/photos.html',
             controller: function ($scope, Upload, $timeout, PhotosService) {
 
 
@@ -21,7 +21,7 @@ angular.module('ProjectHands.upload')
                         });
                 };
 
-                $scope.album = "test1"
+
                 $scope.getPhotos($scope.album);
 
                 $scope.progress = false;
@@ -43,7 +43,7 @@ angular.module('ProjectHands.upload')
                         .then(function (data) {
                             console.log('deletePhoto data', data);
                             //update album after delete
-                            $scope.getPhotos('aq');
+                            $scope.getPhotos($scope.album);
                         })
                         .catch(function (error) {
                             console.log('deletePhoto error ', error);
