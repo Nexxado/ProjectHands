@@ -5,7 +5,7 @@ angular.module('ProjectHands.upload')
             restrict: 'E',
             scope: { album: '=' ,twoWayBind: "=myTwoWayBind"},
             replace: true,
-            templateUrl: 'modules/upload/templates/directives/file-upload.html',
+            templateUrl: 'modules/photos/templates/directives/file-photos.html',
             controller: function ($scope, Upload, $timeout, PhotosService) {
 
 

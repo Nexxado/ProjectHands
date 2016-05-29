@@ -9,7 +9,7 @@ angular.module('ProjectHands.home')
 
                 $scope.uploadPic = function (file) {
                     file.upload = Upload.upload({
-                        url: '/api/upload/uploads',
+                        url: '/api/photos/uploads',
                         data: {username: $scope.username, file: file},
                     });
 

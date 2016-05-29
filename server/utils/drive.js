@@ -142,7 +142,7 @@ function fixDirectLink(link) {
 }
 
 /**
- * Main routin for uploding file upload + set public + return web content link
+ * Main routin for uploding file photos + set public + return web content link
  */
 function uploadToDrive(filePath, album_key, callback) {
     var fileId ;
