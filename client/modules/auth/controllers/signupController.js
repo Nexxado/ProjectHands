@@ -8,6 +8,10 @@ angular.module('ProjectHands.auth')
         if (!$scope.validateArea() || $scope.SignupForm.$invalid)
             return;
 
+        getSelected($scope.volunteer_areas, $scope.user.area);
+        getSelected($scope.preferred_day, $scope.user.preferred_day);
+        getSelected($scope.team_leader, $scope.user.team_leader);
+
         AuthService.signup($scope.user).$promise
             .then(function (data) {
                 console.log('data', data);
@@ -49,6 +53,19 @@ angular.module('ProjectHands.auth')
         angular.element('.signup-form fieldset.required').addClass('invalid');
         return false;
     };
+
+
+    /**
+     * Push selected checkboxes to user object
+     * @param checkboxes {Array} : Array of the checkboxes' input models
+     * @param property {Array} : property field in $scope.user to push the selected checkboxes to.
+     */
+    function getSelected(checkboxes, property) {
+        for(var i = 0; i < checkboxes.length; i++) {
+            if(checkboxes[i].checked)
+                property.push(checkboxes[i].label);
+        }
+    }
 
 
     /************************/
@@ -125,15 +142,21 @@ angular.module('ProjectHands.auth')
     ];
 
     $scope.user = {
+        name: '',
         email: '',
         password: '',
         phone: '',
-        name: '',
-        remarks: '\n\n\n\n\n'
+        area: [],
+        preferred_day: [],
+        team_leader: [],
+        remarks: '\n\n\n\n\n',
+        extra: ''
     };
 
     $scope.signupSuccess = false;
     $scope.toastAnchor = 'form';
+    $scope.regexPhone = /^0(5(2|3|4|7|8)|(2|3|4|8)|77 )-?\d{4}-?\d{3}$/;
+    $scope.regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
     /**
      * Workaround for angular material not respecting "rows" attribute on textarea tag

@@ -3,14 +3,8 @@ var debug = require('debug')('utils/auth');
 var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
 var ROLES = config.ROLES;
-var HttpStatus = require('http-status-codes');
-var ROLES_HIERARCHY = Object.keys(ROLES).map(function (key) {
-    return ROLES[key];
-}).reverse();
 var bcrypt = require('bcrypt');
 var saltRounds = 10; // will do 2^rounds
-
-var validate = require('./validation');
 
 
 /** CONSTANTS */
@@ -61,22 +55,6 @@ module.exports = {
      * @param callback {function} : methods will be executed when the user is inserted(Success/Fail)
      */
     signUp: function (user, callback) {
-
-        if (!validate.email(user.email))
-            return callback({errMessage: "Invalid Email"}, null);
-        if (!validate.password(user.password))
-            return callback({errMessage: "Invalid Password"}, null);
-        if (!validate.phone(user.phone))
-            return callback({errMessage: "Invalid Phone Number"}, null);
-
-        //Set TTL on collection's documents with field "createdAt"
-        // mongoUtils.getCollection(COLLECTIONS.SIGNUPS).ensureIndex({createdAt: 1},
-        //     {expireAfterSeconds: 86400}, // 24 hours
-        //     function (error, indexName) {
-        //         debug('ensureIndex indexName', indexName);
-        //         debug('ensureIndex error', error);
-        //     });
-
 
         //Check if user already exists
         mongoUtils.query(COLLECTIONS.USERS, {$or: [{email: user.email}, {phone: user.phone}]}, function (error, result) {

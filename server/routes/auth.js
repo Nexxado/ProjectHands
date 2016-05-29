@@ -8,6 +8,7 @@ var emailUtils = require('../utils/email');
 var writeToClient = require('../utils/writeToClient');
 var config = require('../../config.json');
 var middleware = require('../utils/middleware');
+var validation = require('../utils/validation');
 var serverSecret = process.env.SERVER_SECRET || config.SECRETS.serverSecret;
 var ROLES = config.ROLES;
 
@@ -15,7 +16,7 @@ var ROLES = config.ROLES;
 /**
  * User Login - match user password hash to hash in DB using passport strategy
  */
-router.post('/login', passport.authenticate('local'),
+router.post('/login', validation.validateParams, passport.authenticate('local'),
     function (req, res) {
 
         debug('local login success');
@@ -90,15 +91,15 @@ router.get('/logout', middleware.ensureAuthenticated, function (req, res) {
 /**
  * User SignUp - create a temp account on sign up, send activation email with token
  */
-router.post("/signup", function (req, res) {
+router.post("/signup", validation.validateParams, function (req, res) {
 
     if(req.isAuthenticated())
         return writeToClient(res, null, "User Already Logged In", HttpStatus.BAD_REQUEST);
 
     try {
         var user = JSON.parse(req.body.user);
-        if (!user || !user.email || !user.password || !user.name || !user.phone)
-            return writeToClient(res, null, "Please Provide all required fields", HttpStatus.BAD_REQUEST);
+        // if (!user || !user.email || !user.password || !user.name || !user.phone)
+        //     return writeToClient(res, null, "Please Provide all required fields", HttpStatus.BAD_REQUEST);
 
         user.role = ROLES.ADMIN; //FIXME change initial role to ROLES.GUEST;
 

@@ -1,60 +1,86 @@
+
+var debug = require('debug')('utils/validation');
+var HttpStatus = require('http-status-codes');
+
+var validation = {};
+
 /**
- * Created by ND88 on 20/05/2016.
+ * Validate phone number
+ * @param phone {String}
+ * @returns {boolean}
  */
+function validatePhone(phone) {
+    var regexPhone = /^0(5(2|3|4|7|8)|(2|3|4|8)|77 )-?\d{4}-?\d{3}$/;
+    return regexPhone.test(phone);
+}
 
+/**
+ * Validate Email
+ * @param email {String}
+ * @returns {boolean}
+ */
+function validateEmail(email) {
+    //Email Regex according to RFC 5322. - http://emailregex.com/
+    var regexEmail = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+    return regexEmail.test(email);
+}
 
-module.exports = {
-
-    /**
-     * Checks if a 9 Digit ID is a legal Israeli ID
-     * @param   {string}  id : 9 digit ID number as string
-     * @returns {boolean} : true if legal ID, otherwise false
-     * Algorithm:
-     * 1) Multiply each ID digit with each corrsponding ID of the check number
-     * 2) For any result with 2 digits, add the digits together
-     * 3) Sum all the resulting numbers, if the sum is divisble by 10, its legal.
-     */
-    // id: function(id) {
-    //     var check = "121212121";
-    //     var array = [];
-    //     var sum = 0;
-    //
-    //     for(var i =  0; i < id.length; i++) {
-    //         var result = parseInt(id.charAt(i)) * parseInt(check.charAt(i));
-    //         array.push(result);
-    //     }
-    //
-    //     for(var i = 0; i < array.length; i++) {
-    //         if(array[i] >= 10) {
-    //             var numStr = array[i].toString();
-    //             var result = parseInt(numStr.charAt(0)) + parseInt(numStr.charAt(1));
-    //             array[i] = result;
-    //         }
-    //     }
-    //
-    //     for(var i = 0; i < array.length; i++) {
-    //         sum += array[i];
-    //     }
-    //
-    //
-    //     return !(sum % 10);
-    // },
-
-
-    phone: function(phone) {
-        //TODO Implement phone validation
-        return true;
-    },
-
-    email: function(email){
-        //Email Regex according to RFC 5322. - http://emailregex.com/
-        var regexEmail = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
-        return regexEmail.test(email);
-    },
-
-    password: function(password) {
-        return true;
-        //TODO Implement password constraints
+/**
+ * Validate Password
+ * @param password {String}
+ * @returns {boolean}
+ */
+function validatePassword(password) {
+    var constraints = [/[A-Z]/, /[a-z]/, /[0-9]/, /^.{8,}$/];
+    var counter = 0;
+    for(var i = 0; i < constraints.length; i++) {
+        if(constraints[i].test(password))
+            counter++;
     }
+    return counter === constraints.length;
+}
 
+/**
+ * Validate user sign-up details
+ * @param user {Object}
+ * @returns {boolean}
+ */
+function validateSignup(user) {
+    if (!user ||
+        !user.email || user.email === '' ||
+        !user.password || user.password === '' ||
+        !user.name || user.name === '' ||
+        !user.phone || user.phone === '')
+        return false;
+
+    if(!user.area || !user.area.length || (user.team_leader && user.team_leader.length > 1))
+        return false;
+
+    return validateEmail(user.email) && validatePassword(user.password) && validatePhone(user.phone);
+}
+
+
+//Middleware to validate request params according to request path
+validation.validateParams = function(req, res, next) {
+    debug('validateParams path', req.path);
+
+    switch(req.path) {
+        case '/signup':
+            if(!req.body.user || !validateSignup(JSON.parse(req.body.user)))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please Provide all required fields"});
+            break;
+
+        case '/login':
+            if(!req.body.email || !req.body.password ||
+                !validateEmail(req.body.email) || !validatePassword(req.body.password))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Email or Password are incorrect"});
+            break;
+
+        default:
+            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Bad Request"});
+    }
+    return next();
 };
+
+
+module.exports = validation;
