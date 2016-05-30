@@ -8,32 +8,39 @@ var mongoUtils = require('../utils/mongo');
 var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
 
-router.post('/uploads', multipartyMiddleware,
-    function (request, response) {
-        // We are able to access req.files.file thanks to
-        // the multiparty middleware
-        var file = request.files.file;
-        var albumKey = request.body.album_key;
 
-        console.log('albumKey ' + albumKey);
-        console.log(file.name);
-        console.log(file.type);
+//the router for photos module
+/**
+ * post for upload photos to sever using multipartyMiddleware
+ *
+ */
+router.post('/uploads', multipartyMiddleware, function (request, response) {
+    // We are able to access req.files.file thanks to
+    // the multiparty middleware
+    //TODO check request old files
+    var file = request.files.file;
+    var albumKey = request.body.album_key;
 
-        driveUtils.uploadFile(file.path, albumKey, function (err, res) {
+    //upload photo to google drive
+    driveUtils.uploadFile(
+        file.path,
+        albumKey,
+        function (err, res) {
             if (err) {
 
             } else {
-                console.log('uploadFile ' + res);
-
-                // saveLink(fileId, webContentLink, album_key, callback)
-                saveLink(res.file_id, res.web_link, albumKey, function (err, res) {
+                var photoData = {
+                    file_id: res.file_id,
+                    web_link: res.web_link,
+                    album_key: albumKey
+                };
+                //save photo data to server db
+                savePhoto(res.file_id, res.web_link, albumKey, function (err, res) {
                     if (err) {
 
                     } else {
-                        getAlbum(albumKey, function (err, res) {
-                            writeToClient(response, res);
-                            console.log('getAlbum ' + res);
-                        })
+                        //send to client new photo data
+                        writeToClient(response, photoData);
                     }
                 });
 
@@ -41,58 +48,83 @@ router.post('/uploads', multipartyMiddleware,
             }
 
         });
-    });
-
+});
+/**
+ * post for delete photo from drive and db
+ * TODO change to delete method
+ */
 router.post('/delete', function (request, response) {
-    // We are able to access req.files.file thanks to
-    // the multiparty middleware
-    // var photoUrl = request.body.photo_url;
 
     var fileId = request.body.file_id;
-    console.log('fileId for delete : ' + fileId);
+
+    //delete file from drive 
     driveUtils.deleteFile(fileId, function (err, res) {
-        if(err){
-            console.log('deleteFile : ' + err);
-        }else {
+        if (err) {
+
+        } else {
+            //delete photo data from the db
             deletePhoto(fileId, function (err, res) {
-                if(err){
-                    console.log('deletePhoto err : ' + err);
-                }else{
-                    console.log('deletePhoto res : ' + res);
+                if (err) {
+
+                } else {
+
                     writeToClient(response);
                 }
             })
-            console.log('deleteFile : ' + res);
+          
         }
     });
 });
-
+/**
+ * gets album data from the db
+ */
 router.get('/album', function (request, response) {
     var album = request.query.album;
-    console.log('album : ' + album);
-
     getAlbum(album, function (err, res) {
-        if(err){
+        if (err) {
 
-        }else {
+        } else {
             writeToClient(response, res);
         }
     })
 });
 
-function saveLink(fileId, webContentLink, album_key, callback) {
-    mongoUtils.insert(COLLECTIONS.IMAGES, {album_key: album_key, web_link: webContentLink, file_id: fileId}, callback);
+
+//DB METHODS
+/**
+ *  save photo data to db
+ * @param fileId : photo drive file id
+ * @param webContentLink : drive direct link
+ * @param album_key : album of the photo
+ * @param callback : holds err / success
+ */
+function savePhoto(fileId, webContentLink, album_key, callback) {
+    mongoUtils.insert(COLLECTIONS.PHOTOS, {
+            album_key: album_key,
+            web_link: webContentLink,
+            file_id: fileId
+        }
+        , callback);
 }
 /**
- *
- * @param albumKey
- * @param callback
+ *  get all photos of particular album
+ * @param albumKey : the album
+ * @param callback : callback holds err / success
  */
 function getAlbum(albumKey, callback) {
     // console.log('getAlbumImages(albumKey) ' + albumKey);
-    mongoUtils.query(COLLECTIONS.IMAGES, {album_key: albumKey}, callback);
+    mongoUtils.query(COLLECTIONS.PHOTOS, {
+        album_key: albumKey
+    }, callback);
 }
+/**
+ * delete photo data from the db
+ * @param fileId : the drive file id
+ * @param callback : callback holds err / success
+ */
 function deletePhoto(fileId, callback) {
-    mongoUtils.delete(COLLECTIONS.IMAGES, {file_id: fileId}, callback);
+    mongoUtils.delete(COLLECTIONS.PHOTOS, {
+        file_id: fileId
+    }, callback);
 }
 module.exports = router;

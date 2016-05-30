@@ -49,12 +49,13 @@
 
                     <md-whiteframe class="md-whiteframe-8dp" layout layout-align="center center">
                         <div class="image-container">
+                            <!--<div class="image-progress">-->
+                                <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
+                            <!--</div>-->
                             <img height="300" width="300" ng-src="{{img.web_link}}">
                             <md-button ng-click="deletePhoto(img.file_id, $index)" class="md-fab delete-button"
                                        aria-label="Delete">
                                 <md-icon md-svg-src="assets/icons/ic_delete_white_24px.svg"></md-icon>
-                                <!--<md-progress-circular ng-show="progressDelete"-->
-                                <!--md-mode="indeterminate"></md-progress-circular>-->
                             </md-button>
                         </div>
                     </md-whiteframe>

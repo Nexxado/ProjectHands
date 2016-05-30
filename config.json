@@ -21,7 +21,7 @@
         "CHATS": "chats",
         "SIGNUPS": "signup_users",
         "ACTIONS": "actions",
-        "IMAGES": "images"
+        "PHOTOS": "photos"
     },
     "ROLES": {
         "ADMIN": "admin",

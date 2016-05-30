@@ -3,12 +3,9 @@ var readline = require('readline');
 var google = require('googleapis');
 var googleAuth = require('google-auth-library');
 var mime = require('mime-types');
-
-//***************images
 var config = require('../../config.json');
-var COLLECTIONS = config.COLLECTIONS;
-var mongoUtils = require('./mongo');
-//***************
+
+
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/drive-nodejs-quickstart.json
 var SCOPES = [
@@ -111,68 +108,35 @@ function storeToken(token) {
  */
 function initAuth(auth) {
     myAuth = auth;
-
-    // var service = google.drive('v3');
-    // service.files.list({
-    //     auth: auth,
-    //     pageSize: 10,
-    //     fields: "nextPageToken, files(id, name)"
-    // }, function (err, response) {
-    //     if (err) {
-    //         console.log('The API returned an error: ' + err);
-    //         return;
-    //     }
-    //     var files = response.files;
-    //     if (files.length == 0) {
-    //         console.log('No files found.');
-    //     } else {
-    //         console.log('Files:');
-    //         for (var i = 0; i < files.length; i++) {
-    //             var file = files[i];
-    //             console.log('%s (%s)', file.name, file.id);
-    //         }
-    //     }
-    // });
 }
 /**
- * make link to by direct and nod download, remove suffix 'export=download'
+ * make link to by direct and not download, remove suffix 'export=download'
  */
 function fixDirectLink(link) {
     return link.split('export=download')[0];
 }
 
 /**
- * Main routin for uploding file photos + set public + return web content link
+ *  the routine for uploading file to google drive :
+ * 1. upload file to google drive
+ * 2. set file permission to public
+ * 3. get file webContentLink
+ * @param filePath : path of the file in the file system
+ * @param albumkey : album you want to put file in
+ * @param callback : (err, res), res holds  file_id and web_link
  */
-function uploadToDrive(filePath, album_key, callback) {
-    var fileId ;
-    uploadFileToDrive(filePath, album_key, function (err, file) {
+function uploadToDrive(filePath, albumkey, callback) {
+    var fileId;
+    uploadFileToDrive(filePath, albumkey, function (err, file) {
         if (err) {
-            // console.log('uploadFileToDrive: ' + err);
-
         } else {
-
-            setFileShardToAnyone(file.id, function (err, res) {
+            setFilePermissionAnyoneRead(file.id, function (err, res) {
                 fileId = file.id;
-                console.log('file.id: ' + file.id);
                 if (err) {
-                    // console.log('setFileShardToAnyone: ' + err);
                 } else {
-                    // console.log('setFileShardToAnyone: ' + res);
-                    // deleteFileFormDrive(file.id, function (err, res) {
-                    //     if (err) {
-                    //         console.log('deleteFileFormDrive: err ' + err);
-                    //     } else {
-                    //         console.log('deleteFileFormDrive: res' + res);
-                    //     }
-                    // });
-
                     getFileWebContentLink(file.id, function (err, res) {
                         if (err) {
-                            // console.log('getFileWebContentLink: ' + err);
                         } else {
-                            // console.log('getFileWebContentLink res: ', res.webContentLink);
-                            // console.log('getFileWebContentLink permissionsId: ', res.permissionsId);
                             var mRes = {
                                 file_id: fileId,
                                 web_link: fixDirectLink(res.webContentLink)
@@ -209,7 +173,11 @@ function uploadFileToDrive(filePath, album_key, callback) {
         }
     }, callback);
 }
-
+/**
+ * delete file from google drive
+ * @param fileId
+ * @param callback
+ */
 function deleteFile(fileId, callback) {
     var drive = google.drive({version: 'v3', auth: myAuth});
     drive.files.delete({
@@ -217,11 +185,11 @@ function deleteFile(fileId, callback) {
     }, callback);
 }
 /**
- * Set file in google drive to by public for everyone with a link
+ * Set file in google drive to by public to anyone with a link
  * @param callback with (err, res) if file shard  success err=null
  * @param fileId
  */
-function setFileShardToAnyone(fileId, callback) {
+function setFilePermissionAnyoneRead(fileId, callback) {
     var drive = google.drive({version: 'v3', auth: myAuth});
     drive.permissions.create({
         resource: {
@@ -245,25 +213,11 @@ function getFileWebContentLink(fileId, callback) {
     }, callback);
 }
 
-function getImagesCollection() {
-    mongoUtils.query(COLLECTIONS.IMAGES, {}, function (error, result) {
-        if (error)
-            console.log(err);
-        else
-            console.log(result);
-    })
-}
-
-function getAlbumImages(albumKey) {
-    console.log('getAlbumImages(albumKey) ' + albumKey);
-    mongoUtils.query(COLLECTIONS.IMAGES, {album_key: albumKey}, function (error, result) {
-        if (error)
-            console.log(err);
-        else
-            console.log(result);
-    })
-}
-
+/**
+ * NOT USED for now
+ * @param name
+ * @param auth
+ */
 function createFolder(name, auth) {
     var drive = google.drive({version: 'v3', auth: auth});
     var fileMetadata = {
@@ -285,7 +239,6 @@ function createFolder(name, auth) {
 
 module.exports = {
     uploadFile: function (filePath, album_key, callback) {
-        // uploadFileToDrive(filePath, album_key, callback);
         uploadToDrive(filePath, album_key, callback);
     },
     deleteFile: function (fileId, callback) {

@@ -3,7 +3,7 @@ angular.module('ProjectHands.photos')
     .directive('photos', function () {
         return {
             restrict: 'E',
-            scope: { album: '@'},
+            scope: {album: '@'},
             replace: true,
             templateUrl: 'modules/photos/templates/directives/photos.html',
             controller: function ($scope, Upload, $timeout, PhotosService) {
@@ -72,7 +72,7 @@ angular.module('ProjectHands.photos')
                                             ', Response: ' + JSON.stringify(resp.data) +
                                             '\n' + $scope.log;
                                         // $scope.photoSrc = (resp.data).replace(/['"]+/g, '');
-                                        $scope.images = resp.data;
+                                        $scope.images.push(resp.data);
                                         $scope.progress = false;
                                     });
                                 }, null, function (evt) {
