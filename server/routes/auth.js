@@ -27,13 +27,13 @@ router.post('/login', validation.validateParams, passport.authenticate('local'),
             name: req.user.name,
             email: req.user.email,
             role: req.user.role,
+            phone: req.user.phone,
             approved: req.user.approved,
             signup_complete: req.user.signup_complete,
+            joined_date: req.user.joined_date,
             avatar: req.user.avatar,
             renovations: req.user.renovations,
-            tasks: req.user.tasks,
-            calendar_events: req.user.calendar_events,
-            layout_settings: req.user.layout_settings
+            tasks: req.user.tasks
         });
     });
 
@@ -46,13 +46,13 @@ router.get('/isLoggedIn', middleware.ensureAuthenticated, function (req, res) {
         name: req.user.name,
         email: req.user.email,
         role: req.user.role,
+        phone: req.user.phone,
         approved: req.user.approved,
         signup_complete: req.user.signup_complete,
+        joined_date: req.user.joined_date,
         avatar: req.user.avatar,
         renovations: req.user.renovations,
-        tasks: req.user.tasks,
-        calendar_events: req.user.calendar_events,
-        layout_settings: req.user.layout_settings
+        tasks: req.user.tasks
     });
 });
 
@@ -105,6 +105,8 @@ router.post("/signup", validation.validateParams, function (req, res) {
 
         debug('signup user', user);
         delete user._id; //TODO check why user is receieved with _id = ''
+
+        user.joined_date = new Date().toISOString();
 
         authUtils.signUp(user, function (error, result) {
 

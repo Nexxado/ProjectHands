@@ -17,7 +17,7 @@ var FACEBOOK_CALLBACK_URL = process.env.FACEBOOK_CALLBACK || config.AUTH.faceboo
 
 module.exports = function (passport) {
 
-    /*
+    /**
      * Serialize user into session
      */
     passport.serializeUser(function (user, done) {
@@ -31,7 +31,7 @@ module.exports = function (passport) {
         done(null, JSON.stringify(serialize));
     });
 
-    /*
+    /**
      * Deserialize user from session
      */
     passport.deserializeUser(function (serialized, done) {
@@ -54,7 +54,7 @@ module.exports = function (passport) {
     });
     
     
-    /*
+    /**
      * Strategy used for local login
      */
     passport.use(new LocalStrategy({ usernameField: 'email' }, function(email, password, done) {
@@ -74,7 +74,7 @@ module.exports = function (passport) {
         });
     }));
 
-    /*
+    /**
      * Strategy used for Google Social sign in
      */
     passport.use(new GoogleStrategy({
@@ -118,7 +118,8 @@ module.exports = function (passport) {
                     name: profile.name.givenName + ' ' + profile.name.familyName,
                     role: ROLES.ADMIN, //FIXME change initial role to ROLES.GUEST;
                     signup_complete: false,
-                    approved: false
+                    approved: false,
+                    joined_date: new Date().toISOString()
                 };
 
                 mongoUtils.insert(USERS, newUser, function(error, result) {
@@ -137,7 +138,7 @@ module.exports = function (passport) {
         });
     }));
 
-    /*
+    /**
      * Strategy used for Facebook Social sign in
      */
     passport.use(new FacebookStrategy({
@@ -182,7 +183,8 @@ module.exports = function (passport) {
                     name: profile.name.givenName + ' ' + profile.name.familyName,
                     role: ROLES.ADMIN, //FIXME change initial role to ROLES.GUEST;
                     signup_complete: false,
-                    approved: false
+                    approved: false,
+                    joined_date: new Date().toISOString()
                 };
 
                 mongoUtils.insert(USERS, newUser, function(error, result) {
