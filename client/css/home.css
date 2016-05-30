@@ -24,6 +24,11 @@
     position: relative;
 }
 
+.image-progress{
+    right: 50px;
+    top: 50px;
+}
+
 .delete-button {
     position: absolute;
     right: 10px;

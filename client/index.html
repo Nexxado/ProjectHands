@@ -26,6 +26,7 @@
     <link href="css/home.css" rel="stylesheet">
     <link href="css/status.css" rel="stylesheet">
     <link href="css/signup.css" rel="stylesheet">
+    <link href="css/photos.css" rel="stylesheet"/>
 
 
 </head>
@@ -58,6 +59,8 @@
 <script src="vendor/crypto-js/crypto-js.js"></script>
 <script src="js/TweenMax.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
+<script src="js/ng-file-upload-shim.min.js"></script> <!-- for no html5 browsers support -->
+<script src="js/ng-file-upload.min.js"></script>
 
 
 <!-- App -->
@@ -69,6 +72,7 @@
 <script src="modules/auth/routes.js"></script>
 <script src="modules/home/home.module.js"></script>
 <script src="modules/home/routes.js"></script>
+<script src="modules/photos/photos.module.js"></script>
 
 <!-- Controllers -->
 <script src="js/controllers/chatController.js"></script>
@@ -98,10 +102,11 @@
 <script src="modules/dashboard/directives/dashboard-chat-sidenav.js"></script>
 <script src="modules/home/directives/photo-slider.js"></script>
 <script src="modules/home/directives/photo-gallery.js"></script>
-<script src="modules/home/directives/file-model.js"></script>
 <script src="modules/home/directives/paypal-button.js"></script>
 <script src="modules/home/directives/statistics.js"></script>
 <script src="modules/home/directives/org-ads.js"></script>
+<script src="modules/home/directives/team.js"></script>
+<script src="modules/photos/directives/photos.js"></script>
 
 <!-- Services -->
 <script src="js/services/utils.js"></script>
@@ -111,8 +116,7 @@
 <script src="js/services/status.js"></script>
 <script src="modules/auth/services/auth.js"></script>
 <script src="modules/auth/services/session.js"></script>
-<script src="modules/home/services/file-upload.js"></script>
-<script src="modules/home/services/photo.js"></script>
+<script src="modules/photos/services/photos.js"></script>
 
 <!-- Filters -->
 <script src="js/filters/capitalize.js"></script>

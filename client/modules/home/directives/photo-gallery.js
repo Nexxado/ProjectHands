@@ -29,15 +29,15 @@ angular.module('ProjectHands.home')
                 //     {image: 'assets/img/home/jobs5.jpg', description: 'Image 04'}
                 // ];
                 
-                $scope.uploadFile = function(){
-                    var file = $scope.myFile;
-
-                    console.log('file is ' );
-                    console.dir(file);
-
-                    var uploadUrl = "/fileUpload";
-                    fileUpload.uploadFileToUrl(file, uploadUrl);
-                };
+                // $scope.uploadFileToDrive = function(){
+                //     var file = $scope.myFile;
+                //
+                //     console.log('file is ' );
+                //     console.dir(file);
+                //
+                //     var uploadUrl = "/fileUpload";
+                //     fileUpload.uploadFileToUrl(file, uploadUrl);
+                // };
                 
                 
 
