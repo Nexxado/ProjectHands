@@ -27,7 +27,7 @@ describe('Database API', function () {
                         _id: "321321321",
                         name: "Mocha Insert Test",
                         email: "mochainsert@gmail.com",
-                        password: "1234"
+                        password: "Ts01012001"
                     })
                 })
                 .expect('Content-Type', /application\/json/)
@@ -75,7 +75,7 @@ describe('Database API', function () {
                     _id: "321321321",
                     name: "Mocha Update Test",
                     email: "mochainsert@gmail.com",
-                    password: "1234"
+                    password: "Ts01012001"
                     }], done);
         });
 
@@ -99,9 +99,9 @@ describe('Database API', function () {
             mongoUtils.insert(COLLECTIONS.USERS, {
                 "_id": "000000000",
                 "name": "Route Test",
-                "password": bcrypt.hashSync('1234', saltRounds),
+                "password": bcrypt.hashSync('Ts01012001', saltRounds),
                 "role": "admin",
-                "email": "route@gmail.com",
+                "email": "route@gmail.com"
             }, function () {});
         });
 
@@ -124,7 +124,7 @@ describe('Database API', function () {
                         _id: "123123123",
                         name: "SignUp Mocha Test",
                         email: "signupmocha@gmail.com",
-                        password: "1234"
+                        password: "Ts01012001"
                     })
                 })
                 .expect(200)
@@ -139,7 +139,7 @@ describe('Database API', function () {
                 .post('/api/auth/login')
                 .send({
                     email: "route@gmail.com",
-                    password: "1234"
+                    password: "Ts01012001"
                 })
                 .expect(200, done);
         });

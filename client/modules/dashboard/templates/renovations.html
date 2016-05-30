@@ -1,8 +1,12 @@
 <md-toolbar layout="row" layout-align="none center" class="md-primary dashboard-top-rounded-toolbar">
+    <md-button ng-click="addRenovation($event)" class="md-fab md-primary md-mini" layout="row" layout-align="center center">
+        <i class="material-icons">add_circle</i>
+    </md-button>
     <span flex></span>
     <div class="md-toolbar-tools" dir="rtl">
         <span>שיפוצים מתוכננים</span>
     </div>
+
 </md-toolbar>
 
 <md-content>
@@ -15,5 +19,3 @@
         </md-list-item>
     </md-list>
 </md-content>
-
-<!--addRenoRoom(renovation.address.street + ' ' + renovation.address.houseNum + ', ' +  renovation.address.city) ; assignVarsForRenovation(renovation.address.city, renovation.address.street, renovation.address.houseNum)-->

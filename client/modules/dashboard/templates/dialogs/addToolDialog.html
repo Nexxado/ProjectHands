@@ -1,0 +1,46 @@
+<md-dialog aria-label="Tool Dialog" flex="50">
+    <form name="AddToolForm" ng-submit="submit()" novalidate>
+        <md-toolbar>
+            <div class="md-toolbar-tools" dir="rtl">
+                <h2>הוספת הודעה חדשה</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <!-- Input Title -->
+                <md-input-container class="md-block md-icon-float rtl">
+                    <label>שם כלי</label>
+                    <md-icon class="material-icons">title</md-icon>
+                    <input type="text" name="name" ng-model="tool.name" required>
+                    <md-tooltip md-delay="1000">שם הכלי אותו תרצה להוסיף</md-tooltip>
+                    <div ng-messages="AddPinnedForm.title.$error">
+                        <div ng-message="required">
+                            שדה חובה
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block md-icon-float rtl">
+                    <label>כמות</label>
+                    <md-icon class="material-icons">format_list_numbered</md-icon>
+                    <input type="text" name="comment" ng-model="tool.quantity">
+                    <md-tooltip md-delay="1000">כמה צריך</md-tooltip>
+                </md-input-container>
+                <!-- Input Description -->
+                <md-input-container class="md-block md-icon-float rtl">
+                    <label>הערה</label>
+                    <md-icon class="material-icons">description</md-icon>
+                    <input type="text" name="comment" ng-model="tool.comment">
+                    <md-tooltip md-delay="1000">הערה לגבי הכלי אותו אתה מוסיף</md-tooltip>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button ng-click="cancel()" class="md-warn">ביטול</md-button>
+            <md-button type="submit" class="md-primary">אישור</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

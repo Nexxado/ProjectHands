@@ -14,6 +14,22 @@
     opacity: 0;
 }
 
+/******************************/
+/***** Toggle Slide Right *****/
+/******************************/
+.toggle-slide-right.ng-hide-add,
+.toggle-slide-right.ng-hide-remove  {
+    transition: all ease 500ms;
+}
+
+.toggle-slide-right {
+    transform: translateX(0);
+}
+
+.toggle-slide-right.ng-hide {
+    transform: translateX(100%);
+}
+
 /***********************************/
 /***** Slide in\out from Right *****/
 /***********************************/

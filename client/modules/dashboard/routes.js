@@ -12,8 +12,8 @@ angular.module('ProjectHands.dashboard')
             }
         },
         resolve: {
-            auth: function($rootScope) {
-                return $rootScope.authenticate('dashboard');
+            auth: function($rootScope, ACL) {
+                return $rootScope.authenticate(ACL.VIEW_DASHBOARD);
             }
         }
     })

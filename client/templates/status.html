@@ -1,0 +1,11 @@
+<md-content>
+    <div layout="column" layout-align="center center" layout-padding>
+        <h1>Status Page</h1>
+        <div class="status-indicator" ng-class="active ? 'active' : 'not-active'"></div>
+        <div class="status-message">{{ message }}</div>
+        <!-- Admin Control Panel -->
+        <div admin-actions>
+            <md-button ng-click="updateStatusDialog($event)">עדכן סטטוס</md-button>
+        </div>
+    </div>
+</md-content>

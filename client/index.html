@@ -4,11 +4,12 @@
 
 <head>
     <base href="/">
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-signin-client_id" content="990301468716-ubc9ojva16mhq03k1sb88k2djruph8is.apps.googleusercontent.com">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Project 'Hands'</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-signin-client_id"
+          content="990301468716-ubc9ojva16mhq03k1sb88k2djruph8is.apps.googleusercontent.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project 'Hands'</title>
 
     <!-- Vendor -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -17,26 +18,25 @@
     <link href="vendor/fullcalendar/dist/fullcalendar.css" rel="stylesheet">
 
     <!-- App -->
-    <link href="css/app.css" rel="stylesheet" >
-    <link href="css/animations.css" rel="stylesheet" >
-    <link href="css/toolbar.css" rel="stylesheet" >
-    <link href="css/chat.css" rel="stylesheet" >
-    <link href="css/dashboard.css" rel="stylesheet" >
-    <link href="css/renovation_dashboard.css" rel="stylesheet">
-    <link href="css/home.css" rel="stylesheet"/>
-
+    <link href="css/app.css" rel="stylesheet">
+    <link href="css/animations.css" rel="stylesheet">
+    <link href="css/toolbar.css" rel="stylesheet">
+    <link href="css/chat.css" rel="stylesheet">
+    <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/home.css" rel="stylesheet">
+    <link href="css/status.css" rel="stylesheet">
+    <link href="css/signup.css" rel="stylesheet">
+    <link href="css/photos.css" rel="stylesheet"/>
 
 
 </head>
 
 <body>
-	<toolbar></toolbar>
-    <notifications></notifications>
-	<!-- Main Content -->
-	<main ui-view id="main-view"></main>
+<toolbar></toolbar>
+<notifications></notifications>
+<!-- Main Content -->
+<main ui-view id="main-view"></main>
 </body>
-
-
 
 
 <!-- Vendor (3rd party libraries) -->
@@ -59,6 +59,8 @@
 <script src="vendor/crypto-js/crypto-js.js"></script>
 <script src="js/TweenMax.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
+<script src="js/ng-file-upload-shim.min.js"></script> <!-- for no html5 browsers support -->
+<script src="js/ng-file-upload.min.js"></script>
 
 
 <!-- App -->
@@ -68,15 +70,17 @@
 <script src="modules/dashboard/routes.js"></script>
 <script src="modules/auth/auth.module.js"></script>
 <script src="modules/auth/routes.js"></script>
-<script src="modules/auth/submodules/google.js"></script>
 <script src="modules/home/home.module.js"></script>
 <script src="modules/home/routes.js"></script>
+<script src="modules/photos/photos.module.js"></script>
 
 <!-- Controllers -->
 <script src="js/controllers/chatController.js"></script>
 <script src="js/controllers/chatRoomController.js"></script>
+<script src="js/controllers/statusController.js"></script>
 <script src="modules/auth/controllers/loginController.js"></script>
 <script src="modules/auth/controllers/signupController.js"></script>
+<script src="modules/auth/controllers/oauthSignupController.js"></script>
 <script src="modules/dashboard/controllers/dashboardController.js"></script>
 <script src="modules/dashboard/controllers/dashboardMainPageController.js"></script>
 <script src="modules/dashboard/controllers/dashboardUserProfileController.js"></script>
@@ -91,25 +95,28 @@
 <script src="js/directives/chat.js"></script>
 <script src="js/directives/chat-room.js"></script>
 <script src="js/directives/notifications.js"></script>
+<script src="js/directives/adminActions.js"></script>
 <script src="modules/dashboard/directives/dashboard-toolbar.js"></script>
 <script src="modules/dashboard/directives/dashboard-sidenav.js"></script>
 <script src="modules/dashboard/directives/dashboard-sidenav-admin.js"></script>
 <script src="modules/dashboard/directives/dashboard-chat-sidenav.js"></script>
 <script src="modules/home/directives/photo-slider.js"></script>
 <script src="modules/home/directives/photo-gallery.js"></script>
-<script src="modules/home/directives/file-model.js"></script>
 <script src="modules/home/directives/paypal-button.js"></script>
 <script src="modules/home/directives/statistics.js"></script>
 <script src="modules/home/directives/org-ads.js"></script>
+<script src="modules/home/directives/team.js"></script>
+<script src="modules/photos/directives/photos.js"></script>
 
 <!-- Services -->
 <script src="js/services/utils.js"></script>
 <script src="js/services/socketio.js"></script>
 <script src="js/services/database.js"></script>
+<script src="js/services/chat.js"></script>
+<script src="js/services/status.js"></script>
 <script src="modules/auth/services/auth.js"></script>
 <script src="modules/auth/services/session.js"></script>
-<script src="modules/home/services/file-upload.js"></script>
-<script src="modules/home/services/photo.js"></script>
+<script src="modules/photos/services/photos.js"></script>
 
 <!-- Filters -->
 <script src="js/filters/capitalize.js"></script>

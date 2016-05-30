@@ -4,6 +4,10 @@ angular.module('ProjectHands')
 
         var baseUrl = '/api/database';
 
+        /**
+         * Convenience Service - FOR DEVELOPMENT PURPOSES ONLY!!!
+         * TODO This file will be deleted in production
+         */
     
         /**
          * Remove a document from the database
@@ -51,7 +55,7 @@ angular.module('ProjectHands')
         /**
          * Query a document in the database
          * @param   {string}   collection : The collection the current document is in
-         * @param   {object}   query      : Query to be used against the database to find the document
+         * @param   {object}   data      : Query to be used against the database to find the document
          * @returns {object}              : Promise to be executed once data is retrieved from the server
          */
         function query(collection, data) {

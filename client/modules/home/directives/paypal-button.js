@@ -5,8 +5,8 @@ angular.module('ProjectHands.home')
             restrict: 'E',
             replace: true,
             templateUrl: 'modules/home/templates/directives/paypal-button.html',
-            controller: function ($scope) {
-            
+            controller: function ($scope, $timeout) {
+
 
             }
         };

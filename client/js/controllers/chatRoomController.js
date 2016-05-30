@@ -1,7 +1,8 @@
 angular.module('ProjectHands')
 
-.controller('ChatRoomController', function ($scope, $timeout, socketio, DatabaseService, UtilsService, COLLECTIONS) {
+.controller('ChatRoomController', function ($scope, $timeout, socketio, ChatService, UtilsService, $rootScope) {
 
+    $scope.user = $rootScope.user;
     //Message Classes
     var class_message_self = 'chat-message-self';
     var class_message_others = 'chat-message-others';
@@ -10,10 +11,11 @@ angular.module('ProjectHands')
 //    $scope.room = $attrs.room;
 //    $scope.user = $attrs.user;
 //    console.log('chat-room user', $scope.user);
-//    console.log('chat-room room', $scope.room);
+   console.log('chat-room', $scope.room);
 
     $scope.history = [];
-	console.log("hahahaha", $scope.user);
+    $scope.users = [];
+    $scope.showUsersList = false;
     $scope.message = {
         user: $scope.user.name,
         content: '',
@@ -21,6 +23,19 @@ angular.module('ProjectHands')
         class: class_message_self,
         align: 'end'
     };
+
+    socketio.on('message', function (message) {
+        $scope.$apply(function () {
+            message.dir = isHebrew(message.user) ? 'rtl' : 'ltr';
+            message.class = class_message_others;
+            $scope.history.push(parseTimestamp(message));
+        });
+    });
+
+    socketio.on('online-users', function (users) {
+        console.log('online-users', $scope.room, users);
+        $scope.users = users;
+    });
 
     socketio.emit('room.join', $scope.room);
     getChatHistory();
@@ -39,7 +54,7 @@ angular.module('ProjectHands')
         delete message.dir;
         delete message.class;
 
-        socketio.emit('message', message, $scope.room, function (data) {
+        socketio.emit('message', {message: message, room: $scope.room}, function (data) {
             console.log('Ack: ', data);
         });
 
@@ -49,13 +64,7 @@ angular.module('ProjectHands')
         $scope.message.content = '';
     };
 
-    socketio.on('message', function (message) {
-        $scope.$apply(function () {
-            message.dir = isHebrew(message.user) ? 'rtl' : 'ltr';
-            message.class = class_message_others;
-            $scope.history.push(parseTimestamp(message));
-        });
-    });
+    
 
 
     //Change date object to HH:MM format
@@ -68,13 +77,11 @@ angular.module('ProjectHands')
     //Get chat history
     function getChatHistory() {
 
-        DatabaseService.query(COLLECTIONS.CHATS, {
-                _id: $scope.room
-            }).$promise
-            .then(function (data) {
-                console.log('data', data);
-                if (data.length > 0)
-                    $scope.history = data[0].messages;
+        ChatService.getChatHistory($scope.room).$promise
+            .then(function (result) {
+                console.log('result', result);
+                if (result.length > 0)
+                    $scope.history = result[0].messages;
 
                 $scope.history.forEach(function (message) {
                     message.class = $scope.user.name === message.user ? class_message_self : class_message_others;

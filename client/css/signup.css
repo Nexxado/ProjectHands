@@ -1,0 +1,35 @@
+.signup-form  fieldset {
+    margin-bottom: 15px;
+}
+
+.signup-form  fieldset .fieldset-subheader {
+    color: rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.signup-form .volunteer-area fieldset,
+.signup-form .preferred-day fieldset,
+.signup-form .team-leader fieldset {
+    padding-top: 15px;
+}
+
+.signup-form .volunteer-area fieldset md-input-container {
+    margin-bottom: 0;
+}
+
+.signup-form .extra .header {
+    direction: rtl;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.signup-form .extra .subheader {
+    direction: rtl;
+    color: rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+}
+
+.signup-form fieldset.required.invalid {
+    border-color: rgb(221,44,0);
+}

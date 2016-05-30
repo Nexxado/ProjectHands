@@ -12,7 +12,7 @@ angular.module('ProjectHands')
         if(!socket)
             return;
 
-        socket.emit('client-disconnect');
+        socket.disconnect();
         socket = undefined;
     }
 

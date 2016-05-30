@@ -2,25 +2,15 @@ angular.module('ProjectHands.auth')
 
 .controller('SignupController', function ($scope, AuthService, UtilsService) {
 
-    $scope.signupSuccess = false;
-    $scope.user = {
-        email: '',
-        password: '',
-        realID: '',
-        name: ''
-    };
-
-    $scope.toastAnchor = 'form';
 
     $scope.signup = function () {
 
-        if ($scope.SignupForm.$invalid)
+        if (!$scope.validateArea() || $scope.SignupForm.$invalid)
             return;
 
-        if(!isLegalID($scope.user.realID)) {
-            UtilsService.makeToast('תעודת זהות אינה חוקית', $scope.toastAnchor, 'bottom right');
-            return;
-        }
+        getSelected($scope.volunteer_areas, $scope.user.area);
+        getSelected($scope.preferred_day, $scope.user.preferred_day);
+        getSelected($scope.team_leader, $scope.user.team_leader);
 
         AuthService.signup($scope.user).$promise
             .then(function (data) {
@@ -34,38 +24,147 @@ angular.module('ProjectHands.auth')
 
 
     /**
-     * Checks if a 9 Digit ID is a legal Israeli ID
-     * @param   {string}  id : 9 digit ID number as string
-     * @returns {boolean} : true if legal ID, otherwise false
-     * Algorithm:
-     * 1) Multiply each ID digit with each corrsponding ID of the check number
-     * 2) For any result with 2 digits, add the digits together
-     * 3) Sum all the resulting numbers, if the sum is divisble by 10, its legal.
+     * Force only one checkbox for be check at each time.
+     * Check off every checkbox apart from the newly selected one.
+     * @param array {Array} : array of checkboxes models
+     * @param index {Number} : Index of the newly selected checkbox
      */
-    function isLegalID(id) {
-
-        var check = "121212121";
-        var array = [];
-        var sum = 0;
-
-        for(var i =  0; i < id.length; i++) {
-            var result = parseInt(id.charAt(i)) * parseInt(check.charAt(i));
-            array.push(result);
-        }
-
+    $scope.forceOneCheckbox = function(array, index) {
         for(var i = 0; i < array.length; i++) {
-            if(array[i] >= 10) {
-                var numStr = array[i].toString();
-                var result = parseInt(numStr.charAt(0)) + parseInt(numStr.charAt(1));
-                array[i] = result;
+            if(i !== index) {
+                array[i].checked = false;
+            }
+        }
+    };
+
+    /**
+     * Validating Volunteer Area checkboxes
+     * Making sure at least one is checked
+     * @returns {boolean}
+     */
+    $scope.validateArea = function() {
+        for(var i = 0; i < $scope.volunteer_areas.length; i++) {
+            if($scope.volunteer_areas[i].checked) {
+                angular.element('.signup-form fieldset.required').removeClass('invalid');
+                return true;
             }
         }
 
-        for(var i = 0; i < array.length; i++) {
-            sum += array[i];
+        angular.element('.signup-form fieldset.required').addClass('invalid');
+        return false;
+    };
+
+
+    /**
+     * Push selected checkboxes to user object
+     * @param checkboxes {Array} : Array of the checkboxes' input models
+     * @param property {Array} : property field in $scope.user to push the selected checkboxes to.
+     */
+    function getSelected(checkboxes, property) {
+        for(var i = 0; i < checkboxes.length; i++) {
+            if(checkboxes[i].checked)
+                property.push(checkboxes[i].label);
         }
+    }
 
 
-        return !(sum % 10);
+    /************************/
+    /***** Input Models *****/
+    /************************/
+    $scope.volunteer_areas = [
+        {
+            label: 'ירושלים',
+            checked: false
+        } , {
+            label: 'בית שמש',
+            checked: false
+        } , {
+            label: 'מעלה אדומים',
+            checked: false
+        } , {
+            label: 'רמלה-לוד',
+            checked: false
+        } , {
+            label: 'אחר',
+            checked: false,
+            input: ''
+        }
+    ];
+
+    $scope.preferred_day = [
+        {
+            label: 'אין לי יום קבוע',
+            checked: false
+        } , {
+            label: "א' - בוקר",
+            checked: false
+        } , {
+            label: "א' - אחה\"צ",
+            checked: false
+        } , {
+            label: "ב' - בוקר",
+            checked: false
+        } , {
+            label: "ב' - אחה\"צ",
+            checked: false
+        } , {
+            label: "ג' - בוקר",
+            checked: false
+        } , {
+            label: "ג' - אחה\"צ",
+            checked: false
+        } , {
+            label: "ד' - בוקר",
+            checked: false
+        } , {
+            label: "ד' - אחה\"צ",
+            checked: false
+        } , {
+            label: "ה' - בוקר",
+            checked: false
+        } , {
+            label: "ה' - אחה\"צ",
+            checked: false
+        }
+    ];
+
+    $scope.team_leader = [
+        {
+            label: 'כן',
+            checked: false
+        } , {
+            label: 'לא',
+            checked: false
+        } , {
+            label: 'עוד לא סגור על זה',
+            checked: false
+        }
+    ];
+
+    $scope.user = {
+        name: '',
+        email: '',
+        password: '',
+        phone: '',
+        area: [],
+        preferred_day: [],
+        team_leader: [],
+        remarks: '\n\n\n\n\n',
+        extra: ''
+    };
+
+    $scope.signupSuccess = false;
+    $scope.toastAnchor = 'form';
+    $scope.regexPhone = /^0(5(2|3|4|7|8)|(2|3|4|8)|77 )-?\d{4}-?\d{3}$/;
+    $scope.regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+    /**
+     * Workaround for angular material not respecting "rows" attribute on textarea tag
+     * Initializing the model (user.remarks) with a newline char per row
+     * Deleting all of them on focus.
+     */
+    $scope.clearEmptyTextArea = function() {
+        if($scope.user.remarks.match(/^\s+$/))
+            $scope.user.remarks = '';
     }
 });

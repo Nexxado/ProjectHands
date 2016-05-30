@@ -4,6 +4,7 @@
             <!-- Banner -->
             <a class="toolbar-logo" ui-sref="home"><img src="assets/img/logo.jpg"></a>
             <md-button ui-sref="home">פרויקט ידיים</md-button>
+            <md-button ui-sref="status">Status</md-button>
             <span flex></span>
             <!-- Buttons -->
             <md-button ui-sref="signup" ng-hide="isLoggedIn">
@@ -13,7 +14,7 @@
                 כניסה
             </md-button>
             <md-button aria-label="user profile" ng-click="constructionToast('top right')" ng-show="isLoggedIn">
-                {{ userName }}
+                {{ user.name }}
             </md-button>
             <md-button class="remove-uppercase" ui-sref="dashboard" ui-sref-active="md-primary md-raised" ng-show="isLoggedIn">
                 Dashboard

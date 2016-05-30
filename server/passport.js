@@ -17,7 +17,7 @@ var FACEBOOK_CALLBACK_URL = process.env.FACEBOOK_CALLBACK || config.AUTH.faceboo
 
 module.exports = function (passport) {
 
-    /*
+    /**
      * Serialize user into session
      */
     passport.serializeUser(function (user, done) {
@@ -31,7 +31,7 @@ module.exports = function (passport) {
         done(null, JSON.stringify(serialize));
     });
 
-    /*
+    /**
      * Deserialize user from session
      */
     passport.deserializeUser(function (serialized, done) {
@@ -42,7 +42,10 @@ module.exports = function (passport) {
         };
         
         mongoUtils.query(USERS, query, function(error, result) {
-            
+
+            if(!result || !result[0]) //User not found - Terminate session.
+                return done(error, false);
+
             var user = result[0];
             debug('deserializeUser query error', error);
             debug('deserializeUser query user', user);
@@ -51,7 +54,7 @@ module.exports = function (passport) {
     });
     
     
-    /*
+    /**
      * Strategy used for local login
      */
     passport.use(new LocalStrategy({ usernameField: 'email' }, function(email, password, done) {
@@ -71,7 +74,7 @@ module.exports = function (passport) {
         });
     }));
 
-    /*
+    /**
      * Strategy used for Google Social sign in
      */
     passport.use(new GoogleStrategy({
@@ -114,7 +117,9 @@ module.exports = function (passport) {
                     email: profile.emails[0].value,
                     name: profile.name.givenName + ' ' + profile.name.familyName,
                     role: ROLES.ADMIN, //FIXME change initial role to ROLES.GUEST;
-                    approved: false
+                    signup_complete: false,
+                    approved: false,
+                    joined_date: new Date().toISOString()
                 };
 
                 mongoUtils.insert(USERS, newUser, function(error, result) {
@@ -129,13 +134,11 @@ module.exports = function (passport) {
 
                     return done(null, user);
                 });
-                //TODO add new user to signups
-                //let user add details like id, before adding to permanent database
             }
         });
     }));
 
-    /*
+    /**
      * Strategy used for Facebook Social sign in
      */
     passport.use(new FacebookStrategy({
@@ -179,7 +182,9 @@ module.exports = function (passport) {
                     email: profile.emails[0].value,
                     name: profile.name.givenName + ' ' + profile.name.familyName,
                     role: ROLES.ADMIN, //FIXME change initial role to ROLES.GUEST;
-                    approved: false
+                    signup_complete: false,
+                    approved: false,
+                    joined_date: new Date().toISOString()
                 };
 
                 mongoUtils.insert(USERS, newUser, function(error, result) {
@@ -194,8 +199,6 @@ module.exports = function (passport) {
 
                     return done(null, user);
                 });
-                //TODO add new user to signups
-                //let user add details like id, before adding to permanent database
             }
         });
 
