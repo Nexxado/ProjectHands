@@ -3,7 +3,7 @@
  */
 angular.module('ProjectHands')
 
-    .service('StatusService', function($resource, ACL) {
+    .service('StatusService', function($resource) {
 
         var baseUrl = '/api/status';
 
@@ -14,8 +14,7 @@ angular.module('ProjectHands')
         function updateStatus(active, message) {
             return $resource(baseUrl + '/update_status').save({
                 active: active,
-                message: message,
-                action: ACL.CHANGE_STATUS
+                message: message
             });
         }
 

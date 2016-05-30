@@ -7,13 +7,14 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var config = require('../config.json');
+var ACL = config.ACL;
 var store = new MongoDBStore(
     {
         uri: process.env.MONGODB_URL || config.mongoDBUrl,
         collection: 'sessions'
     });
 
-store.on('error', function(error) {
+store.on('error', function (error) {
     debug('Mongo SessionStore error:', error);
 });
 
@@ -21,7 +22,7 @@ app.use(express.static(__dirname + '/../client')); //Static route for client sid
 app.use('/vendor', express.static(__dirname + '/../node_modules/')); //Static Route for node_modules
 
 app.use(cookieParser());
-app.use(session({ 
+app.use(session({
     secret: process.env.SESSION_SECRET || config.SECRETS.sessionSecret,
     store: store,
     cookie: {
@@ -32,12 +33,28 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 require('./passport')(passport);
 
+/**
+ * Middleware to assign action id according to request url
+ * @link ensurePermission will check user permission against the DB using the action id
+ */
+app.use(function (req, res, next) {
+    switch (true) {
+        case /update_status/.test(req.originalUrl):
+            req.action = ACL.CHANGE_STATUS;
+            break;
+        case /import/.test(req.originalUrl):
+        case /export/.test(req.originalUrl):
+            req.action = ACL.DATA_IMPORT_EXPORT;
+            break;
+    }
 
+    next();
+});
 
 app.use('/api/database', require('./routes/database'));
 app.use('/api/auth', require('./routes/auth'));
@@ -47,14 +64,14 @@ app.use('/api/dataexchange', require('./routes/dataexchange'));
 
 
 //Fix express rewrites since UI Router is in html5Mode
-app.all('*', function(request, response, next) {
+app.all('*', function (request, response, next) {
     // Just send the index.html for other files to support HTML5Mode
-    response.sendFile('index.html', { root: __dirname + '/../client' });
+    response.sendFile('index.html', {root: __dirname + '/../client'});
 });
 
 
 //Redirect any unmatched urls (404 Not Found). keep this as the last app.use()
-app.use(function(request, response) {
+app.use(function (request, response) {
     response.redirect('/');
 });
 

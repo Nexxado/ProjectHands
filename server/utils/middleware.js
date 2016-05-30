@@ -28,11 +28,12 @@ middleware.ensureAuthenticated = function(req, res, next) {
  */
 middleware.ensurePermission = function(req, res, next) {
 
-    var action = req.params.action || req.body.action;
-    debug('ensurePermission request action', action);
+    if(!req.action)
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send("No Action ID");
+    debug('ensurePermission request action', req.action);
     debug('ensurePermission user', req.user.role);
 
-    mongoUtils.query(COLLECTIONS.ACTIONS, {action: action}, function (error, result) {
+    mongoUtils.query(COLLECTIONS.ACTIONS, {action: req.action}, function (error, result) {
 
         if (error || !result || result.length !== 1)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send("Internal Server Error");
