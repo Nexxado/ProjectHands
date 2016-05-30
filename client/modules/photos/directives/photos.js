@@ -37,13 +37,14 @@ angular.module('ProjectHands.photos')
                 });
                 $scope.log = '';
 
-                $scope.deletePhoto = function (fileId) {
+                $scope.deletePhoto = function (fileId, index) {
                     $scope.progressDelete = true;
                     PhotosService.deletePhoto(fileId)
                         .then(function (data) {
                             console.log('deletePhoto data', data);
                             //update album after delete
-                            $scope.getPhotos($scope.album);
+                            // $scope.getPhotos($scope.album);
+                            $scope.images.splice(index, 1);
                         })
                         .catch(function (error) {
                             console.log('deletePhoto error ', error);
