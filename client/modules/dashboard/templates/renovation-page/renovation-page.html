@@ -39,7 +39,7 @@
                                                     <md-list-item class="md-2-line" ng-repeat="task in thisRenovation.tasks">
                                                         <div class=" renovation-task" layout="row" layout-align="center center">
                                                             <div>
-                                                                <md-button ng-show="editTasksMode" ng-click="" class="md-icon-button" layout="row" layout-align="center center">
+                                                                <md-button ng-show="editTasksMode" ng-click="deleteTask(task)" class="md-icon-button" layout="row" layout-align="center center">
                                                                     <i class="material-icons">close</i>
                                                                 </md-button>
                                                             </div>
@@ -75,7 +75,7 @@
                                                     <div class="md-list-item-text pinned-message effect7" style="padding:20px; margin:10px;" layout="column">
                                                         <div layout="row" ng-show="editMessagesMode">
                                                             <span flex></span>
-                                                            <md-button ng-click="" class="md-icon-button" layout="row" layout-align="center center">
+                                                            <md-button ng-click="deletePinned(pinned)" class="md-icon-button" layout="row" layout-align="center center">
                                                                 <i class="material-icons">close</i>
                                                             </md-button>
                                                         </div>

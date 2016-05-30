@@ -33,6 +33,13 @@ angular.module('ProjectHands.dashboard')
     $scope.renovationCurrentStage = $scope.thisRenovation.current_stage;
     $scope.renovationProgress = Math.floor((100 / ($scope.renovationStages.length)) * ($scope.renovationStages.indexOf($scope.renovationCurrentStage) + 1));
 
+    //    $scope.calcRenoProgress();
+
+    $scope.calcRenoProgress = function () {
+        $scope.renovationProgress = Math.floor((100 / ($scope.renovationStages.length)) * ($scope.renovationStages.indexOf($scope.renovationCurrentStage) + 1));
+    };
+
+
     console.log("Renovation progress is: ", $scope.renovationProgress);
     console.log("num of stages is: ", $scope.renovationStages.length);
 
@@ -94,6 +101,14 @@ angular.module('ProjectHands.dashboard')
                 locals: {}
             })
             .then(function (newTask) {
+                //Check for duplicates in tasks
+                for (var i in $scope.thisRenovation.tasks) {
+                    if ($scope.thisRenovation.tasks[i].name === newTask.name) {
+                        console.log("The title you have chosen already exists");
+                        $scope.constructionToast('top right');
+                        throw new Error("Task Title already exists. Please choose a different title");
+                    }
+                }
                 var reno = $scope.thisRenovation;
                 console.log(reno, $scope.thisRenovation);
                 DatabaseService.update(
@@ -152,6 +167,14 @@ angular.module('ProjectHands.dashboard')
                 locals: {}
             })
             .then(function (newPinned) {
+                //Check for duplicates in pinned
+                for (var i in $scope.thisRenovation.pinned) {
+                    if ($scope.thisRenovation.pinned[i].title === newPinned.title) {
+                        console.log("The title you have chosen already exists");
+                        $scope.constructionToast('top right');
+                        throw new Error("Pinned Title already exists. Please choose a different title");
+                    }
+                }
                 var reno = $scope.thisRenovation;
                 console.log(reno, $scope.thisRenovation);
                 DatabaseService.update(
@@ -211,6 +234,14 @@ angular.module('ProjectHands.dashboard')
                 locals: {}
             })
             .then(function (newTool) {
+                //Check for duplicates in tools
+                for (var i in $scope.thisRenovation.toolsNeeded) {
+                    if ($scope.thisRenovation.toolsNeeded[i].name === newTool.name) {
+                        console.log("The tool name you have chosen already exists");
+                        $scope.constructionToast('top right');
+                        throw new Error("Tool Name already exists. Please choose a different name");
+                    }
+                }
                 var reno = $scope.thisRenovation;
                 console.log(reno, $scope.thisRenovation);
                 DatabaseService.update(
@@ -264,11 +295,14 @@ angular.module('ProjectHands.dashboard')
                     $set: {
                         "current_stage": $scope.renovationCurrentStage
                     }
-                }
+                }, {}
             ).$promise.then(function (result) {
                 console.log("The result is: ", result);
+                $scope.calcRenoProgress();
             }).catch(function (error) {
                 console.log("Error: ", error);
+                //if there was a problem, go back to the last stage that was valid
+                $scope.renovationCurrentStage = $scope.lastStage;
             });
             if ($scope.renovationCurrentStage === "עובד סוציאלי עודכן, יש צורך לשבץ צוות") {
                 $scope.finalizeRenovation();
@@ -295,6 +329,58 @@ angular.module('ProjectHands.dashboard')
 
 
     $scope.minDate = new Date();
+
+    $scope.deleteTask = function (task) {
+        var reno = $scope.thisRenovation;
+        DatabaseService.update(
+            COLLECTIONS.RENOVATIONS, {
+                addr: {
+                    city: reno.addr.city,
+                    street: reno.addr.street,
+                    num: reno.addr.num
+                }
+            }, {
+                $pull: {
+                    "tasks": {
+                        'name': task.name
+                    }
+                }
+            }, {}
+        ).$promise.then(function (result) {
+            console.log("The result is: ", result);
+            var index = $scope.thisRenovation.tasks.indexOf(task);
+            $scope.thisRenovation.tasks.splice(index, 1);
+        }).catch(function (error) {
+            console.log("Error: ", error);
+        });
+    };
+
+    $scope.deletePinned = function (pinned) {
+        var reno = $scope.thisRenovation;
+        console.log("pinned is: ", pinned);
+        DatabaseService.update(
+            COLLECTIONS.RENOVATIONS, {
+                addr: {
+                    city: reno.addr.city,
+                    street: reno.addr.street,
+                    num: reno.addr.num
+                }
+            }, {
+                $pull: {
+                    "pinned": {
+                        'title': pinned.title
+                    }
+                }
+            }, {}
+        ).$promise.then(function (result) {
+            console.log("The result is: ", result);
+            var index = $scope.thisRenovation.pinned.indexOf(pinned);
+            $scope.thisRenovation.pinned.splice(index, 1);
+
+        }).catch(function (error) {
+            console.log("Error: ", error);
+        });
+    };
 
     $scope.finalizeRenovation = function ($event) {
         var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
