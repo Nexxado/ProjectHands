@@ -1,14 +1,13 @@
 var router = require('express').Router();
-var HttpStatus = require('http-status-codes');
 var excel = require('../utils/excel')
 
 
 
 
-router.get('/import', function(request, response) {
-    
-    debug('data importing');
+router.post('/import', function(request, response) {
 
+    //TODO: get the real path on the server
+    debug('data importing');
     //var fullPath = request.body.filepath;
     var fullPath = "table.xlsx";
 
@@ -29,8 +28,7 @@ router.get('/export/:collectionName&:query', function(request, response) {
     try 
     {
         var collectionName =  request.params.collectionName;
-      //  var query = JSON.parse(request.body.query);
-        var query = {};
+       var query = JSON.parse(request.params.query);
 
         excel.exportCollection(collectionName,query,response,function (error,result) {
             if(error)

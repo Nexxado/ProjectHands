@@ -14,10 +14,13 @@ const HeadersRow = 3;
  * To be removed
  * */
 //exportCollection("users",{});
+/*
 mongoUtils.connect("mongodb://127.0.0.1:27017/hands");
 setTimeout(function() {
 importWorkBook("table.xlsx");},3000);
-
+setTimeout(function() {
+    exportCollection("volunteers");},6000);
+*/
 /**
  * Fills unKnown in each cell where date is missing
  * @param sheets : the workbook sheets
@@ -184,7 +187,8 @@ function importWorkBook(workBooPath,callback) {
     {
         sheetsFaildToImportName =null;
     }
-    callback(sheetsFaildToImportName,"All sheets were processed");
+    debug("All sheets were processed");
+    //callback(sheetsFaildToImportName,"All sheets were processed");
 
 }
 
@@ -195,14 +199,9 @@ function importWorkBook(workBooPath,callback) {
  * @param query : the wanted data to export
  * @example : exportCollection("users",{});
  */
-function exportCollection(collectionName,query)
+function exportCollection(collectionName,query,response,callback)
 {
-    /** for local testing
-     * To be removed
-     * */
-    mongoUtils.connect("mongodb://127.0.0.1:27017/hands")
-    setTimeout(function() {
-        mongoUtils.query("users",query,function (error,result) {
+        mongoUtils.query(collectionName,query,function (error,result) {
             if(!error && result.length>0)
             {
                 /** the excel sheet data*/
@@ -224,12 +223,15 @@ function exportCollection(collectionName,query)
                 var writer = fs.createWriteStream(collectionName+'.xlsx');
                 writer.write(buffer);
                 writer.end();
-                console.log("done writing");
+                var filePath = collectionName+'.xlsx';
+                response.setHeader("content-type", "text/xlsx");
+                response.setHeader('Content-disposition', 'attachment;filename=' + filePath);
+                fs.createReadStream(filePath).pipe(response);
+                return;
             }
+            callback("No such Data",result);
 
         });
-    }, 2000);
-
 }
 
 module.exports = {
