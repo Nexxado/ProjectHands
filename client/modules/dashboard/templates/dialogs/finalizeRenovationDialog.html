@@ -17,14 +17,14 @@
                     <label>בחירת צוות</label>
                     <md-icon class="material-icons">title</md-icon>
                     <md-select ng-model="renovation.team">
-                        <md-option ng-repeat="team in allTeams" value="{{team}}">
-                            {{team}}
+                        <md-option ng-repeat="team in allTeams" ng-value="team">
+                            {{team.name}}
                         </md-option>
                     </md-select>
                 </md-input-container>
 <!--                <md-input-container class="md-block md-icon-float rtl">-->
                     <label>בחירת תאריך</label>
-                    <md-datepicker ng-model="renovation.date" md-min-date="minDate"></md-datepicker>
+                    <md-datepicker ng-model="date" md-min-date="minDate"></md-datepicker>
 <!--                </md-input-container>-->
             </div>
         </md-dialog-content>

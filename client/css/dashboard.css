@@ -183,6 +183,12 @@ md-menu-item > .md-button {
 .pinned-wrapper {
     margin-left: 5px;
     margin-right: 5px;
+	position: relative;
+}
+.pinned-delete-button{
+	position: absolute;
+	top: 10px;
+	left: 0;
 }
 .box-header {
     /*	margin-left: 5%; */
