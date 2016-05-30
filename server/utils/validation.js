@@ -10,7 +10,7 @@ var validation = {};
  * @returns {boolean}
  */
 function validatePhone(phone) {
-    var regexPhone = /^0(5(2|3|4|7|8)|(2|3|4|8)|77 )-?\d{4}-?\d{3}$/;
+    var regexPhone = /^0(5(2|3|4|7|8)|(2|3|4|8)|77)-?\d{4}-?\d{3}$/;
     return regexPhone.test(phone);
 }
 

@@ -5,5 +5,8 @@
 	} , {
 		action: 'acl_change_status',
 		role: 'admin'
+	} , {
+		action: 'acl_data_import_export',
+		role: 'admin'
 	}
 ]

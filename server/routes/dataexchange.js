@@ -1,10 +1,11 @@
 var router = require('express').Router();
-var excel = require('../utils/excel')
+var excel = require('../utils/excel');
+var middleware = require('../utils/middleware');
 
 
 
 
-router.post('/import', function(request, response) {
+router.post('/import', middleware.ensureAuthenticated, middleware.ensurePermission, function(request, response) {
 
     //TODO: get the real path on the server
     debug('data importing');
@@ -23,7 +24,7 @@ router.post('/import', function(request, response) {
 });
 
 
-router.get('/export/:collectionName&:query', function(request, response) {
+router.get('/export/:collectionName&:query', middleware.ensureAuthenticated, middleware.ensurePermission, function(request, response) {
 
     try 
     {
