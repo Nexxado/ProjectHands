@@ -1,13 +1,16 @@
 <div layout="column" style="width: inherit; height: inherit">
-    <div>
-
-
+    <md-button ng-click="changeMode()" class="md-fab delete-button"
+               aria-label="Edit">
+        <md-icon ng-show="!isEditMode" md-svg-src="assets/icons/ic_mode_edit_black_24px.svg"></md-icon>
+        <md-icon ng-show="isEditMode" md-svg-src="assets/icons/ic_done_black_24px.svg"></md-icon>
+    </md-button>
+    <div ng-show="isEditMode">
         <!--Drop File:-->
         <div ngf-drop ngf-select ng-model="files" class="drop-box"
              ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
              accept="image/*,application/pdf"
              ngf-pattern="'image/*,application/pdf'">
-            <div layout-align="center center" >
+            <div layout-align="center center">
                 <div ng-show="!progress">
                     Drop images here or click to upload
                 </div>
@@ -45,17 +48,26 @@
                               md-rowspan="1"
                               md-colspan="1"
                               md-colspan-sm="1"
-                              md-colspan-xs="1">
+                              md-colspan-xs="1"
+                >
 
-                    <md-whiteframe class="md-whiteframe-8dp" layout layout-align="center center">
+                    <md-whiteframe
+
+                            class="md-whiteframe-8dp"
+                            layout layout-align="center center">
                         <div class="image-container">
-                            <!--<div class="image-progress">-->
-                                <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
-                            <!--</div>-->
-                            <img height="300" width="300" ng-src="{{img.web_link}}">
-                            <md-button ng-click="deletePhoto(img.file_id, $index)" class="md-fab delete-button"
+
+
+                            <img height="300" width="300" ng-src="{{img.web_link}}"
+                                 ng-click="showImageDialog($event, img.web_link)" style="cursor: pointer">
+
+                            <md-button ng-show="isEditMode" ng-click="deletePhoto(img.file_id, $index)"
+                                       class="md-fab delete-button"
                                        aria-label="Delete">
                                 <md-icon md-svg-src="assets/icons/ic_delete_white_24px.svg"></md-icon>
+                                <!--<div class="image-progress" >-->
+                                <!--<md-progress-circular md-mode="indeterminate"></md-progress-circular>-->
+                                <!--</div>-->
                             </md-button>
                         </div>
                     </md-whiteframe>

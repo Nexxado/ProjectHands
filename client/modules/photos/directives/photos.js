@@ -6,8 +6,50 @@ angular.module('ProjectHands.photos')
             scope: {album: '@'},
             replace: true,
             templateUrl: 'modules/photos/templates/directives/photos.html',
-            controller: function ($scope, Upload, $timeout, PhotosService) {
+            controller: function ($scope, Upload, $timeout, PhotosService, $mdDialog, $mdMedia) {
 
+                var dialogImgUrl = "";
+                    function DialogController($scope, $mdDialog) {
+                    $scope.dialogImgUrl = dialogImgUrl ; 
+                    $scope.hide = function () {
+                        $mdDialog.hide();
+                    };
+                    $scope.cancel = function () {
+                        $mdDialog.cancel();
+                    };
+                    $scope.answer = function (answer) {
+                        $mdDialog.hide(answer);
+                    };
+                };
+
+                $scope.showImageDialog = function (ev, imageUrl) {
+                    dialogImgUrl = imageUrl;
+                    var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
+                    $mdDialog.show({
+                        controller: DialogController,
+                        templateUrl: 'modules/photos/templates/dialog/photo-dialog.html',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose: true,
+                        fullscreen: useFullScreen
+                    })
+                        .then(function (answer) {
+                            $scope.status = 'You said the information was "' + answer + '".';
+                        }, function () {
+                            $scope.status = 'You cancelled the dialog.';
+                        });
+                    $scope.$watch(function () {
+                        return $mdMedia('xs') || $mdMedia('sm');
+                    }, function (wantsFullScreen) {
+                        $scope.customFullscreen = (wantsFullScreen === true);
+                    });
+                };
+
+                $scope.isEditMode = false;
+
+                $scope.changeMode = function () {
+                    $scope.isEditMode = !$scope.isEditMode;
+                };
 
                 $scope.getPhotos = function (album) {
                     PhotosService.getPhotos(album)
