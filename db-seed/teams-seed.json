@@ -1,12 +1,29 @@
-    {
-        "_id": "team_315568991",
-        "name": "צוות אחשורוש",
-        "manager_id": "315568991",
-        "members_id": [
-            "504425136",
-            "138548975",
-            "393116710",
-            "868876951",
-			"111111111"
+[
+     {
+            "_id": "team_315568991",
+            "name": "צוות אחשורוש",
+            "manager_email": "yr@gmail.com",
+            "members_email": [
+			"yr@gmail.com",
+            "mb@gmail.com",
+            "pn@gmail.com",
+            "ad@gmail.com",
+            "ms@gmail.com",
+			"test@gmail.com",
+			"ddraiman1990@gmail.com"
+        ]
+    },
+	
+	{
+            "_id": "team_246685779",
+            "name": "צוות נותןבראש",
+            "manager_email": "yt@gmail.com",
+            "members_email": [
+			"yt@gmail.com",
+            "bp@gmail.com",
+            "hb@gmail.com",
+            "kb@gmail.com"
         ]
     }
+	
+]
