@@ -51,6 +51,9 @@ app.use(function (req, res, next) {
         case /export/.test(req.originalUrl):
             req.action = ACL.DATA_IMPORT_EXPORT;
             break;
+        case new RegExp(ACL.VIEW_DASHBOARD).test(req.originalUrl):
+            req.action = ACL.VIEW_DASHBOARD;
+            break;
     }
 
     next();

@@ -22,7 +22,7 @@ router.post('/login', validation.validateParams, passport.authenticate('local'),
         debug('local login success');
         debug('local login user', req.user);
 
-        writeToClient(res, {
+        res.send({
             success: true,
             name: req.user.name,
             email: req.user.email,
@@ -41,7 +41,7 @@ router.post('/login', validation.validateParams, passport.authenticate('local'),
  * check if user is logged in - has an active session
  */
 router.get('/isLoggedIn', middleware.ensureAuthenticated, function (req, res) {
-    return writeToClient(res, {
+    return res.send({
         success: true,
         name: req.user.name,
         email: req.user.email,
@@ -98,8 +98,7 @@ router.post("/signup", validation.validateParams, function (req, res) {
 
     try {
         var user = JSON.parse(req.body.user);
-        // if (!user || !user.email || !user.password || !user.name || !user.phone)
-        //     return writeToClient(res, null, "Please Provide all required fields", HttpStatus.BAD_REQUEST);
+        user.email = user.email.toLowerCase();
 
         user.role = ROLES.ADMIN; //FIXME change initial role to ROLES.GUEST;
 
@@ -114,13 +113,14 @@ router.post("/signup", validation.validateParams, function (req, res) {
             debug('signup error', error);
             if (error) {
                 debug('signup sending error');
-                return writeToClient(res, null, error, HttpStatus.INTERNAL_SERVER_ERROR);
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
             }
-            writeToClient(res, {success: true});
+
             var token = jwt.sign(user, serverSecret, {algorithm: 'HS512', expiresIn: "1h"});
             var link = 'http://' + req.hostname + '/api/auth/activation/' + token;
             emailUtils.activationEmail(user.email, user.name, link);
+            return res.send({success: true});
         });
 
     } catch (error) {
@@ -138,12 +138,12 @@ router.post('/signup_oauth', middleware.ensureAuthenticated, validation.validate
     authUtils.oauthSignup(req.user, info, function (error, result) {
 
         if(error)
-            return writeToClient(res, null, error, HttpStatus.INTERNAL_SERVER_ERROR);
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
         debug('oauthSignup error', error);
         debug('oauthSignup result', result.result);
         debug('oauthSignup user', req.user);
-        writeToClient(res, {success: true, message: "Sign-Up Process Completed Successfully"});
+        return res.send({success: true, message: "Sign-Up Process Completed Successfully"});
     });
 
 });
@@ -210,11 +210,11 @@ router.post('/assignrole', middleware.ensureAuthenticated, function (req, res) {
     authUtils.setUserRole(user, newRole, function (error, result) {
 
         if (error)
-            return writeToClient(res, null, error, HttpStatus.INTERNAL_SERVER_ERROR);
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
         debug('assignrole setUserRole error', error);
         debug('assignrole setUserRole result', result);
-        writeToClient(res, result);
+        return res.send(result);
     });
 
 });
@@ -235,7 +235,7 @@ router.post('/forgot', function (req, res) {
     if (req.isAuthenticated() && oldPassword !== null && oldPassword.length !== 0) {
         authUtils.setPassword({email: email}, oldPassword, newPassword, true, function (error, result) {
             if (error) {
-                writeToClient(res, null, error, HttpStatus.INTERNAL_SERVER_ERROR);
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
             }
             else {
                 if (result !== authUtils.messages.PASSWORD_UPDATE_SUCCESS) {
@@ -251,13 +251,13 @@ router.post('/forgot', function (req, res) {
     else {
         authUtils.passwordResetRequest(email, function (error, result) {
             if (error) {
-                writeToClient(res, null, error, HttpStatus.INTERNAL_SERVER_ERROR);
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
             }
             else {
                 /** the result will be the username if there is no errors*/
                 const USER_DATA_NOT_EXIST = "Wrong Email.";
-                if (result == USER_DATA_NOT_EXIST) {
-                    writeToClient(res, result, "", HttpStatus.NOT_FOUND);
+                if (result === USER_DATA_NOT_EXIST) {
+                    // writeToClient(res, result, "", HttpStatus.NOT_FOUND);
                     return res.redirect(encodeURI('/result/error/' + USER_DATA_NOT_EXIST));
                 }
                 else {
