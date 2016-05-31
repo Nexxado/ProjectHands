@@ -80,23 +80,32 @@ function validateOauthSignup(info) {
 validation.validateParams = function(req, res, next) {
     debug('validateParams path', req.path);
 
-    switch(req.path) {
-        case '/signup':
+    switch(true) {
+        case /signup/.test(req.originalUrl):
             if(!req.body.user || !validateSignup(JSON.parse(req.body.user)))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please Provide all required fields"});
             break;
 
-        case '/signup_oauth':
+        case /signup_oauth/.test(req.originalUrl):
             if(typeof req.user.signup_complete === 'undefined' || req.user.signup_complete === true)
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Sign-Up Process has already been completed"});
             else if(!req.body.info || !validateOauthSignup(JSON.parse(req.body.info)))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please Provide all required fields"});
             break;
 
-        case '/login':
+        case /login/.test(req.originalUrl):
             if(!req.body.email || !req.body.password ||
                 !validateEmail(req.body.email) || !validatePassword(req.body.password))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Email or Password are incorrect"});
+            break;
+
+        case /forgot/.test(req.originalUrl):
+            if(req.user.googleId || req.user.facebookId)
+                return res.status(HttpStatus.FORBIDDEN).send({errMessage: "User is signed in via OAuth2 provider"});
+
+            if(!req.body.email || !req.body.new_password || !req.body.old_password ||
+                !validatePassword(req.body.new_password) || !validatePassword(req.body.old_password))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Old or New Password is incorrect"});
             break;
 
         default:

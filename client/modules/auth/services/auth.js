@@ -108,7 +108,7 @@ angular.module('ProjectHands.auth')
      * @param oldPassword
      * @returns {*|{method}|Promise|Session}
      */
-    function changePassword(email,newPassword,oldPassword) {
+    function changePassword(email, oldPassword, newPassword) {
         return $resource(baseUrl + '/forgot').save({
             email: email,
             new_password:newPassword,

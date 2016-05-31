@@ -143,47 +143,44 @@ module.exports = {
         // fetch the user and check that the passwords do match
         mongoUtils.query(COLLECTIONS.USERS, user, function (error, result) {
             if (error) {
-                callback(error, MESSAGES.DB_FETCH_ERROR);
+                return callback(error, {message: MESSAGES.DB_FETCH_ERROR});
             }
-            else {
-                // compare the password
-                bcrypt.compare(oldPassword, result[0].password, function (error, isMatch) {
+            // compare the password
+            bcrypt.compare(oldPassword, result[0].password, function (error, isMatch) {
 
-                    if (isChange) {
-                        if (error) {
-                            callback(error, MESSAGES.DB_FETCH_ERROR);
-                        }
-                        else if (!isMatch) {
-                            /** to change password , the oldPassword must matches the one in the DB*/
-                            callback(error, MESSAGES.PASSWORD_NOT_MATCH_ERROR);
-                        }
-                        return;
+                if (isChange) {
+                    if (error) {
+                        return callback(error, {message: MESSAGES.DB_FETCH_ERROR});
                     }
+                    else if (!isMatch) {
+                        /** to change password , the oldPassword must matches the one in the DB*/
+                        return callback(error, {message: MESSAGES.PASSWORD_NOT_MATCH_ERROR});
+                    }
+                }
 
-                    //updating to new password
-                    doPasswordHash(newPassword, function (error, hashedPassword) {
-                        if (error)
-                            callback(error, hashedPassword);
+                //updating to new password
+                doPasswordHash(newPassword, function (error, hashedPassword) {
+                    if (error)
+                        return callback(error, hashedPassword);
 
-                        mongoUtils.update(COLLECTIONS.USERS, user, {$set: {password: hashedPassword}}, {}, function (error, result) {
-                            if (error) {
-                                callback(error, MESSAGES.PASSWORD_UPDATING_ERROR);
-                            }
-                            else {
-                                callback(error, MESSAGES.PASSWORD_UPDATE_SUCCESS);
-                            }
+                    mongoUtils.update(COLLECTIONS.USERS, user, {$set: {password: hashedPassword}}, {}, function (error, result) {
+                        if (error) {
+                            callback(error, {message: MESSAGES.PASSWORD_UPDATING_ERROR});
+                        }
+                        else {
+                            callback(error, {message: MESSAGES.PASSWORD_UPDATE_SUCCESS});
+                        }
 
-                        });
                     });
                 });
-            }
+            });
         });
         //token is made
         // sent to the email
         // press the link
         // redirect to change password page
     },
-    
+
     /**
      * Gives a Allowed/NotAllowed for user to login
      * @param email {string}

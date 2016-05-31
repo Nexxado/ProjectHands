@@ -28,6 +28,7 @@ router.post('/login', validation.validateParams, passport.authenticate('local'),
             email: req.user.email,
             role: req.user.role,
             phone: req.user.phone,
+            isOAuth: !!(req.user.googleId || req.user.facebookId),
             approved: req.user.approved,
             signup_complete: req.user.signup_complete,
             joined_date: req.user.joined_date,
@@ -47,6 +48,7 @@ router.get('/isLoggedIn', middleware.ensureAuthenticated, function (req, res) {
         email: req.user.email,
         role: req.user.role,
         phone: req.user.phone,
+        isOAuth: !!(req.user.googleId || req.user.facebookId),
         approved: req.user.approved,
         signup_complete: req.user.signup_complete,
         joined_date: req.user.joined_date,
@@ -113,7 +115,7 @@ router.post("/signup", validation.validateParams, function (req, res) {
             debug('signup error', error);
             if (error) {
                 debug('signup sending error');
-                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+                return res.status(HttpStatus.BAD_REQUEST).send(error);
 
             }
 
@@ -224,7 +226,7 @@ router.post('/assignrole', middleware.ensureAuthenticated, function (req, res) {
  * and the new , old password too, to kip the need to open a new page to enter the passwords
  * the old password is needed if changing password , if forgot option the new password is enough
  */
-router.post('/forgot', function (req, res) {
+router.post('/forgot', validation.validateParams, function (req, res) {
 
     var email = req.body.email;
     //  phone = req.params.phone;
@@ -232,18 +234,20 @@ router.post('/forgot', function (req, res) {
     var oldPassword = req.body.old_password;
 
     /** in the case of change password , the user must be logged in*/
-    if (req.isAuthenticated() && oldPassword !== null && oldPassword.length !== 0) {
+    if (req.isAuthenticated()) {
         authUtils.setPassword({email: email}, oldPassword, newPassword, true, function (error, result) {
             if (error) {
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
             }
             else {
-                if (result !== authUtils.messages.PASSWORD_UPDATE_SUCCESS) {
-                    return res.redirect(encodeURI('/result/error/' + result));
+                if (result.message !== authUtils.messages.PASSWORD_UPDATE_SUCCESS) {
+                    // return res.redirect(encodeURI('/result/error/' + result));
+                    return res.status(HttpStatus.BAD_REQUEST).send(result);
 
                 }
 
-                return res.redirect(encodeURI('/result/info/' + result));
+                // return res.redirect(encodeURI('/result/info/' + result));
+                return res.send(result);
             }
 
         });
