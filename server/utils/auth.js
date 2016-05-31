@@ -13,7 +13,8 @@ var MESSAGES = {
     PASSWORD_NOT_MATCH_ERROR: "The password dose not match , please try again",
     PASSWORD_UPDATING_ERROR: "Error has accourd while updating the password",
     PASSWORD_UPDATE_SUCCESS: "The password has been changed",
-    USER_DATA_NOT_EXIST: "Wrong Email or Phone number"
+    USER_DATA_NOT_EXIST: "Wrong Email or Phone number",
+    EMAIL_UPDATE_SUCCESS: "Email successfully updated"
 };
 
 /**
@@ -112,7 +113,7 @@ module.exports = {
      * @param phone {string} : the user phone
      * @param callback
      */
-    passwordResetRequest: function (email, callback) {
+    ResetRequest: function (email, callback) {
 
         // validate the data
         mongoUtils.query(COLLECTIONS.USERS, {email: email}, function (error, result) {
@@ -162,9 +163,11 @@ module.exports = {
 
                     //updating to new password
                     doPasswordHash(newPassword, function (error, hashedPassword) {
-                        if (error)
+                        if (error) {
                             callback(error, hashedPassword);
+                            return;
 
+                        }
                         mongoUtils.update(COLLECTIONS.USERS, user, {$set: {password: hashedPassword}}, {}, function (error, result) {
                             if (error) {
                                 callback(error, MESSAGES.PASSWORD_UPDATING_ERROR);
@@ -183,7 +186,7 @@ module.exports = {
         // press the link
         // redirect to change password page
     },
-    
+
     /**
      * Gives a Allowed/NotAllowed for user to login
      * @param email {string}
@@ -217,5 +220,34 @@ module.exports = {
                 callback(error, user);
             });
         });
+    },
+    setEmail: function (oldEmail, newEmail, callback) {
+        /** yo assert that the user with this email in the system*/
+        
+        mongoUtils.query(COLLECTIONS.USERS, {email: oldEmail}, function (error, result) {
+
+            if (error) {
+                callback(error, MESSAGES.DB_FETCH_ERROR);
+            }
+            else {
+
+                mongoUtils.update(COLLECTIONS.USERS, {email: oldEmail}, {$set: {email: newEmail}}, {}, function (error, result) {
+                    if (error) {
+                        callback(error, MESSAGES.DB_FETCH_ERROR);
+                    }
+                    else {
+                        callback(error, MESSAGES.EMAIL_UPDATE_SUCCESS);
+                    }
+
+                });
+
+            }
+
+
+        });
+
+
+
     }
+
 };

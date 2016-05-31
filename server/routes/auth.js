@@ -227,7 +227,6 @@ router.post('/assignrole', middleware.ensureAuthenticated, function (req, res) {
 router.post('/forgot', function (req, res) {
 
     var email = req.body.email;
-    //  phone = req.params.phone;
     var newPassword = req.body.new_password;
     var oldPassword = req.body.old_password;
 
@@ -249,7 +248,7 @@ router.post('/forgot', function (req, res) {
         });
     }
     else {
-        authUtils.passwordResetRequest(email, function (error, result) {
+        authUtils.ResetRequest(email, function (error, result) {
             if (error) {
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
             }
@@ -298,8 +297,60 @@ router.get('/reset/:token', function (req, res) {
         });
     });
 });
+router.get('/changeEmailRequest/:oldEmail&:newEmail', function (req, res) {
+    var oldEmail = req.param.oldEmail;
+    var newEmail = req.param.newEmail;
 
+    authUtils.ResetRequest(email, function (error, result) {
+        if (error) {
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+        }
+        else {
+            /** the result will be the username if there is no errors*/
+            const USER_DATA_NOT_EXIST = "Wrong Email.";
+            if (result === USER_DATA_NOT_EXIST) {
+                // writeToClient(res, result, "", HttpStatus.NOT_FOUND);
+                return res.redirect(encodeURI('/result/error/' + USER_DATA_NOT_EXIST));
+            }
+            else {
+                var token = jwt.sign({
+                    oldEmail: oldEmail,
+                    newEmail: newEmail,
+                    username: result,
+                    iat: Math.floor(Date.now() / 1000)
+                }, serverSecret, {algorithm: 'HS512'});
+                var link = 'http://' + req.hostname + '/api/auth/changeEmail/' + token;
+                emailUtils.changeEmail(email, result, link);
 
+                var message = "Email has been sent to the current email in order to do the changes.";
+                return res.redirect(encodeURI('/result/info/' + message));
+            }
+        }
+    });
+});
+/**
+ * Change email when link is clicked
+ */
+router.get('/changeEmail/:token', function (req, res) {
+
+    debug('reset email token', req.params.token);
+    jwt.verify(req.params.token, serverSecret, {algorithm: 'HS512'}, function (error, decoded) {
+        if (error)
+            return res.redirect(encodeURI('/result/error/invalid token'));
+        /**iat is a field that is added to be able to calc expire time and such things */
+        delete decoded.iat;
+        authUtils.setEmail({oldEmail: decoded.oldEmail, newEmail: decoded.newEmail}, function (error, result) {
+            if (error) {
+                return res.redirect(encodeURI('/result/error/' + result));
+            }
+
+            /** send a email no the new email address telling that now its the new one*/
+            emailUtils.changeEmailConfirmation(decoded.newEmail, decoded.username);
+            debug('reset result', result);
+            res.redirect('/login/');
+        });
+    });
+});
 
 
 module.exports = router;
