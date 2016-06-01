@@ -27,6 +27,13 @@ function ensureConstraints() {
             debug('Users indexName', indexName);
             debug('Users error', error);
         });
+
+    _db.collection(COLLECTIONS.TEAMS).ensureIndex({name: 1},
+        {unique: true, sparse: true},
+        function (error, indexName) {
+            debug('Teams indexName', indexName);
+            debug('Teams error', error);
+        });
 }
 
 

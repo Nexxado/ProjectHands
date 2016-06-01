@@ -1,0 +1,43 @@
+var router = require('express').Router();
+var HttpStatus = require('http-status-codes');
+var debug = require('debug')('routes/renovation');
+var config = require('../../config.json');
+var ROLES = config.ROLES;
+var ROLES_HIERARCHY = Object.keys(ROLES).map(function (key) {
+    return ROLES[key];
+}).reverse();
+var COLLECTIONS = config.COLLECTIONS;
+var mongoUtils = require('../utils/mongo');
+var middleware = require('../utils/middleware');
+var validation = require('../utils/validation');
+
+router.get('/get_info/:city&:street&:num', function(req, res) {
+    res.send({success: true, params: req.params});
+
+    mongoUtils.query(COLLECTIONS.RENOVATIONS, {
+        addr: {
+            city: req.params.city,
+            street: req.params.street,
+            num: req.params.num
+        }
+    } , function (error, result) {
+
+        if(error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to get renovation info"});
+        else if(!result.length)
+            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "No renovation matches the address"});
+
+        var renovation = result[0];
+        //only TEAM_LEAD gets RSVP list
+        if(ROLES_HIERARCHY.indexOf(req.user.role) < ROLES_HIERARCHY.indexOf(ROLES.TEAM_LEAD))
+            delete renovation.rsvp;
+
+        //TODO How will user get his own RSVP status if not team leader?
+        res.send(renovation);
+    })
+});
+
+
+
+
+module.exports = router;
