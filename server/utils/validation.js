@@ -112,6 +112,13 @@ validation.validateParams = function(req, res, next) {
             if(!req.body.email || !req.body.newrole)
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: 'No user or new role provided'});
             break;
+        
+        case /update_status/.test(req.originalUrl):
+            if(typeof req.body.active !== 'boolean')
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
+            if(!req.body.message)
+                req.body.mesage = '';
+            break;
 
         default:
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Bad Request"});

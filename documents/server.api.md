@@ -11,6 +11,20 @@
     * [Email Activation](#email-activation)
     * [Authenticate User Action](#authenticate-user-action)
     * [Update User Role](#update-user-role)
+    * [Forgot Password](#forgot-password)
+    * [Reset Password](#reset-password)
+* [Chat](#chat)
+    * [Get Chat History](#chat-history)
+* [Status](#Status)
+    * [Update Status](#update-status)
+    * [Get Status](#get-status)
+* [Data Exchange](#data-exchange)
+    * [Import Data](#import-data)
+    * [Export Data](#export-data)
+* [Photos](#photos)
+    * [Upload Photos](#upload-photos)
+    * [Delete Photos](#delete-photos)
+    * [Get Album Data](#get-album-data)
     
 
 ---
@@ -197,5 +211,236 @@ Server assigns action id to request according to passed param
 | 401 | {errMessage : "Error: User is not logged in" } |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "No Action ID"} |
+
+---
+
+### Forgot Password
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/auth/forgot |
+
+| Type  | Params | Values |
+|---|---|---|
+|  BODY | email | String |
+|  BODY | old_password | String |
+|  BODY | new_password | String |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+|200 | {success: true} |
+| 400 | {errMessage: ""} |
+| 500 | {errMessage: ""} |
+
+---
+
+### Reset Password
+
+#### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/auth/reset/:token |
+
+| Type  | Params | Values |
+|---|---|---|
+|  PARAMS | token | String |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+|200 | {success: true} |
+| 400 | {errMessage: ""} |
+| 500 | {errMessage: ""} |
+
+---
+
+---
+
+## Chat
+
+### Chat History
+
+#### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/chat/history/:chatId |
+
+| Type  | Params | Values |
+|---|---|---|
+|  PARAMS | chatId | String |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {id: chat_id, messages: [{align: msgSide, class: msgClass, content: msgContent, timestamp: HH:mm, user: username}]} |
+| 400 | {errMessage: "Invalid Chat Id"} |
+| 401 | {errMessage : "Error: User is not logged in" } |
+| 500 | {errMessage: "Error getting chat history"} |
+
+---
+
+---
+
+# Status
+
+Endpoints regarding ProjectHands' Referral Receiving Status
+
+### Update Status
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/status/update_status |
+
+| Type  | Params | Values |
+|---|---|---|
+|  BODY | active | boolean |
+|  BODY | message | String |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+|200 | {active: boolean, message: ""} |
+| 400 | {errMessage: "Please provide all required fields"} |
+| 500 | {errMessage: "Error updating status"} |
+
+---
+
+### Get Status
+
+#### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/status/get_status |
+
+| Type  | Params | Values |
+|---|---|---|
+|   |   |   |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+|200 | {active: boolean, message: ""} |
+| 500 | {errMessage: "Error getting status"} |
+
+---
+
+---
+
+## Data Exchange
+
+### Import Data
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/dataexchange/import |
+
+| Type  | Params | Values |
+|---|---|---|
+|   |   |   |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+|   |   |
+
+---
+
+### Export Data
+
+#### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/dataexchange/export/:collectionName&:query |
+
+| Type  | Params | Values |
+|---|---|---|
+|   |   |   |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+|   |   |
+
+---
+
+---
+
+## Photos
+
+### Upload Photos
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/photos/uploads |
+
+| Type  | Params | Values |
+|---|---|---|
+|   |   |   |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+|   |   |
+
+---
+
+### Delete Photos
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/photos/delete |
+
+| Type  | Params | Values |
+|---|---|---|
+|   |   |   |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+|   |   |
+
+---
+
+### Get Album Data
+
+#### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/photos/album |
+
+| Type  | Params | Values |
+|---|---|---|
+|   |   |   |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+|   |   |
 
 ---

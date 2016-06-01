@@ -32,9 +32,7 @@ router.post('/login', validation.validateParams, passport.authenticate('local'),
             approved: req.user.approved,
             signup_complete: req.user.signup_complete,
             joined_date: req.user.joined_date,
-            avatar: req.user.avatar,
-            renovations: req.user.renovations,
-            tasks: req.user.tasks
+            avatar: req.user.avatar
         });
     });
 
@@ -52,9 +50,7 @@ router.get('/isLoggedIn', middleware.ensureAuthenticated, function (req, res) {
         approved: req.user.approved,
         signup_complete: req.user.signup_complete,
         joined_date: req.user.joined_date,
-        avatar: req.user.avatar,
-        renovations: req.user.renovations,
-        tasks: req.user.tasks
+        avatar: req.user.avatar
     });
 });
 

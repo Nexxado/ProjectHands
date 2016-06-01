@@ -8,7 +8,7 @@ angular.module('ProjectHands')
         var baseUrl = '/api/chat';
         
         function getChatHistory(chatId) {
-            return $resource(baseUrl + '/history/:chatId').query({chatId: chatId});
+            return $resource(baseUrl + '/history/:chatId').get({chatId: chatId});
         }
 
         return {
