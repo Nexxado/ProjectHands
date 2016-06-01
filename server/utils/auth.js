@@ -44,9 +44,9 @@ module.exports = {
      * @param newRole {string}
      * @param callback {function}
      */
-    setUserRole: function (user, newRole, callback) {
+    setUserRole: function (email, newRole, callback) {
         //we need to check that who sent the request has admin role
-        mongoUtils.update(COLLECTIONS.USERS, {email: user.email}, {$set: {role: newRole}}, {}, callback);
+        mongoUtils.update(COLLECTIONS.USERS, {email: email}, {$set: {role: newRole}}, {}, callback);
     },
 
     /**

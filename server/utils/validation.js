@@ -108,6 +108,11 @@ validation.validateParams = function(req, res, next) {
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Old or New Password is incorrect"});
             break;
 
+        case /assignrole/.test(req.originalUrl):
+            if(!req.body.email || !req.body.newrole)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: 'No user or new role provided'});
+            break;
+
         default:
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Bad Request"});
     }

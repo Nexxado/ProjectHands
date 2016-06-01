@@ -96,7 +96,7 @@ router.get('/logout', middleware.ensureAuthenticated, function (req, res) {
 router.post("/signup", validation.validateParams, function (req, res) {
 
     if(req.isAuthenticated())
-        return writeToClient(res, null, "User Already Logged In", HttpStatus.BAD_REQUEST);
+        return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User Already Logged In"});
 
     try {
         var user = JSON.parse(req.body.user);
@@ -126,7 +126,7 @@ router.post("/signup", validation.validateParams, function (req, res) {
         });
 
     } catch (error) {
-        writeToClient(res, null, "Error: Sign-Up Request Failed", HttpStatus.BAD_REQUEST);
+        res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: Sign-Up Request Failed" });
         debug("SignUp error: ", error);
     }
 });
@@ -198,18 +198,13 @@ router.get('/authenticate/:action', middleware.ensureAuthenticated, middleware.e
 /**
  * Change a user role - can only be invoked by an admin user.
  */
-router.post('/assignrole', middleware.ensureAuthenticated, function (req, res) {
+router.post('/assignrole', middleware.ensureAuthenticated, validation.validateParams, function (req, res) {
 
-    if (!req.body.user || !req.body.newrole)
-        return writeToClient(res, null, 'No user or new role provided', HttpStatus.BAD_REQUEST);
+    if (req.user.role !== ROLES.ADMIN) //check if user is admin
+        return res.status(HttpStatus.FORBIDDEN).send({errMessage: 'Not Allowed'});
 
-    if (req.user.role !== ROLES.ADMIN)
-        return writeToClient(res, null, 'Not Allowed', HttpStatus.FORBIDDEN);
 
-    var user = JSON.parse(req.body.user);
-    var newRole = req.body.newrole;
-
-    authUtils.setUserRole(user, newRole, function (error, result) {
+    authUtils.setUserRole(req.body.email, req.body.newrole, function (error, result) {
 
         if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);

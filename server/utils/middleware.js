@@ -20,7 +20,7 @@ middleware.ensureAuthenticated = function(req, res, next) {
     if (req.isAuthenticated())
         return next();
 
-    res.status(HttpStatus.UNAUTHORIZED).send("Error: User is not logged in");
+    res.status(HttpStatus.UNAUTHORIZED).send({errMessage : "Error: User is not logged in" });
 };
 
 /**
@@ -29,7 +29,7 @@ middleware.ensureAuthenticated = function(req, res, next) {
 middleware.ensurePermission = function(req, res, next) {
 
     if(!req.action)
-        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send("No Action ID");
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "No Action ID"});
     debug('ensurePermission request action', req.action);
     debug('ensurePermission user', req.user.role);
 
@@ -39,7 +39,7 @@ middleware.ensurePermission = function(req, res, next) {
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send("Internal Server Error");
 
         if (ROLES_HIERARCHY.indexOf(req.user.role) < ROLES_HIERARCHY.indexOf(result[0].role))
-            return res.status(HttpStatus.FORBIDDEN).send("Not Allowed");
+            return res.status(HttpStatus.FORBIDDEN).send({errMessage: "Not Allowed"});
 
         next();
     });
