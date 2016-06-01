@@ -54,6 +54,9 @@ app.use(function (req, res, next) {
         case new RegExp(ACL.VIEW_DASHBOARD).test(req.originalUrl):
             req.action = ACL.VIEW_DASHBOARD;
             break;
+        case /renovation\/get_info/.test(req.originalUrl):
+            req.action = ACL.GET_RENOVATION_INFO;
+            break;
     }
 
     next();

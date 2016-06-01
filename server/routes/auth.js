@@ -244,6 +244,9 @@ router.post('/forgot', validation.validateParams, function (req, res) {
         });
     }
     else {
+
+        //TODO check if email does not belong to OAuth2 User
+
         authUtils.passwordResetRequest(email, function (error, result) {
             if (error) {
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);

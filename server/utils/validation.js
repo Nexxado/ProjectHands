@@ -100,7 +100,7 @@ validation.validateParams = function(req, res, next) {
             break;
 
         case /forgot/.test(req.originalUrl):
-            if(req.user.googleId || req.user.facebookId)
+            if(req.isAuthenticated() && (req.user.googleId || req.user.facebookId))
                 return res.status(HttpStatus.FORBIDDEN).send({errMessage: "User is signed in via OAuth2 provider"});
 
             if(!req.body.email || !req.body.new_password || !req.body.old_password ||
@@ -118,6 +118,11 @@ validation.validateParams = function(req, res, next) {
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
             if(!req.body.message)
                 req.body.mesage = '';
+            break;
+
+        case /renovation\/get_info/.test(req.originalUrl):
+            if(!req.params.city || !req.params.street || !req.params.num)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
             break;
 
         default:

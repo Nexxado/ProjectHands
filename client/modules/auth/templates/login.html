@@ -27,11 +27,16 @@
                 </div>
             </div>
         </md-input-container>
-        <div>
-            <md-button type="submit" class="md-accent md-raised white">כניסה</md-button>
+        <div layout="row">
+            <div>
+                <md-button type="submit" class="md-accent md-raised white">כניסה</md-button>
+            </div>
+            <div>
+                <md-button ng-click="resetPassword($event)" class="md-warn">שכחתי סיסמה</md-button>
+            </div>
         </div>
-        <br/>
     </form>
+    <br/>
     <!-- OAuth Buttons -->
     <div layout="column" layout-align="center center">
         <a href="javascript:void(0)" ng-click="loginGoogle()">

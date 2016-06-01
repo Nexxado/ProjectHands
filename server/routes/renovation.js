@@ -11,8 +11,8 @@ var mongoUtils = require('../utils/mongo');
 var middleware = require('../utils/middleware');
 var validation = require('../utils/validation');
 
-router.get('/get_info/:city&:street&:num', function(req, res) {
-    res.send({success: true, params: req.params});
+router.get('/get_info/:city&:street&:num', middleware.ensureAuthenticated, middleware.ensurePermission,
+    validation.validateParams, function(req, res) {
 
     mongoUtils.query(COLLECTIONS.RENOVATIONS, {
         addr: {
@@ -28,12 +28,15 @@ router.get('/get_info/:city&:street&:num', function(req, res) {
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "No renovation matches the address"});
 
         var renovation = result[0];
+
+        var isRSVP = renovation.rsvp && renovation.rsvp.indexOf(req.user.email) > -1;
+
         //only TEAM_LEAD gets RSVP list
         if(ROLES_HIERARCHY.indexOf(req.user.role) < ROLES_HIERARCHY.indexOf(ROLES.TEAM_LEAD))
             delete renovation.rsvp;
 
         //TODO How will user get his own RSVP status if not team leader?
-        res.send(renovation);
+        res.send({isRSVP: isRSVP, renovation: renovation});
     })
 });
 

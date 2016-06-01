@@ -8,5 +8,7 @@
 	} , {
 		action: 'acl_data_import_export',
 		role: 'admin'
-	}
+	} , {
+		action: 'acl_get_renovation_info',
+		role: 'volunteer'
 ]

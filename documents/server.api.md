@@ -2,7 +2,7 @@
 
 **Table of Contents**
 
-* [Authentication](#authentication)
+* [**Authentication**](#authentication)
     * [Login](#login)
     * [isLoggedIn](#isloggedin)
     * [Logout](#logout)
@@ -13,18 +13,20 @@
     * [Update User Role](#update-user-role)
     * [Forgot Password](#forgot-password)
     * [Reset Password](#reset-password)
-* [Chat](#chat)
+* [**Chat**](#chat)
     * [Get Chat History](#chat-history)
-* [Status](#Status)
+* [**Status**](#Status)
     * [Update Status](#update-status)
     * [Get Status](#get-status)
-* [Data Exchange](#data-exchange)
+* [**Data Exchange**](#data-exchange)
     * [Import Data](#import-data)
     * [Export Data](#export-data)
-* [Photos](#photos)
+* [**Photos**](#photos)
     * [Upload Photos](#upload-photos)
     * [Delete Photos](#delete-photos)
     * [Get Album Data](#get-album-data)
+* [**Renovations**](#renovations)
+    * [Get Renovation Info](#get-renovation-info)
     
 
 ---
@@ -442,5 +444,33 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 | Status  | Response |
 |---|---|
 |   |   |
+
+---
+
+---
+
+## Renovations
+
+### Get Renovation Info
+
+#### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/renovation/get_info/:city&:street&:num |
+
+| Type  | Params | Values |
+|---|---|---|
+| PARAMS | city  | String  |
+| PARAMS | street  | String  |
+| PARAMS | num  | String  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 |  {isRSVP: boolean, renovation: {addr: {}, created: date, updated: date, date: date, tasks: [{name: username, ... }], ...} |
+| 400 |  {errMessage: "No renovation matches the address"} |
+| 500 | {errMessage: "Failed to get renovation info"} |
 
 ---

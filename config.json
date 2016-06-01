@@ -34,6 +34,7 @@
     "ACL": {
         "VIEW_DASHBOARD": "acl_view_dashboard",
         "CHANGE_STATUS": "acl_change_status",
-        "DATA_IMPORT_EXPORT": "acl_data_import_export"
+        "DATA_IMPORT_EXPORT": "acl_data_import_export",
+        "GET_RENOVATION_INFO": "acl_get_renovation_info"
     }
 }
