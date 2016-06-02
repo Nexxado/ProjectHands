@@ -103,7 +103,7 @@ angular.module('ProjectHands.photos')
                                 Upload.upload({
                                     url: '/api/photos/uploads',
                                     data: {
-                                        username: $scope.username,
+                                        // username: $scope.username,
                                         album_key: $scope.album,
                                         file: file
                                     }
@@ -118,11 +118,14 @@ angular.module('ProjectHands.photos')
                                         $scope.progress = false;
                                     });
                                 }, null, function (evt) {
+                                    // $scope.progress = false;
                                     var progressPercentage = parseInt(100.0 *
                                         evt.loaded / evt.total);
                                     $scope.log = 'progress: ' + progressPercentage +
                                         '% ' + evt.config.data.file.name + '\n' +
                                         $scope.log;
+
+
                                 });
                             }
                         }

@@ -7,7 +7,7 @@ var driveUtils = require('../utils/drive');
 var mongoUtils = require('../utils/mongo');
 var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
-
+var HttpStatus = require('http-status-codes');
 
 //the router for photos module
 /**
@@ -21,13 +21,24 @@ router.post('/uploads', multipartyMiddleware, function (request, response) {
     var file = request.files.file;
     var albumKey = request.body.album_key;
 
+    //check if its no album key
+    if (albumKey == null) {
+        writeToClient(response, null, "Error: missing album_key", HttpStatus.BAD_REQUEST);
+        return;
+    }
+
+    if (file == null) {
+        writeToClient(response, null, "Error: missing file", HttpStatus.BAD_REQUEST);
+        return;
+    }
+
     //upload photo to google drive
     driveUtils.uploadFile(
         file.path,
         albumKey,
         function (err, res) {
             if (err) {
-
+                writeToClient(response, null, "Error: file not saved", HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 var photoData = {
                     file_id: res.file_id,
@@ -37,7 +48,7 @@ router.post('/uploads', multipartyMiddleware, function (request, response) {
                 //save photo data to server db
                 savePhoto(res.file_id, res.web_link, albumKey, function (err, res) {
                     if (err) {
-
+                        writeToClient(response, null, "Error: file not saved", HttpStatus.INTERNAL_SERVER_ERROR);
                     } else {
                         //send to client new photo data
                         writeToClient(response, photoData);
@@ -60,18 +71,17 @@ router.post('/delete', function (request, response) {
     //delete file from drive 
     driveUtils.deleteFile(fileId, function (err, res) {
         if (err) {
-
+            writeToClient(response, null, "Error: file did not deleted", HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
             //delete photo data from the db
             deletePhoto(fileId, function (err, res) {
                 if (err) {
-
+                    writeToClient(response, null, "Error: file did not deleted", HttpStatus.INTERNAL_SERVER_ERROR);
                 } else {
-
                     writeToClient(response);
                 }
             })
-          
+
         }
     });
 });
@@ -82,7 +92,7 @@ router.get('/album', function (request, response) {
     var album = request.query.album;
     getAlbum(album, function (err, res) {
         if (err) {
-
+            writeToClient(response, null, "Error: INTERNAL_SERVER_ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
             writeToClient(response, res);
         }
