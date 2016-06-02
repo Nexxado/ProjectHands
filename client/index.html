@@ -16,6 +16,8 @@
     <link href="vendor/angular-material/angular-material.css" rel="stylesheet">
     <link href="vendor/angular-gridster/dist/angular-gridster.min.css" rel="stylesheet">
     <link href="vendor/fullcalendar/dist/fullcalendar.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
+    <link rel="stylesheet" type="text/css" href="css/examples.css" />
 
     <!-- App -->
     <link href="css/app.css" rel="stylesheet">
@@ -28,14 +30,35 @@
     <link href="css/signup.css" rel="stylesheet">
     <link href="css/photos.css" rel="stylesheet"/>
 
+    <script type="text/javascript" src="js/jquery.fullPage.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#fullpage').fullpage({
+                sectionsColor: ['#f2f2f2', '#4BBFC3', '#7BAABE', 'whitesmoke', '#ccddff']
+            });
+        });
+    </script>
+
 
 </head>
 
 <body>
-<toolbar></toolbar>
-<notifications></notifications>
-<!-- Main Content -->
-<main ui-view id="main-view"></main>
+<div id="fullpage">
+    <div class="section active" id="section0"><h1>fullPage.js</h1></div>
+    <div class="section" id="section1">
+        <div class="slide "><h1>Simple Demo</h1></div>
+        <div class="slide active"><h1>Only text</h1></div>
+        <div class="slide"><h1>And text</h1></div>
+        <div class="slide"><h1>And more text</h1></div>
+    </div>
+    <div class="section" id="section2"><h1>No wraps, no extra markup</h1></div>
+    <div class="section" id="section3"><h1>Just the simplest demo ever</h1></div>
+</div>
+<!--<toolbar></toolbar>-->
+<!--<notifications></notifications>-->
+<!--&lt;!&ndash; Main Content &ndash;&gt;-->
+<!--<main ui-view id="main-view"></main>-->
+
 </body>
 
 
@@ -61,7 +84,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="js/ng-file-upload-shim.min.js"></script> <!-- for no html5 browsers support -->
 <script src="js/ng-file-upload.min.js"></script>
-
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
 
 <!-- App -->
 <script src="js/app.js"></script>

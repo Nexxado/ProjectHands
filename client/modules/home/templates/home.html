@@ -1,35 +1,37 @@
-<md-content>
-    <!--<photos album="test1234"></photos>-->
-    <div layout="column" layout-align="center center" layout-padding>
+<div style="background-color: var(--background-color)">
+
+    <div layout="column" layout-align="center center">
 
         <!--IMAGE SLIDE SHOW-->
-        <div>
-            <img ng-src="assets/img/home/hands.jpg">
+        <div style="width: 100%">
+            <img ng-src="assets/img/home/hands.jpg" style="width: 100%">
         </div>
 
         <!--PHOTO SLIDER-->
-        <div>
+        <div style="margin: 32px">
             <photo-slider></photo-slider>
         </div>
 
         <!--ORGANIZATION ADS-->
-        <div>
+        <div style="margin: 32px">
             <org-ads></org-ads>
         </div>
         <!--STATISTICS-->
-        <div>
+        <div style="margin: 32px">
             <statistics></statistics>
         </div>
         <!--THE TEAM-->
-        <div>
+        <div style="margin: 32px">
             <team></team>
         </div>
         <!--DONATE-->
-        <paypal-button></paypal-button>
+        <div style="margin: 32px">
+            <paypal-button></paypal-button>
+        </div>
 
         <!--goto home panel-->
         <md-button ui-sref="home-panel">home-panel</md-button>
 
     </div>
 
-</md-content>
+</div>
