@@ -397,15 +397,15 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 
 | Type  | Params | Values |
 |---|---|---|
-|   |   |   |
+| FILES | file        | File     |
+| BODY  |album_key   | string   |
 
 #### Response
 
 | Status  | Response |
 |---|---|
-|   |   |
-
----
+|200   | {album_key: string, file_id: string, web_link: string} |
+|400   | {errMessage: "Error: file not saved"}  |
 
 ### Delete Photos
 
@@ -417,13 +417,14 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 
 | Type  | Params | Values |
 |---|---|---|
-|   |   |   |
+| BODY | file_id  | string    |
 
 #### Response
 
 | Status  | Response |
 |---|---|
-|   |   |
+|200   | {success: true}  |
+|500   | {errMessage: "Error: file did not deleted"} |
 
 ---
 
@@ -437,13 +438,14 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 
 | Type  | Params | Values |
 |---|---|---|
-|   |   |   |
+| QUERY | album   | string  |
 
 #### Response
 
 | Status  | Response |
 |---|---|
-|   |   |
+|200   | [{album_key: string, file_id: string, web_link: string},...]  |
+|500   | {errMessage: "Couldn't find album"} |
 
 ---
 
