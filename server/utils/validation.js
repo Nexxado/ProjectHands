@@ -81,25 +81,25 @@ validation.validateParams = function(req, res, next) {
     debug('validateParams path', req.path);
 
     switch(true) {
-        case /signup/.test(req.originalUrl):
+        case /auth\/signup/.test(req.originalUrl):
             if(!req.body.user || !validateSignup(JSON.parse(req.body.user)))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please Provide all required fields"});
             break;
 
-        case /signup_oauth/.test(req.originalUrl):
+        case /auth\/signup_oauth/.test(req.originalUrl):
             if(typeof req.user.signup_complete === 'undefined' || req.user.signup_complete === true)
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Sign-Up Process has already been completed"});
             else if(!req.body.info || !validateOauthSignup(JSON.parse(req.body.info)))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please Provide all required fields"});
             break;
 
-        case /login/.test(req.originalUrl):
+        case /auth\/login/.test(req.originalUrl):
             if(!req.body.email || !req.body.password ||
                 !validateEmail(req.body.email) || !validatePassword(req.body.password))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Email or Password are incorrect"});
             break;
 
-        case /forgot/.test(req.originalUrl):
+        case /auth\/forgot/.test(req.originalUrl):
             if(req.isAuthenticated() && (req.user.googleId || req.user.facebookId))
                 return res.status(HttpStatus.FORBIDDEN).send({errMessage: "User is signed in via OAuth2 provider"});
 
@@ -108,12 +108,12 @@ validation.validateParams = function(req, res, next) {
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Old or New Password is incorrect"});
             break;
 
-        case /assignrole/.test(req.originalUrl):
+        case /auth\/assignrole/.test(req.originalUrl):
             if(!req.body.email || !req.body.newrole)
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: 'No user or new role provided'});
             break;
         
-        case /update_status/.test(req.originalUrl):
+        case /status\/update_status/.test(req.originalUrl):
             if(typeof req.body.active !== 'boolean')
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
             if(!req.body.message)
@@ -125,8 +125,18 @@ validation.validateParams = function(req, res, next) {
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
             break;
 
+        case /renovation\/create/.test(req.originalUrl):
+            if(!req.body.city || !req.body.street || !req.body.num)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
+            break;
+
+        case /renovation\/edit/.test(req.originalUrl):
+            if(false) //TODO Add params to check
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
+            break;
+
         default:
-            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Bad Request"});
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "No Validation Performed"});
     }
     return next();
 };

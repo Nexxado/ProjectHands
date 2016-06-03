@@ -36,7 +36,7 @@ middleware.ensurePermission = function(req, res, next) {
     mongoUtils.query(COLLECTIONS.ACTIONS, {action: req.action}, function (error, result) {
 
         if (error || !result || result.length !== 1)
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send("Internal Server Error");
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Invalid Action ID"});
 
         if (ROLES_HIERARCHY.indexOf(req.user.role) < ROLES_HIERARCHY.indexOf(result[0].role))
             return res.status(HttpStatus.FORBIDDEN).send({errMessage: "Not Allowed"});

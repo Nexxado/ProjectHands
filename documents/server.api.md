@@ -27,6 +27,11 @@
     * [Get Album Data](#get-album-data)
 * [**Renovations**](#renovations)
     * [Get Renovation Info](#get-renovation-info)
+    * [Get All Renovations](#get-all-renovations)
+    * [Create Renovation](#create-renovation)
+* [**Users**](#users)
+    * [Get All Users](#get-all-users)
+    * [Get All Sign-ups](#get-all-sign-ups)
     
 
 ---
@@ -120,7 +125,7 @@
 | Status  | Response |
 |---|---|
 | 200  |{success: true} |
-| 400 | {errMessage: "Please Provide all required fields"} or {errMessage: "User Already Logged In"} |
+| 400 | {errMessage: "Please Provide all required fields"} OR {errMessage: "User Already Logged In"} |
 
 ---
 
@@ -143,7 +148,7 @@
 | Status  | Response |
 |---|---|
 | 200  |{success: true} |
-| 400 | {errMessage: "Please Provide all required fields"} or {errMessage: "Sign-Up Process has already been completed"} |
+| 400 | {errMessage: "Please Provide all required fields"} OR {errMessage: "Sign-Up Process has already been completed"} |
 
 ---
 
@@ -184,7 +189,7 @@ Server assigns action id to request according to passed param
 
 | Status  | Response |
 |---|---|
-|200 | {success: true} |
+| 200 | {success: true} |
 | 401 | {errMessage : "Error: User is not logged in" } |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "No Action ID"} |
@@ -208,7 +213,7 @@ Server assigns action id to request according to passed param
 
 | Status  | Response |
 |---|---|
-|200 | {success: true} |
+| 200 | {success: true} |
 | 400 | {errMessage: "No user or new role provided"} |
 | 401 | {errMessage : "Error: User is not logged in" } |
 | 403 | {errMessage: "Not Allowed"} |
@@ -234,7 +239,7 @@ Server assigns action id to request according to passed param
 
 | Status  | Response |
 |---|---|
-|200 | {success: true} |
+| 200 | {success: true} |
 | 400 | {errMessage: ""} |
 | 500 | {errMessage: ""} |
 
@@ -256,7 +261,7 @@ Server assigns action id to request according to passed param
 
 | Status  | Response |
 |---|---|
-|200 | {success: true} |
+| 200 | {success: true} |
 | 400 | {errMessage: ""} |
 | 500 | {errMessage: ""} |
 
@@ -312,7 +317,7 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 
 | Status  | Response |
 |---|---|
-|200 | {active: boolean, message: ""} |
+| 200 | {active: boolean, message: ""} |
 | 400 | {errMessage: "Please provide all required fields"} |
 | 500 | {errMessage: "Error updating status"} |
 
@@ -334,7 +339,7 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 
 | Status  | Response |
 |---|---|
-|200 | {active: boolean, message: ""} |
+| 200 | {active: boolean, message: ""} |
 | 500 | {errMessage: "Error getting status"} |
 
 ---
@@ -465,14 +470,117 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 |---|---|---|
 | PARAMS | city  | String  |
 | PARAMS | street  | String  |
-| PARAMS | num  | String  |
+| PARAMS | num  | int  |
 
 #### Response
 
 | Status  | Response |
 |---|---|
-| 200 |  {isRSVP: boolean, renovation: {addr: {}, created: date, updated: date, date: date, tasks: [{name: username, ... }], ...} |
-| 400 |  {errMessage: "No renovation matches the address"} |
+| 200 | {isRSVP: boolean, renovation: {addr: {}, created: date, updated: date, date: date, tasks: [{name: username, ... }], ...} |
+| 400 | {errMessage: "No renovation matches the address"} |
+| 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to get renovation info"} |
+
+---
+
+### Get All Renovations
+
+#### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/renovation/all |
+
+| Type  | Params | Values |
+|---|---|---|
+|  |   |   |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | [{...}, {...}, ...] |
+| 400 | {errMessage: "No renovations found"} |
+| 401 | {errMessage : "Error: User is not logged in" } |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to get renovations"} |
+
+---
+
+### Create Renovation
+
+#### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/renovation/create |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY  | city  |  String  |
+| BODY  | street  |  String  |
+| BODY  | num  |  int  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "Please provide all required fields"} OR {errMessage: "Renovation already exists"} |
+| 401 | {errMessage : "Error: User is not logged in" } |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to create renovation"}  |
+
+---
+
+---
+
+## Users
+
+### Get All Users
+
+#### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/user/all_users |
+
+| Type  | Params | Values |
+|---|---|---|
+|  |   |   |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | [{name: "", email: "", role: "", approved: true, ...}, {...}, ...] |
+| 400 | {errMessage: "No users found"} |
+| 401 | {errMessage : "Error: User is not logged in" } |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to get users"} |
+
+---
+
+### Get All Sign-ups
+
+#### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/user/all_signups |
+
+| Type  | Params | Values |
+|---|---|---|
+|  |   |   |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | [{name: "", email: "", role: guest, approved: false, ...}, {...}, ...] |
+| 400 | {errMessage: "No signups found"} |
+| 401 | {errMessage : "Error: User is not logged in" } |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to get signups"} |
 
 ---
