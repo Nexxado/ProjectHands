@@ -16,43 +16,12 @@ var ROLES = config.ROLES;
 /**
  * User Login - match user password hash to hash in DB using passport strategy
  */
-router.post('/login', validation.validateParams, passport.authenticate('local'),
-    function (req, res) {
-
-        debug('local login success');
-        debug('local login user', req.user);
-
-        res.send({
-            success: true,
-            name: req.user.name,
-            email: req.user.email,
-            role: req.user.role,
-            phone: req.user.phone,
-            isOAuth: !!(req.user.googleId || req.user.facebookId),
-            approved: req.user.approved,
-            signup_complete: req.user.signup_complete,
-            joined_date: req.user.joined_date,
-            avatar: req.user.avatar
-        });
-    });
+router.post('/login', validation.validateParams, passport.authenticate('local'), sendUserInfo);
 
 /**
  * check if user is logged in - has an active session
  */
-router.get('/isLoggedIn', middleware.ensureAuthenticated, function (req, res) {
-    return res.send({
-        success: true,
-        name: req.user.name,
-        email: req.user.email,
-        role: req.user.role,
-        phone: req.user.phone,
-        isOAuth: !!(req.user.googleId || req.user.facebookId),
-        approved: req.user.approved,
-        signup_complete: req.user.signup_complete,
-        joined_date: req.user.joined_date,
-        avatar: req.user.avatar
-    });
-});
+router.get('/isLoggedIn', middleware.ensureAuthenticated, sendUserInfo);
 
 
 /**
@@ -60,21 +29,11 @@ router.get('/isLoggedIn', middleware.ensureAuthenticated, function (req, res) {
  */
 router.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
-router.get('/google/callback', passport.authenticate('google', {failureRedirect: '/signup'}),
-    function (req, res) {
-
-        debug('google login success', req.user);
-        res.redirect('/after-auth.html');
-    });
+router.get('/google/callback', passport.authenticate('google', {failureRedirect: '/signup'}), redirectOAuth);
 
 router.get('/facebook', passport.authenticate('facebook', {scope: ['email']}));
 
-router.get('/facebook/callback', passport.authenticate('facebook', {failureRedirect: '/signup'}),
-    function (req, res) {
-
-        debug('google login success', req.user);
-        res.redirect('/after-auth.html');
-    });
+router.get('/facebook/callback', passport.authenticate('facebook', {failureRedirect: '/signup'}), redirectOAuth);
 
 
 /**
@@ -82,7 +41,7 @@ router.get('/facebook/callback', passport.authenticate('facebook', {failureRedir
  */
 router.get('/logout', middleware.ensureAuthenticated, function (req, res) {
     req.logout();
-    return writeToClient(res, {success: true});
+    res.send({success: true});
 });
 
 
@@ -192,27 +151,6 @@ router.get('/authenticate/:action', middleware.ensureAuthenticated, middleware.e
 
 
 /**
- * Change a user role - can only be invoked by an admin user.
- */
-router.post('/assignrole', middleware.ensureAuthenticated, validation.validateParams, function (req, res) {
-
-    if (req.user.role !== ROLES.ADMIN) //check if user is admin
-        return res.status(HttpStatus.FORBIDDEN).send({errMessage: 'Not Allowed'});
-
-
-    authUtils.setUserRole(req.body.email, req.body.newrole, function (error, result) {
-
-        if (error)
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
-
-        debug('assignrole setUserRole error', error);
-        debug('assignrole setUserRole result', result);
-        return res.send(result);
-    });
-
-});
-
-/**
  * will take the email and the phone to ensure that the details are correct
  * and the new , old password too, to kip the need to open a new page to enter the passwords
  * the old password is needed if changing password , if forgot option the new password is enough
@@ -297,7 +235,34 @@ router.get('/reset/:token', function (req, res) {
     });
 });
 
+/**
+ * Send user info to client
+ */
+function sendUserInfo(req, res) {
 
+    debug('sendUserInfo', req.user);
 
+    return res.send({
+        success: true,
+        name: req.user.name,
+        email: req.user.email,
+        role: req.user.role,
+        phone: req.user.phone,
+        isOAuth: !!(req.user.googleId || req.user.facebookId),
+        approved: req.user.approved,
+        signup_complete: req.user.signup_complete,
+        joined_date: req.user.joined_date,
+        avatar: req.user.avatar
+    });
+}
+
+/**
+ * Redirect OAuth2 Logins
+ */
+function redirectOAuth(req, res) {
+
+    debug('redirectOAuth', req.user);
+    res.redirect('/after-auth.html');
+}
 
 module.exports = router;

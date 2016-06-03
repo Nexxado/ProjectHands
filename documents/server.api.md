@@ -10,7 +10,6 @@
     * [OAuth Sign Up](#oauth-sign-up)
     * [Email Activation](#email-activation)
     * [Authenticate User Action](#authenticate-user-action)
-    * [Update User Role](#update-user-role)
     * [Forgot Password](#forgot-password)
     * [Reset Password](#reset-password)
 * [**Chat**](#chat)
@@ -34,6 +33,7 @@
     * [Get All Sign-ups](#get-all-sign-ups)
     * [Approve User](#approve-user)
     * [Delete User](#delete-user)
+    * [Update User Role](#update-user-role)
 * [**Teams**](#teams)
     * [Create Team](#create-team)
     * [Delete Team](#delete-team)
@@ -200,31 +200,6 @@ Server assigns action id to request according to passed param
 | Status  | Response |
 |---|---|
 | 200 | {success: true} |
-| 401 | {errMessage: "Error: User is not logged in"} |
-| 403 | {errMessage: "Not Allowed"} |
-| 500 | {errMessage: "No Action ID"} |
-
----
-
-### Update User Role
-Server assigns action id to request according to passed param
-
-#### Request
-
-| Method | Url |
-|---|---|
-| POST | /api/auth/assignrole |
-
-| Type  | Params | Values |
-|---|---|---|
-|  BODY | action | String |
-
-#### Response
-
-| Status  | Response |
-|---|---|
-| 200 | {success: true} |
-| 400 | {errMessage: "No user or new role provided"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "No Action ID"} |
@@ -646,6 +621,32 @@ Approve a user to join Project Hands
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to delete user"} |
+
+---
+
+### Update User Role
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/user/assign_role |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | email | String |
+| BODY | newRole | String
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "No user or new role provided"} |
+| 400 | {errMessage: "User does not exists"} |
+| 401 | {errMessage: "Error: User is not logged in"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to change user role"} |
 
 ---
 

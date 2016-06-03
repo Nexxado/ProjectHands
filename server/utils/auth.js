@@ -40,16 +40,6 @@ module.exports = {
     messages: MESSAGES,
 
     /**
-     * @param user {object}
-     * @param newRole {string}
-     * @param callback {function}
-     */
-    setUserRole: function (email, newRole, callback) {
-        //we need to check that who sent the request has admin role
-        mongoUtils.update(COLLECTIONS.USERS, {email: email}, {$set: {role: newRole}}, {}, callback);
-    },
-
-    /**
      * Insert a user to the DataBase
      * @param user {object} : the user details from the Client
      * @param callback {function} : methods will be executed when the user is inserted(Success/Fail)

@@ -11,14 +11,14 @@ var validation = require('../utils/validation');
 /**
  * Get all volunteers
  */
-router.get('/all_users', middleware.ensureAuthenticated, middleware.ensurePermission, function(req, res) {
+router.get('/all_users', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
 
-    mongoUtils.query(COLLECTIONS.USERS, {approved: true}, function(error, result) {
+    mongoUtils.query(COLLECTIONS.USERS, {approved: true}, function (error, result) {
         debug('all_users', error, result);
 
-        if(error)
+        if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to get users"});
-        else if(!result.length)
+        else if (!result.length)
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "No users found"});
 
         res.send(result);
@@ -30,14 +30,14 @@ router.get('/all_users', middleware.ensureAuthenticated, middleware.ensurePermis
 /**
  * Get all users who signed up
  */
-router.get('/aLL_signups', middleware.ensureAuthenticated, middleware.ensurePermission, function(req, res) {
+router.get('/aLL_signups', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
 
-    mongoUtils.query(COLLECTIONS.USERS, {approved: false}, function(error, result) {
+    mongoUtils.query(COLLECTIONS.USERS, {approved: false}, function (error, result) {
         debug('aLL_signups', error, result);
 
-        if(error)
+        if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to get signups"});
-        else if(!result.length)
+        else if (!result.length)
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "No signups found"});
 
         res.send(result);
@@ -48,48 +48,80 @@ router.get('/aLL_signups', middleware.ensureAuthenticated, middleware.ensurePerm
 /**
  * Approve User Sign-up
  */
-router.post('/approve', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams, 
-    function(req, res) {
-    
-    mongoUtils.query(COLLECTIONS.USERS, {email: req.body.email}, function (error, result) {
+router.post('/approve', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    function (req, res) {
 
-        if(error)
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to approve user"});
+        mongoUtils.query(COLLECTIONS.USERS, {email: req.body.email}, function (error, result) {
 
-        if(result && result.length && result[0].approved)
-            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User already approved"});
+            if (error)
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to approve user"});
 
-        mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, {$set: {approved: true, role: req.body.role}}, {},
-            function(error, result) {
-                debug('approve', error, result);
+            if (result && result.length && result[0].approved)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User already approved"});
 
-                if(error || !result.nModified)
-                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to approve user"});
+            mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, {
+                    $set: {
+                        approved: true,
+                        role: req.body.role
+                    }
+                }, {},
+                function (error, result) {
+                    debug('approve', error, result);
 
-                res.send({success: true})
-            })
+                    if (error || !result.nModified)
+                        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to approve user"});
 
-    })
-});
+                    res.send({success: true})
+                })
+
+        })
+    });
 
 
 /**
  * Delete User
  */
 router.delete('/delete/:email', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    function(req, res) {
-        
-        mongoUtils.delete(COLLECTIONS.USERS, {email: req.params.email}, function(error, result) {
+    function (req, res) {
+
+        mongoUtils.delete(COLLECTIONS.USERS, {email: req.params.email}, function (error, result) {
             debug('delete', req.params.email, error, result);
 
-            if(error || !result.nRemoved)
+            if (error || !result.nRemoved)
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to delete user"});
 
             res.send({success: true})
         });
-        
+
     });
 
+
+/**
+ * Change a user role
+ */
+router.post('/assign_role', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams, function (req, res) {
+
+    mongoUtils.query(COLLECTIONS.USERS, {email: req.body.email}, function (error, result) {
+
+        if (error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to change user role"});
+        else if (!result.length)
+            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User does not exists"});
+
+        mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, {$set: {role: req.body.newRole}}, {},
+            function (error, result) {
+
+                debug('assign_role', error, result);
+                if (error || !result.nModified)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed change user role"});
+
+                return res.send({success: true});
+            });
+
+
+    })
+
+});
 
 
 module.exports = router;

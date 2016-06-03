@@ -125,11 +125,6 @@ validation.validateParams = function(req, res, next) {
                 !validatePassword(req.body.new_password) || !validatePassword(req.body.old_password))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Old or New Password is incorrect"});
             break;
-
-        case /auth\/assignrole/.test(req.originalUrl):
-            if(!req.body.email || !req.body.newrole)
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: 'No user or new role provided'});
-            break;
         
         case /status\/update_status/.test(req.originalUrl):
             if(typeof req.body.active !== 'boolean')
@@ -157,6 +152,11 @@ validation.validateParams = function(req, res, next) {
         case /user\/delete/.test(req.originalUrl):
             if(!req.params.email)
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid user email"});
+            break;
+
+        case /user\/assign_role/.test(req.originalUrl):
+            if(!req.body.email || !req.body.newRole)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: 'No user or new role provided'});
             break;
 
         case /team\/create/.test(req.originalUrl):
