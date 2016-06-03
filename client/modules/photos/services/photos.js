@@ -1,8 +1,27 @@
 angular.module('ProjectHands.photos')
 
-    .factory("PhotosService", function ($rootScope, $resource, $cookies, $q, AUTH_EVENTS, UtilsService) {
+    .factory("PhotosService", function ($rootScope, $resource, $cookies, Upload, $q) {
 
         var baseUrl = '/api/photos';
+
+        function uploadPhoto(album, file) {
+            var deferred = $q.defer();
+            Upload.upload({
+                url: baseUrl + '/uploads',
+                data: {
+                    // username: $scope.username,
+                    album: album,
+                    file: file
+                }
+            }).then(function (resp) {
+                deferred.resolve(resp.data);
+            }, null, function (evt) {
+
+            }).catch(function (error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        }
 
         function deletePhoto(fileId) {
             var deferred = $q.defer();
@@ -41,6 +60,7 @@ angular.module('ProjectHands.photos')
 
         return {
             deletePhoto: deletePhoto,
-            getPhotos: getPhotos
+            getPhotos: getPhotos,
+            uploadPhoto: uploadPhoto
         };
     });
