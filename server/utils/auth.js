@@ -9,12 +9,14 @@ var saltRounds = 10; // will do 2^rounds
 
 /** CONSTANTS */
 var MESSAGES = {
-    DB_FETCH_ERROR: "Error has accourd , please  try again",
+    DB_FETCH_ERROR: "Error has accord , please  try again",
     PASSWORD_NOT_MATCH_ERROR: "The password dose not match , please try again",
-    PASSWORD_UPDATING_ERROR: "Error has accourd while updating the password",
+    PASSWORD_UPDATING_ERROR: "Error has accord while updating the password",
     PASSWORD_UPDATE_SUCCESS: "The password has been changed",
     USER_DATA_NOT_EXIST: "Wrong Email or Phone number",
-    EMAIL_UPDATE_SUCCESS: "Email successfully updated"
+    EMAIL_UPDATE_SUCCESS: "Email successfully updated",
+    USER_EMAIL_NOT_EXIST: "Wrong Email."
+
 };
 
 /**
@@ -122,7 +124,7 @@ module.exports = {
             }
             else {
                 if (result.length === 0) {
-                    callback(error, MESSAGES.USER_DATA_NOT_EXIST);
+                    callback(error, MESSAGES.USER_EMAIL_NOT_EXIST);
                 }
                 else {
                     callback(error, result[0].name);
