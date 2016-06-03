@@ -92,8 +92,7 @@ angular.module('ProjectHands.photos')
                             console.log('deletePhoto error ', error);
                         });
                 }
-
-
+                
                 $scope.upload = function (files) {
                     if (files && files.length) {
                         for (var i = 0; i < files.length; i++) {

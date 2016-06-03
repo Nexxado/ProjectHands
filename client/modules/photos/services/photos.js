@@ -6,7 +6,7 @@ angular.module('ProjectHands.photos')
 
         function deletePhoto(fileId) {
             var deferred = $q.defer();
-            $resource(baseUrl + '/delete').save({
+            $resource(baseUrl + '/delete').delete({
                 file_id: fileId
             })
                 .$promise

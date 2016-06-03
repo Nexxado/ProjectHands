@@ -14,50 +14,40 @@ var HttpStatus = require('http-status-codes');
  * post for upload photos to sever using multipartyMiddleware
  *
  */
-router.post('/uploads', multipartyMiddleware, function (request, response) {
+router.post('/uploads', multipartyMiddleware, function (req, res) {
     // We are able to access req.files.file thanks to
     // the multiparty middleware
-    //TODO check request old files
-    var file = request.files.file;
-    var albumKey = request.body.album_key;
+    var file = req.files.file;
+    var albumKey = req.body.album_key;
 
     //check if its no album key
-    if (albumKey == null) {
-        writeToClient(response, null, "Error: missing album_key", HttpStatus.BAD_REQUEST);
-        return;
-    }
+    if (!albumKey)
+        return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: missing album_key"});
 
-    if (file == null) {
-        writeToClient(response, null, "Error: missing file", HttpStatus.BAD_REQUEST);
-        return;
-    }
+    if (!file)
+        return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: missing file"});
 
     //upload photo to google drive
     driveUtils.uploadFile(
         file.path,
         albumKey,
-        function (err, res) {
-            if (err) {
-                writeToClient(response, null, "Error: file not saved", HttpStatus.INTERNAL_SERVER_ERROR);
-            } else {
-                var photoData = {
-                    file_id: res.file_id,
-                    web_link: res.web_link,
-                    album_key: albumKey
-                };
-                //save photo data to server db
-                savePhoto(res.file_id, res.web_link, albumKey, function (err, res) {
-                    if (err) {
-                        writeToClient(response, null, "Error: file not saved", HttpStatus.INTERNAL_SERVER_ERROR);
-                    } else {
-                        //send to client new photo data
-                        writeToClient(response, photoData);
-                    }
-                });
+        function (error, resolt) {
+            if (error)
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Error: file not saved"});
 
+            var photoData = {
+                file_id: resolt.file_id,
+                web_link: resolt.web_link,
+                album_key: albumKey
+            };
+            //save photo data to server db
+            savePhoto(res.file_id, res.web_link, albumKey, function (error, resolt) {
+                if (error)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Error: file not saved"});
 
-            }
-
+                //send to client new photo data
+                res.send(photoData);
+            });
         });
 });
 /**
