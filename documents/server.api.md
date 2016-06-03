@@ -29,6 +29,7 @@
     * [Get All Renovations](#get-all-renovations)
     * [Create Renovation](#create-renovation)
 * [**Users**](#users)
+    * [Get User Info](#get-user-info)
     * [Get All Users](#get-all-users)
     * [Get All Sign-ups](#get-all-sign-ups)
     * [Approve User](#approve-user)
@@ -451,7 +452,7 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 
 | Method | Url |
 |---|---|
-| GET | /api/renovation/get_info/:city&:street&:num |
+| GET | /api/renovation/get_info/:city/:street/:num |
 
 | Type  | Params | Values |
 |---|---|---|
@@ -477,7 +478,7 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 
 | Method | Url |
 |---|---|
-| GET | /api/renovation/all |
+| GET | /api/renovation/get_all |
 
 | Type  | Params | Values |
 |---|---|---|
@@ -525,6 +526,31 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 ---
 
 ## Users
+
+### Get User Info
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/user/get_info/:email |
+
+| Type  | Params | Values |
+|---|---|---|
+| PARAMS | email | String |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {email: "", name: "", role: "", ...} |
+| 400 | {errMessage: "Invalid user email"} |
+| 400 | {errMessage: "User does not exists"} |
+| 401 | {errMessage: "Error: User is not logged in"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to get user info"} |
+
+---
 
 ### Get All Users
 

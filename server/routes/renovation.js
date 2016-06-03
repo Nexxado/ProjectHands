@@ -14,7 +14,7 @@ var validation = require('../utils/validation');
 /**
  * Get a renovation's info according to its address (city, street name, house number)
  */
-router.get('/get_info/:city&:street&:num', middleware.ensureAuthenticated, middleware.ensurePermission,
+router.get('/get_info/:city/:street/:num', middleware.ensureAuthenticated, middleware.ensurePermission,
     validation.validateParams, function(req, res) {
 
     mongoUtils.query(COLLECTIONS.RENOVATIONS, {
@@ -46,7 +46,7 @@ router.get('/get_info/:city&:street&:num', middleware.ensureAuthenticated, middl
 /**
  * Get entire renovation collection
  */
-router.get('/all', middleware.ensureAuthenticated, middleware.ensurePermission, function(req, res) {
+router.get('/get_all', middleware.ensureAuthenticated, middleware.ensurePermission, function(req, res) {
 
     mongoUtils.query(COLLECTIONS.RENOVATIONS, {}, function(error, result) {
         if(error)

@@ -9,6 +9,24 @@ var validation = require('../utils/validation');
 
 
 /**
+ * Get user info
+ */
+router.get('/user_info/:email', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    function (req, res) {
+
+        mongoUtils.query(COLLECTIONS.USERS, {email: req.params.email}, function (error, result) {
+            debug('user_info', error, result);
+
+            if (error)
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to get user info"});
+            else if (!result.length)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User does not exists"});
+
+            res.send(result[0]);
+        });
+    });
+
+/**
  * Get all volunteers
  */
 router.get('/all_users', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {

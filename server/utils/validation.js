@@ -149,6 +149,7 @@ validation.validateParams = function(req, res, next) {
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid user email or role"});
             break;
 
+        case /user\/user_info/.test(req.originalUrl):
         case /user\/delete/.test(req.originalUrl):
             if(!req.params.email)
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid user email"});

@@ -6,8 +6,7 @@ module.exports = function (req, res, next) {
         case /status\/update_status/.test(req.originalUrl):
             req.action = ACL.CHANGE_STATUS;
             break;
-        case /dataexchange\/import/.test(req.originalUrl):
-        case /dataexchange\/export/.test(req.originalUrl):
+        case /dataexchange\//.test(req.originalUrl):
             req.action = ACL.DATA_IMPORT_EXPORT;
             break;
         case new RegExp(ACL.VIEW_DASHBOARD).test(req.originalUrl):
@@ -22,7 +21,7 @@ module.exports = function (req, res, next) {
         case /renovation\/get_info/.test(req.originalUrl):
             req.action = ACL.RENOVATION_GET_INFO;
             break;
-        case /renovation\/all/.test(req.originalUrl):
+        case /renovation\/get_all/.test(req.originalUrl):
             req.action = ACL.RENOVATION_GET_ALL;
             break;
         case /renovation\/create/.test(req.originalUrl):
