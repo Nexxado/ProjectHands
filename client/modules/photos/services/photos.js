@@ -56,8 +56,7 @@ angular.module('ProjectHands.photos')
 
             return deferred.promise;
         }
-
-
+        
         return {
             deletePhoto: deletePhoto,
             getPhotos: getPhotos,

@@ -63,8 +63,7 @@ angular.module('ProjectHands.photos')
                             console.log('getPhotos error ', error);
                         });
                 };
-
-
+                
                 $scope.getPhotos($scope.album);
 
                 $scope.progress = false;

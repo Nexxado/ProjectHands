@@ -1,13 +1,138 @@
-<md-content layout-padding>
-    <h1>user data</h1>
+<md-content layout-padding layout="column" layout-align="center center">
 
-    <h3>{{profile.name}}</h3>
-    <h3>{{profile.email}}</h3>
-    <h3>{{profile.role}}</h3>
-    <h3>{{profile.phone}}</h3>
+    <div layout="row">
+        <div>
+            <md-card>
+                <md-toolbar layout="row" class="md-hue-3">
+                    <div class="md-toolbar-tools">
+                        <span>Personal settings</span>
+                    </div>
+                </md-toolbar>
+                <md-content>
+                    <md-list flex>
+                        <md-list-item   ng-click="null">
 
+                                <h3>Profile</h3>
 
-    <h1>change email</h1>
-    <h1>change password</h1>
+                        </md-list-item>
+                        <md-list-item class="md-3-line" ng-click="null">
+                            <div class="md-list-item-text" layout="column">
+                                <h3>Account</h3>
+                            </div>
+                        </md-list-item>
+                        <md-list-item class="md-3-line" ng-click="null">
+                            <div class="md-list-item-text" layout="column">
+                                <h3>Emails</h3>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
+            </md-card>
 
+        </div>
+        <div>
+            <md-card>
+
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Profile picture</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-divider></md-divider>
+                <md-card-content>
+                    <div layout-padding layout="column">
+                        <img ng-src={{profilePicUrl}} alt="profile pic">
+
+                        <div>
+                            <!--Drop File:-->
+                            <div ngf-drop ngf-select ng-model="files" class="drop-box"
+                                 ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
+                                 accept="image/*,application/pdf"
+                                 ngf-pattern="'image/*,application/pdf'">
+                                <div layout-align="center center">
+                                    <div ng-show="!progress">
+                                        Upload photo
+                                    </div>
+                                    <div ng-show="progress">
+                                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+                        </div>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+        <div>
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Your Profile</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-divider></md-divider>
+                <md-card-content>
+                    <h3>Name</h3>
+                    <h4>{{profile.name}}</h4>
+
+                    <h3>Email</h3>
+                    <h4>{{profile.email}}</h4>
+
+                    <h3>Role</h3>
+                    <h4>{{profile.role}}</h4>
+
+                    <h3>Phone</h3>
+                    <h4>{{profile.role}}</h4>
+                </md-card-content>
+            </md-card>
+        </div>
+        <div>
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Change Password</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-divider></md-divider>
+                <md-card-content>
+                    <div layout="column">
+                        <md-input-container>
+                            <label>Old password</label>
+                            <input ng-model="password.old">
+                        </md-input-container>
+                        <md-input-container>
+                            <label>New password</label>
+                            <input ng-model="password.new">
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Confirm new password</label>
+                            <input ng-model="password.confirm">
+                        </md-input-container>
+                        <md-button>Update password</md-button>
+                        <md-button>I forgot my password</md-button>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+        <div>
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Change Email</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-divider></md-divider>
+                <md-card-content>
+                    <div layout="column">
+                        <md-input-container>
+                            <label>New email</label>
+                            <input ng-model="password.old">
+                        </md-input-container>
+                        <md-button>Update email</md-button>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
 </md-content>
