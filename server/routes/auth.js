@@ -298,7 +298,7 @@ router.get('/reset/:token', function (req, res) {
         });
     });
 });
-router.post('/changeEmailRequest/:oldEmail&:newEmail', validation.validateParams, middleware.ensureAuthenticated, function (req, res) {
+router.post('/changeEmailRequest', middleware.ensureAuthenticated, validation.validateParams, function (req, res) {
     var oldEmail = req.body.oldEmail;
     var newEmail = req.body.newEmail;
 
