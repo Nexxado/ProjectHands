@@ -24,6 +24,9 @@
 		"action": "acl_renovation_edit",
 		"role": "team_lead"
 	} , {
+		"action": "acl_renovation_rsvp",
+		"role": "volunteer"
+	} , {
 		"action": "acl_team_actions",
 		"role": "admin"
 	}

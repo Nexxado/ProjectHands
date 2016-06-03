@@ -28,6 +28,7 @@
     * [Get Renovation Info](#get-renovation-info)
     * [Get All Renovations](#get-all-renovations)
     * [Create Renovation](#create-renovation)
+    * [Renovation RSVP](#renovation-rsvp)
 * [**Users**](#users)
     * [Get User Info](#get-user-info)
     * [Get All Users](#get-all-users)
@@ -520,6 +521,37 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to create renovation"}  |
+
+---
+
+### Renovation RSVP
+Updates a user's RSVP status for a renovation.
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/renovation/rsvp |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY  | city  |  String  |
+| BODY  | street  |  String  |
+| BODY  | num  |  int  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {rsvp: boolean} |
+| 400 | {errMessage: "Invalid renovation address"} |
+| 400 | {errMessage: "Renovation does not exists"} |
+| 400 | {errMessage: "Renovation does not have a team assigned"} |
+| 400 | {errMessage: "Team does not exists"} |
+| 400 | {errMessage: "User is not part of renovation team"} |
+| 401 | {errMessage: "Error: User is not logged in"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to change rsvp status"}  |
 
 ---
 

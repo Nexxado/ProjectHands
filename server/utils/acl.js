@@ -30,6 +30,9 @@ module.exports = function (req, res, next) {
         case /renovation\/edit/.test(req.originalUrl):
             req.action = ACL.RENOVATION_EDIT;
             break;
+        case /renovation\/rsvp/.test(req.originalUrl):
+            req.action = ACL.RENOVATION_RSVP;
+            break;
     }
 
     next();

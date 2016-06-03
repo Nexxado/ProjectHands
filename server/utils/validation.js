@@ -135,6 +135,7 @@ validation.validateParams = function(req, res, next) {
 
         case /renovation\/get_info/.test(req.originalUrl):
         case /renovation\/create/.test(req.originalUrl):
+        case /renovation\/rsvp/.test(req.originalUrl):
             if(!req.body.city || !req.body.street || !req.body.num)
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address"});
             break;
