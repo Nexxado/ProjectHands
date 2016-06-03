@@ -135,6 +135,16 @@ validation.validateParams = function(req, res, next) {
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
             break;
 
+        case /user\/approve/.test(req.originalUrl):
+            if(!req.body.email || !req.body.role)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
+            break;
+
+        case /user\/delete/.test(req.originalUrl):
+            if(!req.params.email)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
+            break;
+
         default:
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "No Validation Performed"});
     }

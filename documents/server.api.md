@@ -32,6 +32,8 @@
 * [**Users**](#users)
     * [Get All Users](#get-all-users)
     * [Get All Sign-ups](#get-all-sign-ups)
+    * [Approve User](#approve-user)
+    * [Delete User](#delete-user)
     
 
 ---
@@ -582,5 +584,55 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 | 401 | {errMessage : "Error: User is not logged in" } |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to get signups"} |
+
+---
+
+### Approve User
+Approve a user to join Project Hands
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/user/approve |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | email | String  |
+| BODY | role  | String  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "Please provide all required fields"} |
+| 401 | {errMessage : "Error: User is not logged in" } |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to approve user"} |
+
+---
+
+### Delete User
+
+#### Request
+
+| Method | Url |
+|---|---|
+| DELETE | /api/user/delete/:email |
+
+| Type  | Params | Values |
+|---|---|---|
+| PARAMS | email | String  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "Please provide all required fields"} |
+| 401 | {errMessage : "Error: User is not logged in" } |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to delete user"} |
 
 ---
