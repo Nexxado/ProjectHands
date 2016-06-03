@@ -103,7 +103,7 @@ angular.module('ProjectHands.photos')
                                     url: '/api/photos/uploads',
                                     data: {
                                         // username: $scope.username,
-                                        album_key: $scope.album,
+                                        album: $scope.album,
                                         file: file
                                     }
                                 }).then(function (resp) {

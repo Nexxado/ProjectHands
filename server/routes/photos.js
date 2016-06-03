@@ -18,10 +18,10 @@ router.post('/uploads', multipartyMiddleware, function (req, res) {
     // We are able to access req.files.file thanks to
     // the multiparty middleware
     var file = req.files.file;
-    var albumKey = req.body.album_key;
+    var album = req.body.album;
 
-    if (!albumKey)
-        return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: missing album_key"});
+    if (!album)
+        return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: missing album"});
 
     if (!file)
         return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: missing file"});
@@ -29,7 +29,7 @@ router.post('/uploads', multipartyMiddleware, function (req, res) {
     //upload photo to google drive
     driveUtils.uploadFile(
         file.path,
-        albumKey,
+        album,
         function (error, result) {
             if (error)
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Error: file not saved"});
@@ -37,12 +37,12 @@ router.post('/uploads', multipartyMiddleware, function (req, res) {
             var photoData = {
                 file_id: result.file_id,
                 web_link: result.web_link,
-                album_key: albumKey
+                album: album
             };
             //save photo data to server db
             savePhoto(photoData.file_id,
                 photoData.web_link,
-                photoData.album_key,
+                photoData.album,
                 function (error, result) {
                     if (error)
                         return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Error: file not saved"});
@@ -63,12 +63,12 @@ router.delete('/delete', function (req, res) {
     //delete file from drive 
     driveUtils.deleteFile(fileId, function (error, result) {
         if (error)
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Error: file did not deleted"});
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Error: file not deleted"});
 
         //delete photo data from the db
         deletePhoto(fileId, function (error, result) {
             if (error)
-                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Error: file did not deleted"});
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Error: file not deleted"});
 
             res.send({success: true});
         })
@@ -93,12 +93,12 @@ router.get('/album', function (req, res) {
  *  save photo data to db
  * @param fileId {String} : photo drive file id
  * @param webContentLink {String} : drive direct link
- * @param album_key {String} : album of the photo
+ * @param album {String} : album of the photo
  * @param callback {Function} : holds err / success
  */
-function savePhoto(fileId, webContentLink, album_key, callback) {
+function savePhoto(fileId, webContentLink, album, callback) {
     mongoUtils.insert(COLLECTIONS.PHOTOS, {
-            album_key: album_key,
+            album: album,
             web_link: webContentLink,
             file_id: fileId
         }
@@ -106,13 +106,13 @@ function savePhoto(fileId, webContentLink, album_key, callback) {
 }
 /**
  *  get all photos of particular album
- * @param albumKey {String} : the album
+ * @param album {String} : the album
  * @param callback {Function} : callback holds err / success
  */
-function getAlbum(albumKey, callback) {
+function getAlbum(album, callback) {
     // console.log('getAlbumImages(albumKey) ' + albumKey);
     mongoUtils.query(COLLECTIONS.PHOTOS, {
-        album_key: albumKey
+        album: album
     }, callback);
 }
 /**
