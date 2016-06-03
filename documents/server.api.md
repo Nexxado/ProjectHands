@@ -38,6 +38,8 @@
     * [Create Team](#create-team)
     * [Delete Team](#delete-team)
     * [Add Members](#add-members)
+    * [Remove Members](#remove-members)
+    * [Assign To Renovation](#assign-to-renovation)
     
 
 ---
@@ -84,7 +86,7 @@
 | Status  | Response |
 |---|---|
 | 200 | { success: true,  name: String, email: String, <br> role: String, phone: String, isOAuth: boolean, <br> approved: boolean, signup_complete: boolean, joined_date: Date ISO String, <br> avatar: img url, renovations: Array, tasks: Array } |
-| 401 | {errMessage : "Error: User is not logged in" } |
+| 401 | {errMessage: "Error: User is not logged in"} |
 
 ---
 
@@ -105,7 +107,7 @@
 | Status  | Response |
 |---|---|
 | 200  |{success: true} |
-| 401 | {errMessage : "Error: User is not logged in" } |
+| 401 | {errMessage: "Error: User is not logged in"} |
 
 ---
 
@@ -198,7 +200,7 @@ Server assigns action id to request according to passed param
 | Status  | Response |
 |---|---|
 | 200 | {success: true} |
-| 401 | {errMessage : "Error: User is not logged in" } |
+| 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "No Action ID"} |
 
@@ -223,7 +225,7 @@ Server assigns action id to request according to passed param
 |---|---|
 | 200 | {success: true} |
 | 400 | {errMessage: "No user or new role provided"} |
-| 401 | {errMessage : "Error: User is not logged in" } |
+| 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "No Action ID"} |
 
@@ -297,7 +299,7 @@ Server assigns action id to request according to passed param
 |---|---|
 | 200 | {id: chat_id, messages: [{align: msgSide, class: msgClass, content: msgContent, timestamp: HH:mm, user: username}]} |
 | 400 | {errMessage: "Invalid Chat Id"} |
-| 401 | {errMessage : "Error: User is not logged in" } |
+| 401 | {errMessage: "Error: User is not logged in"} |
 | 500 | {errMessage: "Error getting chat history"} |
 
 ---
@@ -512,7 +514,7 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 |---|---|
 | 200 | [{...}, {...}, ...] |
 | 400 | {errMessage: "No renovations found"} |
-| 401 | {errMessage : "Error: User is not logged in" } |
+| 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to get renovations"} |
 
@@ -539,7 +541,7 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 | 200 | {success: true} |
 | 400 | {errMessage: "Invalid renovation address"} |
 | 400 | {errMessage: "Renovation already exists"} |
-| 401 | {errMessage : "Error: User is not logged in" } |
+| 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to create renovation"}  |
 
@@ -567,7 +569,7 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 |---|---|
 | 200 | [{name: "", email: "", role: "", approved: true, ...}, {...}, ...] |
 | 400 | {errMessage: "No users found"} |
-| 401 | {errMessage : "Error: User is not logged in" } |
+| 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to get users"} |
 
@@ -591,7 +593,7 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 |---|---|
 | 200 | [{name: "", email: "", role: guest, approved: false, ...}, {...}, ...] |
 | 400 | {errMessage: "No signups found"} |
-| 401 | {errMessage : "Error: User is not logged in" } |
+| 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to get signups"} |
 
@@ -617,7 +619,7 @@ Approve a user to join Project Hands
 |---|---|
 | 200 | {success: true} |
 | 400 | {errMessage: "Invalid user email or role"} |
-| 401 | {errMessage: "Error: User is not logged in" } |
+| 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to approve user"} |
 
@@ -641,7 +643,7 @@ Approve a user to join Project Hands
 |---|---|
 | 200 | {success: true} |
 | 400 | {errMessage: "Invalid user email"} |
-| 401 | {errMessage : "Error: User is not logged in" } |
+| 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to delete user"} |
 
@@ -669,7 +671,7 @@ Approve a user to join Project Hands
 |---|---|
 | 200 | {success: true} |
 | 400 | {errMessage: "Invalid team name"} |
-| 401 | {errMessage : "Error: User is not logged in" } |
+| 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to create team"} |
 
@@ -693,7 +695,7 @@ Approve a user to join Project Hands
 |---|---|
 | 200 | {success: true} |
 | 400 | {errMessage: "Invalid team name"} |
-| 401 | {errMessage : "Error: User is not logged in" } |
+| 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to delete team"} |
 
@@ -720,8 +722,64 @@ Approve a user to join Project Hands
 | 400 | {errMessage: "Invalid team name or members email"} |
 | 400 | {errMessage: "Team does not exists"} |
 | 400 | {errMessage: "No new members to add"} |
-| 401 | {errMessage : "Error: User is not logged in" } |
+| 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to add members to team"} |
+
+---
+
+### Remove Members
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/team/remove_members |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | name | String |
+| BODY | members | Array |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {membersRemoved: ["", "", ...], notInTeam: ["", "", ...]} |
+| 400 | {errMessage: "Invalid team name or members email"} |
+| 400 | {errMessage: "Team does not exists"} |
+| 400 | {errMessage: "Members are not part of the specified team"} |
+| 401 | {errMessage: "Error: User is not logged in"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to remove members from team"} |
+
+---
+
+### Assign To Renovation
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/team/assign_to_renovation |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | name | String |
+| BODY | city |  String |
+| BODY | street |  String |
+| BODY | num | int |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "Invalid team name or renovation address"} |
+| 400 | {errMessage: "Team does not exists"} |
+| 400 | {errMessage: "Renovation does not exists"} |
+| 401 | {errMessage: "Error: User is not logged in"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to assign renovation to team"} |
 
 ---
