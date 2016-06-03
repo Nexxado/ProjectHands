@@ -51,14 +51,24 @@ router.get('/aLL_signups', middleware.ensureAuthenticated, middleware.ensurePerm
 router.post('/approve', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams, 
     function(req, res) {
     
-    mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, {$set: {approved: true, role: req.body.role}}, {},
-        function(error, result) {
-            debug('approve', error, result);
+    mongoUtils.query(COLLECTIONS.USERS, {email: req.body.email}, function (error, result) {
 
         if(error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to approve user"});
 
-        res.send({success: true})
+        if(result && result.length && result[0].approved)
+            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User already approved"});
+
+        mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, {$set: {approved: true, role: req.body.role}}, {},
+            function(error, result) {
+                debug('approve', error, result);
+
+                if(error || !result.nModified)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to approve user"});
+
+                res.send({success: true})
+            })
+
     })
 });
 
@@ -72,9 +82,9 @@ router.delete('/delete/:email', middleware.ensureAuthenticated, middleware.ensur
         mongoUtils.delete(COLLECTIONS.USERS, {email: req.params.email}, function(error, result) {
             debug('delete', req.params.email, error, result);
 
-            if(error)
+            if(error || !result.nRemoved)
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to delete user"});
-            
+
             res.send({success: true})
         });
         

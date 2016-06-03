@@ -38,7 +38,7 @@ router.get('/get_info/:city&:street&:num', middleware.ensureAuthenticated, middl
         if(ROLES_HIERARCHY.indexOf(req.user.role) < ROLES_HIERARCHY.indexOf(ROLES.TEAM_LEAD))
             delete renovation.rsvp;
 
-        //TODO How will user get his own RSVP status if not team leader?
+
         res.send({isRSVP: isRSVP, renovation: renovation});
     })
 });

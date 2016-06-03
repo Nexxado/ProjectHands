@@ -60,6 +60,7 @@ app.use('/api/dataexchange', require('./routes/dataexchange'));
 app.use('/api/photos', require('./routes/photos'));
 app.use('/api/renovation', require('./routes/renovation'));
 app.use('/api/user', require('./routes/user'));
+app.use('/api/team', require('./routes/team'));
 
 
 /**

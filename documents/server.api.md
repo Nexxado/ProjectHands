@@ -34,6 +34,10 @@
     * [Get All Sign-ups](#get-all-sign-ups)
     * [Approve User](#approve-user)
     * [Delete User](#delete-user)
+* [**Teams**](#teams)
+    * [Create Team](#create-team)
+    * [Delete Team](#delete-team)
+    * [Add Members](#add-members)
     
 
 ---
@@ -51,13 +55,13 @@
 | Type  | Params | Values |
 |---|---|---|
 | BODY  | email | String |
-| BODY | password | String
+| BODY  | password | String
 
 #### Response
 
 | Status  | Response |
 |---|---|
-| 200  |{ success: true,  name: String, email: String, <br> role: String, phone: String, isOAuth: boolean, <br> approved: boolean, signup_complete: boolean, joined_date: Date ISO String, <br> avatar: img url, renovations: Array, tasks: Array } |
+| 200 | { success: true,  name: String, email: String, <br> role: String, phone: String, isOAuth: boolean, <br> approved: boolean, signup_complete: boolean, joined_date: Date ISO String, <br> avatar: img url, renovations: Array, tasks: Array } |
 | 400 | {errMessage: "Email or Password are incorrect"} |
 | 401 | {data: "Error: User is not logged in", status: 401 } |
 
@@ -79,7 +83,7 @@
 
 | Status  | Response |
 |---|---|
-| 200  |{ success: true,  name: String, email: String, <br> role: String, phone: String, isOAuth: boolean, <br> approved: boolean, signup_complete: boolean, joined_date: Date ISO String, <br> avatar: img url, renovations: Array, tasks: Array } |
+| 200 | { success: true,  name: String, email: String, <br> role: String, phone: String, isOAuth: boolean, <br> approved: boolean, signup_complete: boolean, joined_date: Date ISO String, <br> avatar: img url, renovations: Array, tasks: Array } |
 | 401 | {errMessage : "Error: User is not logged in" } |
 
 ---
@@ -126,8 +130,9 @@
 
 | Status  | Response |
 |---|---|
-| 200  |{success: true} |
-| 400 | {errMessage: "Please Provide all required fields"} OR {errMessage: "User Already Logged In"} |
+| 200 | {success: true} |
+| 400 | {errMessage: "Please Provide all required fields"} |
+| 400 | {errMessage: "User Already Logged In"} |
 
 ---
 
@@ -150,7 +155,8 @@
 | Status  | Response |
 |---|---|
 | 200  |{success: true} |
-| 400 | {errMessage: "Please Provide all required fields"} OR {errMessage: "Sign-Up Process has already been completed"} |
+| 400 | {errMessage: "Please Provide all required fields"} |
+| 400 | {errMessage: "Sign-Up Process has already been completed"} |
 
 ---
 
@@ -320,7 +326,7 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 | Status  | Response |
 |---|---|
 | 200 | {active: boolean, message: ""} |
-| 400 | {errMessage: "Please provide all required fields"} |
+| 400 | {errMessage: "Invalid new status"} |
 | 500 | {errMessage: "Error updating status"} |
 
 ---
@@ -404,15 +410,17 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 
 | Type  | Params | Values |
 |---|---|---|
-| FILES | file        | File     |
-| BODY  |album_key   | string   |
+| FILES | file    | File     |
+| BODY  | album   | string   |
 
 #### Response
 
 | Status  | Response |
 |---|---|
-|200   | {album_key: string, file_id: string, web_link: string} |
-|400   | {errMessage: "Error: file not saved"}  |
+|200   | {album: string, file_id: string, web_link: string} |
+|400   | {errMessage: "Error: missing album"}  |
+|400   | {errMessage: "Error: missing file"}  |
+|500   | {errMessage: "Error: file not saved"}  |
 
 ### Delete Photos
 
@@ -420,18 +428,18 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 
 | Method | Url |
 |---|---|
-| POST | /api/photos/delete |
+| DELETE | /api/photos/delete |
 
 | Type  | Params | Values |
 |---|---|---|
-| BODY | file_id  | string    |
+| QUERY | file_id  | string    |
 
 #### Response
 
 | Status  | Response |
 |---|---|
 |200   | {success: true}  |
-|500   | {errMessage: "Error: file did not deleted"} |
+|500   | {errMessage: "Error: file not deleted"} |
 
 ---
 
@@ -451,7 +459,7 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 
 | Status  | Response |
 |---|---|
-|200   | [{album_key: string, file_id: string, web_link: string},...]  |
+|200   | [{album: string, file_id: string, web_link: string},...]  |
 |500   | {errMessage: "Couldn't find album"} |
 
 ---
@@ -480,6 +488,7 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 |---|---|
 | 200 | {isRSVP: boolean, renovation: {addr: {}, created: date, updated: date, date: date, tasks: [{name: username, ... }], ...} |
 | 400 | {errMessage: "No renovation matches the address"} |
+| 400 | {errMessage: "Invalid renovation address"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to get renovation info"} |
 
@@ -528,7 +537,8 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 | Status  | Response |
 |---|---|
 | 200 | {success: true} |
-| 400 | {errMessage: "Please provide all required fields"} OR {errMessage: "Renovation already exists"} |
+| 400 | {errMessage: "Invalid renovation address"} |
+| 400 | {errMessage: "Renovation already exists"} |
 | 401 | {errMessage : "Error: User is not logged in" } |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to create renovation"}  |
@@ -606,8 +616,8 @@ Approve a user to join Project Hands
 | Status  | Response |
 |---|---|
 | 200 | {success: true} |
-| 400 | {errMessage: "Please provide all required fields"} |
-| 401 | {errMessage : "Error: User is not logged in" } |
+| 400 | {errMessage: "Invalid user email or role"} |
+| 401 | {errMessage: "Error: User is not logged in" } |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to approve user"} |
 
@@ -630,9 +640,88 @@ Approve a user to join Project Hands
 | Status  | Response |
 |---|---|
 | 200 | {success: true} |
-| 400 | {errMessage: "Please provide all required fields"} |
+| 400 | {errMessage: "Invalid user email"} |
 | 401 | {errMessage : "Error: User is not logged in" } |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to delete user"} |
+
+---
+
+---
+
+## Teams
+
+### Create Team
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/team/create |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | name | String |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "Invalid team name"} |
+| 401 | {errMessage : "Error: User is not logged in" } |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to create team"} |
+
+---
+
+### Delete Team
+
+#### Request
+
+| Method | Url |
+|---|---|
+| DELETE | /api/team/delete/:name |
+
+| Type  | Params | Values |
+|---|---|---|
+| PARAMS | name | String |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "Invalid team name"} |
+| 401 | {errMessage : "Error: User is not logged in" } |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to delete team"} |
+
+---
+
+### Add Members
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/team/add_members |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | name | String |
+| BODY | members | Array |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {newMembersAdded: ["", "", ...], alreadyInTeam: ["", "", ...]} |
+| 400 | {errMessage: "Invalid team name or members email"} |
+| 400 | {errMessage: "Team does not exists"} |
+| 400 | {errMessage: "No new members to add"} |
+| 401 | {errMessage : "Error: User is not logged in" } |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to add members to team"} |
 
 ---

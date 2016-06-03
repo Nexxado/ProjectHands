@@ -76,6 +76,24 @@ function validateOauthSignup(info) {
     return validatePhone(info.phone);
 }
 
+/**
+ * Validate Array of emails
+ * @param members {Array} : array of emails
+ * @returns {boolean}
+ */
+function validateMembers(members) {
+
+    if(typeof members !== 'object' || !Array.isArray(members))
+        return false;
+
+    for(var i = 0; i < members.length; i++) {
+        if(!validateEmail(members[i]))
+            return false;
+    }
+
+    return true;
+}
+
 //Middleware to validate request params according to request path
 validation.validateParams = function(req, res, next) {
     debug('validateParams path', req.path);
@@ -115,19 +133,15 @@ validation.validateParams = function(req, res, next) {
         
         case /status\/update_status/.test(req.originalUrl):
             if(typeof req.body.active !== 'boolean')
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid new status"});
             if(!req.body.message)
                 req.body.mesage = '';
             break;
 
         case /renovation\/get_info/.test(req.originalUrl):
-            if(!req.params.city || !req.params.street || !req.params.num)
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
-            break;
-
         case /renovation\/create/.test(req.originalUrl):
             if(!req.body.city || !req.body.street || !req.body.num)
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address"});
             break;
 
         case /renovation\/edit/.test(req.originalUrl):
@@ -137,12 +151,27 @@ validation.validateParams = function(req, res, next) {
 
         case /user\/approve/.test(req.originalUrl):
             if(!req.body.email || !req.body.role)
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid user email or role"});
             break;
 
         case /user\/delete/.test(req.originalUrl):
             if(!req.params.email)
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid user email"});
+            break;
+
+        case /team\/create/.test(req.originalUrl):
+            if(!req.body.name)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name"});
+            break;
+
+        case /team\/delete/.test(req.originalUrl):
+            if(!req.params.name)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name"});
+            break;
+
+        case /team\/add_members/.test(req.originalUrl):
+            if(!req.body.name || !req.body.members || !validateMembers(req.body.members))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name or members emails"});
             break;
 
         default:
