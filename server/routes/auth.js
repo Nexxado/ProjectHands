@@ -237,7 +237,7 @@ router.post('/forgot', validation.validateParams, function (req, res) {
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
             }
             else {
-                if (result !== authUtils.messages.PASSWORD_UPDATE_SUCCESS) {
+                if (result !== config.MESSAGES.PASSWORD_UPDATE_SUCCESS) {
                     return res.redirect(encodeURI('/result/error/' + result));
 
                 }
@@ -254,10 +254,9 @@ router.post('/forgot', validation.validateParams, function (req, res) {
             }
             else {
                 /** the result will be the username if there is no errors*/
-                const USER_DATA_NOT_EXIST = "Wrong Email.";
-                if (result === USER_DATA_NOT_EXIST) {
+                if (result === config.MESSAGES.USER_EMAIL_NOT_EXIST) {
                     // writeToClient(res, result, "", HttpStatus.NOT_FOUND);
-                    return res.redirect(encodeURI('/result/error/' + USER_DATA_NOT_EXIST));
+                    return res.redirect(encodeURI('/result/error/' + config.MESSAGES.USER_EMAIL_NOT_EXIST));
                 }
                 else {
                     var token = jwt.sign({
@@ -308,9 +307,8 @@ router.post('/changeEmailRequest', middleware.ensureAuthenticated, validation.va
         }
         else {
             /** the result will be the username if there is no errors*/
-            const USER_EMAIL_NOT_EXIST = "Wrong Email.";
-            if (result === USER_EMAIL_NOT_EXIST) {
-                return res.redirect(encodeURI('/result/error/' + USER_EMAIL_NOT_EXIST));
+            if (result === config.MESSAGES.USER_EMAIL_NOT_EXIST) {
+                return res.redirect(encodeURI('/result/error/' + config.MESSAGES.USER_EMAIL_NOT_EXIST));
             }
             else {
                 var token = jwt.sign({

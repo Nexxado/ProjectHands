@@ -35,5 +35,15 @@
         "VIEW_DASHBOARD": "acl_view_dashboard",
         "CHANGE_STATUS": "acl_change_status",
         "DATA_IMPORT_EXPORT": "acl_data_import_export"
+    },
+  "MESSAGES": {
+    "DB_FETCH_ERROR": "Error has accord , please  try again",
+    "PASSWORD_NOT_MATCH_ERROR": "The password dose not match , please try again",
+    "PASSWORD_UPDATING_ERROR": "Error has accord while updating the password",
+    "PASSWORD_UPDATE_SUCCESS": "The password has been changed",
+    "USER_DATA_NOT_EXIST": "Wrong Email or Phone number",
+    "EMAIL_UPDATE_SUCCESS": "Email successfully updated",
+    "USER_EMAIL_NOT_EXIST": "Wrong Email"
+
     }
 }
