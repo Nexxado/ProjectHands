@@ -12,6 +12,8 @@
     * [Authenticate User Action](#authenticate-user-action)
     * [Forgot Password](#forgot-password)
     * [Reset Password](#reset-password)
+    * [Change Email](#change-email)
+    * [Change Email Request](#change-email-request)
 * [**Chat**](#chat)
     * [Get Chat History](#chat-history)
 * [**Status**](#Status)
@@ -252,6 +254,50 @@ Server assigns action id to request according to passed param
 | 200 | {success: true} |
 | 400 | {errMessage: ""} |
 | 500 | {errMessage: ""} |
+
+---
+
+### Change Email
+
+#### Request
+
+| Method | Url |
+|---|---|
+| GET| /api/auth/changeEmail/:token |
+
+| Type  | Params | Values |
+|---|---|---|
+|  PARAMS | token | String |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | redirect to /login |
+| 400 | redirect to /result/error/Error has accord , please  try again |
+| 400 | redirect to /result/error/invalid token |
+
+---
+
+### Change Email Request
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/auth/changeEmailRequest|
+
+| Type  | Params | Values |
+|---|---|---|
+|  BODY | oldEmail| String |
+|  BODY | newEmail| String |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | redirect to /login |
+| 400 | redirect to /result/error/Wrong Email |
 
 ---
 
@@ -568,7 +614,7 @@ Updates a user's RSVP status for a renovation.
 
 | Method | Url |
 |---|---|
-| POST | /api/user/get_info/:email |
+| GET | /api/user/get_info/:email |
 
 | Type  | Params | Values |
 |---|---|---|
@@ -750,7 +796,7 @@ Approve a user to join Project Hands
 
 | Method | Url |
 |---|---|
-| DELETE | /api/team/delete/:name |
+| DELETE | /api/team/delete/:teamName |
 
 | Type  | Params | Values |
 |---|---|---|

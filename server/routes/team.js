@@ -26,7 +26,7 @@ router.post('/create', middleware.ensureAuthenticated, middleware.ensurePermissi
 /**
  * Delete a Team
  */
-router.delete('/delete/:name', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+router.delete('/delete/:teamName', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
     function (req, res) {
 
         mongoUtils.delete(COLLECTIONS.TEAMS, {name: req.params.teamName}, function (error, result) {
