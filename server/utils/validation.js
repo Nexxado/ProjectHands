@@ -1,4 +1,3 @@
-
 var debug = require('debug')('utils/validation');
 var HttpStatus = require('http-status-codes');
 
@@ -96,7 +95,10 @@ function validateMembers(members) {
     return true;
 }
 
-//Middleware to validate request params according to request path
+
+/**
+ * Middleware to validate request params according to request path
+ */
 validation.validateParams = function(req, res, next) {
     debug('validateParams path', req.path);
 

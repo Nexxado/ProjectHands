@@ -12,18 +12,9 @@ var validation = require('../utils/validation');
  * Get user info
  */
 router.get('/user_info/:email', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    function (req, res) {
+    middleware.ensureUserExists, function (req, res) {
 
-        mongoUtils.query(COLLECTIONS.USERS, {email: req.params.email}, function (error, result) {
-            debug('user_info', error, result);
-
-            if (error)
-                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to get user info"});
-            else if (!result.length)
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User does not exists"});
-
-            res.send(result[0]);
-        });
+        res.send(req.queriedUser);
     });
 
 /**
@@ -35,7 +26,7 @@ router.get('/all_users', middleware.ensureAuthenticated, middleware.ensurePermis
         debug('all_users', error, result);
 
         if (error)
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to get users"});
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to find users"});
         else if (!result.length)
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "No users found"});
 
@@ -54,7 +45,7 @@ router.get('/aLL_signups', middleware.ensureAuthenticated, middleware.ensurePerm
         debug('aLL_signups', error, result);
 
         if (error)
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to get signups"});
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to find signups"});
         else if (!result.length)
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "No signups found"});
 
@@ -69,30 +60,18 @@ router.get('/aLL_signups', middleware.ensureAuthenticated, middleware.ensurePerm
 router.post('/approve', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
     function (req, res) {
 
-        mongoUtils.query(COLLECTIONS.USERS, {email: req.body.email}, function (error, result) {
+        if (req.queriedUser.approved)
+            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User already approved"});
 
-            if (error)
-                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to approve user"});
+        mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, {$set: {approved: true, role: req.body.role}}, {},
+            function (error, result) {
+                debug('approve', error, result);
 
-            if (result && result.length && result[0].approved)
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User already approved"});
+                if (error || !result.nModified)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to approve user"});
 
-            mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, {
-                    $set: {
-                        approved: true,
-                        role: req.body.role
-                    }
-                }, {},
-                function (error, result) {
-                    debug('approve', error, result);
-
-                    if (error || !result.nModified)
-                        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to approve user"});
-
-                    res.send({success: true})
-                })
-
-        })
+                res.send({success: true})
+            });
     });
 
 
@@ -117,14 +96,8 @@ router.delete('/delete/:email', middleware.ensureAuthenticated, middleware.ensur
 /**
  * Change a user role
  */
-router.post('/assign_role', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams, function (req, res) {
-
-    mongoUtils.query(COLLECTIONS.USERS, {email: req.body.email}, function (error, result) {
-
-        if (error)
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to change user role"});
-        else if (!result.length)
-            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User does not exists"});
+router.post('/assign_role', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureUserExists, function (req, res) {
 
         mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, {$set: {role: req.body.newRole}}, {},
             function (error, result) {
@@ -136,10 +109,7 @@ router.post('/assign_role', middleware.ensureAuthenticated, middleware.ensurePer
                 return res.send({success: true});
             });
 
-
-    })
-
-});
+    });
 
 
 module.exports = router;

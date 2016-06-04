@@ -470,6 +470,7 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 | 400 | {errMessage: "No renovation matches the address"} |
 | 400 | {errMessage: "Invalid renovation address"} |
 | 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovation"} |
 | 500 | {errMessage: "Failed to get renovation info"} |
 
 ---
@@ -494,7 +495,7 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 | 400 | {errMessage: "No renovations found"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
-| 500 | {errMessage: "Failed to get renovations"} |
+| 500 | {errMessage: "Failed to find renovations"} |
 
 ---
 
@@ -552,6 +553,7 @@ Updates a user's RSVP status for a renovation.
 | 400 | {errMessage: "User is not part of renovation team"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovation"} |
 | 500 | {errMessage: "Failed to change rsvp status"}  |
 
 ---
@@ -581,7 +583,7 @@ Updates a user's RSVP status for a renovation.
 | 400 | {errMessage: "User does not exists"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
-| 500 | {errMessage: "Failed to get user info"} |
+| 500 | {errMessage: "Failed to find user"} |
 
 ---
 
@@ -605,7 +607,7 @@ Updates a user's RSVP status for a renovation.
 | 400 | {errMessage: "No users found"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
-| 500 | {errMessage: "Failed to get users"} |
+| 500 | {errMessage: "Failed to find users"} |
 
 ---
 
@@ -629,7 +631,7 @@ Updates a user's RSVP status for a renovation.
 | 400 | {errMessage: "No signups found"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
-| 500 | {errMessage: "Failed to get signups"} |
+| 500 | {errMessage: "Failed to find signups"} |
 
 ---
 
@@ -653,8 +655,11 @@ Approve a user to join Project Hands
 |---|---|
 | 200 | {success: true} |
 | 400 | {errMessage: "Invalid user email or role"} |
+| 400 | {errMessage: "User does not exists"} |
+| 400 | {errMessage: "User already approved"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find user"} |
 | 500 | {errMessage: "Failed to approve user"} |
 
 ---
@@ -679,6 +684,7 @@ Approve a user to join Project Hands
 | 400 | {errMessage: "Invalid user email"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find user"} |
 | 500 | {errMessage: "Failed to delete user"} |
 
 ---
@@ -705,6 +711,7 @@ Approve a user to join Project Hands
 | 400 | {errMessage: "User does not exists"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find user"} |
 | 500 | {errMessage: "Failed to change user role"} |
 
 ---
@@ -757,6 +764,7 @@ Approve a user to join Project Hands
 | 400 | {errMessage: "Invalid team name"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find team"} |
 | 500 | {errMessage: "Failed to delete team"} |
 
 ---
@@ -842,6 +850,7 @@ Approve a user to join Project Hands
 | 400 | {errMessage: "Renovation does not exists"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find team"} |
 | 500 | {errMessage: "Failed to assign renovation to team"} |
 
 ---
@@ -870,6 +879,7 @@ Approve a user to join Project Hands
 | 400 | {errMessage: "User is not part of team"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find team"} |
 | 500 | {errMessage: "Failed to assign manager to team"} |
 
 ---

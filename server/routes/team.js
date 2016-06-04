@@ -44,52 +44,32 @@ router.delete('/delete/:name', middleware.ensureAuthenticated, middleware.ensure
  * Add members to team
  */
 router.post('/add_members', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    function (req, res) {
+    middleware.ensureMultipleUsersExists, middleware.ensureTeamExists, function (req, res) {
 
         var members = JSON.parse(req.body.members);
 
-        //Check members exists
-        mongoUtils.query(COLLECTIONS.USERS, {email: {$in: members}}, function(error, result) {
+        //Separate new members from members already in team.
+        var alreadyInTeam = [];
+        var newMembers = [];
+        for (var i = 0; i < members.length; i++) {
+            if (req.queriedTeam.members.indexOf(members[i]) < 0)
+                newMembers.push(members[i]);
+            else
+                alreadyInTeam.push(members[i]);
+        }
 
-            if (error)
-                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to add members from team"});
-            else if (!result || result.length !== members.length)
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Some members do not exists"});
+        if (!newMembers.length)
+            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "No new members to add"});
 
-            //Check Team exists
-            mongoUtils.query(COLLECTIONS.TEAMS, {name: req.body.teamName}, function (error, result) {
+        //Add members to team
+        mongoUtils.update(COLLECTIONS.TEAMS, {name: req.body.teamName}, {$push: {members: {$each: newMembers}}}, {},
+            function (error, result) {
 
                 if (error)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to add members to team"});
-                else if (!result || !result.length)
-                    return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Team does not exists"});
 
-                //Separate new members from members already in team.
-                var team = result[0];
-                var alreadyInTeam = [];
-                var newMembers = [];
-                for (var i = 0; i < members.length; i++) {
-                    if (team.members.indexOf(members[i]) < 0)
-                        newMembers.push(members[i]);
-                    else
-                        alreadyInTeam.push(members[i]);
-                }
-
-                if (!newMembers.length)
-                    return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "No new members to add"});
-
-                //Add members to team
-                mongoUtils.update(COLLECTIONS.TEAMS, {name: req.body.teamName}, {$push: {members: {$each: newMembers}}}, {},
-                    function (error, result) {
-
-                        if (error)
-                            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to add members to team"});
-
-                        res.send({newMembersAdded: newMembers, alreadyInTeam: alreadyInTeam});
-                    });
+                res.send({newMembersAdded: newMembers, alreadyInTeam: alreadyInTeam});
             });
-        })
-
     });
 
 
@@ -97,51 +77,32 @@ router.post('/add_members', middleware.ensureAuthenticated, middleware.ensurePer
  * Remove members from a team
  */
 router.post('/remove_members', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    function (req, res) {
+    middleware.ensureMultipleUsersExists, middleware.ensureTeamExists, function (req, res) {
 
         var members = JSON.parse(req.body.members);
 
-        //Check members exists
-        mongoUtils.query(COLLECTIONS.USERS, {email: {$in: members}}, function(error, result) {
+        //Separate members to remove from members not in team
+        var notInTeam = [];
+        var removeMembers = [];
+        for (var i = 0; i < members.length; i++) {
+            if (req.queriedTeam.members.indexOf(members[i]) < 0)
+                notInTeam.push(members[i]);
+            else
+                removeMembers.push(members[i]);
+        }
 
-            if (error)
-                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to remove members from team"});
-            else if (!result || result.length !== members.length)
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Some members do not exists"});
+        if (!removeMembers.length)
+            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Members are not part of the specified team"});
 
-            //Check Team exists
-            mongoUtils.query(COLLECTIONS.TEAMS, {name: req.body.teamName}, function (error, result) {
+        //Remove members from team
+        mongoUtils.update(COLLECTIONS.TEAMS, {name: req.body.teamName}, {$pull: {members: {$each: removeMembers}}}, {},
+            function (error, result) {
 
                 if (error)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to remove members from team"});
-                else if (!result || !result.length)
-                    return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Team does not exists"});
 
-                //Separate members to remove from members not in team
-                var team = result[0];
-                var notInTeam = [];
-                var removeMembers = [];
-                for (var i = 0; i < members.length; i++) {
-                    if (team.members.indexOf(members[i]) < 0)
-                        notInTeam.push(members[i]);
-                    else
-                        removeMembers.push(members[i]);
-                }
-
-                if (!removeMembers.length)
-                    return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Members are not part of the specified team"});
-
-                //Remove members from team
-                mongoUtils.update(COLLECTIONS.TEAMS, {name: req.body.teamName}, {$pull: {members: {$each: removeMembers}}}, {},
-                    function (error, result) {
-
-                        if (error)
-                            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to remove members from team"});
-
-                        res.send({membersRemoved: removeMembers, notInTeam: notInTeam});
-                    });
+                res.send({membersRemoved: removeMembers, notInTeam: notInTeam});
             });
-        })
     });
 
 
@@ -149,7 +110,7 @@ router.post('/remove_members', middleware.ensureAuthenticated, middleware.ensure
  * Assign team to a renovation
  */
 router.post('/assign_to_renovation', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    function (req, res) {
+    middleware.ensureTeamExists, middleware.ensureRenovationExists, function (req, res) {
 
         var renovation = {
             addr: {
@@ -159,33 +120,15 @@ router.post('/assign_to_renovation', middleware.ensureAuthenticated, middleware.
             }
         };
 
-        //Check Team exists
-        mongoUtils.query(COLLECTIONS.TEAMS, {name: req.body.teamName}, function (error, result) {
+        //Assign team to renovation
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {team: req.body.teamName}}, {},
+            function (error, result) {
 
-            if (error)
-                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign renovation to team"});
-            else if (!result || !result.length)
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Team does not exists"});
-
-            //Check Renovation exists
-            mongoUtils.query(COLLECTIONS.RENOVATIONS, renovation, function (error, result) {
-
-                if (error)
+                if (error || !result.nModified)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign renovation to team"});
-                else if (!result || !result.length)
-                    return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Renovation does not exists"});
 
-                //Assign team to renovation
-                mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {team: req.body.teamName}}, {},
-                    function (error, result) {
-
-                        if (error || !result.nModified)
-                            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign renovation to team"});
-
-                        res.send({success: true});
-                    })
-            })
-        })
+                res.send({success: true});
+            });
     });
 
 
@@ -193,40 +136,20 @@ router.post('/assign_to_renovation', middleware.ensureAuthenticated, middleware.
  * Assign Team Manager
  */
 router.post('/assign_manager', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    function (req, res) {
+    middleware.ensureUserExists, middleware.ensureTeamExists, function (req, res) {
 
-        //Check Team exists
-        mongoUtils.query(COLLECTIONS.TEAMS, {name: req.body.teamName}, function (error, result) {
+        if (req.queriedTeam.members && req.queriedTeam.members.indexOf(req.body.email) < 0)
+            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User is not part of team"});
 
-            if (error)
-                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign manager to team"});
-            else if (!result || !result.length)
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Team does not exists"});
+        //Assign user as team manager
+        mongoUtils.update(COLLECTIONS.TEAMS, {name: req.body.teamName}, {$set: {manager: req.body.email}}, {},
+            function (error, result) {
 
-            var team = result[0];
-            if(team.members && team.members.indexOf(req.body.email) < 0)
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User is not part of team"});
-
-            //Check User exists
-            mongoUtils.query(COLLECTIONS.USERS, {email: req.body.email}, function (error, result) {
-
-                if (error)
+                if (error || !result.nModified)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign manager to team"});
-                else if (!result || !result.length)
-                    return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User does not exists"});
 
-                //Assign user as team manager
-                mongoUtils.update(COLLECTIONS.TEAMS, {name: req.body.teamName}, {$set: {manager: req.body.email}}, {},
-                    function(error, result) {
-
-                        if(error || !result.nModified)
-                            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign manager to team"});
-
-                        res.send({success: true});
-                })
+                res.send({success: true});
             });
-        });
-
     });
 
 module.exports = router;
