@@ -7,17 +7,6 @@ var bcrypt = require('bcrypt');
 var saltRounds = 10; // will do 2^rounds
 
 
-/** CONSTANTS */
-var MESSAGES = {
-    DB_FETCH_ERROR: "Error has accord , please  try again",
-    PASSWORD_NOT_MATCH_ERROR: "The password dose not match , please try again",
-    PASSWORD_UPDATING_ERROR: "Error has accord while updating the password",
-    PASSWORD_UPDATE_SUCCESS: "The password has been changed",
-    USER_DATA_NOT_EXIST: "Wrong Email or Phone number",
-    EMAIL_UPDATE_SUCCESS: "Email successfully updated",
-    USER_EMAIL_NOT_EXIST: "Wrong Email."
-
-};
 
 /**
  *Generates a hash for the given data
@@ -27,7 +16,6 @@ var MESSAGES = {
  */
 function doPasswordHash(password, callback) {
     bcrypt.hash(password, saltRounds, function (error, hash) {
-
         debug('bcrypt hash error', error);
         debug('bcrypt hash hash', hash);
         callback(error, hash);
@@ -40,8 +28,6 @@ module.exports = {
      * @link ROLES : contains the Roles in the system
      */
     roles: ROLES,
-    messages: MESSAGES,
-
     /**
      * @param user {object}
      * @param newRole {string}
@@ -112,7 +98,6 @@ module.exports = {
     /**
      * checks whether to send an email reset link or not
      * @param email {string} : the user email
-     * @param phone {string} : the user phone
      * @param callback
      */
     ResetRequest: function (email, callback) {
@@ -120,11 +105,11 @@ module.exports = {
         // validate the data
         mongoUtils.query(COLLECTIONS.USERS, {email: email}, function (error, result) {
             if (error) {
-                callback(error, MESSAGES.DB_FETCH_ERROR);
+                callback(error, config.MESSAGES.DB_FETCH_ERROR);
             }
             else {
                 if (result.length === 0) {
-                    callback(error, MESSAGES.USER_EMAIL_NOT_EXIST);
+                    callback(error, config.MESSAGES.USER_EMAIL_NOT_EXIST);
                 }
                 else {
                     callback(error, result[0].name);
@@ -146,7 +131,7 @@ module.exports = {
         // fetch the user and check that the passwords do match
         mongoUtils.query(COLLECTIONS.USERS, user, function (error, result) {
             if (error) {
-                callback(error, MESSAGES.DB_FETCH_ERROR);
+                callback(error, config.MESSAGES.DB_FETCH_ERROR);
             }
             else {
                 // compare the password
@@ -154,11 +139,11 @@ module.exports = {
 
                     if (isChange) {
                         if (error) {
-                            callback(error, MESSAGES.DB_FETCH_ERROR);
+                            callback(error, config.MESSAGES.DB_FETCH_ERROR);
                         }
                         else if (!isMatch) {
                             /** to change password , the oldPassword must matches the one in the DB*/
-                            callback(error, MESSAGES.PASSWORD_NOT_MATCH_ERROR);
+                            callback(error, config.MESSAGES.PASSWORD_NOT_MATCH_ERROR);
                         }
                         return;
                     }
@@ -172,10 +157,10 @@ module.exports = {
                         }
                         mongoUtils.update(COLLECTIONS.USERS, user, {$set: {password: hashedPassword}}, {}, function (error, result) {
                             if (error) {
-                                callback(error, MESSAGES.PASSWORD_UPDATING_ERROR);
+                                callback(error, config.MESSAGES.PASSWORD_UPDATING_ERROR);
                             }
                             else {
-                                callback(error, MESSAGES.PASSWORD_UPDATE_SUCCESS);
+                                callback(error, config.MESSAGES.PASSWORD_UPDATE_SUCCESS);
                             }
 
                         });
@@ -223,22 +208,28 @@ module.exports = {
             });
         });
     },
+    /**
+     *Allows or disallows the change of email address
+     *
+     * @param oldEmail {string} : the email to be changes
+     * @param newEmail {string} : the email to be used now on
+     * @param callback :  {function} : the function that the data will be sent to
+     */
     setEmail: function (oldEmail, newEmail, callback) {
-        /** yo assert that the user with this email in the system*/
-        
+        /** to assert that the user with this email in the system*/
         mongoUtils.query(COLLECTIONS.USERS, {email: oldEmail}, function (error, result) {
 
             if (error) {
-                callback(error, MESSAGES.DB_FETCH_ERROR);
+                callback(error, config.MESSAGES.DB_FETCH_ERROR);
             }
             else {
 
                 mongoUtils.update(COLLECTIONS.USERS, {email: oldEmail}, {$set: {email: newEmail}}, {}, function (error, result) {
                     if (error) {
-                        callback(error, MESSAGES.DB_FETCH_ERROR);
+                        callback(error, config.MESSAGES.DB_FETCH_ERROR);
                     }
                     else {
-                        callback(error, MESSAGES.EMAIL_UPDATE_SUCCESS);
+                        callback(error, config.MESSAGES.EMAIL_UPDATE_SUCCESS);
                     }
 
                 });
