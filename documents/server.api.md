@@ -42,6 +42,7 @@
     * [Add Members](#add-members)
     * [Remove Members](#remove-members)
     * [Assign To Renovation](#assign-to-renovation)
+    * [Assign Manager](#assign-manager)
     
 
 ---
@@ -722,7 +723,7 @@ Approve a user to join Project Hands
 
 | Type  | Params | Values |
 |---|---|---|
-| BODY | name | String |
+| BODY | teamName | String |
 
 #### Response
 
@@ -746,7 +747,7 @@ Approve a user to join Project Hands
 
 | Type  | Params | Values |
 |---|---|---|
-| PARAMS | name | String |
+| PARAMS | teamName | String |
 
 #### Response
 
@@ -770,7 +771,7 @@ Approve a user to join Project Hands
 
 | Type  | Params | Values |
 |---|---|---|
-| BODY | name | String |
+| BODY | teamName | String |
 | BODY | members | Array |
 
 #### Response
@@ -780,6 +781,7 @@ Approve a user to join Project Hands
 | 200 | {newMembersAdded: ["", "", ...], alreadyInTeam: ["", "", ...]} |
 | 400 | {errMessage: "Invalid team name or members email"} |
 | 400 | {errMessage: "Team does not exists"} |
+| 400 | {errMessage: "Some members do not exists"} |
 | 400 | {errMessage: "No new members to add"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
@@ -797,7 +799,7 @@ Approve a user to join Project Hands
 
 | Type  | Params | Values |
 |---|---|---|
-| BODY | name | String |
+| BODY | teamName | String |
 | BODY | members | Array |
 
 #### Response
@@ -807,6 +809,7 @@ Approve a user to join Project Hands
 | 200 | {membersRemoved: ["", "", ...], notInTeam: ["", "", ...]} |
 | 400 | {errMessage: "Invalid team name or members email"} |
 | 400 | {errMessage: "Team does not exists"} |
+| 400 | {errMessage: "Some members do not exists"} |
 | 400 | {errMessage: "Members are not part of the specified team"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
@@ -824,7 +827,7 @@ Approve a user to join Project Hands
 
 | Type  | Params | Values |
 |---|---|---|
-| BODY | name | String |
+| BODY | teamName | String |
 | BODY | city |  String |
 | BODY | street |  String |
 | BODY | num | int |
@@ -840,5 +843,33 @@ Approve a user to join Project Hands
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to assign renovation to team"} |
+
+---
+
+### Assign Manager
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/team/assign_manager |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | teamName | String |
+| BODY | email | String |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "Invalid team name or user email"} |
+| 400 | {errMessage: "Team does not exists"} |
+| 400 | {errMessage: "User does not exists"} |
+| 400 | {errMessage: "User is not part of team"} |
+| 401 | {errMessage: "Error: User is not logged in"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to assign manager to team"} |
 
 ---

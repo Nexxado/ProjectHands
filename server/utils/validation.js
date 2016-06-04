@@ -82,6 +82,8 @@ function validateOauthSignup(info) {
  * @returns {boolean}
  */
 function validateMembers(members) {
+    
+    members = JSON.parse(members);
 
     if(typeof members !== 'object' || !Array.isArray(members))
         return false;
@@ -162,24 +164,29 @@ validation.validateParams = function(req, res, next) {
             break;
 
         case /team\/create/.test(req.originalUrl):
-            if(!req.body.name)
+            if(!req.body.teamName)
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name"});
             break;
 
         case /team\/delete/.test(req.originalUrl):
-            if(!req.params.name)
+            if(!req.params.teamName)
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name"});
             break;
 
         case /team\/add_members/.test(req.originalUrl):
         case /team\/remove_members/.test(req.originalUrl):
-            if(!req.body.name || !req.body.members || !validateMembers(req.body.members))
+            if(!req.body.teamName || !req.body.members || !validateMembers(req.body.members))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name or members emails"});
             break;
 
         case /team\/assign_to_renovation/.test(req.originalUrl):
-            if(!req.body.name || !req.body.city || !req.body.street || !req.body.num)
+            if(!req.body.teamName || !req.body.city || !req.body.street || !req.body.num)
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name or renovation address"});
+            break;
+        
+        case /team\/assign_leader/.test(req.originalUrl):
+            if(!req.body.teamName || !req.body.email || !validateEmail(req.body.email))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name or user email"});
             break;
 
         default:
