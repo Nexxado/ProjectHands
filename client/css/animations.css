@@ -3,7 +3,7 @@
 /**********************************/
 .toggle-fade.ng-hide-add,
 .toggle-fade.ng-hide-remove  {
-    transition: all ease 500ms;
+    transition: all ease-in-out 500ms;
 }
 
 .toggle-fade {
@@ -19,7 +19,7 @@
 /******************************/
 .toggle-slide-right.ng-hide-add,
 .toggle-slide-right.ng-hide-remove  {
-    transition: all ease 500ms;
+    transition: all ease-in-out 500ms;
 }
 
 .toggle-slide-right {

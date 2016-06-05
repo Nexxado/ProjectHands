@@ -10,11 +10,26 @@
     </md-toolbar>
     <md-dialog-content>
         <div class="md-dialog-content">
-
+            <md-content class="user-info rtl" layout="row" layout-padding>
+                <div layout="column" class="user-info-main">
+                    <div class="title">שם: {{ user.name }}</div>
+                    <div class="">אימייל: {{ user.email }}</div>
+                    <div>מס' טלפון: {{ user.phone }}</div>
+                    <div>תאריך הרשמה: {{ user.signupDate }}</div>
+                </div>
+            </md-content>
         </div>
     </md-dialog-content>
-    <md-dialog-actions layout-align="start">
-        <md-button ng-click="cancel()" class="md-warn">ביטול</md-button>
-        <md-button ng-click="" class="md-primary">אישור</md-button>
+    <md-dialog-actions class="user-actions" layout-align="start">
+        <md-button class="md-warn" ng-click="cancel()">
+            ביטול
+        </md-button>
+        <span flex></span>
+        <md-button class="md-warn md-raised" ng-click="submit(false)">
+            מחק משתמש
+        </md-button>
+        <md-button class="md-raised approve-btn" ng-click="submit(true)">
+            אשר משתמש
+        </md-button>
     </md-dialog-actions>
 </md-dialog>

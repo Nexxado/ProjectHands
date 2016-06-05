@@ -14,6 +14,7 @@ var validation = require('../utils/validation');
 router.get('/user_info/:email', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
     middleware.ensureUserExists, function (req, res) {
 
+        delete req.queriedUser.password; //Don't send user password
         res.send(req.queriedUser);
     });
 
@@ -29,6 +30,11 @@ router.get('/all_users', middleware.ensureAuthenticated, middleware.ensurePermis
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to find users"});
         else if (!result.length)
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "No users found"});
+
+        //Don't send user password
+        result.forEach(function(user) {
+            delete user.password;
+        });
 
         res.send(result);
     });
@@ -54,6 +60,11 @@ router.get('/aLL_signups', middleware.ensureAuthenticated, middleware.ensurePerm
             return typeof user.signup_complete === 'undefined' || user.signup_complete === true
         });
 
+        //Don't send user password
+        result.forEach(function(user) {
+            delete user.password;
+        });
+
         res.send(result);
     });
 });
@@ -63,16 +74,16 @@ router.get('/aLL_signups', middleware.ensureAuthenticated, middleware.ensurePerm
  * Approve User Sign-up
  */
 router.post('/approve', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    function (req, res) {
+    middleware.ensureUserExists, function (req, res) {
 
         if (req.queriedUser.approved)
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User already approved"});
 
         mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, {$set: {approved: true, role: req.body.role}}, {},
             function (error, result) {
-                debug('approve', error, result);
+                debug('approve', error, result.result);
 
-                if (error || !result.nModified)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to approve user"});
 
                 res.send({success: true})
@@ -87,9 +98,9 @@ router.delete('/delete/:email', middleware.ensureAuthenticated, middleware.ensur
     function (req, res) {
 
         mongoUtils.delete(COLLECTIONS.USERS, {email: req.params.email}, function (error, result) {
-            debug('delete', req.params.email, error, result);
+            debug('delete', req.params.email, error, result.result);
 
-            if (error || !result.nRemoved)
+            if (error || result.result.n === 0)
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to delete user"});
 
             res.send({success: true})

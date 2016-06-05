@@ -1,24 +1,46 @@
-<div flex-gt-sm="50" flex-offset-gt-sm="25" flex>
-    <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
-        <div class="md-toolbar-tools">
-            <span>בקשות הצטרפות</span>
-        </div>
-    </md-toolbar>
-    <md-content>
-        <md-list class="md-dense" flex>
-            <md-list-item class="md-3-line rtl" ng-repeat="user in signups" ng-click="showUserDetails($event, user)">
-                <div class="md-list-item-text" layout="column">
-                    <h3>{{ user.name }}</h3>
-                    <h4>{{ user.email }}</h4>
-                    <p>{{ user.phone }}</p>
-                </div>
-                <!--<md-button class="md-secondary md-icon-button approve-btn" ng-click="approveUser(user)" aria-label="approve user">-->
-                    <!--<md-icon class="material-icons">check</md-icon>-->
-                <!--</md-button>-->
-                <!--<md-button class="md-secondary md-icon-button delete-btn" ng-click="deleteUser(user)" aria-label="delete user">-->
-                    <!--<md-icon class="material-icons">close</md-icon>-->
-                <!--</md-button>-->
-            </md-list-item>
-        </md-list>
-    </md-content>
+<div layout="row" layout-align="end">
+    <div class="toggle-slide-right toggle-fade list-border dashboard-height" flex-gt-sm="50" flex hide-sm hide-xs ng-show="selectedUser">
+        <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
+            <div class="md-toolbar-tools">
+                <span>פרטי משתמש</span>
+            </div>
+        </md-toolbar>
+        <md-content class="user-info rtl" layout="row" layout-padding>
+            <div layout="column" class="user-info-main">
+                <div class="title">שם: {{ selectedUser.name }}</div>
+                <div class="">אימייל: {{ selectedUser.email }}</div>
+                <div>מס' טלפון: {{ selectedUser.phone }}</div>
+                <div>תאריך הרשמה: {{ selectedUser.signupDate }}</div>
+            </div>
+            <span flex></span>
+            <div class="user-actions" layout="row" layout-align="center center">
+                <md-button class="md-raised approve-btn" ng-click="approveUser(selectedUser)">
+                    אשר משתמש
+                </md-button>
+                <md-button class="md-warn md-raised" ng-click="deleteUser(selectedUser)">
+                    מחק משתמש
+                </md-button>
+            </div>
+        </md-content>
+    </div>
+    <div flex-gt-sm="45" flex-offset-gt-sm="5" flex class="list-border dashboard-height">
+        <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
+            <div class="md-toolbar-tools">
+                <span>בקשות הצטרפות</span>
+            </div>
+        </md-toolbar>
+        <md-content>
+            <md-list class="md-dense signups-list" flex>
+                <md-list-item class="md-3-line rtl list-slide-right" ng-class="{'selected': isSelected(user)}"
+                              ng-repeat="user in signups"
+                              ng-click="showUserDetails($event, user)">
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{ user.name }}</h3>
+                        <h4>{{ user.email }}</h4>
+                        <p>{{ user.phone }}</p>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </div>
 </div>
