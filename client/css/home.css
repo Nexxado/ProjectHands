@@ -6,6 +6,14 @@
     --background-color: #C3DCF0;
 }
 
+.org-ads{
+    padding: 48px;
+}
+
+.text-large{
+    text-size: 250%;
+}
+
 .team-avatar{
     border-radius: 150px;
     width: 150px;
