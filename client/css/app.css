@@ -6,6 +6,15 @@
     color: white !important;
 }
 
+md-toolbar.rounded-toolbar {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+md-list-item .md-secondary-container md-icon.approve-btn {
+    color: #009688;
+}
+
 /*************************/
 /***** Admin Actions *****/
 /*************************/
@@ -107,4 +116,19 @@ md-icon.rtl {
 md-toast {
     direction: rtl;
     text-align: center;
+}
+
+md-list-item.rtl .md-list-item-text {
+    direction: rtl;
+    text-align: right;
+}
+
+md-list-item.rtl .md-secondary-container,
+md-list-item.rtl .md-secondary {
+    right: auto;
+    left: 16px;
+}
+
+md-toolbar.rtl {
+    direction: rtl;
 }

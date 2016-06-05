@@ -84,7 +84,8 @@ angular.module('ProjectHands.dashboard')
 
     .state('dashboard.join-requests', {
         url: '/join-requests',
-        templateUrl: 'modules/dashboard/templates/join-requests.html'
+        templateUrl: 'modules/dashboard/templates/join-requests.html',
+        controller: 'JoinRequestController'
     })
 
     .state('dashboard.chat', {

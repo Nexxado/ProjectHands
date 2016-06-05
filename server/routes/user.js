@@ -49,6 +49,11 @@ router.get('/aLL_signups', middleware.ensureAuthenticated, middleware.ensurePerm
         else if (!result.length)
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "No signups found"});
 
+        //Filter out OAuth2 users who didn't complete the signup process
+        result = result.filter(function(user) {
+            return typeof user.signup_complete === 'undefined' || user.signup_complete === true
+        });
+
         res.send(result);
     });
 });
