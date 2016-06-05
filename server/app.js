@@ -65,6 +65,7 @@ app.use('/api/chat', require('./routes/chat'));
 app.use('/api/status', require('./routes/status'));
 app.use('/api/dataexchange', require('./routes/dataexchange'));
 app.use('/api/photos', require('./routes/photos'));
+app.use('/api/statistics', require('./routes/statistics'));
 
 
 //Fix express rewrites since UI Router is in html5Mode
