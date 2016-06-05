@@ -3,7 +3,7 @@
         <md-toolbar layout="row" layout-align="none center" class="md-primary dashboard-top-rounded-toolbar" dir="rtl">
             <span flex></span>
             <div class="md-toolbar-tools">
-                <span>{{myTeam.name}}</span>
+                <span>{{team.name}}</span>
             </div>
         </md-toolbar>
         <md-content>
@@ -17,7 +17,6 @@
                         <p>תאריך הצטרפות: {{member.joined_date | date}}</p>
                     </div>
                     <span flex></span>
-                    <h2 ng-show="myUser._id == member._id">אני</h2>
                     <img ng-src="{{member.avatar}}" class="md-avatar" alt="{{item.who}}" />
                     <md-divider></md-divider>
                 </md-list-item>

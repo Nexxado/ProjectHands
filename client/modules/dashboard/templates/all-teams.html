@@ -1,1 +1,22 @@
-All teams
+<md-toolbar layout="row" layout-align="none center" class="md-primary dashboard top-rounded-toolbar" dir="rtl">
+	<div class="md-toolbar-tools">
+		<span>צוותים</span>
+	</div>
+	<span flex></span>
+	<md-button ng-click="addRenovation($event)" class="md-fab md-primary md-mini" layout="row" layout-align="center center">
+		<i class="material-icons">add_circle</i>
+	</md-button>
+
+</md-toolbar>
+<md-list flex dir="rtl">
+	<md-list-item class="md-3-line" ng-repeat="team in allTeams" ui-sref="dashboard.team({team_id: team._id})">
+		<div class="md-list-item-text" layout="row">
+			<div>
+				<p>{{ team.name }}</p>
+				<h4>{{ team.manager_email }}</h4>
+				<h4>{{ team._id }}</h4>
+			</div>
+			<span flex></span>
+		</div>
+	</md-list-item>
+</md-list>

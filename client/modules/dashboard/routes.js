@@ -8,7 +8,7 @@ angular.module('ProjectHands.dashboard')
         controller: 'DashboardController',
         deepStateRedirect: {
             default: {
-                state: 'dashboard.main-page'
+                state: 'dashboard.renovations'
             }
         },
         resolve: {
@@ -47,8 +47,9 @@ angular.module('ProjectHands.dashboard')
     })
 
     .state('dashboard.team', {
-        url: '/team',
-        templateUrl: 'modules/dashboard/templates/team.html'
+        url: '/team/:team_id',
+        templateUrl: 'modules/dashboard/templates/team.html',
+		controller: 'DashboardTeamController'
     })
 
     .state('dashboard.calendar', {
