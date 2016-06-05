@@ -153,10 +153,8 @@ angular.module('ProjectHands.dashboard')
 	DatabaseService.query(COLLECTIONS.USERS, {
 		email: $scope.user.email
 	}).$promise.then(function (result) {
-		console.log("My email is: ", $scope.user.email);
 		$scope.myUser = result[0];
 		$scope.getUserTeam($scope.myUser.email);
-		console.log("my ID is: ", $scope.myUser._id);
 		//        $scope.getUserTeam('111111111'); //FIXME Delete and uncomment above line
 		$scope.getAllTeams();
 
@@ -171,10 +169,7 @@ angular.module('ProjectHands.dashboard')
 		DatabaseService.query(COLLECTIONS.TEAMS, {
 			members_email: email
 		}).$promise.then(function (result) {
-			//			console.log("getUserTeam Result: ", result);
 			$scope.myTeam = result[0];
-			//			$scope.getTeamMember($scope.myTeam.manager_email);
-			//			console.log("mamanger ", $scope.myTeam.manager_id);
 			for (var i in $scope.myTeam.members_email) {
 				$scope.getTeamMember($scope.myTeam.members_email[i]);
 			}
@@ -190,9 +185,7 @@ angular.module('ProjectHands.dashboard')
 		DatabaseService.query(COLLECTIONS.USERS, {
 			email: memberEmail
 		}).$promise.then(function (result) {
-			//			console.log("MemberID Result: ", result[0]);
 			$scope.teamMembers.push(result[0]);
-			//			console.log($scope.teamMembers);
 		}).catch(function (error) {
 			console.log("Error: ", error);
 		});
@@ -203,7 +196,6 @@ angular.module('ProjectHands.dashboard')
 	$scope.getRenovations = function () {
 		DatabaseService.query(COLLECTIONS.RENOVATIONS, {}).$promise.then(function (result) {
 			$scope.renovations = result;
-			console.log($scope.renovations);
 		}).catch(function (error) {
 			console.log("Error: ", error);
 		});
@@ -259,7 +251,6 @@ angular.module('ProjectHands.dashboard')
 			.then(function (newReno) {
 				DatabaseService.insert(COLLECTIONS.RENOVATIONS, newReno)
 					.$promise.then(function (result) {
-						console.log("The result amazingly is: ", result);
 					}).catch(function (error) {
 						console.log("Error: ", error);
 					});
@@ -275,14 +266,12 @@ angular.module('ProjectHands.dashboard')
 	$scope.getAllTeams = function () {
 		DatabaseService.query(COLLECTIONS.TEAMS, {})
 			.$promise.then(function (result) {
-				console.log("Team query result is: ", result);
 				$scope.allTeams = [];
 				for(var i = 0; i < result.length; i++) {
 					$scope.allTeams.push(result[i]);
 				}
-				console.log("teams are: ", $scope.allTeams);
 			}).catch(function (error) {
 				console.log("Error: ", error);
 			});
 	};
-});
+})

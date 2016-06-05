@@ -10,6 +10,7 @@
             <md-list class="md-dense">
                 <md-divider></md-divider>
                 <md-list-item class="md-3-line" ng-repeat="member in teamMembers" dir="rtl">
+					<!--Add ng-click="userProfile(user)" to direct to user's profile (maybe in dialog instead of route)-->
                     <div class="md-list-item-text dashboard-list-text" th:classappend="dashboard-special-list-item" layout="column">
                         <h3>{{member.name}}</h3>
                         <h4>{{member._id}}</h4>

@@ -1,0 +1,44 @@
+<md-dialog aria-label="Add Stage Dialog" flex="50">
+    <form name="AddStageForm" ng-submit="submit()" novalidate>
+        <md-toolbar>
+            <div class="md-toolbar-tools" dir="rtl">
+                <h2>הוספת שלב חדש</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+				<!-- Stage Title -->
+				<md-input-container class="md-block md-icon-float rtl">
+                    <label>שם השלב</label>
+                    <md-icon class="material-icons">title</md-icon>
+                    <input type="text" name="name" ng-model="stage.title" required>
+                    <md-tooltip md-delay="1000">שם השלב שתרצה להוסיף</md-tooltip>
+                    <div ng-messages="AddStageForm.title.$error">
+                        <div ng-message="required">
+                            שדה חובה
+                        </div>
+                    </div>
+                </md-input-container>
+				
+                <!-- To be inserted after this stage -->
+                <md-input-container class="md-block md-icon-float rtl">
+                    <label>שם השלב</label>
+                    <md-icon class="material-icons">description</md-icon>
+                    <md-select ng-model="stage.after_stage">
+                        <md-option ng-repeat="stage in stages" ng-value="stage">
+                            {{stage}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button ng-click="cancel()" class="md-warn">ביטול</md-button>
+            <md-button type="submit" class="md-primary">אישור</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
