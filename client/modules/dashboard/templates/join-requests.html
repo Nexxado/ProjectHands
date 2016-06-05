@@ -6,13 +6,18 @@
     </md-toolbar>
     <md-content>
         <md-list class="md-dense" flex>
-            <md-list-item class="md-3-line rtl" ng-repeat="user in signups" ng-click="showUserDetails(user)">
+            <md-list-item class="md-3-line rtl" ng-repeat="user in signups" ng-click="showUserDetails($event, user)">
                 <div class="md-list-item-text" layout="column">
                     <h3>{{ user.name }}</h3>
                     <h4>{{ user.email }}</h4>
                     <p>{{ user.phone }}</p>
                 </div>
-                <md-icon class="md-secondary material-icons approve-btn" ng-click="approveUser(user)" aria-label="approve">check</md-icon>
+                <!--<md-button class="md-secondary md-icon-button approve-btn" ng-click="approveUser(user)" aria-label="approve user">-->
+                    <!--<md-icon class="material-icons">check</md-icon>-->
+                <!--</md-button>-->
+                <!--<md-button class="md-secondary md-icon-button delete-btn" ng-click="deleteUser(user)" aria-label="delete user">-->
+                    <!--<md-icon class="material-icons">close</md-icon>-->
+                <!--</md-button>-->
             </md-list-item>
         </md-list>
     </md-content>

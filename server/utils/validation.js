@@ -103,15 +103,15 @@ validation.validateParams = function(req, res, next) {
     debug('validateParams path', req.path);
 
     switch(true) {
-        case /auth\/signup/.test(req.originalUrl):
-            if(!req.body.user || !validateSignup(JSON.parse(req.body.user)))
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please Provide all required fields"});
-            break;
-
         case /auth\/signup_oauth/.test(req.originalUrl):
             if(typeof req.user.signup_complete === 'undefined' || req.user.signup_complete === true)
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Sign-Up Process has already been completed"});
             else if(!req.body.info || !validateOauthSignup(JSON.parse(req.body.info)))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please Provide all required fields"});
+            break;
+
+        case /auth\/signup/.test(req.originalUrl):
+            if(!req.body.user || !validateSignup(JSON.parse(req.body.user)))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please Provide all required fields"});
             break;
 

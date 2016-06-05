@@ -3,7 +3,7 @@
  */
 angular.module('ProjectHands.dashboard')
 
-.controller('JoinRequestController', function($scope, UserService) {
+.controller('JoinRequestController', function($scope, UserService, $mdDialog, $mdMedia) {
 
     $scope.signups = [];
 
@@ -14,5 +14,30 @@ angular.module('ProjectHands.dashboard')
         })
         .catch(function(error) {
             console.info('getAllSignups error', error);
+        });
+
+
+    $scope.showUserDetails = function($event, user) {
+        var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
+
+        $mdDialog.show({
+            controller: function ($scope, $mdDialog) {
+
+                $scope.cancel = function() {
+                    $mdDialog.cancel();
+                }
+            },
+            templateUrl: '/modules/dashboard/templates/dialogs/userDetails.html',
+            parent: angular.element(document.body),
+            targetEvent: $event,
+            clickOutsideToClose: true,
+            fullscreen: useFullScreen
         })
+            .then(function (result) {
+
+
+            }, function () {
+                //Dialog Canceled
+            });
+    }
 });
