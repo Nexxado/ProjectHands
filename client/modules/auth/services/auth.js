@@ -118,6 +118,19 @@ angular.module('ProjectHands.auth')
     }
 
     /**
+     *  Changes user email address
+     * @param oldEmail : the email to be changed
+     * @param newEmail : the email to be used
+     * @returns {*|{method}|Promise|Session}
+     */
+    function changeEmailRequest(oldEmail, newEmail) {
+        return $resource(baseUrl + '/changeEmailRequest').save({
+            oldEmail: oldEmail,
+            newEmail: newEmail
+        });
+
+    }
+    /**
      * Checks if a 9 Digit ID is a legal Israeli ID
      * @param   {string}  id : 9 digit ID number as string
      * @returns {boolean} : true if legal ID, otherwise false
