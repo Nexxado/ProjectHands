@@ -6,7 +6,15 @@
     --background-color: #C3DCF0;
 }
 
+.home-background{
+    background-color: var(--background-color);
+}
+.white-background{
+    background-color: white;
+}
+
 .sta{
+    background-color: white;
     padding: 8px;
     margin: 8px;
 }
