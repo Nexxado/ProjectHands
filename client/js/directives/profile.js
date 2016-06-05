@@ -5,7 +5,27 @@ angular.module('ProjectHands')
             restrict: 'E',
             replace: true,
             templateUrl: '/templates/directives/profile.html',
-            controller: function ($scope, AuthService, PhotosService) {
+            controller: function ($scope, $location, AuthService, PhotosService) {
+
+                
+                $scope.sProfiel = true;
+                $scope.sAccount = false;
+                $scope.sEmails = false;
+                $scope.showProfile = function () {
+                    $scope.sProfiel = true;
+                    $scope.sAccount = false;
+                    $scope.sEmails = false;
+                };
+                $scope.showAccount = function () {
+                    $scope.sProfiel = false;
+                    $scope.sAccount = true;
+                    $scope.sEmails = false;
+                };
+                $scope.showEmails = function () {
+                    $scope.sProfiel = false;
+                    $scope.sAccount = false;
+                    $scope.sEmails = true;
+                };
 
                 var album = 'abc';
 
@@ -31,34 +51,24 @@ angular.module('ProjectHands')
                 $scope.getPhotos = function (album) {
                     PhotosService.getPhotos(album)
                         .then(function (data) {
-                            $scope.profilePic = data;
-                            $scope.profilePicUrl = data.web_link;
+                            $scope.profilePic = data[0];
+                            $scope.profilePicUrl = $scope.profilePic.web_link;
                         })
                         .catch(function (error) {
 
                         });
                 };
+                
                 $scope.getPhotos(album);
+                
                 $scope.isEditMode = false;
 
                 $scope.changeMode = function () {
                     $scope.isEditMode = !$scope.isEditMode;
                 };
-
-                $scope.getPhotos = function (album) {
-                    PhotosService.getPhotos(album)
-                        .then(function (data) {
-                            console.log('getPhotos data', data);
-                            $scope.images = data;
-                        })
-                        .catch(function (error) {
-
-                            console.log('getPhotos error ', error);
-                        });
-                };
-
-
+                
                 $scope.progress = false;
+                
                 $scope.progressDelete = false;
 
                 $scope.$watch('files', function () {

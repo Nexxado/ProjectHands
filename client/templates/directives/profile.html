@@ -1,7 +1,7 @@
 <md-content layout-padding layout="column" layout-align="center center">
 
     <div layout="row">
-        <div>
+        <div class="profile-side-nav">
             <md-card>
                 <md-toolbar layout="row" class="md-hue-3">
                     <div class="md-toolbar-tools">
@@ -10,17 +10,15 @@
                 </md-toolbar>
                 <md-content>
                     <md-list flex>
-                        <md-list-item   ng-click="null">
-
-                                <h3>Profile</h3>
-
+                        <md-list-item ng-click="showProfile()">
+                            <h3>Profile</h3>
                         </md-list-item>
-                        <md-list-item class="md-3-line" ng-click="null">
+                        <md-list-item class="md-3-line" ng-click="showAccount()">
                             <div class="md-list-item-text" layout="column">
                                 <h3>Account</h3>
                             </div>
                         </md-list-item>
-                        <md-list-item class="md-3-line" ng-click="null">
+                        <md-list-item class="md-3-line" ng-click="showEmails()">
                             <div class="md-list-item-text" layout="column">
                                 <h3>Emails</h3>
                             </div>
@@ -28,22 +26,24 @@
                     </md-list>
                 </md-content>
             </md-card>
-
         </div>
-        <div>
-            <md-card>
 
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">Profile picture</span>
-                    </md-card-title-text>
-                </md-card-title>
+        <div ng-show="sProfiel" class="profile-main">
+            <md-card>
+                <md-toolbar layout="row" class="md-hue-3">
+                    <div class="md-toolbar-tools">
+                        <span>Your Profile</span>
+                    </div>
+                </md-toolbar>
                 <md-divider></md-divider>
                 <md-card-content>
-                    <div layout-padding layout="column">
-                        <img ng-src={{profilePicUrl}} alt="profile pic">
-
+                    <div layout="row">
+                        <div layout-padding layout="column">
+                            <h3>Profile picture</h3>
+                            <img ng-src={{profilePicUrl}} alt="profile pic" style="width: 200px;height: 200px;">
+                        </div>
                         <div>
+                            <span></span>
                             <!--Drop File:-->
                             <div ngf-drop ngf-select ng-model="files" class="drop-box"
                                  ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
@@ -51,7 +51,7 @@
                                  ngf-pattern="'image/*,application/pdf'">
                                 <div layout-align="center center">
                                     <div ng-show="!progress">
-                                        Upload photo
+                                        Upload new picture
                                     </div>
                                     <div ng-show="progress">
                                         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
@@ -62,16 +62,6 @@
                         </div>
                     </div>
                 </md-card-content>
-            </md-card>
-        </div>
-        <div>
-            <md-card>
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">Your Profile</span>
-                    </md-card-title-text>
-                </md-card-title>
-                <md-divider></md-divider>
                 <md-card-content>
                     <h3>Name</h3>
                     <h4>{{profile.name}}</h4>
@@ -87,52 +77,95 @@
                 </md-card-content>
             </md-card>
         </div>
-        <div>
+
+        <div ng-show="sAccount" class="profile-main">
             <md-card>
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">Change Password</span>
-                    </md-card-title-text>
-                </md-card-title>
+                <md-toolbar layout="row" class="md-hue-3">
+                    <div class="md-toolbar-tools">
+                        <span>Change Password</span>
+                    </div>
+                </md-toolbar>
                 <md-divider></md-divider>
-                <md-card-content>
-                    <div layout="column">
-                        <md-input-container>
+                <md-card-content >
+                    <form style="width: 400px;" name="chPassForm" ng-submit="login()" layout="column" novalidate id="loginToastsAnchor">
+
+                        <md-input-container class="md-icon-float md-block">
                             <label>Old password</label>
-                            <input ng-model="password.old">
+                            <input type="password" name="password" ng-model="password" required/>
+                            <md-icon class="material-icons">lock_outline</md-icon>
+                            <div ng-messages="chPassForm.password.$error">
+                                <div ng-message="required">
+                                    שדה חובה
+                                </div>
+                            </div>
                         </md-input-container>
-                        <md-input-container>
+                        <md-input-container class="md-icon-float md-block">
                             <label>New password</label>
-                            <input ng-model="password.new">
+                            <input type="password" name="password" ng-model="password" required/>
+                            <md-icon class="material-icons">lock_outline</md-icon>
+                            <div ng-messages="chPassForm.password.$error">
+                                <div ng-message="required">
+                                    שדה חובה
+                                </div>
+                            </div>
                         </md-input-container>
-                        <md-input-container>
+                        <md-input-container class="md-icon-float md-block">
                             <label>Confirm new password</label>
-                            <input ng-model="password.confirm">
+                            <input type="password" name="password" ng-model="password" required/>
+                            <md-icon class="material-icons">lock_outline</md-icon>
+                            <div ng-messages="chPassForm.password.$error">
+                                <div ng-message="required">
+                                    שדה חובה
+                                </div>
+                            </div>
                         </md-input-container>
-                        <md-button>Update password</md-button>
-                        <md-button>I forgot my password</md-button>
-                    </div>
+                        <div layout="row">
+                            <md-button type="submit" class="md-accent md-raised white">Update password</md-button>
+                            <md-button class="md-accent md-raised white">I forgot my password</md-button>
+                        </div>
+                        <br/>
+                    </form>
+
                 </md-card-content>
             </md-card>
         </div>
-        <div>
+
+        <div ng-show="sEmails" class="profile-main">
             <md-card>
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">Change Email</span>
-                    </md-card-title-text>
-                </md-card-title>
-                <md-divider></md-divider>
-                <md-card-content>
-                    <div layout="column">
-                        <md-input-container>
-                            <label>New email</label>
-                            <input ng-model="password.old">
-                        </md-input-container>
-                        <md-button>Update email</md-button>
+
+                <md-toolbar layout="row" class="md-hue-3">
+                    <div class="md-toolbar-tools">
+                        <span>Change Email</span>
                     </div>
+                </md-toolbar>
+
+                <md-divider></md-divider>
+
+                <md-card-content>
+                    <form name="ChEmailForm" ng-submit="login()" layout="column" novalidate id="ChEmailToastsAnchor">
+                        <md-input-container class="md-icon-float md-block rtl">
+                            <label>אימייל</label>
+                            <input type="text" name="email" ng-model="email" ng-pattern="regexEmail" required />
+                            <md-icon class="material-icons">email</md-icon>
+                            <div ng-messages="ChEmailForm.email.$error">
+                                <div ng-message="required">
+                                    שדה חובה
+                                </div>
+                                <div ng-message="pattern">
+                                    אימייל שגוי
+                                </div>
+                            </div>
+                        </md-input-container>
+
+                        <div>
+                            <md-button type="submit" class="md-accent md-raised white">Update email</md-button>
+                        </div>
+                        <br/>
+                    </form>
+
                 </md-card-content>
             </md-card>
         </div>
+
     </div>
 </md-content>
