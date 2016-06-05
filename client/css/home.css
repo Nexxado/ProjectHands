@@ -6,6 +6,16 @@
     --background-color: #C3DCF0;
 }
 
+.team-avatar{
+    border-radius: 150px;
+    width: 150px;
+    height: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    background-size: 280px;
+    background-position: right;
+}
+
 .home-background{
     background-color: var(--background-color);
 }
