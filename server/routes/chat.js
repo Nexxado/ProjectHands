@@ -4,7 +4,6 @@
 var router = require('express').Router();
 var HttpStatus = require('http-status-codes');
 var debug = require('debug')('routes/chat');
-var writeToClient = require('../utils/writeToClient');
 var CHATS = require('../../config.json').COLLECTIONS.CHATS;
 var mongoUtils = require('../utils/mongo');
 var middleware = require('../utils/middleware');

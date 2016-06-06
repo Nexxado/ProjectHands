@@ -5,7 +5,6 @@ var passport = require('passport');
 var authUtils = require('../utils/auth');
 var debug = require('debug')('routes/auth');
 var emailUtils = require('../utils/email');
-var writeToClient = require('../utils/writeToClient');
 var config = require('../../config.json');
 var middleware = require('../utils/middleware');
 var validation = require('../utils/validation');
@@ -198,7 +197,6 @@ router.post('/forgot', validation.validateParams, function (req, res) {
                 /** the result will be the username if there is no errors*/
                 const USER_DATA_NOT_EXIST = "Wrong Email.";
                 if (result === USER_DATA_NOT_EXIST) {
-                    // writeToClient(res, result, "", HttpStatus.NOT_FOUND);
                     return res.redirect(encodeURI('/result/error/' + USER_DATA_NOT_EXIST));
                 }
                 else {

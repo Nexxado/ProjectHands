@@ -2,7 +2,6 @@ var router = require('express').Router();
 var HttpStatus = require('http-status-codes');
 var mongoUtils = require('../utils/mongo');
 var debug = require('debug')('routes/database');
-var writeToClient = require('../utils/writeToClient');
 
 
 /**
@@ -21,12 +20,12 @@ router.post("/insert", function (req, res) {
         var dataObj = JSON.parse(req.body.data);
         mongoUtils.insert(colName, dataObj, function (error, result) {
             if(error)
-                return writeToClient(res, result, error, HttpStatus.INTERNAL_SERVER_ERROR);
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
-            writeToClient(res, result);
+            res.send(result);
         });
     } catch (error) {
-        writeToClient(res, "Request Error", HttpStatus.INTERNAL_SERVER_ERROR);
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Request Error"});
         debug("The error is : ", error);
     }
 
@@ -44,13 +43,13 @@ router.delete("/delete/:collection&:query", function (req, res) {
         var query = JSON.parse(req.params.query);
         mongoUtils.delete(colName, query, function (error, result) {
             if(error)
-                return writeToClient(res, result, error, HttpStatus.INTERNAL_SERVER_ERROR);
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
-            writeToClient(res, result);
+            res.send(result);
         });
 
     } catch (error) {
-        writeToClient(res, "Request Error", HttpStatus.INTERNAL_SERVER_ERROR);
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Request Error"});
         debug("The error is : ", error);
     }
 
@@ -71,13 +70,13 @@ router.post("/update", function (req, res) {
         var data = JSON.parse(req.body.data);
         mongoUtils.update(colName, query, data, options, function (error, result) {
             if(error)
-                return writeToClient(res, result, error, HttpStatus.INTERNAL_SERVER_ERROR);
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
-            writeToClient(res, result);
+            res.send(result);
         });
 
     } catch (error) {
-        writeToClient(res, "Request Error", HttpStatus.INTERNAL_SERVER_ERROR);
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Request Error"});
         debug("The error is : ", error);
     }
 
@@ -96,14 +95,14 @@ router.get("/query/:collection&:query", function (req, res) {
         mongoUtils.query(colName, query, function (error, result) {
             debug('query callback result', result);
             if(error)
-                return writeToClient(res, result, error, HttpStatus.INTERNAL_SERVER_ERROR);
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
-            writeToClient(res, result);
+            res.send(result);
 
         });
 
     } catch (error) {
-        writeToClient(res, "Request Error", HttpStatus.INTERNAL_SERVER_ERROR);
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Request Error"});
         debug("The error is : ", error);
     }
 

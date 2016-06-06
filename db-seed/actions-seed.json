@@ -29,5 +29,8 @@
 	} , {
 		"action": "acl_team_actions",
 		"role": "admin"
+	} , {
+		"action": "acl_statistics_actions",
+		"role": "admin"
 	}
 ]
