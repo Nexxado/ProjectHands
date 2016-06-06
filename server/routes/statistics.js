@@ -6,7 +6,7 @@ var config = require('../../config.json');
 var writeToClient = require('../utils/writeToClient');
 var middleware = require('../utils/middleware');
 
-router.get('/VolunteersCountPerDate/:date', /* middleware.ensureAuthenticated,middleware.ensurePermission,*/
+router.get('/VolunteersCountPerDate/:date', middleware.ensureAuthenticated, /*middleware.ensurePermission,*/
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
@@ -22,7 +22,7 @@ router.get('/VolunteersCountPerDate/:date', /* middleware.ensureAuthenticated,mi
     });
 
 
-router.get('/renovationsVolunteersNumberPerDate/:date', /* middleware.ensureAuthenticated,middleware.ensurePermission,*/
+router.get('/renovationsVolunteersNumberPerDate/:date', middleware.ensureAuthenticated, /*middleware.ensurePermission,*/
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
@@ -37,7 +37,7 @@ router.get('/renovationsVolunteersNumberPerDate/:date', /* middleware.ensureAuth
         }
     });
 
-router.get('/renovationsCostPerDate/:date', /* middleware.ensureAuthenticated,middleware.ensurePermission,*/
+router.get('/renovationsCostPerDate/:date', middleware.ensureAuthenticated, /*middleware.ensurePermission,*/
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
@@ -52,7 +52,7 @@ router.get('/renovationsCostPerDate/:date', /* middleware.ensureAuthenticated,mi
         }
     });
 
-router.get('/renovationsVolunteeringHoursPerDate/:date', /* middleware.ensureAuthenticated,middleware.ensurePermission,*/
+router.get('/renovationsVolunteeringHoursPerDate/:date', middleware.ensureAuthenticated, /*middleware.ensurePermission,*/
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
@@ -67,7 +67,7 @@ router.get('/renovationsVolunteeringHoursPerDate/:date', /* middleware.ensureAut
         }
     });
 
-router.get('/renovationsPerDate/:date', /* middleware.ensureAuthenticated,middleware.ensurePermission,*/
+router.get('/renovationsPerDate/:date', middleware.ensureAuthenticated, /*middleware.ensurePermission,*/
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
