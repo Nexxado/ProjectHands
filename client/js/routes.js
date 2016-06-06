@@ -29,11 +29,11 @@ angular.module('ProjectHands')
                 controller: 'StatusController'
             })
 
-            .state('profile', {
-                url: '/profile',
-                templateUrl: 'templates/profile.html',
-                controller: 'ProfileController'
-            })
+            // .state('profile', {
+            //     url: '/profile',
+            //     templateUrl: 'templates/profile.html',
+            //     controller: 'ProfileController'
+            // })
 
 
             .state('about', {
@@ -63,11 +63,9 @@ angular.module('ProjectHands')
             })
             .state('profile', {
                 url: '/profile',
-                templateUrl: 'templates/profile.html'
-            })
-            .state('profile.profile', {
-                url: '/profile.profile',
-                templateUrl: 'templates/status.html'
+                template: '<md-content>' +
+                                '<profile></profile>' +
+                            '</md-content>'
             });
 
         $locationProvider.html5Mode(true);
