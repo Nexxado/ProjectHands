@@ -23,13 +23,18 @@ router.get('/user_info/:email', middleware.ensureAuthenticated, middleware.ensur
  */
 router.get('/all_users', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
 
-    mongoUtils.query(COLLECTIONS.USERS, {approved: true}, function (error, result) {
+    mongoUtils.query(COLLECTIONS.USERS, {}, function (error, result) {
         debug('all_users', error, result);
 
         if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to find users"});
         else if (!result.length)
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "No users found"});
+
+        //filter out unapproved users.
+        result = result.filter(function(user) {
+            return typeof user.approved === 'undefined' || user.approved === true
+        });
 
         //Don't send user password
         result.forEach(function(user) {

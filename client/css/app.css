@@ -15,6 +15,10 @@ md-list-item.selected {
     background-color: #e0e0e0;
 }
 
+md-list {
+    overflow-x: hidden;
+}
+
 .list-border {
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-top-left-radius: 15px;
@@ -69,6 +73,10 @@ md-list-item.selected {
 /***********************/
 /***** RTL Classes *****/
 /***********************/
+
+.rtl {
+    direction: rtl;
+}
 
 /* INPUT */
 md-input-container.rtl label {

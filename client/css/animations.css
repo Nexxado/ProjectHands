@@ -30,6 +30,54 @@
     transform: translateX(100%);
 }
 
+/*****************************/
+/***** Toggle Slide Left *****/
+/*****************************/
+.toggle-slide-left.ng-hide-add,
+.toggle-slide-left.ng-hide-remove  {
+    transition: all ease-in-out 500ms;
+}
+
+.toggle-slide-left {
+    transform: translateX(0);
+}
+
+.toggle-slide-left.ng-hide {
+    transform: translateX(-100%);
+}
+
+/*******************************/
+/***** Toggle Slide Bottom *****/
+/*******************************/
+.toggle-slide-bottom.ng-hide-add,
+.toggle-slide-bottom.ng-hide-remove  {
+    transition: all ease-in-out 500ms;
+}
+
+.toggle-slide-bottom {
+    transform: translateY(0);
+}
+
+.toggle-slide-bottom.ng-hide {
+    transform: translateY(100%);
+}
+
+/*******************************/
+/***** Toggle Slide Top *****/
+/*******************************/
+.toggle-slide-top.ng-hide-add,
+.toggle-slide-top.ng-hide-remove  {
+    transition: all ease-in-out 500ms;
+}
+
+.toggle-slide-top {
+    transform: translateY(0);
+}
+
+.toggle-slide-top.ng-hide {
+    transform: translateY(-100%);
+}
+
 /***********************************/
 /***** Slide in\out from Right *****/
 /***********************************/

@@ -69,7 +69,8 @@ angular.module('ProjectHands.dashboard')
 
     .state('dashboard.all-teams', {
         url: '/all-teams',
-        templateUrl: 'modules/dashboard/templates/all-teams.html'
+        templateUrl: 'modules/dashboard/templates/all-teams.html',
+        controller: 'AllTeamsController'
     })
 
     .state('dashboard.renovations-ref', {

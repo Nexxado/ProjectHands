@@ -40,6 +40,17 @@ router.delete('/delete/:teamName', middleware.ensureAuthenticated, middleware.en
 
     });
 
+
+router.get('/all_teams', middleware.ensureAuthenticated, middleware.ensurePermission, function(req, res) {
+
+    mongoUtils.query(COLLECTIONS.TEAMS, {}, function(error, result) {
+        if(error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: 'Failed to get teams'});
+
+        res.send(result);
+    });
+});
+
 /**
  * Add members to team
  */

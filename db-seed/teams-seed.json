@@ -2,23 +2,22 @@
      {
             "_id": "team_315568991",
             "name": "צוות אחשורוש",
-            "manager_email": "yr@gmail.com",
-            "members_email": [
+            "manager": "yr@gmail.com",
+            "members": [
 			"yr@gmail.com",
             "mb@gmail.com",
             "pn@gmail.com",
             "ad@gmail.com",
             "ms@gmail.com",
-			"test@gmail.com",
-			"ddraiman1990@gmail.com"
+			"test@gmail.com"
         ]
     },
 	
 	{
             "_id": "team_246685779",
             "name": "צוות נותןבראש",
-            "manager_email": "yt@gmail.com",
-            "members_email": [
+            "manager": "yt@gmail.com",
+            "members": [
 			"yt@gmail.com",
             "bp@gmail.com",
             "hb@gmail.com",

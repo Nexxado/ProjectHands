@@ -26,6 +26,23 @@
 
 }
 
-.signups-list {
+.list-signups {
     overflow-x: hidden;
+}
+
+.admin-list {
+    overflow: hidden;
+}
+
+.admin-list md-content {
+    height: 78vh;
+    overflow-y: scroll;
+}
+
+.list-search-input {
+    margin: 0;
+}
+
+.list-search-input input {
+    width: initial;
 }

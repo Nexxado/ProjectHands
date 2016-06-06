@@ -15,11 +15,10 @@
 		"_id": "315568991",
 		"name": "יוחאי רשף",
 		"password": "1234",
-		"role": "team manager",
+		"role": "teamLead",
 		"email": "yr@gmail.com",
 		"joined_date": "07/07/1951",
 		"avatar": "http://icons.iconarchive.com/icons/mattahan/ultrabuuf/256/Comics-Mask-icon.png",
-		"approved": false,
 		"phone": "05455454109",
 		"tools": [
 
@@ -32,7 +31,6 @@
 		"email": "mb@gmail.com",
 		"joined_date": "02/12/1987",
 		"avatar": "http://icons.iconarchive.com/icons/mattahan/ultrabuuf/256/Comics-Mask-icon.png",
-		"approved": false,
 		"phone": "05455454185",
 		"tools": [
 
@@ -68,7 +66,6 @@
 		"email": "ms@gmail.com",
 		"joined_date": "10/09/2013",
 		"avatar": "http://icons.iconarchive.com/icons/mattahan/ultrabuuf/256/Comics-Mask-icon.png",
-		"approved": false,
 		"phone": "05455451234",
 		"tools": [
 
@@ -159,7 +156,7 @@
 		"_id": "246685779",
 		"name": "ילד טוב",
 		"password": "1234",
-		"role": "team manager",
+		"role": "teamLead",
 		"email": "yt@gmail.com",
 		"joined_date": "07/07/1951",
 		"avatar": "http://icons.iconarchive.com/icons/mattahan/ultrabuuf/256/Comics-Mask-icon.png",

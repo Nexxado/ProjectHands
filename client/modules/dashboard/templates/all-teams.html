@@ -1,1 +1,83 @@
-All teams
+<div layout="column" layout-gt-sm="row" layout-align="end">
+    <!-- Teams List -->
+    <div class="toggle-slide-right toggle-fade list-border dashboard-height admin-list" flex-gt-sm="50" flex>
+        <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
+            <div class="md-toolbar-tools">
+                <span>צוותים</span>
+                <span flex></span>
+                <div>
+                    <!-- Teams Search Input -->
+                    <div class="toggle-fade toggle-slide-left" ng-hide="selectedTeam">
+                        <md-input-container class="md-block md-icon-float rtl list-search-input">
+                            <input type="text" name="search-teams" ng-model="searchTeams"/>
+                            <md-icon class="material-icons">search</md-icon>
+                        </md-input-container>
+                    </div>
+                    <!-- Team Members Search Input -->
+                    <div class="toggle-fade toggle-slide-left" ng-show="selectedTeam">
+                        <md-input-container class="md-block md-icon-float rtl list-search-input">
+                            <input type="text" name="search-team-members" ng-model="searchTeamMembers"/>
+                            <md-icon class="material-icons">search</md-icon>
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </md-toolbar>
+        <md-content>
+            <md-list class="md-dense list-teams toggle-slide-top toggle-fade" flex ng-hide="selectedTeam">
+                <md-list-item class="md-2-line rtl list-slide-right"
+                              ng-repeat="team in teams | filter: searchTeams"
+                              ng-click="showTeamMembers(team)">
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{ team.name }}</h3>
+                        <h4>מנהל: {{ team.manager_name }}</h4>
+                    </div>
+                </md-list-item>
+            </md-list>
+            <md-list class="md-dense toggle-slide-bottom toggle-fade" ng-show="selectedTeam">
+                <md-subheader class="md-no-sticky rtl">
+                    <md-button class="md-icon-button" ng-click="hideTeamMembers()">
+                        <md-icon class="material-icons">keyboard_arrow_down</md-icon>
+                    </md-button>
+                    <span>חברי צוות {{ selectedTeam.name }}</span>
+                    <md-button class="md-icon-button" ng-click="editTeam($event, selectedTeam)" style="float: left">
+                        <md-icon class="material-icons">edit</md-icon>
+                    </md-button>
+                </md-subheader>
+                <md-list-item class="md-2-line rtl list-slide-right"
+                              ng-repeat="member in selectedTeam.members_info | filter: searchTeamMembers">
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{ member.name }}</h3>
+                        <h4>{{ member.email }}</h4>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </div>
+    <!-- Users List -->
+    <div flex-gt-sm="45" flex-offset-gt-sm="5" flex class="list-border dashboard-height admin-list">
+        <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
+            <div class="md-toolbar-tools">
+                <span>משתמשים</span>
+                <span flex></span>
+                <!-- Search Input -->
+                <md-input-container class="md-block md-icon-float rtl list-search-input">
+                    <input type="text" name="search-users" ng-model="searchUsers"/>
+                    <md-icon class="material-icons">search</md-icon>
+                </md-input-container>
+            </div>
+        </md-toolbar>
+        <md-content>
+            <md-list class="md-dense list-volunteers" flex>
+                <md-list-item class="md-2-line rtl list-slide-right" ng-class="{'selected': isSelected(user)}"
+                              ng-repeat="user in users | filter: searchUsers"
+                              ng-click="showUserDetails($event, user)">
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{ user.name }}</h3>
+                        <h4>{{ user.email }}</h4>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </div>
+</div>

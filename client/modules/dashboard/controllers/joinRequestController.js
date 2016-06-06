@@ -5,6 +5,7 @@ angular.module('ProjectHands.dashboard')
 
     .controller('JoinRequestController', function ($scope, UserService, UtilsService, $mdDialog, $mdMedia) {
 
+        $scope.search = '';
         $scope.signups = [];
         $scope.selectedUser;
 
