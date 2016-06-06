@@ -27,7 +27,7 @@ router.post('/uploads', multipartyMiddleware, function (req, res) {
         req.files.file.path,
         req.body.album,
         function (error, result) {
-            if (error || !result)
+            if (error)
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
             var photoData = {
@@ -40,7 +40,7 @@ router.post('/uploads', multipartyMiddleware, function (req, res) {
                 result.web_link,
                 req.body.album,
                 function (error, result) {
-                    if (error || !result)
+                    if (error)
                         return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
                     res.send(photoData);
@@ -58,11 +58,11 @@ router.delete('/delete', function (req, res) {
         return res.status(HttpStatus.BAD_REQUEST).send("Missing file id");
 
     driveUtils.deleteFile(req.query.file_id, function (error, result) {
-        if (error || !result)
+        if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
         deletePhoto(req.query.file_id, function (error, result) {
-            if (error || !result)
+            if (error)
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
             res.send({success: true});
@@ -77,7 +77,7 @@ router.delete('/delete', function (req, res) {
  */
 router.get('/album', function (req, res) {
     getAlbum(req.query.album, function (error, result) {
-        if (error || !result)
+        if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
         res.send(result);
