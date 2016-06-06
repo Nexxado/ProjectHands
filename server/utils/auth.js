@@ -64,6 +64,7 @@ module.exports = {
 
                     }
                     user.password = hashedPassword;
+                    user.signupDate = new Date().toISOString();
                     user.approved = false;
                     mongoUtils.insert(COLLECTIONS.SIGNUPS, user, callback);
 
@@ -77,6 +78,7 @@ module.exports = {
     oauthSignup: function (user, info, callback) {
 
         info.signup_complete = true;
+        info.signupDate = new Date().toISOString();
         mongoUtils.update(COLLECTIONS.USERS, {email: user.email}, {$set: info}, {}, callback)
     },
 

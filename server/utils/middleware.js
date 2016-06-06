@@ -67,7 +67,7 @@ middleware.ensureUserExists = function(req, res, next) {
  */
 middleware.ensureMultipleUsersExists = function(req, res, next) {
 
-    var members = JSON.parse(req.body.members);
+    var members = req.body.members;
 
     mongoUtils.query(COLLECTIONS.USERS, {email: {$in: members}}, function(error, result) {
 

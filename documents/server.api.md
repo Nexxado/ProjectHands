@@ -41,6 +41,7 @@
 * [**Teams**](#teams)
     * [Create Team](#create-team)
     * [Delete Team](#delete-team)
+    * [Get All Teams](#get-all-teams)
     * [Add Members](#add-members)
     * [Remove Members](#remove-members)
     * [Assign To Renovation](#assign-to-renovation)
@@ -815,6 +816,29 @@ Approve a user to join Project Hands
 
 ---
 
+### Get All Teams
+
+#### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/team/all_teams |
+
+| Type  | Params | Values |
+|---|---|---|
+|  |  |  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | [{name: "", manager: "", members: []}, {...}, ...] |
+| 401 | {errMessage: "Error: User is not logged in"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to get teams"} |
+
+---
+
 ### Add Members
 
 #### Request
@@ -923,6 +947,7 @@ Approve a user to join Project Hands
 | 400 | {errMessage: "Team does not exists"} |
 | 400 | {errMessage: "User does not exists"} |
 | 400 | {errMessage: "User is not part of team"} |
+| 400 | {errMessage: "User is already manager of team"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to find team"} |

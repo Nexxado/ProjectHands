@@ -40,7 +40,7 @@ angular.module('ProjectHands')
          * @returns {Promise}
          */
         function approveUser(email, role) {
-            return $resource(baseUrl + '/rsvp').save({
+            return $resource(baseUrl + '/approve').save({
                 email: email,
                 role: role
             });

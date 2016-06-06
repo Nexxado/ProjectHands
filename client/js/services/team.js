@@ -30,6 +30,14 @@ angular.module('ProjectHands')
         }
 
         /**
+         * Get all teams in database
+         * @returns {Promise}
+         */
+        function getAllTeams() {
+            return $resource(baseUrl + '/all_teams').query();
+        }
+
+        /**
          * Add members to team
          * @param teamName {String}
          * @param members {Array} : members to add to team
@@ -89,6 +97,7 @@ angular.module('ProjectHands')
         return {
             create: create,
             deleteTeam: deleteTeam,
+            getAllTeams: getAllTeams,
             addMembers: addMembers,
             removeMembers: removeMembers,
             assignToRenovation: assignToRenovation,

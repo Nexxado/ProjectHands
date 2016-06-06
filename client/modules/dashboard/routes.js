@@ -70,7 +70,8 @@ angular.module('ProjectHands.dashboard')
 
     .state('dashboard.all-teams', {
         url: '/all-teams',
-        templateUrl: 'modules/dashboard/templates/all-teams.html'
+        templateUrl: 'modules/dashboard/templates/all-teams.html',
+        controller: 'AllTeamsController'
     })
 
     .state('dashboard.renovations-ref', {
@@ -85,7 +86,8 @@ angular.module('ProjectHands.dashboard')
 
     .state('dashboard.join-requests', {
         url: '/join-requests',
-        templateUrl: 'modules/dashboard/templates/join-requests.html'
+        templateUrl: 'modules/dashboard/templates/join-requests.html',
+        controller: 'JoinRequestController'
     })
 
     .state('dashboard.chat', {

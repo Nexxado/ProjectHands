@@ -6,6 +6,42 @@
     color: white !important;
 }
 
+md-toolbar.rounded-toolbar {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+md-list-item.selected {
+    background-color: #e0e0e0;
+}
+
+md-list {
+    overflow-x: hidden;
+}
+
+.list-border {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.dashboard-height {
+    height: 85vh;
+}
+
+button.md-button.approve-btn,
+button.md-button.approve-btn:active,
+button.md-button.md-raised.approve-btn,
+button.md-button.md-raised.approve-btn:active{
+    background-color: #009688;
+    color: white;
+}
+
+button.md-button.approve-btn:hover,
+button.md-button.md-raised.approve-btn:hover {
+    background-color: #00796B;
+}
+
 /*************************/
 /***** Admin Actions *****/
 /*************************/
@@ -51,6 +87,14 @@
 /***** RTL Classes *****/
 /***********************/
 
+md-option {
+    direction: rtl;
+}
+
+.rtl {
+    direction: rtl;
+}
+
 /* INPUT */
 md-input-container.rtl label {
     right: 0;
@@ -85,6 +129,10 @@ md-input-container.md-icon-float.rtl > md-icon {
     left: auto;
 }
 
+md-input-container.rtl > md-select {
+    direction: rtl;
+}
+
 /* CHECKBOX */
 md-checkbox.rtl {
     direction: rtl;
@@ -107,4 +155,19 @@ md-icon.rtl {
 md-toast {
     direction: rtl;
     text-align: center;
+}
+
+md-list-item.rtl .md-list-item-text {
+    direction: rtl;
+    text-align: right;
+}
+
+md-list-item.rtl .md-secondary-container,
+md-list-item.rtl .md-secondary {
+    right: auto;
+    left: 16px;
+}
+
+md-toolbar.rtl {
+    direction: rtl;
 }

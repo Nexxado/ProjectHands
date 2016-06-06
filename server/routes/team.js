@@ -40,13 +40,27 @@ router.delete('/delete/:teamName', middleware.ensureAuthenticated, middleware.en
 
     });
 
+
+/**
+ * Get all teams in the database
+ */
+router.get('/all_teams', middleware.ensureAuthenticated, middleware.ensurePermission, function(req, res) {
+
+    mongoUtils.query(COLLECTIONS.TEAMS, {}, function(error, result) {
+        if(error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: 'Failed to get teams'});
+
+        res.send(result);
+    });
+});
+
 /**
  * Add members to team
  */
 router.post('/add_members', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
     middleware.ensureMultipleUsersExists, middleware.ensureTeamExists, function (req, res) {
 
-        var members = JSON.parse(req.body.members);
+        var members = req.body.members;
 
         //Separate new members from members already in team.
         var alreadyInTeam = [];
@@ -79,7 +93,7 @@ router.post('/add_members', middleware.ensureAuthenticated, middleware.ensurePer
 router.post('/remove_members', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
     middleware.ensureMultipleUsersExists, middleware.ensureTeamExists, function (req, res) {
 
-        var members = JSON.parse(req.body.members);
+        var members = req.body.members;
 
         //Separate members to remove from members not in team
         var notInTeam = [];
@@ -140,7 +154,9 @@ router.post('/assign_manager', middleware.ensureAuthenticated, middleware.ensure
 
         if (req.queriedTeam.members && req.queriedTeam.members.indexOf(req.body.email) < 0)
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User is not part of team"});
-
+        else if (req.queriedTeam.manager === req.body.email)
+            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User is already manager of team"});
+            
         //Assign user as team manager
         mongoUtils.update(COLLECTIONS.TEAMS, {name: req.body.teamName}, {$set: {manager: req.body.email}}, {},
             function (error, result) {
