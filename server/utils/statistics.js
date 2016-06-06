@@ -91,11 +91,6 @@ function getVolunteersCountPerDate(year, month, dayFrom, dayTo, callback) {
  * @param callback : Object[][renovationName:numberOfVolunteers , totalVolunteers:theWholeNumberOfColunteers]
  */
 function getRenovationsVolunteersNumberPerDate(year, month, dayFrom, dayTo, callback) {
-    var date = parseDateToStringFormat(year, month, dayFrom, dayTo);
-    year = date.year;
-    month = date.month;
-    dayFrom = date.dayFrom;
-    dayTo = date.dayTo;
     getRenovationsPerDate(year, month, dayFrom, dayTo, function (error, result) {
         if (error) {
             callback(error, result);
@@ -140,11 +135,6 @@ function getRenovationsVolunteersNumberPerDate(year, month, dayFrom, dayTo, call
  * @param callback : Object[][renovationName:renovationMoney , totalCost:thecosts]
  */
 function getRenovationsCostPerDate(year, month, dayFrom, dayTo, callback) {
-    var date = parseDateToStringFormat(year, month, dayFrom, dayTo);
-    year = date.year;
-    month = date.month;
-    dayFrom = date.dayFrom;
-    dayTo = date.dayTo;
     getRenovationsPerDate(year, month, dayFrom, dayTo, function (error, result) {
         if (error) {
             callback(error, result);
@@ -207,12 +197,6 @@ function getRenovationCost(renovation) {
  * @param callback : Object[renovationName,renovationHours]
  */
 function getRenovationsVolunteeringHoursPerDate(year, month, dayFrom, dayTo, callback) {
-    var date = parseDateToStringFormat(year, month, dayFrom, dayTo);
-    year = date.year;
-    month = date.month;
-    dayFrom = date.dayFrom;
-    dayTo = date.dayTo;
-
     getRenovationsPerDate(year, month, dayFrom, dayTo, function (error, result) {
         if (error) {
             callback(error, result);
@@ -321,6 +305,6 @@ module.exports = {
     getRenovationsVolunteersNumberPerDate: getRenovationsVolunteersNumberPerDate,
     getRenovationsCostPerDate: getRenovationsCostPerDate,
     getRenovationsVolunteeringHoursPerDate: getRenovationsVolunteeringHoursPerDate,
-    getRenovationsPerDate: getRenovationsVolunteeringHoursPerDate
+    getRenovationsPerDate: getRenovationsPerDate
 
 }

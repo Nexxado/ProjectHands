@@ -291,7 +291,7 @@ router.get('/reset/:token', function (req, res) {
         delete decoded.iat;
         authUtils.setPassword({email: decoded.email}, "", decoded.newPassword, false, function (error, result) {
             if (error) {
-                return res.redirect(encodeURI('/result/error/' + result));
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
             }
             debug('reset result', result);
             res.redirect('/login/');
