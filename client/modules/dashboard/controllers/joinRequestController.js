@@ -49,7 +49,7 @@ angular.module('ProjectHands.dashboard')
                             $mdDialog.hide(approve);
                         }
                     },
-                    templateUrl: '/modules/dashboard/templates/dialogs/userDetails.html',
+                    templateUrl: '/modules/dashboard/templates/dialogs/signupDetails.html',
                     parent: angular.element(document.body),
                     targetEvent: $event,
                     clickOutsideToClose: true,

@@ -29,6 +29,19 @@ md-list {
     height: 85vh;
 }
 
+button.md-button.approve-btn,
+button.md-button.approve-btn:active,
+button.md-button.md-raised.approve-btn,
+button.md-button.md-raised.approve-btn:active{
+    background-color: #009688;
+    color: white;
+}
+
+button.md-button.approve-btn:hover,
+button.md-button.md-raised.approve-btn:hover {
+    background-color: #00796B;
+}
+
 /*************************/
 /***** Admin Actions *****/
 /*************************/
@@ -74,6 +87,10 @@ md-list {
 /***** RTL Classes *****/
 /***********************/
 
+md-option {
+    direction: rtl;
+}
+
 .rtl {
     direction: rtl;
 }
@@ -110,6 +127,10 @@ md-input-container.md-has-icon.rtl > label {
 md-input-container.md-icon-float.rtl > md-icon {
     right: 2px;
     left: auto;
+}
+
+md-input-container.rtl > md-select {
+    direction: rtl;
 }
 
 /* CHECKBOX */

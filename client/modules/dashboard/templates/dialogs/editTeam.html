@@ -1,21 +1,86 @@
 <md-dialog aria-label="Edit Team Dialog" flex="50">
-    <md-toolbar dir="rtl">
-        <div class="md-toolbar-tools">
-            <h2>עריכת צוות</h2>
-            <span flex></span>
-            <md-button class="md-icon-button" ng-click="cancel()">
-                <md-icon class="material-icons">close</md-icon>
+    <form name="EditTeamForm" ng-submit="submit()" layout="column" novalidate>
+        <md-toolbar dir="rtl">
+            <div class="md-toolbar-tools">
+                <h2>עריכת צוות</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content" layout="column" layout-align="end">
+                <!-- Team Manager Select -->
+                <div layout="row" layout-align="end" flex>
+                    <md-input-container class="md-block rtl" flex="25">
+                        <label>מנהל צוות</label>
+                        <md-select name="teamManager" ng-model="teamManager.email" required>
+                            <md-option ng-value="user.email" ng-repeat="user in team.members_info">
+                                {{ user.name }}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="EditTeamForm.teamManager.$error">
+                            <div ng-message="required">
+                                שדה חובה
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <!-- Users without team list -->
+                    <div flex-gt-sm="45" flex class="list-border dialog-list">
+                        <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
+                            <div class="md-toolbar-tools">
+                                <span>משתמשים ללא צוות</span>
+                            </div>
+                        </md-toolbar>
+                        <md-content>
+                            <md-list class="md-dense list-volunteers" flex>
+                                <md-list-item class="md-2-line rtl list-slide-right"
+                                              ng-repeat="user in users">
+                                    <div class="md-list-item-text" layout="column">
+                                        <h3>{{ user.name }}</h3>
+                                        <h4>{{ user.email }}</h4>
+                                    </div>
+                                    <md-icon class="md-secondary rtl" ng-click="addUser($index, user)">arrow_back
+                                    </md-icon>
+                                </md-list-item>
+                            </md-list>
+                        </md-content>
+                    </div>
+                    <!-- Team members list -->
+                    <div flex-gt-sm="45" flex-offset-gt-sm="10" flex class="list-border dialog-list">
+                        <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
+                            <div class="md-toolbar-tools">
+                                <span>חברי צוות</span>
+                            </div>
+                        </md-toolbar>
+                        <md-content>
+                            <md-list class="md-dense list-volunteers" flex>
+                                <md-list-item class="md-2-line rtl list-slide-left"
+                                              ng-repeat="user in team.members_info">
+                                    <div class="md-list-item-text" layout="column">
+                                        <h3>{{ user.name }}</h3>
+                                        <h4>{{ user.email }}</h4>
+                                    </div>
+                                    <md-icon class="md-secondary rtl" ng-click="removeUser($index, user)">
+                                        arrow_forward
+                                    </md-icon>
+                                </md-list-item>
+                            </md-list>
+                        </md-content>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout-align="start">
+            <md-button type="button" ng-click="cancel()" class="md-warn">
+                ביטול
             </md-button>
-        </div>
-    </md-toolbar>
-    <md-dialog-content>
-        <div class="md-dialog-content">
-            <md-content class="rtl" layout="row" layout-padding>
-
-            </md-content>
-        </div>
-    </md-dialog-content>
-    <md-dialog-actions layout-align="start">
-
-    </md-dialog-actions>
+            <md-button type="submit" class="md-raised md-primary">
+                אישור
+            </md-button>
+        </md-dialog-actions>
+    </form>
 </md-dialog>

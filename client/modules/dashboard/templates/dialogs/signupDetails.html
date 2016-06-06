@@ -1,4 +1,4 @@
-<md-dialog aria-label="User Details Dialog" flex="25">
+<md-dialog aria-label="Signup Details Dialog" flex="25">
     <md-toolbar dir="rtl">
         <div class="md-toolbar-tools">
             <h2>פרטי משתמש</h2>
@@ -10,20 +10,26 @@
     </md-toolbar>
     <md-dialog-content>
         <div class="md-dialog-content">
-            <md-content class="user-info rtl" layout="row" layout-padding>
-                <div layout="column" class="user-info-main">
+            <md-content class="signup-info rtl" layout="row" layout-padding>
+                <div layout="column" class="signup-info-main">
                     <div class="title">שם: {{ user.name }}</div>
                     <div class="">אימייל: {{ user.email }}</div>
                     <div>מס' טלפון: {{ user.phone }}</div>
-                    <div>תאריך הצטרפות: {{ user.joined_date }}</div>
-                    <div>תפקיד: {{ user.role }}</div>
+                    <div>תאריך הרשמה: {{ user.signupDate }}</div>
                 </div>
             </md-content>
         </div>
     </md-dialog-content>
-    <md-dialog-actions class="user-actions" layout-align="start">
-        <md-button class="md-primary" ng-click="cancel()">
-            סגור
+    <md-dialog-actions class="signup-actions" layout-align="start">
+        <md-button class="md-warn" ng-click="cancel()">
+            ביטול
+        </md-button>
+        <span flex></span>
+        <md-button class="md-warn md-raised" ng-click="submit(false)">
+            מחק משתמש
+        </md-button>
+        <md-button class="md-raised approve-btn" ng-click="submit(true)">
+            אשר משתמש
         </md-button>
     </md-dialog-actions>
 </md-dialog>

@@ -1,22 +1,29 @@
 /*****************************/
 /***** Join Request Page *****/
 /*****************************/
-.user-info.rtl {
+.signup-info.rtl {
     direction: rtl;
 }
 
-.user-info .user-info-main div {
+.signup-info .signup-info-main div {
     padding: 2px 10px;
 }
 
-.user-actions button.approve-btn,
-.user-actions button.approve-btn:active {
+.signup-actions button.approve-btn,
+.signup-actions button.approve-btn:active {
     background-color: #009688;
     color: white;
 }
 
-.user-actions button.md-raised.approve-btn:hover {
+.signup-actions button.md-raised.approve-btn:hover {
     background-color: #00796B;
+}
+
+.signup-info .signup-info-main .title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: 10px;
+
 }
 
 .user-info .user-info-main .title {
@@ -26,18 +33,29 @@
 
 }
 
+.user-info .user-info-main div {
+    padding: 2px 10px;
+}
+
 .list-signups {
     overflow-x: hidden;
 }
 
-.admin-list {
+.admin-list,
+.dialog-list {
     overflow: hidden;
 }
 
 .admin-list md-content {
     height: 78vh;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
+
+.dialog-list md-content {
+    overflow-y: auto;
+    max-height: 40vh;
+}
+
 
 .list-search-input {
     margin: 0;
