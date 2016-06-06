@@ -133,9 +133,13 @@ module.exports = {
      * @param query {object} : the search criteria
      * @param callback {function} : method that will be executed when data is retrieved
      * callback will be executed when finish , and with null if any errors
+     * @param projection {object} : to select which headers we want to retrieve
      * */
-    query: function (collectionName, query, callback) {
-        _db.collection(collectionName).find(query).toArray(function (error, result) {
+    query: function (collectionName, query, callback, projection) {
+        if (projection === undefined) {
+            projection = {};
+        }
+        _db.collection(collectionName).find(query, projection).toArray(function (error, result) {
             if (error) {
                 debug(error);
                 callback(error, result);
