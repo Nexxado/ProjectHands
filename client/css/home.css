@@ -3,9 +3,36 @@
     --dot-meargin: 20px;
     --nav-buttom: 30px;
     --dot-border: 3px;
+    --background-color: #C3DCF0;
+}
+
+.org-ads{
+    padding: 48px;
+}
+
+.text-large{
+    text-size: 450%;
+}
+
+.team-avatar{
+    border-radius: 150px;
+    width: 150px;
+    height: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    background-size: 280px;
+    background-position: right;
+}
+
+.home-background{
+    background-color: var(--background-color);
+}
+.white-background{
+    background-color: white;
 }
 
 .sta{
+    background-color: white;
     padding: 8px;
     margin: 8px;
 }

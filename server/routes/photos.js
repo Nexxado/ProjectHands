@@ -2,86 +2,85 @@ var fs = require('fs');
 var router = require('express').Router();
 var multiparty = require('connect-multiparty');
 var multipartyMiddleware = multiparty();
-var writeToClient = require('../utils/writeToClient');
 var driveUtils = require('../utils/drive');
 var mongoUtils = require('../utils/mongo');
 var config = require('../../config.json');
-var HttpStatus = require('http-status-codes');
 var COLLECTIONS = config.COLLECTIONS;
-
+var HttpStatus = require('http-status-codes');
 
 //the router for photos module
 /**
  * post for upload photos to sever using multipartyMiddleware
- *
+ * Expected Params:
+ * @param file {File} : photo file to be upload
+ * @param album {string} : album you want to save the photo to
  */
 router.post('/uploads', multipartyMiddleware, function (req, res) {
-    // We are able to access req.files.file thanks to
-    // the multiparty middleware
-    //TODO check request old files
-    var file = req.files.file;
-    var albumKey = req.body.album_key;
 
-    //upload photo to google drive
+    if (req.body.album === undefined || req.body.album === null)
+        return res.status(HttpStatus.BAD_REQUEST).send("Error: missing album");
+
+    if (req.files.file === undefined || req.files.file === null)
+        return res.status(HttpStatus.BAD_REQUEST).send("Error: missing file");
+
     driveUtils.uploadFile(
-        file.path,
-        albumKey,
+        req.files.file.path,
+        req.body.album,
         function (error, result) {
             if (error)
-                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Error: file not saved"});
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
             var photoData = {
                 file_id: result.file_id,
                 web_link: result.web_link,
-                album_key: albumKey
+                album: req.body.album
             };
-            //save photo data to server db
-            savePhoto(result.file_id, result.web_link, albumKey, function (error, result) {
-                if (error)
-                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Error: file not saved"});
-                //send to client new photo data
-                res.send(photoData);
-            });
 
+            savePhoto(result.file_id,
+                result.web_link,
+                req.body.album,
+                function (error, result) {
+                    if (error)
+                        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
+                    res.send(photoData);
+                });
         });
 });
 /**
  * post for delete photo from drive and db
- * TODO change to delete method
+ * Expected Params:
+ * @param file_id {string} : file id to by deleted
  */
-router.post('/delete', function (req, res) {
+router.delete('/delete', function (req, res) {
 
-    var fileId = req.body.file_id;
+    if (req.query.file_id === undefined || req.query.file_id === null)
+        return res.status(HttpStatus.BAD_REQUEST).send("Missing file id");
 
-    //delete file from drive 
-    driveUtils.deleteFile(fileId, function (error, result) {
+    driveUtils.deleteFile(req.query.file_id, function (error, result) {
         if (error)
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Error: file did not deleted"});
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
-        //delete photo data from the db
-        deletePhoto(fileId, function (error, result) {
+        deletePhoto(req.query.file_id, function (error, result) {
             if (error)
-                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Error: file did not deleted"});
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
             res.send({success: true});
         })
-
     });
 });
 
-
 /**
  * gets album data from the db
+ * Expected Params:
+ * @param album {string} : album to by deleted
  */
 router.get('/album', function (req, res) {
-    var album = req.query.album;
-    getAlbum(album, function (error, result) {
-        if (error) {
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Couldn't find album"})
-        } else {
-            res.send(result);
-        }
+    getAlbum(req.query.album, function (error, result) {
+        if (error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+
+        res.send(result);
     })
 });
 
@@ -91,12 +90,12 @@ router.get('/album', function (req, res) {
  *  save photo data to db
  * @param fileId {String} : photo drive file id
  * @param webContentLink {String} : drive direct link
- * @param album_key {String} : album of the photo
+ * @param album {String} : album of the photo
  * @param callback {Function} : holds err / success
  */
-function savePhoto(fileId, webContentLink, album_key, callback) {
+function savePhoto(fileId, webContentLink, album, callback) {
     mongoUtils.insert(COLLECTIONS.PHOTOS, {
-            album_key: album_key,
+            album: album,
             web_link: webContentLink,
             file_id: fileId
         }
@@ -104,13 +103,13 @@ function savePhoto(fileId, webContentLink, album_key, callback) {
 }
 /**
  *  get all photos of particular album
- * @param albumKey {String} : the album
+ * @param album {String} : the album
  * @param callback {Function} : callback holds err / success
  */
-function getAlbum(albumKey, callback) {
+function getAlbum(album, callback) {
     // console.log('getAlbumImages(albumKey) ' + albumKey);
     mongoUtils.query(COLLECTIONS.PHOTOS, {
-        album_key: albumKey
+        album: album
     }, callback);
 }
 /**

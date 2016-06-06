@@ -9,10 +9,10 @@ angular.module('ProjectHands.home')
 
                 //mock obj
                 $scope.statistics = {
-                    renovations : 10+ "- ",
-                    volunteers : " "+20+ "- ",
-                    work_hours : " "+300+ "- ",
-                    donations : " "+20000+ "- "
+                    renovations : 10,
+                    volunteers : " "+20,
+                    work_hours : " "+300,
+                    donations : " "+20000
                 }
 
             }

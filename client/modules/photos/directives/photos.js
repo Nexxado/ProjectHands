@@ -9,8 +9,9 @@ angular.module('ProjectHands.photos')
             controller: function ($scope, Upload, $timeout, PhotosService, $mdDialog, $mdMedia) {
 
                 var dialogImgUrl = "";
-                    function DialogController($scope, $mdDialog) {
-                    $scope.dialogImgUrl = dialogImgUrl ; 
+
+                function DialogController($scope, $mdDialog) {
+                    $scope.dialogImgUrl = dialogImgUrl;
                     $scope.hide = function () {
                         $mdDialog.hide();
                     };
@@ -62,8 +63,7 @@ angular.module('ProjectHands.photos')
                             console.log('getPhotos error ', error);
                         });
                 };
-
-
+                
                 $scope.getPhotos($scope.album);
 
                 $scope.progress = false;
@@ -93,37 +93,50 @@ angular.module('ProjectHands.photos')
                         });
                 }
 
-
                 $scope.upload = function (files) {
                     if (files && files.length) {
                         for (var i = 0; i < files.length; i++) {
                             var file = files[i];
                             if (!file.$error) {
                                 $scope.progress = true;
-                                Upload.upload({
-                                    url: '/api/photos/uploads',
-                                    data: {
-                                        username: $scope.username,
-                                        album_key: $scope.album,
-                                        file: file
-                                    }
-                                }).then(function (resp) {
-                                    $timeout(function () {
-                                        $scope.log = 'file: ' +
-                                            resp.config.data.file.name +
-                                            ', Response: ' + JSON.stringify(resp.data) +
-                                            '\n' + $scope.log;
-                                        // $scope.photoSrc = (resp.data).replace(/['"]+/g, '');
-                                        $scope.images.push(resp.data);
+                                PhotosService.uploadPhoto($scope.album, file)
+                                    .then(function (data) {
+                                        console.log('uploadPhoto data', data);
+                                        $scope.progress = false;
+                                        $scope.images.push(data);
+                                    })
+                                    .catch(function (error) {
+                                        console.log('uploadPhoto error ', error);
                                         $scope.progress = false;
                                     });
-                                }, null, function (evt) {
-                                    var progressPercentage = parseInt(100.0 *
-                                        evt.loaded / evt.total);
-                                    $scope.log = 'progress: ' + progressPercentage +
-                                        '% ' + evt.config.data.file.name + '\n' +
-                                        $scope.log;
-                                });
+
+                                // Upload.upload({
+                                //     url: '/api/photos/uploads',
+                                //     data: {
+                                //         // username: $scope.username,
+                                //         album: $scope.album,
+                                //         file: file
+                                //     }
+                                // }).then(function (resp) {
+                                //     $timeout(function () {
+                                //         $scope.log = 'file: ' +
+                                //             resp.config.data.file.name +
+                                //             ', Response: ' + JSON.stringify(resp.data) +
+                                //             '\n' + $scope.log;
+                                //         // $scope.photoSrc = (resp.data).replace(/['"]+/g, '');
+                                //         $scope.images.push(resp.data);
+                                //         $scope.progress = false;
+                                //     });
+                                // }, null, function (evt) {
+                                //     // $scope.progress = false;
+                                //     var progressPercentage = parseInt(100.0 *
+                                //         evt.loaded / evt.total);
+                                //     $scope.log = 'progress: ' + progressPercentage +
+                                //         '% ' + evt.config.data.file.name + '\n' +
+                                //         $scope.log;
+                                //
+                                //
+                                // });
                             }
                         }
                     }

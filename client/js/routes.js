@@ -60,6 +60,14 @@ angular.module('ProjectHands')
             .state('about.contact', {
                 url: '/contact',
                 templateUrl: 'templates/about/contact.html'
+            })
+            .state('profile', {
+                url: '/profile',
+                templateUrl: 'templates/profile.html'
+            })
+            .state('profile.profile', {
+                url: '/profile.profile',
+                templateUrl: 'templates/status.html'
             });
 
         $locationProvider.html5Mode(true);

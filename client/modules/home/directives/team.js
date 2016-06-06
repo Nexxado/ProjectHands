@@ -5,9 +5,13 @@ angular.module('ProjectHands.home')
             restrict: 'E',
             replace: true,
             templateUrl: 'modules/home/templates/directives/team.html',
-            controller: function ($scope, $timeout) {
+            controller: function ($scope) {
 
-
+                $scope.team = {
+                    name: "",
+                    role: "",
+                    img_url: ""
+                }
             }
         };
     });
