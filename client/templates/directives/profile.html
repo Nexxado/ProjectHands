@@ -1,6 +1,6 @@
 <md-content layout-padding layout="column" layout-align="center center">
 
-    <div layout="row">
+    <div layout="row" ng-show="isLoggedIn">
         <div class="profile-side-nav">
             <md-card>
                 <md-toolbar layout="row" class="md-hue-3">
@@ -86,12 +86,13 @@
                     </div>
                 </md-toolbar>
                 <md-divider></md-divider>
-                <md-card-content >
-                    <form style="width: 400px;" name="chPassForm" ng-submit="login()" layout="column" novalidate id="loginToastsAnchor">
+                <md-card-content>
+                    <form style="width: 400px;" name="chPassForm" ng-submit="changePassword()" layout="column" novalidate
+                          id="loginToastsAnchor">
 
                         <md-input-container class="md-icon-float md-block">
                             <label>Old password</label>
-                            <input type="password" name="password" ng-model="password" required/>
+                            <input type="password" name="password" ng-model="change_password.old" required/>
                             <md-icon class="material-icons">lock_outline</md-icon>
                             <div ng-messages="chPassForm.password.$error">
                                 <div ng-message="required">
@@ -101,7 +102,7 @@
                         </md-input-container>
                         <md-input-container class="md-icon-float md-block">
                             <label>New password</label>
-                            <input type="password" name="password" ng-model="password" required/>
+                            <input type="password" name="password" ng-model="change_password.new" required/>
                             <md-icon class="material-icons">lock_outline</md-icon>
                             <div ng-messages="chPassForm.password.$error">
                                 <div ng-message="required">
@@ -111,7 +112,7 @@
                         </md-input-container>
                         <md-input-container class="md-icon-float md-block">
                             <label>Confirm new password</label>
-                            <input type="password" name="password" ng-model="password" required/>
+                            <input type="password" name="password" ng-model="change_password.conf_new" required/>
                             <md-icon class="material-icons">lock_outline</md-icon>
                             <div ng-messages="chPassForm.password.$error">
                                 <div ng-message="required">
@@ -121,11 +122,39 @@
                         </md-input-container>
                         <div layout="row">
                             <md-button type="submit" class="md-accent md-raised white">Update password</md-button>
-                            <md-button class="md-accent md-raised white">I forgot my password</md-button>
+
                         </div>
                         <br/>
                     </form>
 
+
+                </md-card-content>
+                <md-toolbar layout="row" class="md-hue-3">
+                    <div class="md-toolbar-tools">
+                        <span>Reset password</span>
+                    </div>
+                </md-toolbar>
+                <md-card-content>
+                    <form style="width: 400px;" name="resetPasswordForm" ng-submit="resetPassword()" layout="column" novalidate
+                          id="resetPassToastsAnchor">
+
+                        <md-input-container class="md-icon-float md-block">
+                            <label>New password</label>
+                            <input type="password" name="password" ng-model="reset_password.new" required/>
+                            <md-icon class="material-icons">lock_outline</md-icon>
+                            <div ng-messages="chPassForm.password.$error">
+                                <div ng-message="required">
+                                    שדה חובה
+                                </div>
+                            </div>
+                        </md-input-container>
+
+                        <div layout="row">
+
+                            <md-button type="submit" class="md-accent md-raised white">Reset password</md-button>
+                        </div>
+                        <br/>
+                    </form>
                 </md-card-content>
             </md-card>
         </div>
@@ -145,7 +174,7 @@
                     <form name="ChEmailForm" ng-submit="login()" layout="column" novalidate id="ChEmailToastsAnchor">
                         <md-input-container class="md-icon-float md-block rtl">
                             <label>אימייל</label>
-                            <input type="text" name="email" ng-model="email" ng-pattern="regexEmail" required />
+                            <input type="text" name="email" ng-model="email" ng-pattern="regexEmail" required/>
                             <md-icon class="material-icons">email</md-icon>
                             <div ng-messages="ChEmailForm.email.$error">
                                 <div ng-message="required">
@@ -167,5 +196,9 @@
             </md-card>
         </div>
 
+    </div>
+
+    <div ng-show="!isLoggedIn">
+        You are not logged in!
     </div>
 </md-content>

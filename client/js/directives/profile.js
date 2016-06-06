@@ -7,70 +7,88 @@ angular.module('ProjectHands')
             templateUrl: '/templates/directives/profile.html',
             controller: function ($scope, $location, AuthService, PhotosService) {
 
-                
-                $scope.sProfiel = true;
-                $scope.sAccount = false;
-                $scope.sEmails = false;
-                $scope.showProfile = function () {
-                    $scope.sProfiel = true;
-                    $scope.sAccount = false;
-                    $scope.sEmails = false;
+                $scope.isLoggedIn = false;
+
+                $scope.change_password = {
+                    old: "",
+                    new: "",
+                    conf_new: ""
                 };
-                $scope.showAccount = function () {
-                    $scope.sProfiel = false;
-                    $scope.sAccount = true;
-                    $scope.sEmails = false;
-                };
-                $scope.showEmails = function () {
-                    $scope.sProfiel = false;
-                    $scope.sAccount = false;
-                    $scope.sEmails = true;
+                $scope.reset_password = {
+                    new: ""
                 };
 
-                var album = 'abc';
+                $scope.changePassword = function () {
+                    if ($scope.chPassForm.$invalid)
+                        return;
 
+                    if (!($scope.change_password.old === $scope.change_password.conf_new))
+                        return;
+
+                    AuthService.changePassword($scope.profile.email, $scope.change_password.old, $scope.change_password.new)
+                        .then(function (data) {
+
+                        })
+                        .catch(function (error) {
+
+                        });
+                    
+                    resetForm();
+                };
+                $scope.resetPassword = function () {
+                    if ($scope.resetPasswordForm.$invalid)
+                        return;
+
+                    AuthService.resetPassword($scope.profile.email, $scope.reset_password.new)
+                        .then(function (data) {
+
+                        })
+                        .catch(function (error) {
+
+                        });
+                };
+
+                var resetForm = function () {
+                    $scope.change_password = {
+                        old: "",
+                        new: "",
+                        conf_new: ""
+                    };
+                    $scope.reset_password = {
+                        new: ""
+                    };
+                };
+                var album = '';
                 $scope.profilePic = {};
                 $scope.profilePicUrl = {};
 
-                $scope.isEditMode = false;
-                $scope.changeMode = function () {
-                    $scope.isEditMode = !$scope.isEditMode;
-                };
-
-                $scope.profile;
+                $scope.profile = {};
 
                 AuthService.isLoggedIn().$promise
                     .then(function (result) {
+                        $scope.isLoggedIn = true;
                         $scope.profile = result;
-                        console.log('getSession result', result);
+                        album = $scope.profile.email;
+                        $scope.getPhotos(album);
+                        console.log(result);
                     })
                     .catch(function (error) {
-                        console.log('isLoggedIn error', error);
+                        $scope.isLoggedIn = false;
                     });
 
                 $scope.getPhotos = function (album) {
                     PhotosService.getPhotos(album)
                         .then(function (data) {
-                            $scope.profilePic = data[0];
+                            $scope.profilePic = data[data.length];
                             $scope.profilePicUrl = $scope.profilePic.web_link;
                         })
                         .catch(function (error) {
 
                         });
                 };
-                
-                $scope.getPhotos(album);
-                
-                $scope.isEditMode = false;
 
-                $scope.changeMode = function () {
-                    $scope.isEditMode = !$scope.isEditMode;
-                };
-                
                 $scope.progress = false;
-                
                 $scope.progressDelete = false;
-
                 $scope.$watch('files', function () {
                     $scope.upload($scope.files);
                 });
@@ -79,8 +97,6 @@ angular.module('ProjectHands')
                         $scope.files = [$scope.file];
                     }
                 });
-                $scope.log = '';
-
                 $scope.deletePhoto = function (fileId, index) {
                     $scope.progressDelete = true;
                     PhotosService.deletePhoto(fileId)
@@ -94,7 +110,6 @@ angular.module('ProjectHands')
                             console.log('deletePhoto error ', error);
                         });
                 }
-
                 $scope.upload = function (files) {
                     if (files && files.length) {
                         for (var i = 0; i < files.length; i++) {
@@ -117,6 +132,24 @@ angular.module('ProjectHands')
                     }
                 };
 
+                $scope.sProfiel = true;
+                $scope.sAccount = false;
+                $scope.sEmails = false;
+                $scope.showProfile = function () {
+                    $scope.sProfiel = true;
+                    $scope.sAccount = false;
+                    $scope.sEmails = false;
+                };
+                $scope.showAccount = function () {
+                    $scope.sProfiel = false;
+                    $scope.sAccount = true;
+                    $scope.sEmails = false;
+                };
+                $scope.showEmails = function () {
+                    $scope.sProfiel = false;
+                    $scope.sAccount = false;
+                    $scope.sEmails = true;
+                };
             }
         };
     });
