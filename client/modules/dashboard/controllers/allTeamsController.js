@@ -3,7 +3,7 @@
  */
 angular.module('ProjectHands.dashboard')
 
-    .controller('AllTeamsController', function ($scope, UserService, TeamService, $mdDialog, $mdMedia) {
+    .controller('AllTeamsController', function ($scope, UserService, TeamService, $mdDialog, $mdMedia, $timeout) {
 
         $scope.users = [];
         $scope.teams = [];
@@ -29,7 +29,7 @@ angular.module('ProjectHands.dashboard')
                 .then(function (result) {
                     console.info('getAllTeams result', result);
                     $scope.teams = result;
-                    getMemberInfo();
+                    getAllTeamsInfo();
                 })
                 .catch(function (error) {
                     console.info('getAllTeams error', error);
@@ -98,12 +98,7 @@ angular.module('ProjectHands.dashboard')
                 locals: {
                     user: user
                 }
-            })
-                .then(function (result) {
-
-                }, function () {
-                    //Dialog Canceled
-                });
+            });
         };
 
 
@@ -117,49 +112,20 @@ angular.module('ProjectHands.dashboard')
         function updateTeam(team, manager_email, addedUsers, removedUsers) {
 
             //Remove users already in team from addedUsers
-            addedUsers = addedUsers.filter(function (user) {
-                return team.members.indexOf(user.email) < 0;
+            addedUsers = addedUsers.filter(function (email) {
+                return team.members.indexOf(email) < 0;
             });
             //Remove users not in team from removedUsers
-            removedUsers = removedUsers.filter(function (user) {
-                return team.members.indexOf(user.email) >= 0;
+            removedUsers = removedUsers.filter(function (email) {
+                return team.members.indexOf(email) >= 0;
             });
 
-            //Find manager's user object
-            // if (manager_email !== team.manager) {
-            //     var manager;
-            //     if (team.members.indexOf(manager_email) >= 0)
-            //         manager = team.members[team.members.indexOf(manager_email)];
-            //     else if (addedUsers.indexOf(manager_email) >= 0)
-            //         manager = addedUsers[addedUsers.indexOf(manager_email)];
-            //     else {
-            //         console.error('updateTeam', 'Couldn\'t find manager in team members or added users');
-            //         return;
-            //     }
-            // }
-
-            if (!addedUsers.length)
+            if (addedUsers.length)
                 addMembers(team, manager_email, addedUsers, removedUsers);
-            else if (!removedUsers.length)
+            else if (removedUsers.length)
                 removeMembers(team, manager_email, removedUsers);
             else
                 updateManager(team, manager_email);
-
-
-            // TeamService.updateTeam(team.name, manager.email, addedUsers, removedUsers).$promise
-            //     .then(function(result) {
-            //         team.manager = manager.email;
-            //         team.manager_name = manager.name;
-            //         team.members.push(addedUsers);
-            //         removedUsers.forEach(function(user) {
-            //             var index = team.members.indexOf(user);
-            //             team.members.splice(index, 1);
-            //             team.members_info.splice(index, 1);
-            //         });
-            //     })
-            //     .catch(function(error) {
-            //         console.error('updateTeam error', error);
-            //     })
         }
 
 
@@ -176,7 +142,8 @@ angular.module('ProjectHands.dashboard')
 
             TeamService.addMembers(team.name, addedUsers).$promise
                 .then(function (result) {
-                    team.members.push(addedUsers);
+                    team.members = team.members.concat(addedUsers);
+                    team.members_info = team.members_info.concat(getUsersInfo(addedUsers));
                     removeMembers(team, manager_email, removedUsers);
                 })
                 .catch(function (error) {
@@ -213,18 +180,17 @@ angular.module('ProjectHands.dashboard')
         /**
          * Assign manager to team
          * @param team {Object} : the team to update
-         * @param manager_email {Object} : new manager's email
+         * @param manager_email {String} : new manager's email
          */
         function updateManager(team, manager_email) {
 
             if(!manager_email || manager_email === '' || manager_email === team.manager)
                 return;
 
-            TeamService.assignManager(team.name, manager.email).$promise
+            TeamService.assignManager(team.name, manager_email).$promise
                 .then(function (result) {
                     team.manager = manager_email;
-                    // team.manager_name = manager.name;
-                    //TODO update team object with manager_name
+                    team.manager_name = getUsersInfo([manager_email])[0].name;
                 })
                 .catch(function (error) {
                     console.error('assign manager error', error);
@@ -235,7 +201,7 @@ angular.module('ProjectHands.dashboard')
         /**
          * Get members info for each team
          */
-        function getMemberInfo() {
+        function getAllTeamsInfo() {
 
             $scope.teams.forEach(function (team) {
                 team.members_info = [];
@@ -252,6 +218,23 @@ angular.module('ProjectHands.dashboard')
                 }
             });
             console.info('team with member names', $scope.teams);
+        }
+
+        /**
+         * Get members info for team
+         * @param emails {Array} : array of user emails
+         * @returns {Array} : array of user objects
+         */
+        function getUsersInfo(emails) {
+            var users = [];
+            emails.forEach(function(email) {
+
+                users.push($.grep($scope.users, function (user, index) {
+                    return user.email === email;
+                })[0]);
+            });
+
+            return users;
         }
 
         /**

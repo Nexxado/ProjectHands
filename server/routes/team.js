@@ -32,7 +32,7 @@ router.delete('/delete/:teamName', middleware.ensureAuthenticated, middleware.en
         mongoUtils.delete(COLLECTIONS.TEAMS, {name: req.params.teamName}, function (error, result) {
             debug('delete', req.params.teamName, error, result);
 
-            if (error || !result.nRemoved)
+            if (error || result.result.nRemoved === 0)
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to delete team"});
 
             res.send({success: true})
@@ -76,7 +76,7 @@ router.post('/add_members', middleware.ensureAuthenticated, middleware.ensurePer
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "No new members to add"});
 
         //Add members to team
-        mongoUtils.update(COLLECTIONS.TEAMS, {name: req.body.teamName}, {$push: {members: {$each: newMembers}}}, {},
+        mongoUtils.update(COLLECTIONS.TEAMS, {name: req.body.teamName}, {$pushAll: {members: newMembers}}, {},
             function (error, result) {
 
                 if (error)
@@ -109,7 +109,7 @@ router.post('/remove_members', middleware.ensureAuthenticated, middleware.ensure
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Members are not part of the specified team"});
 
         //Remove members from team
-        mongoUtils.update(COLLECTIONS.TEAMS, {name: req.body.teamName}, {$pull: {members: {$each: removeMembers}}}, {},
+        mongoUtils.update(COLLECTIONS.TEAMS, {name: req.body.teamName}, {$pullAll: {members: removeMembers}}, {},
             function (error, result) {
 
                 if (error)
@@ -138,7 +138,7 @@ router.post('/assign_to_renovation', middleware.ensureAuthenticated, middleware.
         mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {team: req.body.teamName}}, {},
             function (error, result) {
 
-                if (error || !result.nModified)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign renovation to team"});
 
                 res.send({success: true});
@@ -161,7 +161,7 @@ router.post('/assign_manager', middleware.ensureAuthenticated, middleware.ensure
         mongoUtils.update(COLLECTIONS.TEAMS, {name: req.body.teamName}, {$set: {manager: req.body.email}}, {},
             function (error, result) {
 
-                if (error || !result.nModified)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign manager to team"});
 
                 res.send({success: true});

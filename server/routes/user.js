@@ -124,7 +124,7 @@ router.post('/assign_role', middleware.ensureAuthenticated, middleware.ensurePer
             function (error, result) {
 
                 debug('assign_role', error, result);
-                if (error || !result.nModified)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed change user role"});
 
                 return res.send({success: true});
