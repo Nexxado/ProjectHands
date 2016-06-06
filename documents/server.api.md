@@ -947,6 +947,7 @@ Approve a user to join Project Hands
 | 400 | {errMessage: "Team does not exists"} |
 | 400 | {errMessage: "User does not exists"} |
 | 400 | {errMessage: "User is not part of team"} |
+| 400 | {errMessage: "User is already manager of team"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to find team"} |

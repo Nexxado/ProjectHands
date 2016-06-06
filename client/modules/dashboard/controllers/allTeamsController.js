@@ -67,7 +67,7 @@ angular.module('ProjectHands.dashboard')
             })
                 .then(function (result) {
                     console.log('dialog result', result);
-                    //TODO Update team according to result.
+                    updateTeam(team, result.manager, result.added, result.removed);
 
                 }, function () {
                     //Dialog Canceled
@@ -99,12 +99,137 @@ angular.module('ProjectHands.dashboard')
                     user: user
                 }
             })
-                .then(function (approve) {
+                .then(function (result) {
 
                 }, function () {
                     //Dialog Canceled
                 });
         };
+
+
+        /**
+         * Update team in database and on client
+         * @param team {Object} : the team to update
+         * @param manager_email {String} : manager's email
+         * @param addedUsers {Array} : array of users' email to added to team
+         * @param removedUsers {Array} : array of users' email to remove from team
+         */
+        function updateTeam(team, manager_email, addedUsers, removedUsers) {
+
+            //Remove users already in team from addedUsers
+            addedUsers = addedUsers.filter(function (user) {
+                return team.members.indexOf(user.email) < 0;
+            });
+            //Remove users not in team from removedUsers
+            removedUsers = removedUsers.filter(function (user) {
+                return team.members.indexOf(user.email) >= 0;
+            });
+
+            //Find manager's user object
+            // if (manager_email !== team.manager) {
+            //     var manager;
+            //     if (team.members.indexOf(manager_email) >= 0)
+            //         manager = team.members[team.members.indexOf(manager_email)];
+            //     else if (addedUsers.indexOf(manager_email) >= 0)
+            //         manager = addedUsers[addedUsers.indexOf(manager_email)];
+            //     else {
+            //         console.error('updateTeam', 'Couldn\'t find manager in team members or added users');
+            //         return;
+            //     }
+            // }
+
+            if (!addedUsers.length)
+                addMembers(team, manager_email, addedUsers, removedUsers);
+            else if (!removedUsers.length)
+                removeMembers(team, manager_email, removedUsers);
+            else
+                updateManager(team, manager_email);
+
+
+            // TeamService.updateTeam(team.name, manager.email, addedUsers, removedUsers).$promise
+            //     .then(function(result) {
+            //         team.manager = manager.email;
+            //         team.manager_name = manager.name;
+            //         team.members.push(addedUsers);
+            //         removedUsers.forEach(function(user) {
+            //             var index = team.members.indexOf(user);
+            //             team.members.splice(index, 1);
+            //             team.members_info.splice(index, 1);
+            //         });
+            //     })
+            //     .catch(function(error) {
+            //         console.error('updateTeam error', error);
+            //     })
+        }
+
+
+        /**
+         * Add members to team, on success remove members
+         * @param team {Object} : the team to update
+         * @param manager_email {String} : new manager's email
+         * @param addedUsers {Array} : array of users' email to added to team
+         * @param removedUsers {Array} : array of users' email to remove from team
+         */
+        function addMembers(team, manager_email, addedUsers, removedUsers) {
+            if(!addedUsers.length)
+                return;
+
+            TeamService.addMembers(team.name, addedUsers).$promise
+                .then(function (result) {
+                    team.members.push(addedUsers);
+                    removeMembers(team, manager_email, removedUsers);
+                })
+                .catch(function (error) {
+                    console.error('addMembers error', error);
+                })
+        }
+
+        /**
+         * Remove members from team, on success assign manager
+         * @param team {Object} : the team to update
+         * @param manager_email {String} : new manager's email
+         * @param removedUsers {Array} : array of users' email to remove from team
+         */
+        function removeMembers(team, manager_email, removedUsers) {
+
+            if(!removedUsers.length)
+                return;
+
+            TeamService.removeMembers(team.name, removedUsers).$promise
+                .then(function (result) {
+                    removedUsers.forEach(function (user) {
+                        var index = team.members.indexOf(user);
+                        team.members.splice(index, 1);
+                        team.members_info.splice(index, 1);
+                    });
+
+                    updateManager(team, manager_email)
+                })
+                .catch(function (error) {
+                    console.error('removeMembers error', error);
+                })
+        }
+
+        /**
+         * Assign manager to team
+         * @param team {Object} : the team to update
+         * @param manager_email {Object} : new manager's email
+         */
+        function updateManager(team, manager_email) {
+
+            if(!manager_email || manager_email === '' || manager_email === team.manager)
+                return;
+
+            TeamService.assignManager(team.name, manager.email).$promise
+                .then(function (result) {
+                    team.manager = manager_email;
+                    // team.manager_name = manager.name;
+                    //TODO update team object with manager_name
+                })
+                .catch(function (error) {
+                    console.error('assign manager error', error);
+                })
+        }
 
 
         /**

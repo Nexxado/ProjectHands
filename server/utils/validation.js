@@ -82,7 +82,7 @@ function validateOauthSignup(info) {
  */
 function validateMembers(members) {
     
-    members = JSON.parse(members);
+    // members = JSON.parse(members);
 
     if(typeof members !== 'object' || !Array.isArray(members))
         return false;
@@ -186,7 +186,7 @@ validation.validateParams = function(req, res, next) {
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name or renovation address"});
             break;
         
-        case /team\/assign_leader/.test(req.originalUrl):
+        case /team\/assign_manager/.test(req.originalUrl):
             if(!req.body.teamName || !req.body.email || !validateEmail(req.body.email))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name or user email"});
             break;
