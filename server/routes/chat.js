@@ -13,16 +13,16 @@ var middleware = require('../utils/middleware');
 router.get('/history/:chatId', middleware.ensureAuthenticated, function(req, res) {
 
     if(!req.params.chatId)
-        return writeToClient(res, null, {errMessage: "Invalid Chat Id"}, HttpStatus.BAD_REQUEST);
+        res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid Chat Id"});
 
     mongoUtils.query(CHATS, {_id: req.params.chatId}, function(error, result) {
 
         debug('history',  req.params.chatId, 'result', result);
         debug('history error', error);
         if(error)
-            return writeToClient(res, result, error, HttpStatus.INTERNAL_SERVER_ERROR);
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Error getting chat history"});
 
-        writeToClient(res, result);
+        res.send(result[0]);
     })
 });
 

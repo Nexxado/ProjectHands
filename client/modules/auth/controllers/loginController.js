@@ -1,6 +1,7 @@
 angular.module('ProjectHands.auth')
 
-.controller('LoginController', function ($scope, $rootScope, UtilsService, SessionService, AuthService, AUTH_EVENTS, $window) {
+.controller('LoginController', function ($scope, $rootScope, UtilsService, SessionService, AuthService, AUTH_EVENTS, 
+                                         $window, $mdDialog, $mdMedia) {
 
     var toastAnchor = '#loginToastsAnchor';
 
@@ -44,6 +45,66 @@ angular.module('ProjectHands.auth')
         SessionService.getSession();
     };
 
+
+    $scope.resetPassword = function($event) {
+        var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
+
+        $mdDialog.show({
+            controller: function ($scope, $mdDialog, AuthService, regexEmail) {
+
+                $scope.regexEmail = regexEmail
+
+                //Input Models
+                $scope.reset = {
+                    email: '',
+                    newPass1: '',
+                    newPass2: ''
+                };
+
+                //Set Form elements to Invalid if the 2 new passwords input don't match.
+                $scope.newPassMatch = function() {
+                    $scope.ResetPasswordForm.newPass1.$setValidity('match', $scope.reset.newPass1 === $scope.reset.newPass2);
+                    $scope.ResetPasswordForm.newPass2.$setValidity('match', $scope.reset.newPass1 === $scope.reset.newPass2);
+                };
+
+
+                $scope.submit = function() {
+
+                    if($scope.ResetPasswordForm.$invalid)
+                        return;
+
+                    console.info('reseting password', $scope.reset);
+                    AuthService.resetPassword($rootScope.reset.email, $scope.reset.newPass1).$promise
+                        .then(function (result) {
+                            console.info('resetPassword result', result);
+                            $mdDialog.hide(true);
+                        })
+                        .catch(function (error) {
+                            console.info('resetPassword error', error);
+                            $mdDialog.hide(false);
+                        });
+                };
+
+                $scope.cancel = function() {
+                    $mdDialog.cancel();
+                }
+            },
+            templateUrl: '/templates/dialogs/resetPassword.html',
+            parent: angular.element(document.body),
+            targetEvent: $event,
+            clickOutsideToClose: true,
+            fullscreen: useFullScreen,
+            locals: {
+                regexEmail: $scope.regexEmail
+            }
+        })
+            .then(function (result) {
+
+
+            }, function () {
+                //Dialog Canceled
+            });
+    };
 
     
     function resetForm() {

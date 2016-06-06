@@ -8,7 +8,7 @@ angular.module('ProjectHands.dashboard')
         controller: 'DashboardController',
         deepStateRedirect: {
             default: {
-                state: 'dashboard.main-page'
+                state: 'dashboard.renovations'
             }
         },
         resolve: {
@@ -47,8 +47,9 @@ angular.module('ProjectHands.dashboard')
     })
 
     .state('dashboard.team', {
-        url: '/team',
-        templateUrl: 'modules/dashboard/templates/team.html'
+        url: '/team/:team_id',
+        templateUrl: 'modules/dashboard/templates/team.html',
+		controller: 'DashboardTeamController'
     })
 
     .state('dashboard.calendar', {
@@ -69,7 +70,8 @@ angular.module('ProjectHands.dashboard')
 
     .state('dashboard.all-teams', {
         url: '/all-teams',
-        templateUrl: 'modules/dashboard/templates/all-teams.html'
+        templateUrl: 'modules/dashboard/templates/all-teams.html',
+        controller: 'AllTeamsController'
     })
 
     .state('dashboard.renovations-ref', {
@@ -84,7 +86,8 @@ angular.module('ProjectHands.dashboard')
 
     .state('dashboard.join-requests', {
         url: '/join-requests',
-        templateUrl: 'modules/dashboard/templates/join-requests.html'
+        templateUrl: 'modules/dashboard/templates/join-requests.html',
+        controller: 'JoinRequestController'
     })
 
     .state('dashboard.chat', {

@@ -3,13 +3,18 @@
         <md-toolbar layout="row" layout-align="none center" class="md-primary dashboard-top-rounded-toolbar" dir="rtl">
             <span flex></span>
             <div class="md-toolbar-tools">
-                <span>{{myTeam.name}}</span>
+                <span>{{team.name}}</span>
             </div>
+			<div>
+				<md-button class="md-raised md-warn" ng-click="deleteTeam($event,team)">מחיקה</md-button>
+				<md-button class="md-raised md-warn" ng-click="addTeamMembers($event,team)">הוספת חברי צוות</md-button>
+			</div>
         </md-toolbar>
         <md-content>
             <md-list class="md-dense">
                 <md-divider></md-divider>
                 <md-list-item class="md-3-line" ng-repeat="member in teamMembers" dir="rtl">
+					<!--Add ng-click="userProfile(user)" to direct to user's profile (maybe in dialog instead of route)-->
                     <div class="md-list-item-text dashboard-list-text" th:classappend="dashboard-special-list-item" layout="column">
                         <h3>{{member.name}}</h3>
                         <h4>{{member._id}}</h4>
@@ -17,7 +22,6 @@
                         <p>תאריך הצטרפות: {{member.joined_date | date}}</p>
                     </div>
                     <span flex></span>
-                    <h2 ng-show="myUser._id == member._id">אני</h2>
                     <img ng-src="{{member.avatar}}" class="md-avatar" alt="{{item.who}}" />
                     <md-divider></md-divider>
                 </md-list-item>

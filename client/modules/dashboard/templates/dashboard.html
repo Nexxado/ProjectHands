@@ -17,8 +17,7 @@
 
 		<!--Second row-->
 		<div layout="column" class="dashboard-navbar-wrapper">
-			<dashboard-sidenav></dashboard-sidenav>
-			<dashboard-sidenav-admin></dashboard-sidenav-admin>
+			<dashboard-sidenav-admin ng-show="{{myUser.role === admin}}"></dashboard-sidenav-admin>
 		</div>
 	</div>
 </div>

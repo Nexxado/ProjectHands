@@ -1,0 +1,64 @@
+<md-dialog aria-label="Add Team Dialog" flex="50">
+	<form name="AddTeamForm" ng-submit="submit()" novalidate>
+		<md-toolbar>
+			<div class="md-toolbar-tools" dir="rtl">
+				<h2>הוספת צוות חדש</h2>
+				<span flex></span>
+				<md-button class="md-icon-button" ng-click="cancel()">
+					<md-icon class="material-icons">close</md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content>
+			<div class="md-dialog-content">
+				<!-- Team name -->
+				<md-input-container class="md-block md-icon-float rtl">
+					<label>שם הצוות</label>
+					<md-icon class="material-icons">title</md-icon>
+					<input type="text" name="name" ng-model="team.name" minlength="2" md-maxlength="150" required>
+					<md-tooltip md-delay="1000">שם הצוות שאתה מתכוון ליצור</md-tooltip>
+					<div ng-messages="AddTeamForm.name.$error">
+						<div ng-message="required">
+							שדה חובה
+						</div>
+						<div ng-message="minlength">
+							השם קצר מדי
+						</div>
+						<div ng-message="md-maxlength">
+							השם ארוך מדי
+						</div>
+					</div>
+				</md-input-container>
+
+				<!-- To be inserted after this stage -->
+				<div class="dialog list hebrew-text">
+						<label>בחירת חברי צוות</label>
+						<md-icon class="material-icons">description</md-icon>
+					<md-input-container class="md-block md-icon-float rtl">
+<!--						ng-checked="exists(user, checkedUsers)"-->
+						
+						<div flex="50" ng-repeat="user in allUsers">
+							<md-checkbox  ng-click="toggle(user, checkedUsers)">
+								{{ user.name }} <span ng-if="exists(user, checkedUsers)">selected</span>
+							</md-checkbox>
+						</div>
+					</md-input-container>
+				</div>
+
+				<md-input-container class="md-block md-icon-float rtl">
+					<label>בחירת מנהל צוות</label>
+					<md-icon class="material-icons">description</md-icon>
+					<md-select ng-model="manager">
+						<md-option ng-repeat="user in checkedUsers" ng-value="user">
+							{{user.name}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+			</div>
+		</md-dialog-content>
+		<md-dialog-actions>
+			<md-button ng-click="cancel()" class="md-warn">ביטול</md-button>
+			<md-button type="submit" class="md-primary">אישור</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

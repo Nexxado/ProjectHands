@@ -29,6 +29,12 @@ angular.module('ProjectHands')
                 controller: 'StatusController'
             })
 
+            .state('profile', {
+                url: '/profile',
+                templateUrl: 'templates/profile.html',
+                controller: 'ProfileController'
+            })
+
 
             .state('about', {
                 url: '/about',

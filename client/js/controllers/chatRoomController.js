@@ -80,8 +80,8 @@ angular.module('ProjectHands')
         ChatService.getChatHistory($scope.room).$promise
             .then(function (result) {
                 console.log('result', result);
-                if (result.length > 0)
-                    $scope.history = result[0].messages;
+                // if (result.length > 0)
+                $scope.history = result.messages;
 
                 $scope.history.forEach(function (message) {
                     message.class = $scope.user.name === message.user ? class_message_self : class_message_others;

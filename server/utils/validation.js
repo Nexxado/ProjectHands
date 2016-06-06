@@ -1,4 +1,3 @@
-
 var debug = require('debug')('utils/validation');
 var HttpStatus = require('http-status-codes');
 
@@ -76,31 +75,124 @@ function validateOauthSignup(info) {
     return validatePhone(info.phone);
 }
 
-//Middleware to validate request params according to request path
+/**
+ * Validate Array of emails
+ * @param members {Array} : array of emails
+ * @returns {boolean}
+ */
+function validateMembers(members) {
+    
+    // members = JSON.parse(members);
+
+    if(typeof members !== 'object' || !Array.isArray(members))
+        return false;
+
+    for(var i = 0; i < members.length; i++) {
+        if(!validateEmail(members[i]))
+            return false;
+    }
+
+    return true;
+}
+
+
+/**
+ * Middleware to validate request params according to request path
+ */
 validation.validateParams = function(req, res, next) {
     debug('validateParams path', req.path);
 
-    switch(req.path) {
-        case '/signup':
-            if(!req.body.user || !validateSignup(JSON.parse(req.body.user)))
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please Provide all required fields"});
-            break;
-
-        case '/signup_oauth':
+    switch(true) {
+        case /auth\/signup_oauth/.test(req.originalUrl):
             if(typeof req.user.signup_complete === 'undefined' || req.user.signup_complete === true)
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Sign-Up Process has already been completed"});
             else if(!req.body.info || !validateOauthSignup(JSON.parse(req.body.info)))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please Provide all required fields"});
             break;
 
-        case '/login':
+        case /auth\/signup/.test(req.originalUrl):
+            if(!req.body.user || !validateSignup(JSON.parse(req.body.user)))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please Provide all required fields"});
+            break;
+
+        case /auth\/login/.test(req.originalUrl):
             if(!req.body.email || !req.body.password ||
                 !validateEmail(req.body.email) || !validatePassword(req.body.password))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Email or Password are incorrect"});
             break;
 
+        case /auth\/forgot/.test(req.originalUrl):
+            if(req.isAuthenticated() && (req.user.googleId || req.user.facebookId))
+                return res.status(HttpStatus.FORBIDDEN).send({errMessage: "User is signed in via OAuth2 provider"});
+
+            if(!req.body.email || !req.body.new_password || !req.body.old_password ||
+                !validatePassword(req.body.new_password) || !validatePassword(req.body.old_password))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Old or New Password is incorrect"});
+            break;
+        
+        case /status\/update_status/.test(req.originalUrl):
+            if(typeof req.body.active !== 'boolean')
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid new status"});
+            if(!req.body.message)
+                req.body.mesage = '';
+            break;
+
+        case /renovation\/get_info/.test(req.originalUrl):
+        case /renovation\/create/.test(req.originalUrl):
+        case /renovation\/rsvp/.test(req.originalUrl):
+            if(!req.body.city || !req.body.street || !req.body.num)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address"});
+            break;
+
+        case /renovation\/edit/.test(req.originalUrl):
+            if(false) //TODO Add params to check
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
+            break;
+
+        case /user\/approve/.test(req.originalUrl):
+            if(!req.body.email || !req.body.role)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid user email or role"});
+            break;
+
+        case /user\/user_info/.test(req.originalUrl):
+        case /user\/delete/.test(req.originalUrl):
+            if(!req.params.email)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid user email"});
+            break;
+
+        case /user\/assign_role/.test(req.originalUrl):
+            if(!req.body.email || !req.body.newRole)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: 'No user or new role provided'});
+            break;
+
+        case /team\/create/.test(req.originalUrl):
+            if(!req.body.teamName)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name"});
+            break;
+
+        case /team\/delete/.test(req.originalUrl):
+            if(!req.params.teamName)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name"});
+            break;
+
+        case /team\/add_members/.test(req.originalUrl):
+        case /team\/remove_members/.test(req.originalUrl):
+            if(!req.body.teamName || !req.body.members || !validateMembers(req.body.members))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name or members emails"});
+            break;
+
+        case /team\/assign_to_renovation/.test(req.originalUrl):
+            if(!req.body.teamName || !req.body.city || !req.body.street || !req.body.num)
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name or renovation address"});
+            break;
+        
+        case /team\/assign_manager/.test(req.originalUrl):
+            if(!req.body.teamName || !req.body.email || !validateEmail(req.body.email))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name or user email"});
+            break;
+
         default:
-            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Bad Request"});
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "No Validation Performed"});
     }
     return next();
 };

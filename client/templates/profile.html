@@ -1,0 +1,23 @@
+<div layout="row" layout-align="center center">
+    <div layout="column" layout-align="center center" dir="rtl">
+        <h1>Profile Page</h1>
+        <div layout="column" layout-align="center center" class="padding">
+            <span class="md-headline">{{user.name}}</span>
+            <span class="md-subhead">תפקיד: {{user.role}}</span>
+        </div>
+        <p>תעודת זהות: {{user._id}}</p>
+        <p>כתובת: {{user.address}}</p>
+        <p>דוא"ל: {{user.email}}</p>
+        <p>טלפון: {{user.phone}}</p>
+        <p>מס' שיפוצים בהם השתתפתי: {{user.total_renovations}}</p>
+        <p>תאריך הצטרפות: {{user.joined_date | date}}</p>
+    </div>
+    <div>
+        <md-button class="md-primary" ng-click="changePassword($event)" ng-hide="user.isOAuth">
+            Change Password
+        </md-button>
+    </div>
+    <!--<div class="profile-pic profile-content-item">-->
+    <!--<img src="{{user.avatar}}" alt="Avatar" height="100%" width="100%" />-->
+    <!--</div>-->
+</div>

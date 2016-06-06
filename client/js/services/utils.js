@@ -49,9 +49,31 @@ angular.module('ProjectHands')
         );
     }
 
+    /**
+     * Convert date object to DD/MM/YYYY string
+     * @param date {object}
+     */
+    function dateToDDMMYYYY(date) {
+        if(!date)
+            return '';
+
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        if(day < 10)
+            day = '0' + day;
+        if(month < 10)
+            month = '0' + month;
+
+
+        return day + '/' + month + '/' + year;
+    }
+
+
     return {
         parseTimestamp: parseTimestamp,
         toTitleCase: toTitleCase,
-        makeToast: makeToast
+        makeToast: makeToast,
+        dateToDDMMYYYY: dateToDDMMYYYY
     };
 });

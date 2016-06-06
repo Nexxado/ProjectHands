@@ -14,6 +14,7 @@ var _db;
 
 function ensureConstraints() {
 
+    //Ensure Sign ups have expiry date
     _db.collection(COLLECTIONS.SIGNUPS).ensureIndex({createdAt: 1},
         {expireAfterSeconds: 86400}, // 24 hours
         function (error, indexName) {
@@ -21,11 +22,20 @@ function ensureConstraints() {
             debug('SignUp Expire error', error);
         });
 
+    //Ensure users have unique phone and email
     _db.collection(COLLECTIONS.USERS).ensureIndex({phone: 1, email: 1},
         {unique: true, sparse: true},
         function (error, indexName) {
             debug('Users indexName', indexName);
             debug('Users error', error);
+        });
+
+    //Ensure teams have a unique name
+    _db.collection(COLLECTIONS.TEAMS).ensureIndex({name: 1},
+        {unique: true, sparse: true},
+        function (error, indexName) {
+            debug('Teams indexName', indexName);
+            debug('Teams error', error);
         });
 }
 

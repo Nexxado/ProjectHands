@@ -3,30 +3,22 @@ angular.module('ProjectHands.dashboard')
 .controller('RenovationPageController', function ($scope, $stateParams, $mdSidenav, $mdMedia, $mdDialog, DatabaseService, COLLECTIONS) {
 
 
-	console.log("Testing to see if params arrive safely: ", $stateParams.city, $stateParams.street, $stateParams.num);
 	$scope.thisRenovation = "";
 	$scope.renovationNotFound = false;
-	console.log("Renovations are: ", $scope.renovations);
-	console.log("my id is: ", $scope.myUser._id);
-	console.info("all teams in renovation page", $scope.allTeams);
 
 	$scope.getRenovation = function (city, street, num) {
-		console.log("Searching for renovation");
-		console.log($scope.renovations);
 		for (var reno in $scope.renovations) {
 			var renovation = $scope.renovations[reno];
 			if (renovation.addr.city == city && renovation.addr.street == street && renovation.addr.num == num) {
 				$scope.thisRenovation = renovation;
-				console.log("Renovation found in User Reno array");
 				$scope.getRenovationTeam($scope.thisRenovation.team_id);
 				return;
 			}
 		}
-		console.log("Reno wasnt found!");
 		$scope.renovationNotFound = true;
 
 	};
-
+	
 	$scope.getRenovationTeam = function (team_id) {
 		//		var team_id = $scope.thisRenovation.team_id;
 		$scope.renovationMembers = [];
@@ -60,9 +52,6 @@ angular.module('ProjectHands.dashboard')
 	};
 
 
-	console.log("Renovation progress is: ", $scope.renovationProgress);
-	console.log("num of stages is: ", $scope.renovationStages.length);
-
 	$scope.renovationMembers = [];
 	$scope.renovationTeam = "";
 
@@ -81,6 +70,7 @@ angular.module('ProjectHands.dashboard')
 
 	$scope.editMessagesMode = false;
 	$scope.editTasksMode = false;
+	$scope.editToolsMode = false;
 
 
 	$scope.editMessages = function () {
@@ -90,17 +80,18 @@ angular.module('ProjectHands.dashboard')
 	$scope.editTasks = function () {
 		$scope.editTasksMode = !$scope.editTasksMode;
 	};
+	
+	$scope.editTools = function () {
+		$scope.editToolsMode = !$scope.editToolsMode;
+	};
 
 	$scope.openLeftMenu = function () {
-		console.log("click aa");
 		$mdSidenav('left').toggle().then(function () {
-			console.log("sidenav opened");
 		});
 	};
 
 	$scope.addTask = function ($event) {
 		var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
-		console.log("the event is: ", $event);
 		$mdDialog.show({
 				controller: function ($scope, $mdToast, $mdDialog) {
 					$scope.task = {
@@ -130,13 +121,11 @@ angular.module('ProjectHands.dashboard')
 				//Check for duplicates in tasks
 				for (var i in $scope.thisRenovation.tasks) {
 					if ($scope.thisRenovation.tasks[i].name === newTask.name) {
-						console.log("The title you have chosen already exists");
 						$scope.constructionToast('top right');
 						throw new Error("Task Title already exists. Please choose a different title");
 					}
 				}
 				var reno = $scope.thisRenovation;
-				console.log(reno, $scope.thisRenovation);
 				DatabaseService.update(
 						COLLECTIONS.RENOVATIONS, {
 							addr: {
@@ -151,7 +140,6 @@ angular.module('ProjectHands.dashboard')
 						}, {}
 					)
 					.$promise.then(function (result) {
-						console.log("The result amazingly is: ", result);
 						$scope.thisRenovation.tasks.push(newTask);
 					}).catch(function (error) {
 						console.log("Error: ", error);
@@ -165,7 +153,6 @@ angular.module('ProjectHands.dashboard')
 
 	$scope.addPinned = function ($event) {
 		var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
-		console.log("the event is: ", $event);
 		$mdDialog.show({
 				controller: function ($scope, $mdToast, $mdDialog) {
 					$scope.today = new Date();
@@ -174,7 +161,6 @@ angular.module('ProjectHands.dashboard')
 						description: "",
 						added_date: "" + $scope.today.getDate() + "/" + ($scope.today.getMonth() + 1) + "/" + $scope.today.getFullYear()
 					};
-					console.log($scope.pinned.added_date);
 					$scope.cancel = function () {
 						$mdDialog.cancel();
 					};
@@ -196,13 +182,11 @@ angular.module('ProjectHands.dashboard')
 				//Check for duplicates in pinned
 				for (var i in $scope.thisRenovation.pinned) {
 					if ($scope.thisRenovation.pinned[i].title === newPinned.title) {
-						console.log("The title you have chosen already exists");
 						$scope.constructionToast('top right');
 						throw new Error("Pinned Title already exists. Please choose a different title");
 					}
 				}
 				var reno = $scope.thisRenovation;
-				console.log(reno, $scope.thisRenovation);
 				DatabaseService.update(
 						COLLECTIONS.RENOVATIONS, {
 							addr: {
@@ -217,7 +201,6 @@ angular.module('ProjectHands.dashboard')
 						}, {}
 					)
 					.$promise.then(function (result) {
-						console.log("The result amazingly is: ", result);
 						$scope.thisRenovation.pinned.push(newPinned);
 					}).catch(function (error) {
 						console.log("Error: ", error);
@@ -229,10 +212,76 @@ angular.module('ProjectHands.dashboard')
 			});
 	};
 
+	$scope.addStage = function ($event) {
+		var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
+		$mdDialog.show({
+				controller: function ($scope, $mdToast, $mdDialog, renovation_stages) {
+					$scope.stages = renovation_stages;
+					$scope.stage = {
+						title: "",
+						after_stage: ""
+					};
+					$scope.cancel = function () {
+						$mdDialog.cancel();
+					};
+
+					$scope.submit = function () {
+						if ($scope.AddStageForm.$invalid) {
+							return;
+						}
+						$mdDialog.hide($scope.stage);
+					};
+				},
+				templateUrl: '/modules/dashboard/templates/dialogs/addStageDialog.html',
+				targetEvent: $event,
+				clickOutsideToClose: false,
+				fullscreen: useFullScreen,
+				locals: {
+					renovation_stages: $scope.thisRenovation.renovation_stages
+					
+				}
+			})
+			.then(function (newStage) {
+				//Check for duplicates in pinned
+				for (var i in $scope.thisRenovation.renovation_stages) {
+					if ($scope.thisRenovation.renovation_stages[i] === newStage) {
+						$scope.constructionToast('top right');
+						throw new Error("Stage already exists");
+					}
+				}
+				var push_index = $scope.thisRenovation.renovation_stages.indexOf(newStage.after_stage) + 1;
+				var reno = $scope.thisRenovation;
+				DatabaseService.update(
+						COLLECTIONS.RENOVATIONS, {
+							addr: {
+								city: reno.addr.city,
+								street: reno.addr.street,
+								num: reno.addr.num
+							}
+						}, {
+							$push: {
+								"renovation_stages": 
+								{
+									$each:[newStage.title],
+									$position: push_index
+								}
+							}
+						}, {}
+					)
+					.$promise.then(function (result) {
+						$scope.thisRenovation.renovation_stages.splice(push_index, 0, newStage.title);
+					}).catch(function (error) {
+						console.log("Error: ", error);
+					});
+				console.log("Dialog finished");
+
+			}, function () {
+				console.log('Dialog Canceled.');
+			});
+	};
 
 	$scope.addTool = function ($event) {
 		var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
-		console.log("the event is: ", $event);
 		$mdDialog.show({
 				controller: function ($scope, $mdToast, $mdDialog) {
 					$scope.tool = {
@@ -263,13 +312,11 @@ angular.module('ProjectHands.dashboard')
 				//Check for duplicates in tools
 				for (var i in $scope.thisRenovation.toolsNeeded) {
 					if ($scope.thisRenovation.toolsNeeded[i].name === newTool.name) {
-						console.log("The tool name you have chosen already exists");
 						$scope.constructionToast('top right');
 						throw new Error("Tool Name already exists. Please choose a different name");
 					}
 				}
 				var reno = $scope.thisRenovation;
-				console.log(reno, $scope.thisRenovation);
 				DatabaseService.update(
 						COLLECTIONS.RENOVATIONS, {
 							addr: {
@@ -284,7 +331,6 @@ angular.module('ProjectHands.dashboard')
 						}, {}
 					)
 					.$promise.then(function (result) {
-						console.log("The result amazingly is: ", result);
 						$scope.thisRenovation.toolsNeeded.push(newTool);
 					}).catch(function (error) {
 						console.log("Error: ", error);
@@ -308,9 +354,6 @@ angular.module('ProjectHands.dashboard')
 		$scope.editStagesMode = false;
 		if ($scope.lastStage != $scope.renovationCurrentStage) {
 			var reno = $scope.thisRenovation;
-			console.log("IT WAS CHANGED");
-			console.log("It was: ", $scope.lastStage);
-			console.log("It is now: ", $scope.renovationCurrentStage);
 			DatabaseService.update(
 				COLLECTIONS.RENOVATIONS, {
 					addr: {
@@ -324,7 +367,6 @@ angular.module('ProjectHands.dashboard')
 					}
 				}, {}
 			).$promise.then(function (result) {
-				console.log("The result is: ", result);
 			}).catch(function (error) {
 				console.log("Error: ", error);
 				//if there was a problem, go back to the last stage that was valid
@@ -389,7 +431,6 @@ angular.module('ProjectHands.dashboard')
 				}
 			}, {}
 		).$promise.then(function (result) {
-			console.log("The result is: ", result);
 			var index = $scope.thisRenovation.tasks.indexOf(task);
 			$scope.thisRenovation.tasks.splice(index, 1);
 		}).catch(function (error) {
@@ -397,9 +438,32 @@ angular.module('ProjectHands.dashboard')
 		});
 	};
 
+	$scope.deleteTool = function (tool) {
+		var reno = $scope.thisRenovation;
+		DatabaseService.update(
+			COLLECTIONS.RENOVATIONS, {
+				addr: {
+					city: reno.addr.city,
+					street: reno.addr.street,
+					num: reno.addr.num
+				}
+			}, {
+				$pull: {
+					"toolsNeeded": {
+						'name': tool.name
+					}
+				}
+			}, {}
+		).$promise.then(function (result) {
+			var index = $scope.thisRenovation.toolsNeeded.indexOf(tool);
+			$scope.thisRenovation.toolsNeeded.splice(index, 1);
+		}).catch(function (error) {
+			console.log("Error: ", error);
+		});
+	};
+	
 	$scope.deletePinned = function (pinned) {
 		var reno = $scope.thisRenovation;
-		console.log("pinned is: ", pinned);
 		DatabaseService.update(
 			COLLECTIONS.RENOVATIONS, {
 				addr: {
@@ -415,7 +479,6 @@ angular.module('ProjectHands.dashboard')
 				}
 			}, {}
 		).$promise.then(function (result) {
-			console.log("The result is: ", result);
 			var index = $scope.thisRenovation.pinned.indexOf(pinned);
 			$scope.thisRenovation.pinned.splice(index, 1);
 
@@ -429,7 +492,6 @@ angular.module('ProjectHands.dashboard')
 		console.log("the event is: ", $event);
 		$mdDialog.show({
 				controller: function ($scope, $mdToast, $mdDialog, allTeams) {
-					console.info("finalize reno dialog", allTeams);
 					$scope.allTeams = allTeams;
 					$scope.date = new Date();
 
@@ -477,11 +539,8 @@ angular.module('ProjectHands.dashboard')
 						}, {}
 					)
 					.$promise.then(function (result) {
-						console.log("The result is: ", result);
-						console.log("TEST TEST this renovation is: ", $scope.thisRenovation);
 						$scope.thisRenovation.date = renovationAddedDetails.date;
 						$scope.thisRenovation.team_id = renovationAddedDetails.team._id;
-						console.log("updated team id is: ", $scope.thisRenovation.team_id);
 						$scope.getRenovationTeam($scope.thisRenovation.team_id);
 						$scope.nextStage();
 					}).catch(function (error) {

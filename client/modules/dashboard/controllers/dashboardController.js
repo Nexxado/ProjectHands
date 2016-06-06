@@ -2,6 +2,9 @@ angular.module('ProjectHands.dashboard')
 
 .controller('DashboardController', function ($scope, DatabaseService, COLLECTIONS, $mdMedia, $mdDialog) {
 
+
+	/*GRIDSTER SETTINGS - CAN BE DELETED ONCE GRIDSTER IS REMOVED*/
+	/*******GRIDSTER SETTINGS START*******/
 	$scope.editLayoutEnabled = false;
 
 	/*Widgets properties*/
@@ -78,7 +81,6 @@ angular.module('ProjectHands.dashboard')
         }
     ];
 
-	/*Grister Settings*/
 	$scope.gridsterOpts = {
 
 		columns: 6, // the width of the grid, in columns
@@ -119,7 +121,6 @@ angular.module('ProjectHands.dashboard')
 		}
 	};
 
-
 	/*Gridster Functions*/
 	$scope.enableEditLayout = function () {
 		$scope.editLayoutEnabled = true;
@@ -146,35 +147,37 @@ angular.module('ProjectHands.dashboard')
 	$scope.$on('gridster-mobile-changed', function (gridster) {});
 	$scope.$on('gridster-draggable-changed', function (gridster) {});
 
+	/*******GRIDSTER SETTINGS END*******/
 
+	/*The team members of THIS user. might not need this*/
 	$scope.teamMembers = [];
+	/*All the teams of Project Hands*/
 	$scope.allTeams = [];
-
+	/*The Logged in User*/
+	$scope.myUser = "";
+	/*The logged user's team*/
+	$scope.myTeam = "";
+	/*All the renovations of project hands*/
+	$scope.renovations = [];
+	
+	/*The first database query to run. getting Logged user, then his team, then all teams*/
 	DatabaseService.query(COLLECTIONS.USERS, {
 		email: $scope.user.email
 	}).$promise.then(function (result) {
-		console.log("My email is: ", $scope.user.email);
 		$scope.myUser = result[0];
 		$scope.getUserTeam($scope.myUser.email);
-		console.log("my ID is: ", $scope.myUser._id);
-		//        $scope.getUserTeam('111111111'); //FIXME Delete and uncomment above line
 		$scope.getAllTeams();
 
 	}).catch(function (error) {
 		console.log("Error: ", error);
 	});
-	/*Logged in User*/
-	$scope.myUser = "";
 
-
+	/*Function to get the specific user's team and then getting all the future renovations*/
 	$scope.getUserTeam = function (email) {
 		DatabaseService.query(COLLECTIONS.TEAMS, {
 			members_email: email
 		}).$promise.then(function (result) {
-			//			console.log("getUserTeam Result: ", result);
 			$scope.myTeam = result[0];
-			//			$scope.getTeamMember($scope.myTeam.manager_email);
-			//			console.log("mamanger ", $scope.myTeam.manager_id);
 			for (var i in $scope.myTeam.members_email) {
 				$scope.getTeamMember($scope.myTeam.members_email[i]);
 			}
@@ -184,31 +187,28 @@ angular.module('ProjectHands.dashboard')
 		});
 	};
 
-	$scope.myTeam = "";
-
+	
+	/*Function to get a team member by his email address*/
 	$scope.getTeamMember = function (memberEmail) {
 		DatabaseService.query(COLLECTIONS.USERS, {
 			email: memberEmail
 		}).$promise.then(function (result) {
-			//			console.log("MemberID Result: ", result[0]);
 			$scope.teamMembers.push(result[0]);
-			//			console.log($scope.teamMembers);
 		}).catch(function (error) {
 			console.log("Error: ", error);
 		});
 	};
 
-	$scope.renovations = [];
-
+	/*Function to get all renovations of Project Hands*/
 	$scope.getRenovations = function () {
 		DatabaseService.query(COLLECTIONS.RENOVATIONS, {}).$promise.then(function (result) {
 			$scope.renovations = result;
-			console.log($scope.renovations);
 		}).catch(function (error) {
 			console.log("Error: ", error);
 		});
 	};
 
+	/*Dialog to add a renovation by Address*/
 	$scope.addRenovation = function ($event) {
 		var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
 		$mdDialog.show({
@@ -258,8 +258,111 @@ angular.module('ProjectHands.dashboard')
 			})
 			.then(function (newReno) {
 				DatabaseService.insert(COLLECTIONS.RENOVATIONS, newReno)
+					.$promise.then(function (result) {}).catch(function (error) {
+						console.log("Error: ", error);
+					});
+				console.log("Dialog finished");
+
+			}, function () {
+				console.log('Dialog Canceled.');
+			});
+	};
+
+	/*Function to get all teams of Project Hands*/
+	$scope.getAllTeams = function () {
+		DatabaseService.query(COLLECTIONS.TEAMS, {})
+			.$promise.then(function (result) {
+				$scope.allTeams = [];
+				for (var i = 0; i < result.length; i++) {
+					$scope.allTeams.push(result[i]);
+				}
+			}).catch(function (error) {
+				console.log("Error: ", error);
+			});
+	};
+
+	//TODO: need to find a way to only take Unassigned users.
+	/*Function to get all the users of Project Hands*/
+	$scope.getAllUsers = function () {
+		DatabaseService.query(COLLECTIONS.USERS, {})
+			.$promise.then(function (result) {
+				$scope.allUsers = [];
+				for (var i = 0; i < result.length; i++) {
+					$scope.allUsers.push(result[i]);
+				}
+			}).catch(function (error) {
+				console.log("Error: ", error);
+			});
+	}
+
+	/*Dialog to add a Team to Project Hands*/
+	$scope.addTeam = function ($event) {
+		var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
+		$mdDialog.show({
+				controller: function ($scope, $mdToast, $mdDialog) {
+					$scope.allUsers = [];
+
+					DatabaseService.query(COLLECTIONS.USERS, {})
+						.$promise.then(function (result) {
+							$scope.allUsers = [];
+							for (var i = 0; i < result.length; i++) {
+								$scope.allUsers.push(result[i]);
+							}
+						}).catch(function (error) {
+							console.log("Error: ", error);
+							$scope.cancel();
+						});
+
+					$scope.manager = "";
+					$scope.team = {
+						name: "",
+						manager_email: "",
+						members_email: [],
+						_id: ""
+					};
+
+					$scope.checkedUsers = [];
+
+					$scope.toggle = function (item, list) {
+						var idx = list.indexOf(item);
+						if (idx > -1) {
+							list.splice(idx, 1);
+						} else {
+							list.push(item);
+						}
+					};
+
+					$scope.exists = function (item, list) {
+						return list.indexOf(item) > -1;
+					};
+
+					$scope.cancel = function () {
+						$mdDialog.cancel();
+					};
+
+					$scope.submit = function () {
+						if ($scope.AddTeamForm.$invalid) {
+							return;
+						}
+						for (var i = 0; i < $scope.checkedUsers.length; i++) {
+							$scope.team.members_email.push($scope.checkedUsers[i].email);
+						}
+						$scope.team.manager_email = $scope.manager.email;
+						$scope.team._id = "team_" + $scope.manager._id;
+						$mdDialog.hide($scope.team);
+					};
+				},
+				templateUrl: '/modules/dashboard/templates/dialogs/addTeamDialog.html',
+				targetEvent: $event,
+				clickOutsideToClose: false,
+				fullscreen: useFullScreen,
+				locals: {}
+			})
+			.then(function (newTeam) {
+				DatabaseService.insert(COLLECTIONS.TEAMS, newTeam)
 					.$promise.then(function (result) {
-						console.log("The result amazingly is: ", result);
+
+						$scope.allTeams.push(newTeam);
 					}).catch(function (error) {
 						console.log("Error: ", error);
 					});
@@ -270,19 +373,55 @@ angular.module('ProjectHands.dashboard')
 			});
 	};
 
-	//	$scope.allTeams = [];
+	/*Dialog to Delete team. will do so ONLY if you type the exact name of the team*/
+	$scope.deleteTeam = function ($event, team) {
+		var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
+		$mdDialog.show({
+				controller: function ($scope, $mdToast, $mdDialog) {
+					console.log("Trying to delete ", team._id);
+					$scope.team_name = team.name;
+					$scope.typed_name = "";
+					$scope.checkedUsers = [];
 
-	$scope.getAllTeams = function () {
-		DatabaseService.query(COLLECTIONS.TEAMS, {})
-			.$promise.then(function (result) {
-				console.log("Team query result is: ", result);
-				$scope.allTeams = [];
-				for(var i = 0; i < result.length; i++) {
-					$scope.allTeams.push(result[i]);
-				}
-				console.log("teams are: ", $scope.allTeams);
-			}).catch(function (error) {
-				console.log("Error: ", error);
+					$scope.cancel = function () {
+						$mdDialog.cancel();
+					};
+
+					$scope.submit = function () {
+						if ($scope.DeleteTeamForm.$invalid) {
+							console.log("invalid form");
+							return;
+						}
+						if ($scope.typed_name !== $scope.team_name) {
+							console.log("Names do not match!");
+							return;
+						}
+						$mdDialog.hide(team);
+					};
+				},
+				templateUrl: '/modules/dashboard/templates/dialogs/deleteTeamDialog.html',
+				targetEvent: $event,
+				clickOutsideToClose: false,
+				fullscreen: useFullScreen,
+				locals: {}
+			})
+			.then(function (deleted_team) {
+				DatabaseService.remove(
+					COLLECTIONS.TEAMS, {
+						_id: deleted_team._id
+					}
+				).$promise.then(function (result) {
+					var index = $scope.allTeams.indexOf(deleted_team);
+					$scope.allTeams.splice(index, 1);
+
+				}).catch(function (error) {
+					console.log("Error: ", error);
+				});
+				console.log("Dialog finished");
+
+			}, function () {
+				console.log('Dialog Canceled.');
 			});
 	};
+
 });

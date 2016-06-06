@@ -16,45 +16,12 @@ var ROLES = config.ROLES;
 /**
  * User Login - match user password hash to hash in DB using passport strategy
  */
-router.post('/login', validation.validateParams, passport.authenticate('local'),
-    function (req, res) {
-
-        debug('local login success');
-        debug('local login user', req.user);
-
-        res.send({
-            success: true,
-            name: req.user.name,
-            email: req.user.email,
-            role: req.user.role,
-            phone: req.user.phone,
-            approved: req.user.approved,
-            signup_complete: req.user.signup_complete,
-            joined_date: req.user.joined_date,
-            avatar: req.user.avatar,
-            renovations: req.user.renovations,
-            tasks: req.user.tasks
-        });
-    });
+router.post('/login', validation.validateParams, passport.authenticate('local'), sendUserInfo);
 
 /**
  * check if user is logged in - has an active session
  */
-router.get('/isLoggedIn', middleware.ensureAuthenticated, function (req, res) {
-    return res.send({
-        success: true,
-        name: req.user.name,
-        email: req.user.email,
-        role: req.user.role,
-        phone: req.user.phone,
-        approved: req.user.approved,
-        signup_complete: req.user.signup_complete,
-        joined_date: req.user.joined_date,
-        avatar: req.user.avatar,
-        renovations: req.user.renovations,
-        tasks: req.user.tasks
-    });
-});
+router.get('/isLoggedIn', middleware.ensureAuthenticated, sendUserInfo);
 
 
 /**
@@ -62,21 +29,11 @@ router.get('/isLoggedIn', middleware.ensureAuthenticated, function (req, res) {
  */
 router.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
-router.get('/google/callback', passport.authenticate('google', {failureRedirect: '/signup'}),
-    function (req, res) {
-
-        debug('google login success', req.user);
-        res.redirect('/after-auth.html');
-    });
+router.get('/google/callback', passport.authenticate('google', {failureRedirect: '/signup'}), redirectOAuth);
 
 router.get('/facebook', passport.authenticate('facebook', {scope: ['email']}));
 
-router.get('/facebook/callback', passport.authenticate('facebook', {failureRedirect: '/signup'}),
-    function (req, res) {
-
-        debug('google login success', req.user);
-        res.redirect('/after-auth.html');
-    });
+router.get('/facebook/callback', passport.authenticate('facebook', {failureRedirect: '/signup'}), redirectOAuth);
 
 
 /**
@@ -84,7 +41,7 @@ router.get('/facebook/callback', passport.authenticate('facebook', {failureRedir
  */
 router.get('/logout', middleware.ensureAuthenticated, function (req, res) {
     req.logout();
-    return writeToClient(res, {success: true});
+    res.send({success: true});
 });
 
 
@@ -94,7 +51,7 @@ router.get('/logout', middleware.ensureAuthenticated, function (req, res) {
 router.post("/signup", validation.validateParams, function (req, res) {
 
     if(req.isAuthenticated())
-        return writeToClient(res, null, "User Already Logged In", HttpStatus.BAD_REQUEST);
+        return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User Already Logged In"});
 
     try {
         var user = JSON.parse(req.body.user);
@@ -113,7 +70,7 @@ router.post("/signup", validation.validateParams, function (req, res) {
             debug('signup error', error);
             if (error) {
                 debug('signup sending error');
-                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+                return res.status(HttpStatus.BAD_REQUEST).send(error);
 
             }
 
@@ -124,7 +81,7 @@ router.post("/signup", validation.validateParams, function (req, res) {
         });
 
     } catch (error) {
-        writeToClient(res, null, "Error: Sign-Up Request Failed", HttpStatus.BAD_REQUEST);
+        res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: Sign-Up Request Failed" });
         debug("SignUp error: ", error);
     }
 });
@@ -194,37 +151,11 @@ router.get('/authenticate/:action', middleware.ensureAuthenticated, middleware.e
 
 
 /**
- * Change a user role - can only be invoked by an admin user.
- */
-router.post('/assignrole', middleware.ensureAuthenticated, function (req, res) {
-
-    if (!req.body.user || !req.body.newrole)
-        return writeToClient(res, null, 'No user or new role provided', HttpStatus.BAD_REQUEST);
-
-    if (req.user.role !== ROLES.ADMIN)
-        return writeToClient(res, null, 'Not Allowed', HttpStatus.FORBIDDEN);
-
-    var user = JSON.parse(req.body.user);
-    var newRole = req.body.newrole;
-
-    authUtils.setUserRole(user, newRole, function (error, result) {
-
-        if (error)
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
-
-        debug('assignrole setUserRole error', error);
-        debug('assignrole setUserRole result', result);
-        return res.send(result);
-    });
-
-});
-
-/**
  * will take the email and the phone to ensure that the details are correct
  * and the new , old password too, to kip the need to open a new page to enter the passwords
  * the old password is needed if changing password , if forgot option the new password is enough
  */
-router.post('/forgot', function (req, res) {
+router.post('/forgot', validation.validateParams, function (req, res) {
 
     var email = req.body.email;
     //  phone = req.params.phone;
@@ -232,23 +163,28 @@ router.post('/forgot', function (req, res) {
     var oldPassword = req.body.old_password;
 
     /** in the case of change password , the user must be logged in*/
-    if (req.isAuthenticated() && oldPassword !== null && oldPassword.length !== 0) {
+    if (req.isAuthenticated()) {
         authUtils.setPassword({email: email}, oldPassword, newPassword, true, function (error, result) {
             if (error) {
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
             }
             else {
-                if (result !== authUtils.messages.PASSWORD_UPDATE_SUCCESS) {
-                    return res.redirect(encodeURI('/result/error/' + result));
+                if (result.message !== authUtils.messages.PASSWORD_UPDATE_SUCCESS) {
+                    // return res.redirect(encodeURI('/result/error/' + result));
+                    return res.status(HttpStatus.BAD_REQUEST).send(result);
 
                 }
 
-                return res.redirect(encodeURI('/result/info/' + result));
+                // return res.redirect(encodeURI('/result/info/' + result));
+                return res.send(result);
             }
 
         });
     }
     else {
+
+        //TODO check if email does not belong to OAuth2 User
+
         authUtils.passwordResetRequest(email, function (error, result) {
             if (error) {
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
@@ -299,7 +235,34 @@ router.get('/reset/:token', function (req, res) {
     });
 });
 
+/**
+ * Send user info to client
+ */
+function sendUserInfo(req, res) {
 
+    debug('sendUserInfo', req.user);
 
+    return res.send({
+        success: true,
+        name: req.user.name,
+        email: req.user.email,
+        role: req.user.role,
+        phone: req.user.phone,
+        isOAuth: !!(req.user.googleId || req.user.facebookId),
+        approved: req.user.approved,
+        signup_complete: req.user.signup_complete,
+        joined_date: req.user.joined_date,
+        avatar: req.user.avatar
+    });
+}
+
+/**
+ * Redirect OAuth2 Logins
+ */
+function redirectOAuth(req, res) {
+
+    debug('redirectOAuth', req.user);
+    res.redirect('/after-auth.html');
+}
 
 module.exports = router;
