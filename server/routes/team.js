@@ -37,7 +37,6 @@ router.delete('/delete/:teamName', middleware.ensureAuthenticated, middleware.en
 
             res.send({success: true})
         });
-
     });
 
 
@@ -156,7 +155,9 @@ router.post('/assign_manager', middleware.ensureAuthenticated, middleware.ensure
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User is not part of team"});
         else if (req.queriedTeam.manager === req.body.email)
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User is already manager of team"});
-            
+
+        var formerManager = req.queriedTeam.manager;
+
         //Assign user as team manager
         mongoUtils.update(COLLECTIONS.TEAMS, {name: req.body.teamName}, {$set: {manager: req.body.email}}, {},
             function (error, result) {
@@ -164,8 +165,24 @@ router.post('/assign_manager', middleware.ensureAuthenticated, middleware.ensure
                 if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign manager to team"});
 
+                updateUserRole(formerManager, config.ROLES.VOLUNTEER);
+                updateUserRole(req.body.email, config.ROLES.TEAM_LEAD);
                 res.send({success: true});
             });
     });
+
+
+function updateUserRole(email, role) {
+
+    mongoUtils.update(COLLECTIONS.USERS, {email: email}, {$set: {role: role}}, {},
+        function (error, success) {
+
+            debug('updateUserRole', error, success.result);
+            // if (error || result.result.nModified === 0)
+                // return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed change user role"});
+
+            // return res.send({success: true});
+        });
+}
 
 module.exports = router;

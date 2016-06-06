@@ -3,7 +3,7 @@
  */
 angular.module('ProjectHands.dashboard')
 
-    .controller('AllTeamsController', function ($scope, UserService, TeamService, $mdDialog, $mdMedia) {
+    .controller('AllTeamsController', function ($scope, UserService, TeamService, UtilsService, ROLES, $mdDialog, $mdMedia) {
 
         $scope.users = [];
         $scope.teams = [];
@@ -143,6 +143,9 @@ angular.module('ProjectHands.dashboard')
         $scope.showUserDetails = function ($event, user) {
             var isMobile = $mdMedia('sm') || $mdMedia('xs');
 
+            var temp = angular.copy(user);
+            temp.role = UtilsService.translateRole(temp.role);
+
             $mdDialog.show({
                 controller: function ($scope, $mdDialog, user) {
 
@@ -161,7 +164,7 @@ angular.module('ProjectHands.dashboard')
                 clickOutsideToClose: true,
                 fullscreen: isMobile,
                 locals: {
-                    user: user
+                    user: temp
                 }
             });
         };
@@ -252,10 +255,21 @@ angular.module('ProjectHands.dashboard')
             if (!manager_email || manager_email === '' || manager_email === team.manager)
                 return;
 
+            var formerManager = team.manager;
+
             TeamService.assignManager(team.name, manager_email).$promise
                 .then(function (result) {
                     team.manager = manager_email;
                     team.manager_name = getUsersInfo([manager_email])[0].name;
+
+                    //Update user roles in View
+                    for(var i = 0; i < $scope.users.length; i++) {
+                        if($scope.users[i].email === formerManager)
+                            $scope.users[i].role = ROLES.VOLUNTEER;
+                        else if($scope.users[i].email === manager_email)
+                            $scope.users[i].role = ROLES.TEAM_LEAD;
+                    }
+                    getAllTeamsInfo();
                 })
                 .catch(function (error) {
                     console.error('assign manager error', error);
