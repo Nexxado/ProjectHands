@@ -141,7 +141,7 @@ function uploadToDrive(filePath, albumkey, callback) {
                                 file_id: fileId,
                                 web_link: fixDirectLink(res.webContentLink)
                             };
-                            callback(err, mRes);
+                            callback({errMessage: "Error: file not saved"}, mRes);
                         }
                     });
 
