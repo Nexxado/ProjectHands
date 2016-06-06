@@ -33,6 +33,9 @@ module.exports = function (req, res, next) {
         case /renovation\/rsvp/.test(req.originalUrl):
             req.action = ACL.RENOVATION_RSVP;
             break;
+        case /statistics\//.test(req.originalUrl):
+            req.action = ACL.STATISTICS_ACTIONS ;
+            break;
     }
 
     next();
