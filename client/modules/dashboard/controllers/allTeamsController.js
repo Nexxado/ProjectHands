@@ -67,6 +67,7 @@ angular.module('ProjectHands.dashboard')
             })
                 .then(function (result) {
                     console.log('dialog result', result);
+                    //TODO Update team according to result.
 
                 }, function () {
                     //Dialog Canceled

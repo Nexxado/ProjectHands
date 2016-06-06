@@ -43,7 +43,7 @@
                                         <h3>{{ user.name }}</h3>
                                         <h4>{{ user.email }}</h4>
                                     </div>
-                                    <md-icon class="md-secondary rtl" ng-click="addUser($index, user)">arrow_back
+                                    <md-icon class="md-secondary rtl" ng-click="addUserToTeam($index, user)">arrow_back
                                     </md-icon>
                                 </md-list-item>
                             </md-list>
@@ -64,7 +64,7 @@
                                         <h3>{{ user.name }}</h3>
                                         <h4>{{ user.email }}</h4>
                                     </div>
-                                    <md-icon class="md-secondary rtl" ng-click="removeUser($index, user)">
+                                    <md-icon class="md-secondary rtl" ng-click="removeUserFromTeam($index, user)">
                                         arrow_forward
                                     </md-icon>
                                 </md-list-item>
