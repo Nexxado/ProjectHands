@@ -24,16 +24,18 @@
             </div>
         </md-toolbar>
         <md-content>
+            <!-- List of Teams -->
             <md-list class="md-dense list-teams toggle-slide-top toggle-fade" flex ng-hide="selectedTeam">
                 <md-list-item class="md-2-line rtl list-slide-right"
                               ng-repeat="team in teams | filter: searchTeams"
-                              ng-click="showTeamMembers(team)">
+                              ng-click="showTeamMembers(team, $index)">
                     <div class="md-list-item-text" layout="column">
                         <h3>{{ team.name }}</h3>
                         <h4>מנהל: {{ team.manager_name }}</h4>
                     </div>
                 </md-list-item>
             </md-list>
+            <!-- List of Team members - shown after choosing team from list -->
             <md-list class="md-dense toggle-slide-bottom toggle-fade" ng-show="selectedTeam">
                 <md-subheader class="md-no-sticky rtl">
                     <md-button class="md-icon-button" ng-click="hideTeamMembers()">
@@ -42,6 +44,9 @@
                     <span>חברי צוות {{ selectedTeam.name }}</span>
                     <md-button class="md-icon-button" ng-click="editTeam($event, selectedTeam)" style="float: left">
                         <md-icon class="material-icons">edit</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="deleteTeam($event, selectedTeam)" style="float: left">
+                        <md-icon class="material-icons">delete</md-icon>
                     </md-button>
                 </md-subheader>
                 <md-list-item class="md-2-line rtl list-slide-right"

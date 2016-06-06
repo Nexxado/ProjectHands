@@ -50,7 +50,7 @@ router.get('/logout', middleware.ensureAuthenticated, function (req, res) {
  */
 router.post("/signup", validation.validateParams, function (req, res) {
 
-    if(req.isAuthenticated())
+    if (req.isAuthenticated())
         return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User Already Logged In"});
 
     try {
@@ -81,7 +81,7 @@ router.post("/signup", validation.validateParams, function (req, res) {
         });
 
     } catch (error) {
-        res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: Sign-Up Request Failed" });
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: error});
         debug("SignUp error: ", error);
     }
 });
@@ -91,17 +91,22 @@ router.post("/signup", validation.validateParams, function (req, res) {
  */
 router.post('/signup_oauth', middleware.ensureAuthenticated, validation.validateParams, function (req, res) {
 
-    var info = JSON.parse(req.body.info);
-    authUtils.oauthSignup(req.user, info, function (error, result) {
+    try {
+        var info = JSON.parse(req.body.info);
+        authUtils.oauthSignup(req.user, info, function (error, result) {
 
-        if(error)
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+            if (error)
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
 
-        debug('oauthSignup error', error);
-        debug('oauthSignup result', result.result);
-        debug('oauthSignup user', req.user);
-        return res.send({success: true, message: "Sign-Up Process Completed Successfully"});
-    });
+            debug('oauthSignup error', error);
+            debug('oauthSignup result', result.result);
+            debug('oauthSignup user', req.user);
+            return res.send({success: true, message: "Sign-Up Process Completed Successfully"});
+        });
+    } catch (error) {
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: error});
+        debug("signup_oauth error: ", error);
+    }
 
 });
 

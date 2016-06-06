@@ -1,0 +1,44 @@
+<md-dialog aria-label="Delete Team Dialog" flex="50">
+    <form name="DeleteTeamForm" ng-submit="submit()" novalidate>
+        <md-toolbar>
+            <div class="md-toolbar-tools" dir="rtl">
+                <h2>מחיקת צוות</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <h3 class="rtl">{{team_name}}</h3>
+                <!-- Team name -->
+                <md-input-container class="md-block md-icon-float rtl">
+                    <label>נא הקלד את שם הצוות בדיוק</label>
+                    <md-icon class="material-icons">title</md-icon>
+                    <input ng-change="checkTeamName()" type="text" name="teamName" ng-model="typed_name"
+                           minlength="{{team_name.length-1}}" md-maxlength="{{team_name.length}}" required>
+                    <md-tooltip md-delay="1000">שם הצוות שאתה מתכוון למחוק</md-tooltip>
+                    <div ng-messages="DeleteTeamForm.teamName.$error">
+                        <div ng-message="required">
+                            שדה חובה
+                        </div>
+                        <div ng-message="minlength">
+                            השם קצר מדי
+                        </div>
+                        <div ng-message="md-maxlength">
+                            השם ארוך מדי
+                        </div>
+                        <div ng-message="match">
+                            לא תואם לשם הצוות
+                        </div>
+                    </div>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout-align="start">
+            <md-button ng-click="cancel()" class="md-warn">ביטול</md-button>
+            <md-button type="submit" class="md-accent md-raised">מחיקה</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

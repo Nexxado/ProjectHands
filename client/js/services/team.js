@@ -24,7 +24,7 @@ angular.module('ProjectHands')
          * @returns {Promise}
          */
         function deleteTeam(teamName) {
-            return $resource(baseUrl + '/delete/:name').delete({
+            return $resource(baseUrl + '/delete/:teamName').delete({
                 teamName: teamName
             });
         }

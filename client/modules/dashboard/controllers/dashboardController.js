@@ -399,7 +399,7 @@ angular.module('ProjectHands.dashboard')
 						$mdDialog.hide(team);
 					};
 				},
-				templateUrl: '/modules/dashboard/templates/dialogs/deleteTeamDialog.html',
+				templateUrl: '/modules/dashboard/templates/dialogs/deleteTeam.html',
 				targetEvent: $event,
 				clickOutsideToClose: false,
 				fullscreen: useFullScreen,

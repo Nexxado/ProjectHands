@@ -1,4 +1,4 @@
-# Server Api
+# Server API
 
 **Table of Contents**
 

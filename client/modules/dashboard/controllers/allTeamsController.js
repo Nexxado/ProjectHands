@@ -3,11 +3,12 @@
  */
 angular.module('ProjectHands.dashboard')
 
-    .controller('AllTeamsController', function ($scope, UserService, TeamService, $mdDialog, $mdMedia, $timeout) {
+    .controller('AllTeamsController', function ($scope, UserService, TeamService, $mdDialog, $mdMedia) {
 
         $scope.users = [];
         $scope.teams = [];
         $scope.selectedTeam;
+        $scope.selectedIndex = -1;
         $scope.searchTeams = '';
         $scope.searchUsers = '';
         $scope.searchTeamMembers = '';
@@ -37,12 +38,14 @@ angular.module('ProjectHands.dashboard')
         }
 
 
-        $scope.showTeamMembers = function (team) {
+        $scope.showTeamMembers = function (team, index) {
             $scope.selectedTeam = team;
+            $scope.selectedIndex = index;
         };
 
         $scope.hideTeamMembers = function () {
             $scope.selectedTeam = undefined;
+            $scope.selectedIndex = -1;
         };
 
         /**
@@ -75,6 +78,68 @@ angular.module('ProjectHands.dashboard')
         };
 
 
+        /**
+         * Invoke Delete Team dialog
+         * @param $event
+         * @param team {Object} : team to be deleted
+         */
+        $scope.deleteTeam = function ($event, team) {
+            var isMobile = $mdMedia('sm') || $mdMedia('xs');
+
+            $mdDialog.show({
+                controller: function ($scope, $mdToast, $mdDialog) {
+                    $scope.team_name = team.name;
+                    $scope.typed_name = "";
+                    $scope.checkedUsers = [];
+
+                    //Set Form elements to Invalid if typed name != team name
+                    $scope.checkTeamName = function() {
+                        $scope.DeleteTeamForm.teamName.$setValidity('match', $scope.typed_name === $scope.team_name);
+                    };
+
+                    $scope.cancel = function () {
+                        $mdDialog.cancel();
+                    };
+
+                    $scope.submit = function () {
+                        if ($scope.DeleteTeamForm.$invalid || $scope.typed_name !== $scope.team_name)
+                            return;
+
+                        $mdDialog.hide(team);
+                    };
+                },
+                templateUrl: '/modules/dashboard/templates/dialogs/deleteTeam.html',
+                parent: angular.element(document.body),
+                targetEvent: $event,
+                clickOutsideToClose: true,
+                fullscreen: isMobile,
+                locals: {
+                    team: angular.copy(team)
+                }
+            })
+                .then(function (team) {
+                    console.log('dialog result', team);
+                    TeamService.deleteTeam(team.name).$promise
+                        .then(function(result) {
+                            $scope.teams.splice($scope.selectedIndex, 1);
+                            $scope.selectedTeam = undefined;
+                            $scope.selectedIndex = -1;
+                        })
+                        .catch(function(error) {
+
+                        })
+
+                }, function () {
+                    //Dialog Canceled
+                });
+        };
+
+
+        /**
+         * Invoke dialog showing the user details
+         * @param $event
+         * @param user {Object}
+         */
         $scope.showUserDetails = function ($event, user) {
             var isMobile = $mdMedia('sm') || $mdMedia('xs');
 
@@ -137,7 +202,7 @@ angular.module('ProjectHands.dashboard')
          * @param removedUsers {Array} : array of users' email to remove from team
          */
         function addMembers(team, manager_email, addedUsers, removedUsers) {
-            if(!addedUsers.length)
+            if (!addedUsers.length)
                 return;
 
             TeamService.addMembers(team.name, addedUsers).$promise
@@ -159,7 +224,7 @@ angular.module('ProjectHands.dashboard')
          */
         function removeMembers(team, manager_email, removedUsers) {
 
-            if(!removedUsers.length)
+            if (!removedUsers.length)
                 return;
 
             TeamService.removeMembers(team.name, removedUsers).$promise
@@ -184,7 +249,7 @@ angular.module('ProjectHands.dashboard')
          */
         function updateManager(team, manager_email) {
 
-            if(!manager_email || manager_email === '' || manager_email === team.manager)
+            if (!manager_email || manager_email === '' || manager_email === team.manager)
                 return;
 
             TeamService.assignManager(team.name, manager_email).$promise
@@ -227,7 +292,7 @@ angular.module('ProjectHands.dashboard')
          */
         function getUsersInfo(emails) {
             var users = [];
-            emails.forEach(function(email) {
+            emails.forEach(function (email) {
 
                 users.push($.grep($scope.users, function (user, index) {
                     return user.email === email;
