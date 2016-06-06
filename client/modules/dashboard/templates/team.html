@@ -5,6 +5,10 @@
             <div class="md-toolbar-tools">
                 <span>{{team.name}}</span>
             </div>
+			<div>
+				<md-button class="md-raised md-warn" ng-click="deleteTeam($event,team)">מחיקה</md-button>
+				<md-button class="md-raised md-warn" ng-click="addTeamMembers($event,team)">הוספת חברי צוות</md-button>
+			</div>
         </md-toolbar>
         <md-content>
             <md-list class="md-dense">

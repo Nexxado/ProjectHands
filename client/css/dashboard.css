@@ -221,3 +221,8 @@ md-menu-item > .md-button {
 .shadow-text.large{
     font: 700 80px 'Bitter';
 }
+
+.dialog.list{
+	overflow: auto;
+	max-height: 30%;
+}
