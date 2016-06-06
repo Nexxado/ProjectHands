@@ -48,4 +48,12 @@ angular.module('ProjectHands.statistics')
             });
         }
 
+        return {
+            getVolunteersCountPerDate: getVolunteersCountPerDate,
+            getRenovationsVolunteersNumberPerDate: getRenovationsVolunteersNumberPerDate,
+            getRenovationsCostPerDate: getRenovationsCostPerDate,
+            getRenovationsVolunteeringHoursPerDate: getRenovationsVolunteeringHoursPerDate,
+            getRenovationsPerDate: getRenovationsPerDate
+        };
+
     });
