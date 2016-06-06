@@ -21,7 +21,7 @@ angular.module('ProjectHands.dashboard')
      * pass arrays back to invoking controller
      */
     $scope.submit = function() {
-
+        //Make form dirty to enable md-select validation
         $scope.EditTeamForm.$setDirty();
         $scope.EditTeamForm.teamManager.$setDirty();
         if($scope.EditTeamForm.$invalid)

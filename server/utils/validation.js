@@ -166,8 +166,8 @@ validation.validateParams = function(req, res, next) {
             break;
 
         case /team\/create/.test(req.originalUrl):
-            if(!req.body.teamName)
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name"});
+            if(!req.body.teamName || !req.body.email || !validateEmail(req.body.email))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name or email"});
             break;
 
         case /team\/delete/.test(req.originalUrl):

@@ -1,0 +1,59 @@
+<md-dialog aria-label="Edit Team Dialog" flex="50">
+    <form name="CreateTeamForm" ng-submit="submit()" layout="column" novalidate>
+        <md-toolbar dir="rtl">
+            <div class="md-toolbar-tools">
+                <h2>עריכת צוות</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content" layout="row" layout-align="end" layout-padding>
+                <!-- Team Manager Select -->
+                <!--<div layout="row" layout-align="end" flex>-->
+                <md-input-container class="md-block rtl" flex="25">
+                    <label>מנהל צוות</label>
+                    <md-select name="teamManager" ng-model="teamManager.email" required>
+                        <md-option ng-value="user.email" ng-repeat="user in usersWithoutTeam">
+                            {{ user.name }}
+                        </md-option>
+                    </md-select>
+                    <div ng-messages="CreateTeamForm.teamManager.$error">
+                        <div ng-message="required">
+                            שדה חובה
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block rtl" flex>
+                    <label>שם צוות</label>
+                    <input name="teamName" ng-model="teamName" required ng-change="checkExists()" md-maxlength="20">
+                    <div ng-messages="CreateTeamForm.teamName.$error">
+                        <div ng-message="required">
+                            שדה חובה
+                        </div>
+                        <div ng-message="exists">
+                            צוות בשם הזה כבר קיים
+                        </div>
+                        <div ng-message="md-maxlength">
+                            שם ארוך מדי
+                        </div>
+                    </div>
+                </md-input-container>
+                <!--</div>-->
+                <!--<div layout="row">-->
+
+                <!--</div>-->
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout-align="start">
+            <md-button type="button" ng-click="cancel()" class="md-warn">
+                ביטול
+            </md-button>
+            <md-button type="submit" class="md-raised md-primary">
+                יצירת צוות
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

@@ -10,11 +10,13 @@ angular.module('ProjectHands')
         /**
          * Create a new team
          * @param teamName {String} : team name must be unique
+         * @param manager_email {String} : email of the user's managers
          * @returns {Promise}
          */
-        function create(teamName) {
+        function createTeam(teamName, manager_email) {
             return $resource(baseUrl + '/create').save({
-                teamName: teamName
+                teamName: teamName,
+                email: manager_email
             });
         }
 
@@ -95,7 +97,7 @@ angular.module('ProjectHands')
 
 
         return {
-            create: create,
+            createTeam: createTeam,
             deleteTeam: deleteTeam,
             getAllTeams: getAllTeams,
             addMembers: addMembers,

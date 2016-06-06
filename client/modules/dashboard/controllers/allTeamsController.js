@@ -79,6 +79,73 @@ angular.module('ProjectHands.dashboard')
 
 
         /**
+         * Invoke dialog to create a new team
+         */
+        $scope.createTeam = function($event) {
+            var isMobile = $mdMedia('sm') || $mdMedia('xs');
+
+            $mdDialog.show({
+                controller: function ($scope, $mdToast, $mdDialog, TeamService, usersWithoutTeam, existingTeams) {
+
+                    //Input Models
+                    $scope.usersWithoutTeam = usersWithoutTeam;
+                    $scope.teamName = '';
+                    $scope.teamManager = {
+                        name: '',
+                        email: ''
+                    };
+
+                    //Set Form elements to Invalid if team name already exists
+                    $scope.checkExists = function() {
+                        $scope.CreateTeamForm.teamName.$setValidity('exists', existingTeams.indexOf($scope.teamName) < 0);
+                    };
+
+                    $scope.cancel = function () {
+                        $mdDialog.cancel();
+                    };
+
+                    $scope.submit = function () {
+                        //Make form dirty to enable md-select validation
+                        $scope.CreateTeamForm.$setDirty();
+                        $scope.CreateTeamForm.teamManager.$setDirty();
+                        if($scope.CreateTeamForm.$invalid)
+                            return;
+
+                        TeamService.createTeam($scope.teamName, $scope.teamManager.email).$promise
+                            .then(function(result) {
+                                $mdDialog.hide(result);
+                            })
+                            .catch(function(error) {
+                                
+                            });
+                    };
+                },
+                templateUrl: '/modules/dashboard/templates/dialogs/createTeam.html',
+                parent: angular.element(document.body),
+                targetEvent: $event,
+                clickOutsideToClose: true,
+                fullscreen: isMobile,
+                locals: {
+                    usersWithoutTeam: getUsersWithoutTeam(),
+                    existingTeams: $scope.teams.map(function(team) {
+                        return team.name;
+                    })
+                }
+            })
+                .then(function (team) {
+                    console.log('dialog result', team);
+                    team.members_info = getUsersInfo(team.members);
+                    team.manager_name = team.members_info[0].name;
+                    $scope.teams.push(team);
+
+                }, function () {
+                    //Dialog Canceled
+                });
+
+        };
+
+
+        /**
          * Invoke Delete Team dialog
          * @param $event
          * @param team {Object} : team to be deleted

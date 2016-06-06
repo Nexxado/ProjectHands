@@ -778,13 +778,15 @@ Approve a user to join Project Hands
 | Type  | Params | Values |
 |---|---|---|
 | BODY | teamName | String |
+| BODY | email | String |
 
 #### Response
 
 | Status  | Response |
 |---|---|
-| 200 | {success: true} |
-| 400 | {errMessage: "Invalid team name"} |
+| 200 | {name: "", manager: "", members: [""} |
+| 400 | {errMessage: "Invalid team name  or email"} |
+| 400 | {errMessage: "User does not exists"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to create team"} |

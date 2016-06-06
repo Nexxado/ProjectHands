@@ -12,14 +12,22 @@ var validation = require('../utils/validation');
  * Create a Team
  */
 router.post('/create', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    function (req, res) {
+    middleware.ensureUserExists, function (req, res) {
 
-        mongoUtils.insert(COLLECTIONS.TEAMS, {name: req.body.teamName}, function (error, result) {
-            debug('create insert', req.body.teamName, error, result);
+        var team = {
+            name: req.body.teamName,
+            manager: req.body.email,
+            members: [
+                req.body.email
+            ]
+        };
+        
+        mongoUtils.insert(COLLECTIONS.TEAMS, team, function (error, result) {
+            debug('create insert', team, error, result);
             if (error)
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to create team"});
 
-            res.send({success: true});
+            res.send(team);
         });
     });
 
