@@ -1,11 +1,11 @@
+/**
+ * Created by DDraiman1990 on May 2016.
+ */
 angular.module('ProjectHands.dashboard')
 
 .controller('RenovationPageController', function ($scope, $stateParams, $mdSidenav, $mdMedia, $mdDialog, DatabaseService, COLLECTIONS) {
 
-
-	$scope.thisRenovation = "";
-	$scope.renovationNotFound = false;
-
+	/******Getters******/
 	$scope.getRenovation = function (city, street, num) {
 		for (var reno in $scope.renovations) {
 			var renovation = $scope.renovations[reno];
@@ -18,7 +18,7 @@ angular.module('ProjectHands.dashboard')
 		$scope.renovationNotFound = true;
 
 	};
-	
+
 	$scope.getRenovationTeam = function (team_id) {
 		//		var team_id = $scope.thisRenovation.team_id;
 		$scope.renovationMembers = [];
@@ -37,26 +37,6 @@ angular.module('ProjectHands.dashboard')
 
 	};
 
-	$scope.getRenovation($stateParams.city, $stateParams.street, $stateParams.num);
-
-	$scope.renovationChatRoom = [$scope.thisRenovation.chat_id];
-
-	$scope.renovationStages = $scope.thisRenovation.renovation_stages;
-	$scope.renovationCurrentStage = $scope.thisRenovation.current_stage;
-	$scope.renovationProgress = Math.floor((100 / ($scope.renovationStages.length)) * ($scope.renovationStages.indexOf($scope.renovationCurrentStage) + 1));
-
-	//    $scope.calcRenoProgress();
-
-	$scope.calcRenoProgress = function () {
-		$scope.renovationProgress = Math.floor((100 / ($scope.renovationStages.length)) * ($scope.renovationStages.indexOf($scope.renovationCurrentStage) + 1));
-	};
-
-
-	$scope.renovationMembers = [];
-	$scope.renovationTeam = "";
-
-
-
 	$scope.getMemberByEmail = function (email) {
 		DatabaseService.query(COLLECTIONS.USERS, {
 			email: email
@@ -68,11 +48,32 @@ angular.module('ProjectHands.dashboard')
 	};
 
 
+	/******Variables Declarations******/
+	$scope.thisRenovation = "";
+	$scope.renovationNotFound = false;
+	$scope.renovationMembers = [];
+	$scope.renovationTeam = "";
 	$scope.editMessagesMode = false;
 	$scope.editTasksMode = false;
 	$scope.editToolsMode = false;
+	$scope.needToAssignTeam = ($scope.renovationCurrentStage === "עובד סוציאלי עודכן, יש צורך לשבץ צוות");
+	$scope.editStagesMode = false;
+	$scope.lastStage = "";
+	$scope.minDate = new Date();
 
 
+	/******First call to get Renovation before initializing more variables******/
+	$scope.getRenovation($stateParams.city, $stateParams.street, $stateParams.num);
+
+
+	/******Initialize more Variables******/
+	$scope.renovationChatRoom = [$scope.thisRenovation.chat_id];
+	$scope.renovationStages = $scope.thisRenovation.renovation_stages;
+	$scope.renovationCurrentStage = $scope.thisRenovation.current_stage;
+	$scope.renovationProgress = Math.floor((100 / ($scope.renovationStages.length)) * ($scope.renovationStages.indexOf($scope.renovationCurrentStage) + 1));
+
+
+	/******Editing Mode Functions******/
 	$scope.editMessages = function () {
 		$scope.editMessagesMode = !$scope.editMessagesMode;
 	};
@@ -80,16 +81,19 @@ angular.module('ProjectHands.dashboard')
 	$scope.editTasks = function () {
 		$scope.editTasksMode = !$scope.editTasksMode;
 	};
-	
+
 	$scope.editTools = function () {
 		$scope.editToolsMode = !$scope.editToolsMode;
 	};
 
-	$scope.openLeftMenu = function () {
-		$mdSidenav('left').toggle().then(function () {
-		});
+
+	/******Misc Functions******/
+	$scope.calcRenoProgress = function () {
+		$scope.renovationProgress = Math.floor((100 / ($scope.renovationStages.length)) * ($scope.renovationStages.indexOf($scope.renovationCurrentStage) + 1));
 	};
 
+
+	/******Adding Dialogs******/
 	$scope.addTask = function ($event) {
 		var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
 		$mdDialog.show({
@@ -238,7 +242,7 @@ angular.module('ProjectHands.dashboard')
 				fullscreen: useFullScreen,
 				locals: {
 					renovation_stages: $scope.thisRenovation.renovation_stages
-					
+
 				}
 			})
 			.then(function (newStage) {
@@ -260,9 +264,8 @@ angular.module('ProjectHands.dashboard')
 							}
 						}, {
 							$push: {
-								"renovation_stages": 
-								{
-									$each:[newStage.title],
+								"renovation_stages": {
+									$each: [newStage.title],
 									$position: push_index
 								}
 							}
@@ -342,9 +345,8 @@ angular.module('ProjectHands.dashboard')
 			});
 	};
 
-	$scope.needToAssignTeam = ($scope.renovationCurrentStage === "עובד סוציאלי עודכן, יש צורך לשבץ צוות");
-	$scope.editStagesMode = false;
-	$scope.lastStage = "";
+
+	/******Stages Editing functions******/
 	$scope.enableEditStages = function () {
 		$scope.editStagesMode = true;
 		$scope.lastStage = $scope.renovationCurrentStage;
@@ -366,8 +368,7 @@ angular.module('ProjectHands.dashboard')
 						"current_stage": $scope.renovationCurrentStage
 					}
 				}, {}
-			).$promise.then(function (result) {
-			}).catch(function (error) {
+			).$promise.then(function (result) {}).catch(function (error) {
 				console.log("Error: ", error);
 				//if there was a problem, go back to the last stage that was valid
 				$scope.renovationCurrentStage = $scope.lastStage;
@@ -404,87 +405,11 @@ angular.module('ProjectHands.dashboard')
 		$scope.renovationCurrentStage = $scope.renovationStages[index];
 		$scope.calcRenoProgress();
 		if ($scope.renovationCurrentStage === "עובד סוציאלי עודכן, יש צורך לשבץ צוות") {
-				$scope.needToAssignTeam = true;
-			} else {
-				$scope.needToAssignTeam = false;
-			}
+			$scope.needToAssignTeam = true;
+		} else {
+			$scope.needToAssignTeam = false;
+		}
 
-	};
-
-
-	$scope.minDate = new Date();
-
-	$scope.deleteTask = function (task) {
-		var reno = $scope.thisRenovation;
-		DatabaseService.update(
-			COLLECTIONS.RENOVATIONS, {
-				addr: {
-					city: reno.addr.city,
-					street: reno.addr.street,
-					num: reno.addr.num
-				}
-			}, {
-				$pull: {
-					"tasks": {
-						'name': task.name
-					}
-				}
-			}, {}
-		).$promise.then(function (result) {
-			var index = $scope.thisRenovation.tasks.indexOf(task);
-			$scope.thisRenovation.tasks.splice(index, 1);
-		}).catch(function (error) {
-			console.log("Error: ", error);
-		});
-	};
-
-	$scope.deleteTool = function (tool) {
-		var reno = $scope.thisRenovation;
-		DatabaseService.update(
-			COLLECTIONS.RENOVATIONS, {
-				addr: {
-					city: reno.addr.city,
-					street: reno.addr.street,
-					num: reno.addr.num
-				}
-			}, {
-				$pull: {
-					"toolsNeeded": {
-						'name': tool.name
-					}
-				}
-			}, {}
-		).$promise.then(function (result) {
-			var index = $scope.thisRenovation.toolsNeeded.indexOf(tool);
-			$scope.thisRenovation.toolsNeeded.splice(index, 1);
-		}).catch(function (error) {
-			console.log("Error: ", error);
-		});
-	};
-	
-	$scope.deletePinned = function (pinned) {
-		var reno = $scope.thisRenovation;
-		DatabaseService.update(
-			COLLECTIONS.RENOVATIONS, {
-				addr: {
-					city: reno.addr.city,
-					street: reno.addr.street,
-					num: reno.addr.num
-				}
-			}, {
-				$pull: {
-					"pinned": {
-						'title': pinned.title
-					}
-				}
-			}, {}
-		).$promise.then(function (result) {
-			var index = $scope.thisRenovation.pinned.indexOf(pinned);
-			$scope.thisRenovation.pinned.splice(index, 1);
-
-		}).catch(function (error) {
-			console.log("Error: ", error);
-		});
 	};
 
 	$scope.finalizeRenovation = function ($event) {
@@ -552,4 +477,146 @@ angular.module('ProjectHands.dashboard')
 				console.log('Dialog Canceled.');
 			});
 	};
+
+
+	/******Deleting Dialogs******/
+	$scope.deleteTask = function (task) {
+		var reno = $scope.thisRenovation;
+		DatabaseService.update(
+			COLLECTIONS.RENOVATIONS, {
+				addr: {
+					city: reno.addr.city,
+					street: reno.addr.street,
+					num: reno.addr.num
+				}
+			}, {
+				$pull: {
+					"tasks": {
+						'name': task.name
+					}
+				}
+			}, {}
+		).$promise.then(function (result) {
+			var index = $scope.thisRenovation.tasks.indexOf(task);
+			$scope.thisRenovation.tasks.splice(index, 1);
+		}).catch(function (error) {
+			console.log("Error: ", error);
+		});
+	};
+
+	$scope.deleteTool = function (tool) {
+		var reno = $scope.thisRenovation;
+		DatabaseService.update(
+			COLLECTIONS.RENOVATIONS, {
+				addr: {
+					city: reno.addr.city,
+					street: reno.addr.street,
+					num: reno.addr.num
+				}
+			}, {
+				$pull: {
+					"toolsNeeded": {
+						'name': tool.name
+					}
+				}
+			}, {}
+		).$promise.then(function (result) {
+			var index = $scope.thisRenovation.toolsNeeded.indexOf(tool);
+			$scope.thisRenovation.toolsNeeded.splice(index, 1);
+		}).catch(function (error) {
+			console.log("Error: ", error);
+		});
+	};
+
+	$scope.deletePinned = function (pinned) {
+		var reno = $scope.thisRenovation;
+		DatabaseService.update(
+			COLLECTIONS.RENOVATIONS, {
+				addr: {
+					city: reno.addr.city,
+					street: reno.addr.street,
+					num: reno.addr.num
+				}
+			}, {
+				$pull: {
+					"pinned": {
+						'title': pinned.title
+					}
+				}
+			}, {}
+		).$promise.then(function (result) {
+			var index = $scope.thisRenovation.pinned.indexOf(pinned);
+			$scope.thisRenovation.pinned.splice(index, 1);
+
+		}).catch(function (error) {
+			console.log("Error: ", error);
+		});
+	};
+
+
+	/******RSVP Functions and Variables******/
+	/*Functions*/
+	$scope.checkRSVP = function (email) {
+		var reno = $scope.thisRenovation;
+		for (var i in reno.rsvp) {
+			if (reno.rsvp[i] === email) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	$scope.confirmRSVP = function (email) {
+		$scope.my_rsvp = true;
+		var reno = $scope.thisRenovation;
+		DatabaseService.update(
+				COLLECTIONS.RENOVATIONS, {
+					addr: {
+						city: reno.addr.city,
+						street: reno.addr.street,
+						num: reno.addr.num
+					}
+				}, {
+					$push: {
+						"rsvp": email
+					}
+				}, {}
+			)
+			.$promise.then(function (result) {
+				$scope.thisRenovation.rsvp.push(email);
+			}).catch(function (error) {
+				console.log("Error: ", error);
+			});
+	}
+
+	$scope.declineRSVP = function (email) {
+		var reno = $scope.thisRenovation;
+		$scope.my_rsvp = false;
+		DatabaseService.update(
+				COLLECTIONS.RENOVATIONS, {
+					addr: {
+						city: reno.addr.city,
+						street: reno.addr.street,
+						num: reno.addr.num
+					}
+				}, {
+					$pull: {
+						"rsvp": email
+					}
+				}, {}
+			)
+			.$promise.then(function (result) {
+			console.log("removed " + email);
+				var index = $scope.thisRenovation.rsvp.indexOf(email);
+				$scope.thisRenovation.rsvp.splice(index, 1);
+			}).catch(function (error) {
+				console.log("Error: ", error);
+			});
+	}
+	
+	/*Variables*/
+	$scope.users_rsvp = $scope.thisRenovation.rsvp;
+	$scope.my_rsvp = $scope.checkRSVP($scope.myUser.email);
+	
+	
 });
