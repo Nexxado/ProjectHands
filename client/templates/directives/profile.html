@@ -4,7 +4,7 @@
         <div class="profile-side-nav">
             <md-card>
                 <md-toolbar layout="row" class="md-hue-3">
-                    <div class="md-toolbar-tools">
+                    <div class="md-toolbar-tools white">
                         <span>Personal settings</span>
                     </div>
                 </md-toolbar>
@@ -14,14 +14,14 @@
                             <h3>Profile</h3>
                         </md-list-item>
                         <md-list-item class="md-3-line" ng-click="showAccount()">
-                            <div class="md-list-item-text" layout="column">
-                                <h3>Account</h3>
-                            </div>
+
+                            <h3>Account</h3>
+
                         </md-list-item>
                         <md-list-item class="md-3-line" ng-click="showEmails()">
-                            <div class="md-list-item-text" layout="column">
-                                <h3>Emails</h3>
-                            </div>
+
+                            <h3>Emails</h3>
+
                         </md-list-item>
                     </md-list>
                 </md-content>
@@ -31,7 +31,7 @@
         <div ng-show="sProfiel" class="profile-main">
             <md-card>
                 <md-toolbar layout="row" class="md-hue-3">
-                    <div class="md-toolbar-tools">
+                    <div class="md-toolbar-tools white">
                         <span>Your Profile</span>
                     </div>
                 </md-toolbar>
@@ -40,10 +40,9 @@
                     <div layout="row">
                         <div layout-padding layout="column">
                             <h3>Profile picture</h3>
-                            <img ng-src={{profilePicUrl}} alt="profile pic" style="width: 200px;height: 200px;">
-                        </div>
-                        <div>
-                            <span></span>
+                            <img ng-show="userHaveProfilePic" ng-src={{profilePicUrl}} alt="profile pic"
+                                 style="width: 200px;height: 200px;">
+                            <div ng-show="!userHaveProfilePic">You don't have profile pic</div>
                             <!--Drop File:-->
                             <div ngf-drop ngf-select ng-model="files" class="drop-box"
                                  ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
@@ -60,34 +59,40 @@
                             </div>
                             <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
                         </div>
+                        <div>
+                            <md-card-content>
+                                <md-divider></md-divider>
+                                <h2>Name</h2>
+                                <h3>{{profile.name}}</h3>
+                                <md-divider></md-divider>
+                                <h2>Email</h2>
+                                <h3>{{profile.email}}</h3>
+                                <md-divider></md-divider>
+                                <h2>Role</h2>
+                                <h3>{{profile.role}}</h3>
+                                <md-divider></md-divider>
+                                <h2>Phone</h2>
+                                <h3>{{profile.role}}</h3>
+                                <md-divider></md-divider>
+                            </md-card-content>
+                        </div>
                     </div>
                 </md-card-content>
-                <md-card-content>
-                    <h3>Name</h3>
-                    <h4>{{profile.name}}</h4>
 
-                    <h3>Email</h3>
-                    <h4>{{profile.email}}</h4>
-
-                    <h3>Role</h3>
-                    <h4>{{profile.role}}</h4>
-
-                    <h3>Phone</h3>
-                    <h4>{{profile.role}}</h4>
-                </md-card-content>
             </md-card>
         </div>
 
         <div ng-show="sAccount" class="profile-main">
             <md-card>
                 <md-toolbar layout="row" class="md-hue-3">
-                    <div class="md-toolbar-tools">
+                    <div class="md-toolbar-tools white">
                         <span>Change Password</span>
                     </div>
                 </md-toolbar>
                 <md-divider></md-divider>
                 <md-card-content>
-                    <form style="width: 400px;" name="chPassForm" ng-submit="changePassword()" layout="column" novalidate
+                    <form style="width: 400px;" name="chPassForm" ng-submit="changePassword()" layout="column"
+                          novalidate
                           id="loginToastsAnchor">
 
                         <md-input-container class="md-icon-float md-block">
@@ -130,12 +135,13 @@
 
                 </md-card-content>
                 <md-toolbar layout="row" class="md-hue-3">
-                    <div class="md-toolbar-tools">
+                    <div class="md-toolbar-tools white">
                         <span>Reset password</span>
                     </div>
                 </md-toolbar>
                 <md-card-content>
-                    <form style="width: 400px;" name="resetPasswordForm" ng-submit="resetPassword()" layout="column" novalidate
+                    <form style="width: 400px;" name="resetPasswordForm" ng-submit="resetPassword()" layout="column"
+                          novalidate
                           id="resetPassToastsAnchor">
 
                         <md-input-container class="md-icon-float md-block">
@@ -163,7 +169,7 @@
             <md-card>
 
                 <md-toolbar layout="row" class="md-hue-3">
-                    <div class="md-toolbar-tools">
+                    <div class="md-toolbar-tools white">
                         <span>Change Email</span>
                     </div>
                 </md-toolbar>

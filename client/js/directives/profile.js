@@ -8,6 +8,7 @@ angular.module('ProjectHands')
             controller: function ($scope, $location, AuthService, PhotosService) {
 
                 $scope.isLoggedIn = false;
+                $scope.userHaveProfilePic = false;
 
                 $scope.change_password = {
                     old: "",
@@ -58,6 +59,7 @@ angular.module('ProjectHands')
                         new: ""
                     };
                 };
+                
                 var album = '';
                 $scope.profilePic = {};
                 $scope.profilePicUrl = {};
@@ -69,17 +71,23 @@ angular.module('ProjectHands')
                         $scope.isLoggedIn = true;
                         $scope.profile = result;
                         album = $scope.profile.email;
-                        $scope.getPhotos(album);
+                        $scope.getProfilePic(album);
                         console.log(result);
                     })
                     .catch(function (error) {
                         $scope.isLoggedIn = false;
                     });
 
-                $scope.getPhotos = function (album) {
+                $scope.getProfilePic = function (album) {
                     PhotosService.getPhotos(album)
                         .then(function (data) {
-                            $scope.profilePic = data[data.length];
+                            $scope.profilePic = data[0];
+                            
+                            if($scope.profilePic === undefined)
+                                $scope.userHaveProfilePic = false;
+                            else
+                                $scope.userHaveProfilePic = true;
+                            
                             $scope.profilePicUrl = $scope.profilePic.web_link;
                         })
                         .catch(function (error) {
