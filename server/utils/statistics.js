@@ -5,24 +5,96 @@ var HttpStatus = require('http-status-codes');
 
 
 setTimeout(mongoUtils.connect(config.mongoDBUrl)
-    , 1000);
+    , 500);
 setTimeout(function () {
-        getTotalVolunteeringHoursPerMonth(2016, 2)
+        getRenovationsVolunteeringHoursPerDate(2016, "01", "01", 30, function (error, result) {
+
+            if (error) {
+                console.log("Some error had happend");
+            }
+            else {
+                console.log(result);
+            }
+        })
 
     }
-    , 10000);
+    , 3000);
 
 
 /**
- *Get total hours of volunteering in time period
+ *Get total Money spent on renovations in time period
  *
  * @param year {int} : the year to be quered
  * @param month {int} : the month to be quered
  * @param dayFrom {int}  : start day on the month
  * @param dayTo {int} : end day on the month
- * @param callback : Object[] with the renovations
+ * @param callback : Object[][renovationName:renovationMoney , totalCost:thecosts]
  */
-function getVolunteeringHoursPerDate(year, month, dayFrom, dayTo, callback) {
+function getRenovationsVolunteeringHoursPerDate(year, month, dayFrom, dayTo, callback) {
+    getRenovationsPerDate(year, month, dayFrom, dayTo, function (error, result) {
+        if (error) {
+            callback(error, result);
+        }
+        else {
+            if (result === "NO RESULTS") {
+                callback(error, "NO RESULTS");
+            }
+            else {
+                /**THE FLOW
+                 * 1- loop on the renovations
+                 * 2- get the cost from them[ costMap {item_name : cost}
+                 * 3- return it
+                 * */
+                var totalCost = 0;
+                var costData = {};
+                for (var i = 0; i < result.length; i++) {
+                    var renovation = result[i];
+                    if (renovation.costMap != undefined) {
+                        var renovationCost = getRenovationCost(renovation);
+                        costData[renovation.name] = renovationCost;
+                        totalCost += renovationCost;
+                    }
+                    else {
+                        costData[renovation.name] = 0;
+                    }
+                }
+                costData["totalCost"] = totalCost;
+                callback(error, totalHours);
+
+            }
+        }
+
+    });
+}
+
+/**
+ *Get the cost of  renovation
+ *
+ * @param renovation  {Object} : the renovation that we to calc its cost
+ * @returns {number} : the total costs
+ */
+function getRenovationCost(renovation) {
+
+    var costMapObject = renovation.moneyMap;
+    var totalCost = 0;
+
+    for (var key in costMapObject) {
+        var money = costMapObject[key];
+        totalCost += money;
+    }
+    return totalCost;
+}
+
+/**
+ *Get total hours of volunteering in renovations in time period
+ *
+ * @param year {int} : the year to be quered
+ * @param month {int} : the month to be quered
+ * @param dayFrom {int}  : start day on the month
+ * @param dayTo {int} : end day on the month
+ * @param callback : Object[renovationName,renovationHours]
+ */
+function getRenovationsVolunteeringHoursPerDate(year, month, dayFrom, dayTo, callback) {
     getRenovationsPerDate(year, month, dayFrom, dayTo, function (error, result) {
         if (error) {
             callback(error, result);
@@ -38,10 +110,21 @@ function getVolunteeringHoursPerDate(year, month, dayFrom, dayTo, callback) {
                  * 3- return it
                  * */
                 var totalHours = 0;
+                var hoursData = {};
                 for (var i = 0; i < result.length; i++) {
                     var renovation = result[i];
-                    totalHours += getRenovationVolunteeringHours(renovation);
+                    if (renovation.hoursMap != undefined) {
+                        var renovationHours = getRenovationVolunteeringHours(renovation);
+                        hoursData[renovation.name] = renovationHours;
+                        totalHours += renovationHours;
+                    }
+                    else {
+                        hoursData[renovation.name] = 0;
+                    }
+
+                    hoursData["totalHours"] = totalHours;
                 }
+                callback(error, hoursData);
 
             }
         }
@@ -64,7 +147,6 @@ function getRenovationVolunteeringHours(renovation) {
         totalHours += hours;
     }
     return totalHours;
-
 }
 //TODO: check what is the Date field name in the renovations
 /**
@@ -85,8 +167,10 @@ function getRenovationsPerDate(year, month, dayFrom, dayTo, callback) {
     mongoUtils.query(COLLECTIONS.RENOVATIONS,
         {
             date: {
-                $gte: new Date('year' + '-' + month + '-' + dayFrom + 'T00:00:00.00Z'),
-                $lt: new Date('year' + '-' + month + '-' + dayTo + 'T00:00:00.00Z')
+                // $gte: new Date(year + '-' + month + '-' + dayFrom + 'T00:00:00Z'),
+                // $lt: new Date(year + '-' + month + '-' + dayTo + 'T00:00:00Z')
+                $gte: new Date('2016-06-01T00:00:00Z'),
+                $lt: new Date('2016-06-30T00:00:00Z')
             }
         },
         function (error, result) {
