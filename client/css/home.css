@@ -2,7 +2,7 @@
     --dot-size: 30px;
     --dot-meargin: 20px;
     --nav-buttom: 30px;
-    --dot-border: 3px;
+    --dot-border: 1px;
     --background-color: #C3DCF0;
 }
 
@@ -85,16 +85,18 @@
     top: 50%;
     margin-top: -35px;
     width: 36px;
-    height: 71px;
+    height: 100px;
     outline: none;
     cursor: pointer;
     background: url(/assets/img/home/blank.gif) no-repeat;
+    background-position-y: 15px;
 }
 
 .arrow.prev {
     opacity: 0.2;
     left: 20px;
     background-image: url(/assets/img/home/paddle_prev_999.png);
+    background-color: rgba(0, 0, 0, 0.35);
     transition: 0.2s linear all;
 }
 
@@ -102,6 +104,7 @@
     opacity: 0.2;
     right: 20px;
     background-image: url(/assets/img/home/paddle_next_999.png);
+    background-color: rgba(0, 0, 0, 0.35);
     transition: 0.2s linear all;
 }
 
@@ -168,7 +171,7 @@ NAV
     white-space: nowrap;
     overflow: hidden;
     background: #FFF;
-    border: var(--dot-border) solid transparent;
+    border: var(--dot-border) solid black;
     outline: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -182,6 +185,6 @@ NAV
 }
 
 .dots .dot a.active {
-    border-color: #FFF;
+    border-color: black;
     background-color: transparent;
 }

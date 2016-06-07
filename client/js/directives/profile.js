@@ -85,10 +85,11 @@ angular.module('ProjectHands')
                             
                             if($scope.profilePic === undefined)
                                 $scope.userHaveProfilePic = false;
-                            else
+                            else{
                                 $scope.userHaveProfilePic = true;
-                            
-                            $scope.profilePicUrl = $scope.profilePic.web_link;
+                                $scope.profilePicUrl = $scope.profilePic.web_link;
+                            }
+
                         })
                         .catch(function (error) {
 
@@ -130,6 +131,7 @@ angular.module('ProjectHands')
                                         $scope.progress = false;
                                         // $scope.images.push(data);
                                         $scope.profilePicUrl = data.web_link;
+                                        $scope.userHaveProfilePic = true;
                                     })
                                     .catch(function (error) {
                                         console.log('uploadPhoto error ', error);
