@@ -119,8 +119,8 @@ angular.module('ProjectHands.auth')
 
     /**
      *  Changes user email address
-     * @param oldEmail : the email to be changed
-     * @param newEmail : the email to be used
+     * @param oldEmail {String} : the email to be changed
+     * @param newEmail {String} : the email to be used
      * @returns {*|{method}|Promise|Session}
      */
     function changeEmailRequest(oldEmail, newEmail) {
