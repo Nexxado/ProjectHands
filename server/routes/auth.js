@@ -5,7 +5,6 @@ var passport = require('passport');
 var authUtils = require('../utils/auth');
 var debug = require('debug')('routes/auth');
 var emailUtils = require('../utils/email');
-var writeToClient = require('../utils/writeToClient');
 var config = require('../../config.json');
 var middleware = require('../utils/middleware');
 var validation = require('../utils/validation');

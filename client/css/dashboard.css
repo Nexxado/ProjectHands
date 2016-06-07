@@ -133,7 +133,7 @@ md-menu-item > .md-button {
     margin-right: 5%;
 }
 .renovation-inner-grid-list{
-    overflow: scroll;
+    overflow: auto;
 }
 
 /*==================================================

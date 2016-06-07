@@ -28,7 +28,6 @@ module.exports = {
      * @link ROLES : contains the Roles in the system
      */
     roles: ROLES,
-    messages: MESSAGES,
 
     /**
      * Insert a user to the DataBase

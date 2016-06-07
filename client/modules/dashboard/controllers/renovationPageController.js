@@ -27,8 +27,8 @@ angular.module('ProjectHands.dashboard')
 		}).$promise.then(function (result) {
 			$scope.renovationTeam = result[0];
 			var team = $scope.renovationTeam;
-			for (var i in team.members_email) {
-				$scope.getMemberByEmail(team.members_email[i]);
+			for (var i in team.members) {
+				$scope.getMemberByEmail(team.members[i]);
 			}
 
 		}).catch(function (error) {
