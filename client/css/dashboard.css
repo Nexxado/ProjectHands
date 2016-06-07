@@ -226,3 +226,9 @@ md-menu-item > .md-button {
 	overflow: auto;
 	max-height: 30%;
 }
+
+.rsvp-button{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+}

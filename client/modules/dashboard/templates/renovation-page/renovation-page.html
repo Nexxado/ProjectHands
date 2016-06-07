@@ -13,6 +13,16 @@
 								<i class="material-icons">chat</i> צ'אט
 							</div>
 						</md-button>
+						<md-button layout="row" ng-click="confirmRSVP(myUser.email)" class="md-raised md-primary rsvp-button" ng-hide="my_rsvp">
+							<div layout="row" layout-align="center center">
+								<i class="material-icons" style="padding-left:5px;">thumb_up</i> מאשר הגעה
+							</div>
+						</md-button>
+						<md-button layout="row" ng-click="declineRSVP(myUser.email)" class="md-raised md-accent rsvp-button" ng-show="my_rsvp">
+							<div layout="row" layout-align="center center">
+								<i class="material-icons" style="padding-left:5px;">thumb_down</i> מבטל אישר הגעה
+							</div>
+						</md-button>
 					</div>
 					<md-tabs md-dynamic-height md-border-bottom class="renovation-tabs">
 						<md-tab label="פרטי שיפוץ">
@@ -29,15 +39,29 @@
 											<md-list class="md-dense">
 												<md-divider></md-divider>
 												<md-list-item class="md-3-line" ng-repeat="member in renovationMembers" dir="rtl">
-													<div class="md-list-item-text dashboard-list-text" th:classappend="dashboard-special-list-item" layout="column">
-														<h3>{{member.name}}</h3>
-														<h4>{{member._id}}</h4>
-														<p>{{member.role}}</p>
-														<p>תאריך הצטרפות: {{member.joined_date | date}}</p>
+													<div layout="row">
+														<div class="md-list-item-text dashboard-list-text" th:classappend="dashboard-special-list-item" layout="column">
+															<div layout="row">
+																<h2>{{member.name}}</h2>
+																<h2 ng-show="myUser.email == member.email">אני</h2>
+															</div>
+																<h4>{{member._id}}</h4>
+																<p>{{member.role}}</p>
+																<p>תאריך הצטרפות: {{member.joined_date | date}}</p>
+														</div>
+														<span flex></span>
+														<div layout="row" layout-align="center center">
+															<div layout="row" layout-align="center center">
+																<span ng-show="checkRSVP(member.email)">
+																<i class="material-icons">thumb_up</i> אישר הגעה
+															</span>
+																<span ng-hide="checkRSVP(member.email)">
+																<i class="material-icons">thumb_down</i> לא אישר הגעה
+															</span>
+															</div>
+															<img ng-src="{{member.avatar}}" class="md-avatar" alt="{{item.who}}" />
+														</div>
 													</div>
-													<span flex></span>
-													<h2 ng-show="myUser._id == member._id">אני</h2>
-													<img ng-src="{{member.avatar}}" class="md-avatar" alt="{{item.who}}" />
 													<md-divider></md-divider>
 												</md-list-item>
 												<md-divider></md-divider>

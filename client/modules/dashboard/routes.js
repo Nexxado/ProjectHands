@@ -40,12 +40,6 @@ angular.module('ProjectHands.dashboard')
         controller: 'RenovationPageController'
     })
 
-    .state('dashboard.toolbox', {
-        url: '/toolbox',
-        templateUrl: 'modules/dashboard/templates/toolbox.html',
-        controller: 'DashboardToolboxController'
-    })
-
     .state('dashboard.team', {
         url: '/team/:team_id',
         templateUrl: 'modules/dashboard/templates/team.html',
@@ -72,16 +66,6 @@ angular.module('ProjectHands.dashboard')
         url: '/all-teams',
         templateUrl: 'modules/dashboard/templates/all-teams.html',
         controller: 'AllTeamsController'
-    })
-
-    .state('dashboard.renovations-ref', {
-        url: '/renovations-ref',
-        templateUrl: 'modules/dashboard/templates/renovations-ref.html'
-    })
-
-    .state('dashboard.store-supporters', {
-        url: '/store-supporters',
-        templateUrl: 'modules/dashboard/templates/store-supporters.html'
     })
 
     .state('dashboard.join-requests', {
