@@ -5,6 +5,7 @@ var passport = require('passport');
 var authUtils = require('../utils/auth');
 var debug = require('debug')('routes/auth');
 var emailUtils = require('../utils/email');
+var writeToClient = require('../utils/writeToClient');
 var config = require('../../config.json');
 var middleware = require('../utils/middleware');
 var validation = require('../utils/validation');
@@ -173,31 +174,26 @@ router.post('/forgot', validation.validateParams, function (req, res) {
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
             }
             else {
-                if (result.message !== authUtils.messages.PASSWORD_UPDATE_SUCCESS) {
-                    // return res.redirect(encodeURI('/result/error/' + result));
-                    return res.status(HttpStatus.BAD_REQUEST).send(result);
+                if (result !== config.MESSAGES.PASSWORD_UPDATE_SUCCESS) {
+                    return res.redirect(encodeURI('/result/error/' + result));
 
                 }
 
-                // return res.redirect(encodeURI('/result/info/' + result));
-                return res.send(result);
+                return res.redirect(encodeURI('/result/info/' + result));
             }
 
         });
     }
     else {
-
-        //TODO check if email does not belong to OAuth2 User
-
-        authUtils.passwordResetRequest(email, function (error, result) {
+        authUtils.ResetRequest(email, function (error, result) {
             if (error) {
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
             }
             else {
                 /** the result will be the username if there is no errors*/
-                const USER_DATA_NOT_EXIST = "Wrong Email.";
-                if (result === USER_DATA_NOT_EXIST) {
-                    return res.redirect(encodeURI('/result/error/' + USER_DATA_NOT_EXIST));
+                if (result === config.MESSAGES.USER_EMAIL_NOT_EXIST) {
+                    // writeToClient(res, result, "", HttpStatus.NOT_FOUND);
+                    return res.redirect(encodeURI('/result/error/' + config.MESSAGES.USER_EMAIL_NOT_EXIST));
                 }
                 else {
                     var token = jwt.sign({
@@ -233,6 +229,62 @@ router.get('/reset/:token', function (req, res) {
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
             }
             debug('reset result', result);
+            req.logout();
+            res.redirect('/login/');
+        });
+    });
+});
+router.post('/changeEmailRequest', middleware.ensureAuthenticated, validation.validateParams, function (req, res) {
+    var oldEmail = req.body.oldEmail;
+    var newEmail = req.body.newEmail;
+
+    authUtils.ResetRequest(oldEmail, function (error, result) {
+        if (error) {
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+        }
+        else {
+            /** the result will be the username if there is no errors*/
+            if (result === config.MESSAGES.USER_EMAIL_NOT_EXIST) {
+                return res.redirect(encodeURI('/result/error/' + config.MESSAGES.USER_EMAIL_NOT_EXIST));
+            }
+            else {
+                var token = jwt.sign({
+                    oldEmail: oldEmail,
+                    newEmail: newEmail,
+                    username: result,
+                    iat: Math.floor(Date.now() / 1000)
+                }, serverSecret, {algorithm: 'HS512'});
+                var link = 'http://' + req.hostname + '/api/auth/changeEmail/' + token;
+                emailUtils.changeEmail(oldEmail, result, link);
+
+                var message = "Email has been sent to the current email in order to do the changes.";
+                return res.redirect(encodeURI('/result/info/' + message));
+            }
+        }
+    });
+});
+/**
+ * Change email when link is clicked
+ */
+router.get('/changeEmail/:token', function (req, res) {
+
+    debug('reset email token', req.params.token);
+    jwt.verify(req.params.token, serverSecret, {algorithm: 'HS512'}, function (error, decoded) {
+        if (error)
+            return res.redirect(encodeURI('/result/error/invalid token'));
+        /**iat is a field that is added to be able to calc expire time and such things */
+        delete decoded.iat;
+        authUtils.setEmail(decoded.oldEmail, decoded.newEmail, function (error, result) {
+            if (error) {
+                return res.redirect(encodeURI('/result/error/' + result));
+            }
+
+            /** send a email to the new email and old addresses telling that now its the new one*/
+            emailUtils.changeEmailConfirmation(decoded.newEmail, decoded.username);
+            emailUtils.changeEmailConfirmation(decoded.oldEmail, decoded.username);
+
+            debug('reset result', result);
+            req.logout();
             res.redirect('/login/');
         });
     });

@@ -117,6 +117,21 @@ angular.module('ProjectHands.auth')
 
     }
 
+    /**
+     *  Changes user email address
+     * @param oldEmail : the email to be changed
+     * @param newEmail : the email to be used
+     * @returns {*|{method}|Promise|Session}
+     */
+    function changeEmailRequest(oldEmail, newEmail) {
+        return $resource(baseUrl + '/changeEmailRequest').save({
+            oldEmail: oldEmail,
+            newEmail: newEmail
+        });
+
+    }
+    
+
     return {
         signup: signup,
         oauthSignup: oauthSignup,
@@ -125,6 +140,7 @@ angular.module('ProjectHands.auth')
         logout: logout,
         authenticate: authenticate,
         resetPassword : resetPassword,
-        changePassword:changePassword
+        changePassword:changePassword,
+        changeEmailRequest: changeEmailRequest
     };
 });

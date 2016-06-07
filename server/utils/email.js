@@ -62,7 +62,22 @@ module.exports = {
 
         sendMail(to, "Reset Account password", body);
     },
+    changeEmail: function (to, username, link) {
+        var body = '<h1>פרויקט ידיים</h1>' +
+            '<h2>היי ' + username + '</h2>' +
+            '<h3>התקבלה בקשה לשינוי כתובת אמייל</h3>' +
+            '<p>כדי לאשר את השינוי לחץ על הכפתור למטה</p>' +
+            '<a href="' + link + '"><button>אשר שינוי </button></a>';
 
+        sendMail(to, "Change account email", body);
+    },
+    changeEmailConfirmation: function (to, username) {
+        var body = '<h1>פרויקט ידיים</h1>' +
+            '<h2>היי ' + username + '</h2>' +
+            '<p>  בקשה לשינוי כתיבת אמייל בוצעה <p>';
+
+        sendMail(to, "Email address has been changed", body);
+    },
     /**
      *After user sign up , he will receive this email
      * @param to : the email recipient

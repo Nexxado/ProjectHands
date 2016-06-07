@@ -120,6 +120,10 @@ validation.validateParams = function(req, res, next) {
                 !validateEmail(req.body.email) || !validatePassword(req.body.password))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Email or Password are incorrect"});
             break;
+        case /changeEmailRequest/.test(req.originalUrl):
+            if (!req.body.oldEmail || !req.body.newEmail || !validateEmail(req.body.oldEmail) || !validateEmail(req.body.newEmail))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Emails are incorrect"});
+            break;
 
         case /auth\/forgot/.test(req.originalUrl):
             if(req.isAuthenticated() && (req.user.googleId || req.user.facebookId))
@@ -191,6 +195,10 @@ validation.validateParams = function(req, res, next) {
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name or user email"});
             break;
 
+        case '/forgot':
+            if (!req.body.email || !req.body.new_password || !req.body.old_password || !validatePassword(req.body.new_password))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide legal data"});
+            break
         default:
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "No Validation Performed"});
     }
