@@ -50,7 +50,7 @@ router.get('/all_users', middleware.ensureAuthenticated, middleware.ensurePermis
 /**
  * Get all users who signed up
  */
-router.get('/aLL_signups', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
+router.get('/all_signups', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
 
     mongoUtils.query(COLLECTIONS.USERS, {approved: false}, function (error, result) {
         debug('aLL_signups', error, result);
