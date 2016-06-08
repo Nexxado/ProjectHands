@@ -64,7 +64,7 @@ angular.module('ProjectHands')
         $scope.message.content = '';
     };
 
-    
+
 
 
     //Change date object to HH:MM format
@@ -80,15 +80,16 @@ angular.module('ProjectHands')
         ChatService.getChatHistory($scope.room).$promise
             .then(function (result) {
                 console.log('result', result);
-                // if (result.length > 0)
-                $scope.history = result.messages;
+                if (result.messages && result.messages.length > 0) {
+                    $scope.history = result.messages;
 
-                $scope.history.forEach(function (message) {
-                    message.class = $scope.user.name === message.user ? class_message_self : class_message_others;
-                    message.align = $scope.user.name === message.user ? "end" : "start";
+                    $scope.history.forEach(function (message) {
+                        message.class = $scope.user.name === message.user ? class_message_self : class_message_others;
+                        message.align = $scope.user.name === message.user ? "end" : "start";
 
-                    return parseTimestamp(message);
-                });
+                        return parseTimestamp(message);
+                    });
+                }
 
             })
             .catch(function (error) {
