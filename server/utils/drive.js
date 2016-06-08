@@ -16,7 +16,8 @@ var SCOPES = [
 
 var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
     process.env.USERPROFILE) + '/.credentials/';
-var TOKEN_PATH = TOKEN_DIR + 'drive-nodejs-credentials.json';
+var TOKEN_PATH = '/.credentials/' ;
+    //TOKEN_DIR + 'drive-nodejs-credentials.json';
 
 // Load client secrets from a local file.
 fs.readFile('client_secret.json', function processClientSecrets(err, content) {
@@ -44,7 +45,7 @@ function authorize(credentials, callback) {
     var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
     // Check if we have previously stored a token.
-    fs.readFile(TOKEN_PATH, function (err, token) {
+    fs.readFile('drive-nodejs-credentials.json', function (err, token) {
         if (err) {
             getNewToken(oauth2Client, callback);
         } else {
