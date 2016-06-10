@@ -1,4 +1,4 @@
-<md-dialog aria-label="Edit User Dialog" flex="50">
+<md-dialog aria-label="Edit User Dialog" flex="60" flex-gt-md="45">
     <form name="EditUserForm" ng-submit="submit()" novalidate>
         <md-toolbar dir="rtl">
             <div class="md-toolbar-tools">
@@ -29,7 +29,8 @@
                     <!-- Phone Number-->
                     <md-input-container class="md-icon-float md-block rtl">
                         <label>מס' טלפון</label>
-                        <input type="text" ng-pattern="regexPhone" name="phone" ng-model="user.phone" minlength="9" maxlength="10"
+                        <input type="text" ng-pattern="regexPhone" name="phone" ng-model="user.phone" minlength="9"
+                               maxlength="10"
                                required/>
                         <md-icon class="material-icons">phone</md-icon>
                         <div ng-messages="EditUserForm.phone.$error">
@@ -45,19 +46,17 @@
                         </div>
                     </md-input-container>
                     <!-- Role -->
-                    <md-input-container class="md-block rtl" flex="25">
-                        <label>תפקיד</label>
-                        <md-select name="role" ng-model="user.role" required ng-disabled="!changeRoleEnabled">
-                            <md-option ng-value="role.value" ng-repeat="role in roles">
-                                {{ role.label }}
-                            </md-option>
-                        </md-select>
-                        <!--<div ng-messages="EditUserForm.role.$error">-->
-                            <!--<div ng-message="required">-->
-                                <!--שדה חובה-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    </md-input-container>
+                    <div layout="row" layout-align="end" flex>
+                        <md-input-container class="md-icon-float md-block rtl" flex="25">
+                            <label>תפקיד</label>
+                            <md-icon class="material-icons">account_box</md-icon>
+                            <md-select name="role" ng-model="user.role" required ng-disabled="!changeRoleEnabled">
+                                <md-option ng-value="role" ng-repeat="role in roles">
+                                    {{ role | translateRole }}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
                 </md-content>
             </div>
         </md-dialog-content>
@@ -69,8 +68,8 @@
                 אישור
             </md-button>
             <span flex></span>
-            <md-button class="md-accent" ng-click="changeRoleEnabled = !changeRoleEnabled">
-                שנה תפקיד
+            <md-button class="md-accent" ng-class="{'md-raised' : changeRoleEnabled}" ng-click="enableRoleChange()">
+                {{ changeRoleEnabled ? 'בטל שינוי תפקיד' : 'שנה תפקיד' }}
             </md-button>
         </md-dialog-actions>
     </form>

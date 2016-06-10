@@ -79,6 +79,10 @@
     margin: 0;
 }
 
-.edit-user-form md-input-container:first-of-type {
+.edit-user-form > md-input-container:first-of-type {
     margin-top: 18px;
+}
+
+.edit-user-form md-input-container.md-icon-float > md-icon {
+    top: 10px;
 }

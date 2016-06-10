@@ -162,7 +162,6 @@ angular.module('ProjectHands.dashboard')
             var isMobile = $mdMedia('sm') || $mdMedia('xs');
 
             var temp = angular.copy(user);
-            temp.role = UtilsService.translateRole(temp.role);
 
             $mdDialog.show({
                 controller: function ($scope, $mdDialog, UtilsService, user) {
@@ -191,13 +190,12 @@ angular.module('ProjectHands.dashboard')
         /**
          * Invoke dialog allowing to edit a user's details
          * @param $event
-         * @param user {Object}
+         * @param index {Number} : index of user in users array
          */
-        $scope.editUser = function($event, user) {
+        $scope.editUser = function($event, index) {
             var isMobile = $mdMedia('sm') || $mdMedia('xs');
 
-            var temp = angular.copy(user);
-            temp.role = UtilsService.translateRole(temp.role);
+            var temp = angular.copy($scope.users[index]);
 
             $mdDialog.show({
                 controller: 'EditUserDialogController',
@@ -209,7 +207,10 @@ angular.module('ProjectHands.dashboard')
                 locals: {
                     user: temp
                 }
-            });
+            })
+                .then(function(updatedUser) {
+                    $scope.users[index] = updatedUser;
+                })
         };
 
 

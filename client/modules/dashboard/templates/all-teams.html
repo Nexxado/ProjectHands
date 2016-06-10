@@ -88,7 +88,7 @@
                         <h3>{{ user.name }}</h3>
                         <h4>{{ user.email }}</h4>
                     </div>
-                    <md-button class="md-secondary md-icon-button toggle-fade" ng-show="editUsers" ng-click="editUser($event, user)">
+                    <md-button class="md-secondary md-icon-button toggle-fade" ng-show="editUsers" ng-click="editUser($event, $index)">
                         <md-icon class="material-icons">edit</md-icon>
                     </md-button>
                 </md-list-item>

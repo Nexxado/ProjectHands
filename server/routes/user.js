@@ -135,4 +135,27 @@ router.post('/assign_role', middleware.ensureAuthenticated, middleware.ensurePer
     });
 
 
+/**
+ * Update user details
+ */
+router.post('/update', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureUserExists, function(req, res) {
+
+        var updatedData = {
+            name: req.body.name,
+            phone: req.body.phone,
+            role: req.body.role
+        };
+        
+        mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, {$set: updatedData}, {}, function(error, result) {
+            debug('update', error, result);
+            if (error || result.result.nModified === 0)
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed update user data"});
+
+            return res.send({success: true});
+        })
+        
+    });
+
+
 module.exports = router;

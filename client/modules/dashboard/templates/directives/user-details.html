@@ -3,12 +3,12 @@
         <div class="title">שם: {{ user.name }}</div>
         <div><span class="header">אימייל:</span> {{ user.email }}</div>
         <div><span class="header">מס' טלפון:</span> {{ user.phone }}</div>
-        <div ng-hide="user.signupDate"><span class="header">תאריך הצטרפות:</span> {{ user.joined_date }}</div>
-        <div ng-show="user.signupDate"><span class="header">תאריך הרשמה:</span> {{ user.signupDate }}</div>
+        <div ng-hide="user.signupDate"><span class="header">תאריך הצטרפות:</span> {{ user.joined_date | date: 'dd/MM/yyyy'}}</div>
+        <div ng-show="user.signupDate"><span class="header">תאריך הרשמה:</span> {{ user.signupDate | date: 'dd/MM/yyyy'}}</div>
         <div>
             <span class="header">איזורי התנדבות:</span>
             <span ng-repeat="area in user.area">{{area}}{{$last ? '' : ', '}}</span>
         </div>
-        <div><span class="header">תפקיד:</span> {{ user.role }}</div>
+        <div><span class="header">תפקיד:</span> {{ user.role | translateRole }}</div>
     </div>
 </div>

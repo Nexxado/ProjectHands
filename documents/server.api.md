@@ -38,6 +38,7 @@
     * [Approve User](#approve-user)
     * [Delete User](#delete-user)
     * [Update User Role](#update-user-role)
+    * [Update User Data](#update-user-data)
 * [**Teams**](#teams)
     * [Create Team](#create-team)
     * [Delete Team](#delete-team)
@@ -747,7 +748,7 @@ Approve a user to join Project Hands
 | Type  | Params | Values |
 |---|---|---|
 | BODY | email | String |
-| BODY | newRole | String
+| BODY | newRole | String |
 
 #### Response
 
@@ -760,6 +761,35 @@ Approve a user to join Project Hands
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to find user"} |
 | 500 | {errMessage: "Failed to change user role"} |
+
+---
+
+### Update User Data
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/user/update |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | email | String |
+| BODY | name | String |
+| BODY | phone | String |
+| BODY | role | String |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "Please Provide all required fields"} |
+| 400 | {errMessage: "User does not exists"} |
+| 401 | {errMessage: "Error: User is not logged in"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find user"} |
+| 500 | {errMessage: "Failed to update user data"} |
 
 ---
 
