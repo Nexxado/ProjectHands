@@ -11,12 +11,7 @@
     <md-dialog-content>
         <div class="md-dialog-content">
             <md-content class="signup-info rtl" layout="row" layout-padding>
-                <div layout="column" class="signup-info-main">
-                    <div class="title">שם: {{ user.name }}</div>
-                    <div class="">אימייל: {{ user.email }}</div>
-                    <div>מס' טלפון: {{ user.phone }}</div>
-                    <div>תאריך הרשמה: {{ user.signupDate }}</div>
-                </div>
+                <user-details user="user" layout="column"></user-details>
             </md-content>
         </div>
     </md-dialog-content>

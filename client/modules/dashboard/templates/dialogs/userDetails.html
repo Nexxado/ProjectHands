@@ -10,15 +10,7 @@
     </md-toolbar>
     <md-dialog-content>
         <div class="md-dialog-content">
-            <md-content class="user-info rtl" layout="row" layout-padding>
-                <div layout="column" class="user-info-main">
-                    <div class="title">שם: {{ user.name }}</div>
-                    <div class="">אימייל: {{ user.email }}</div>
-                    <div>מס' טלפון: {{ user.phone }}</div>
-                    <div>תאריך הצטרפות: {{ user.joined_date }}</div>
-                    <div>תפקיד: {{ user.role }}</div>
-                </div>
-            </md-content>
+            <user-details user="user" layout="row" layout-padding></user-details>
         </div>
     </md-dialog-content>
     <md-dialog-actions class="user-actions" layout-align="start">

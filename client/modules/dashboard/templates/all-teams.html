@@ -68,6 +68,9 @@
         <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
             <div class="md-toolbar-tools">
                 <span>משתמשים</span>
+                <md-button class="md-icon-button" ng-click="editUsers = !editUsers">
+                    <md-icon class="material-icons">{{ editUsers ? 'done' : 'edit' }}</md-icon>
+                </md-button>
                 <span flex></span>
                 <!-- Search Input -->
                 <md-input-container class="md-block md-icon-float rtl list-search-input">
@@ -85,6 +88,9 @@
                         <h3>{{ user.name }}</h3>
                         <h4>{{ user.email }}</h4>
                     </div>
+                    <md-button class="md-secondary md-icon-button toggle-fade" ng-show="editUsers" ng-click="editUser($event, user)">
+                        <md-icon class="material-icons">edit</md-icon>
+                    </md-button>
                 </md-list-item>
             </md-list>
         </md-content>

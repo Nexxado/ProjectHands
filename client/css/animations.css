@@ -62,9 +62,9 @@
     transform: translateY(100%);
 }
 
-/*******************************/
+/****************************/
 /***** Toggle Slide Top *****/
-/*******************************/
+/****************************/
 .toggle-slide-top.ng-hide-add,
 .toggle-slide-top.ng-hide-remove  {
     transition: all ease-in-out 500ms;

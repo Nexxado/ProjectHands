@@ -54,7 +54,7 @@ angular.module('ProjectHands')
      * @param date {object}
      */
     function dateToDDMMYYYY(date) {
-        if(!date)
+        if(!date || typeof date !== 'object')
             return '';
 
         var day = date.getDate();

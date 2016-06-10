@@ -155,8 +155,6 @@ angular.module('ProjectHands.auth')
 
     $scope.signupSuccess = false;
     $scope.toastAnchor = 'form';
-    $scope.regexPhone = /^0(5(2|3|4|7|8)|(2|3|4|8)|77 )-?\d{4}-?\d{3}$/;
-    $scope.regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
     /**
      * Workaround for angular material not respecting "rows" attribute on textarea tag

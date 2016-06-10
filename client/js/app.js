@@ -35,6 +35,8 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
 
 .run(function ($rootScope, $mdToast) {
 
+    $rootScope.rootToastAnchor = '#main-view';
+
 
     /*************************/
     /***** DEBUG METHODS *****/

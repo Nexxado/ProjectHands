@@ -119,7 +119,7 @@ module.exports = function (passport) {
                     role: ROLES.ADMIN, //FIXME change initial role to ROLES.GUEST;
                     signup_complete: false,
                     approved: false,
-                    joined_date: new Date().toISOString()
+                    joined_date: new Date()
                 };
 
                 mongoUtils.insert(USERS, newUser, function(error, result) {
@@ -184,7 +184,7 @@ module.exports = function (passport) {
                     role: ROLES.ADMIN, //FIXME change initial role to ROLES.GUEST;
                     signup_complete: false,
                     approved: false,
-                    joined_date: new Date().toISOString()
+                    joined_date: new Date()
                 };
 
                 mongoUtils.insert(USERS, newUser, function(error, result) {

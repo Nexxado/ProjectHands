@@ -12,11 +12,6 @@ angular.module('ProjectHands.dashboard')
         UserService.getAllSignups().$promise
             .then(function (result) {
                 console.info('getAllSignups result', result);
-                result.forEach(function (user) {
-                    if (user.signupDate) {
-                        user.signupDate = UtilsService.dateToDDMMYYYY(new Date(user.signupDate));
-                    }
-                });
                 $scope.signups = result;
             })
             .catch(function (error) {

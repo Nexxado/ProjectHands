@@ -12,8 +12,14 @@ angular.module('ProjectHands.dashboard')
         $scope.searchTeams = '';
         $scope.searchUsers = '';
         $scope.searchTeamMembers = '';
+        $scope.editUsers = false;
 
 
+        /**
+         * Get all users in database
+         * on success, get all the teams in the database
+         * Note: teams list uses user data to get team members info
+         */
         UserService.getAllUsers().$promise
             .then(function (result) {
                 console.info('getAllUsers result', result);
@@ -25,24 +31,23 @@ angular.module('ProjectHands.dashboard')
             });
 
 
-        function getAllTeams() {
-            TeamService.getAllTeams().$promise
-                .then(function (result) {
-                    console.info('getAllTeams result', result);
-                    $scope.teams = result;
-                    getAllTeamsInfo();
-                })
-                .catch(function (error) {
-                    console.info('getAllTeams error', error);
-                });
-        }
 
 
+
+        /**
+         * Shows team members
+         * Invoked when clicking on a team in the teams list
+         * @param team {Object} : the clicked team
+         * @param index {Number} : index in the teams array
+         */
         $scope.showTeamMembers = function (team, index) {
             $scope.selectedTeam = team;
             $scope.selectedIndex = index;
         };
 
+        /**
+         * Hide team members, return to team list view
+         */
         $scope.hideTeamMembers = function () {
             $scope.selectedTeam = undefined;
             $scope.selectedIndex = -1;
@@ -85,41 +90,7 @@ angular.module('ProjectHands.dashboard')
             var isMobile = $mdMedia('sm') || $mdMedia('xs');
 
             $mdDialog.show({
-                controller: function ($scope, $mdToast, $mdDialog, TeamService, usersWithoutTeam, existingTeams) {
-
-                    //Input Models
-                    $scope.usersWithoutTeam = usersWithoutTeam;
-                    $scope.teamName = '';
-                    $scope.teamManager = {
-                        name: '',
-                        email: ''
-                    };
-
-                    //Set Form elements to Invalid if team name already exists
-                    $scope.checkExists = function() {
-                        $scope.CreateTeamForm.teamName.$setValidity('exists', existingTeams.indexOf($scope.teamName) < 0);
-                    };
-
-                    $scope.cancel = function () {
-                        $mdDialog.cancel();
-                    };
-
-                    $scope.submit = function () {
-                        //Make form dirty to enable md-select validation
-                        $scope.CreateTeamForm.$setDirty();
-                        $scope.CreateTeamForm.teamManager.$setDirty();
-                        if($scope.CreateTeamForm.$invalid)
-                            return;
-
-                        TeamService.createTeam($scope.teamName, $scope.teamManager.email).$promise
-                            .then(function(result) {
-                                $mdDialog.hide(result);
-                            })
-                            .catch(function(error) {
-                                
-                            });
-                    };
-                },
+                controller: 'CreateTeamDialogController',
                 templateUrl: '/modules/dashboard/templates/dialogs/createTeam.html',
                 parent: angular.element(document.body),
                 targetEvent: $event,
@@ -154,27 +125,7 @@ angular.module('ProjectHands.dashboard')
             var isMobile = $mdMedia('sm') || $mdMedia('xs');
 
             $mdDialog.show({
-                controller: function ($scope, $mdToast, $mdDialog) {
-                    $scope.team_name = team.name;
-                    $scope.typed_name = "";
-                    $scope.checkedUsers = [];
-
-                    //Set Form elements to Invalid if typed name != team name
-                    $scope.checkTeamName = function() {
-                        $scope.DeleteTeamForm.teamName.$setValidity('match', $scope.typed_name === $scope.team_name);
-                    };
-
-                    $scope.cancel = function () {
-                        $mdDialog.cancel();
-                    };
-
-                    $scope.submit = function () {
-                        if ($scope.DeleteTeamForm.$invalid || $scope.typed_name !== $scope.team_name)
-                            return;
-
-                        $mdDialog.hide(team);
-                    };
-                },
+                controller: 'DeleteTeamDialogController',
                 templateUrl: '/modules/dashboard/templates/dialogs/deleteTeam.html',
                 parent: angular.element(document.body),
                 targetEvent: $event,
@@ -214,7 +165,7 @@ angular.module('ProjectHands.dashboard')
             temp.role = UtilsService.translateRole(temp.role);
 
             $mdDialog.show({
-                controller: function ($scope, $mdDialog, user) {
+                controller: function ($scope, $mdDialog, UtilsService, user) {
 
                     $scope.user = user;
                     $scope.cancel = function () {
@@ -226,6 +177,31 @@ angular.module('ProjectHands.dashboard')
                     }
                 },
                 templateUrl: '/modules/dashboard/templates/dialogs/userDetails.html',
+                parent: angular.element(document.body),
+                targetEvent: $event,
+                clickOutsideToClose: true,
+                fullscreen: isMobile,
+                locals: {
+                    user: temp
+                }
+            });
+        };
+
+
+        /**
+         * Invoke dialog allowing to edit a user's details
+         * @param $event
+         * @param user {Object}
+         */
+        $scope.editUser = function($event, user) {
+            var isMobile = $mdMedia('sm') || $mdMedia('xs');
+
+            var temp = angular.copy(user);
+            temp.role = UtilsService.translateRole(temp.role);
+
+            $mdDialog.show({
+                controller: 'EditUserDialogController',
+                templateUrl: '/modules/dashboard/templates/dialogs/editUser.html',
                 parent: angular.element(document.body),
                 targetEvent: $event,
                 clickOutsideToClose: true,
@@ -343,6 +319,22 @@ angular.module('ProjectHands.dashboard')
                 })
         }
 
+
+        /**
+         * Get all the teams in the database
+         * @requires users data in $scope.users
+         */
+        function getAllTeams() {
+            TeamService.getAllTeams().$promise
+                .then(function (result) {
+                    console.info('getAllTeams result', result);
+                    $scope.teams = result;
+                    getAllTeamsInfo();
+                })
+                .catch(function (error) {
+                    console.info('getAllTeams error', error);
+                });
+        }
 
         /**
          * Get members info for each team

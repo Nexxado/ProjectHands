@@ -15,7 +15,8 @@
     color: white;
 }
 
-.signup-actions button.md-raised.approve-btn:hover {
+.signup-actions button.md-raised.approve-btn:hover,
+.signup-actions button.md-raised.approve-btn:focus {
     background-color: #00796B;
 }
 
@@ -35,6 +36,10 @@
 
 .user-info .user-info-main div {
     padding: 2px 10px;
+}
+
+.user-info .user-info-main .header {
+    font-weight: bold;
 }
 
 .list-signups {
@@ -63,4 +68,17 @@
 
 .list-search-input input {
     width: initial;
+}
+
+
+/**************************/
+/***** Edit User Form *****/
+/**************************/
+
+.edit-user-form md-input-container {
+    margin: 0;
+}
+
+.edit-user-form md-input-container:first-of-type {
+    margin-top: 18px;
 }

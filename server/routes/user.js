@@ -84,7 +84,9 @@ router.post('/approve', middleware.ensureAuthenticated, middleware.ensurePermiss
         if (req.queriedUser.approved)
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User already approved"});
 
-        mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, {$set: {approved: true, role: req.body.role}}, {},
+        mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, 
+            {$set: {approved: true, role: req.body.role}, $unset: {signupDate: ''}}, 
+            {},
             function (error, result) {
                 debug('approve', error, result.result);
 

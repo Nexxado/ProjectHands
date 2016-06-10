@@ -6,12 +6,13 @@
             </div>
         </md-toolbar>
         <md-content class="signup-info rtl" layout="row" layout-padding>
-            <div layout="column" class="signup-info-main">
-                <div class="title">שם: {{ selectedUser.name }}</div>
-                <div class="">אימייל: {{ selectedUser.email }}</div>
-                <div>מס' טלפון: {{ selectedUser.phone }}</div>
-                <div>תאריך הרשמה: {{ selectedUser.signupDate }}</div>
-            </div>
+            <!--<div layout="column" class="signup-info-main">-->
+                <!--<div class="title">שם: {{ selectedUser.name }}</div>-->
+                <!--<div class="">אימייל: {{ selectedUser.email }}</div>-->
+                <!--<div>מס' טלפון: {{ selectedUser.phone }}</div>-->
+                <!--<div>תאריך הרשמה: {{ selectedUser.signupDate }}</div>-->
+            <!--</div>-->
+            <user-details user="selectedUser"></user-details>
             <span flex></span>
             <div class="signup-actions" layout="row" layout-align="center center">
                 <md-button class="md-raised approve-btn" ng-click="approveUser(selectedUser)">

@@ -61,7 +61,7 @@ router.post("/signup", validation.validateParams, function (req, res) {
         debug('signup user', user);
         delete user._id; //TODO check why user is receieved with _id = ''
 
-        user.joined_date = new Date().toISOString();
+        user.joined_date = new Date();
 
         authUtils.signUp(user, function (error, result) {
 

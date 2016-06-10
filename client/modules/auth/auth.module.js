@@ -35,7 +35,8 @@ angular.module('ProjectHands.auth', [])
 
         //Email Regex according to RFC 5322. - http://emailregex.com/
         $rootScope.regexEmail = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
-        $rootScope.rootToastAnchor = '#main-view';
+        $rootScope.regexPhone = /^0(5(2|3|4|7|8)|(2|3|4|8)|77 )-?\d{4}-?\d{3}$/;
+        $rootScope.regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/; //Lowercase, Uppercase and a digit, at least 8 chars long.
         SessionService.getSession(); //Restore session on page refresh
 
         var ROLES_HIERARCHY = Object.keys(ROLES).map(function (key) {
