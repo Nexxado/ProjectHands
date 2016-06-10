@@ -2,6 +2,8 @@ var router = require('express').Router();
 var HttpStatus = require('http-status-codes');
 var jwt = require('jsonwebtoken');
 var passport = require('passport');
+var ExpressBrute = require('express-brute');
+var moment = require('moment');
 var authUtils = require('../utils/auth');
 var debug = require('debug')('routes/auth');
 var emailUtils = require('../utils/email');
@@ -11,11 +13,78 @@ var validation = require('../utils/validation');
 var serverSecret = process.env.SERVER_SECRET || config.SECRETS.serverSecret;
 var ROLES = config.ROLES;
 
+var store = new ExpressBrute.MemoryStore(); // stores state locally, don't use this in production
+
+var failCallback = function (req, res, next, nextValidRequestDate) {
+    return res.send(JSON.stringify({errMessage: ""}));
+};
+var handleStoreError = function (error) {
+    log.error(error); // log this error so we can figure out what went wrong
+    // cause node to exit, hopefully restarting the process fixes the problem
+    throw {
+        message: error.message,
+        parent: error.parent
+    };
+}
+
+// Start slowing requests after 5 failed attempts to do something for the same user
+var emailChange = new ExpressBrute(store, {
+    freeRetries: 5,
+    proxyDepth: 1,
+    minWait: 5 * 60 * 1000, // 5 minutes
+    maxWait: 60 * 60 * 1000, // 1 hour,
+    failCallback: failCallback,
+    handleStoreError: handleStoreError
+});
+// No more than 20 email-change per day per IP
+var globalBruteforce = new ExpressBrute(store, {
+    freeRetries: 40,
+    proxyDepth: 1,
+    attachResetToRequest: false,
+    refreshTimeoutOnRequest: false,
+    minWait: 25 * 60 * 60 * 1000, // 1 day 1 hour (should never reach this wait time)
+    maxWait: 25 * 60 * 60 * 1000, // 1 day 1 hour (should never reach this wait time)
+    lifetime: 24 * 60 * 60, // 1 day (seconds not milliseconds)
+    failCallback: failCallback,
+    handleStoreError: handleStoreError
+});
+
+
+router.get('/testt/:username',
+    globalBruteforce.prevent, emailChange.getMiddleware({
+        key: function (req, res, next) {
+            // prevent too many attempts for the same username
+            next(req.params.username);
+        }
+    }),
+    function (req, res, next) {
+        // normal code over here
+        if (true) {
+            var user = req.params.username;
+            res.send('Success! ' + user);
+
+        } else {
+            if (User.isValidLogin(req.body.username, req.body.password)) { // omitted for the sake of conciseness
+                // reset the failure counter so next time they log in they get 5 tries again before the delays kick in
+
+            } else {
+                res.flash('error', "Invalid username or password")
+                res.redirect('/login'); // bad username/password, send them back to the login page
+            }
+        }
+
+    }
+);
 
 /**
  * User Login - match user password hash to hash in DB using passport strategy
  */
-router.post('/login', validation.validateParams, passport.authenticate('local'), sendUserInfo);
+router.post('/login', validation.validateParams, globalBruteforce.prevent, emailChange.getMiddleware({
+    key: function (req, res, next) {
+        // prevent too many attempts for the same email
+        next(req.body.email);
+    }
+}), passport.authenticate('local'), sendUserInfo);
 
 /**
  * check if user is logged in - has an active session
@@ -159,15 +228,24 @@ router.get('/authenticate/:action', middleware.ensureAuthenticated, middleware.e
  * and the new , old password too, to kip the need to open a new page to enter the passwords
  * the old password is needed if changing password , if forgot option the new password is enough
  */
-router.post('/forgot', validation.validateParams, function (req, res) {
+router.post('/forgot', validation.validateParams,
+    globalBruteforce.prevent, emailChange.getMiddleware({
+        key: function (req, res, next) {
+            // prevent too many attempts for the same email
+            next(req.body.email);
+        }
+    }), function (req, res) {
 
     var email = req.body.email;
-    //  phone = req.params.phone;
     var newPassword = req.body.new_password;
     var oldPassword = req.body.old_password;
 
     /** in the case of change password , the user must be logged in*/
     if (req.isAuthenticated()) {
+        if (oldPassword !== undefined && newPassword !== undefined && newPassword === oldPassword) {
+            return res.redirect(encodeURI('/result/info/' + "please chose password that not match the old one"));
+
+        }
         authUtils.setPassword({email: email}, oldPassword, newPassword, true, function (error, result) {
             if (error) {
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
@@ -233,9 +311,19 @@ router.get('/reset/:token', function (req, res) {
         });
     });
 });
-router.post('/changeEmailRequest', middleware.ensureAuthenticated, validation.validateParams, function (req, res) {
+router.post('/changeEmailRequest', middleware.ensureAuthenticated, validation.validateParams,
+    globalBruteforce.prevent, emailChange.getMiddleware({
+        key: function (req, res, next) {
+            // prevent too many attempts for the same email
+            next(req.body.oldEmail);
+        }
+    }), function (req, res) {
     var oldEmail = req.body.oldEmail;
     var newEmail = req.body.newEmail;
+        /** if they are equal , as no change will lbe done*/
+        if (oldEmail !== undefined && newEmail !== undefined && oldEmail === newEmail) {
+            return res.redirect(encodeURI('/result/info/' + "Please chose email that dose not match the original email"));
+        }
 
     authUtils.ResetRequest(oldEmail, function (error, result) {
         if (error) {
@@ -294,20 +382,23 @@ router.get('/changeEmail/:token', function (req, res) {
  */
 function sendUserInfo(req, res) {
 
-    debug('sendUserInfo', req.user);
+    req.brute.reset(function () {
+        debug('sendUserInfo', req.user);
 
-    return res.send({
-        success: true,
-        name: req.user.name,
-        email: req.user.email,
-        role: req.user.role,
-        phone: req.user.phone,
-        isOAuth: !!(req.user.googleId || req.user.facebookId),
-        approved: req.user.approved,
-        signup_complete: req.user.signup_complete,
-        joined_date: req.user.joined_date,
-        avatar: req.user.avatar
+        return res.send({
+            success: true,
+            name: req.user.name,
+            email: req.user.email,
+            role: req.user.role,
+            phone: req.user.phone,
+            isOAuth: !!(req.user.googleId || req.user.facebookId),
+            approved: req.user.approved,
+            signup_complete: req.user.signup_complete,
+            joined_date: req.user.joined_date,
+            avatar: req.user.avatar
+        });
     });
+
 }
 
 /**
