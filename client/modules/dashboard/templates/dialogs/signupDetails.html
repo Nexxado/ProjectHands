@@ -10,9 +10,20 @@
     </md-toolbar>
     <md-dialog-content>
         <div class="md-dialog-content">
-            <md-content class="signup-info rtl" layout="row" layout-padding>
+            <div class="signup-info rtl" layout="row" layout-padding>
                 <user-details user="user" layout="column"></user-details>
-            </md-content>
+                <!-- Role -->
+                <div class="signup-role" layout="row" flex>
+                    <md-input-container class="md-block rtl" flex>
+                        <label>תפקיד</label>
+                        <md-select name="role" ng-model="selectedRole" required>
+                            <md-option ng-value="role" ng-repeat="role in roles">
+                                {{ role | translateRole }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </div>
         </div>
     </md-dialog-content>
     <md-dialog-actions class="signup-actions" layout-align="start">

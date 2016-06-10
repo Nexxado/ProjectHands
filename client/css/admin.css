@@ -27,6 +27,10 @@
 
 }
 
+.signup-info .signup-role {
+    align-items: center;
+}
+
 .user-info .user-info-main .title {
     font-size: 1.4rem;
     font-weight: bold;
