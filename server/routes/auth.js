@@ -49,33 +49,6 @@ var globalBruteforce = new ExpressBrute(store, {
     handleStoreError: handleStoreError
 });
 
-
-router.get('/testt/:username',
-    globalBruteforce.prevent, emailChange.getMiddleware({
-        key: function (req, res, next) {
-            // prevent too many attempts for the same username
-            next(req.params.username);
-        }
-    }),
-    function (req, res, next) {
-        // normal code over here
-        if (true) {
-            var user = req.params.username;
-            res.send('Success! ' + user);
-
-        } else {
-            if (User.isValidLogin(req.body.username, req.body.password)) { // omitted for the sake of conciseness
-                // reset the failure counter so next time they log in they get 5 tries again before the delays kick in
-
-            } else {
-                res.flash('error', "Invalid username or password")
-                res.redirect('/login'); // bad username/password, send them back to the login page
-            }
-        }
-
-    }
-);
-
 /**
  * User Login - match user password hash to hash in DB using passport strategy
  */
