@@ -32,40 +32,25 @@
 									<!--Renovation Team-->
 									<md-grid-tile class="" md-rowspan="5" md-colspan="2" md-colspan-sm="2" md-rowspan-sm="2" md-colspan-xs="1">
 										<div class="box-wrapper renovation-inner-grid-list">
-											<div layout="row" class="box-header">
-												<h3>צוות משפץ</h3>
-												<span flex></span>
+
+											<!--TODO: make sure to disable tab if team not assigned yet-->
+											<div flex-gt-sm="45" flex-offset-gt-sm="5" flex class="renovation-page grid-tab box-header">
+												<div layout="row">
+													<h3>צוות: </h3> 
+													<h3> {{renovationTeam.name}} </h3>
+												</div>
+
+												<md-content>
+													<md-list class="md-dense list-volunteers" flex>
+														<md-list-item class="md-2-line rtl list-slide-right" ng-repeat="member in renovationTeam.members" ng-click="showUserDetails($event, member)">
+															<div class="md-list-item-text" layout="column">
+																<h3>{{ member.name }}</h3>
+																<h4>{{ member.email }}</h4>
+															</div>
+														</md-list-item>
+													</md-list>
+												</md-content>
 											</div>
-											<md-list class="md-dense">
-												<md-divider></md-divider>
-												<md-list-item class="md-3-line" ng-repeat="member in renovationMembers" dir="rtl">
-													<div layout="row">
-														<div class="md-list-item-text dashboard-list-text" th:classappend="dashboard-special-list-item" layout="column">
-															<div layout="row">
-																<h2>{{member.name}}</h2>
-																<h2 ng-show="myUser.email == member.email">אני</h2>
-															</div>
-																<h4>{{member._id}}</h4>
-																<p>{{member.role}}</p>
-																<p>תאריך הצטרפות: {{member.joined_date | date}}</p>
-														</div>
-														<span flex></span>
-														<div layout="row" layout-align="center center">
-															<div layout="row" layout-align="center center">
-																<span ng-show="checkRSVP(member.email)">
-																<i class="material-icons">thumb_up</i> אישר הגעה
-															</span>
-																<span ng-hide="checkRSVP(member.email)">
-																<i class="material-icons">thumb_down</i> לא אישר הגעה
-															</span>
-															</div>
-															<img ng-src="{{member.avatar}}" class="md-avatar" alt="{{item.who}}" />
-														</div>
-													</div>
-													<md-divider></md-divider>
-												</md-list-item>
-												<md-divider></md-divider>
-											</md-list>
 										</div>
 									</md-grid-tile>
 

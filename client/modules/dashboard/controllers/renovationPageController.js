@@ -3,40 +3,23 @@
  */
 angular.module('ProjectHands.dashboard')
 
-.controller('RenovationPageController', function ($scope, $stateParams, $mdSidenav, $mdMedia, $mdDialog, DatabaseService, COLLECTIONS) {
+.controller('RenovationPageController', function ($scope, $stateParams, $mdSidenav, $mdMedia, $mdDialog, DatabaseService, COLLECTIONS, UtilsService) {
 
 	/******Getters******/
-	$scope.getRenovation = function (city, street, num) {
-		for (var reno in $scope.renovations) {
-			var renovation = $scope.renovations[reno];
-			if (renovation.addr.city == city && renovation.addr.street == street && renovation.addr.num == num) {
-				$scope.thisRenovation = renovation;
-				$scope.getRenovationTeam($scope.thisRenovation.team_id);
-				return;
-			}
-		}
-		$scope.renovationNotFound = true;
-
-	};
-
+	
+	/*TODO: switch with the appropriate route*/
 	$scope.getRenovationTeam = function (team_id) {
-		//		var team_id = $scope.thisRenovation.team_id;
-		$scope.renovationMembers = [];
 		DatabaseService.query(COLLECTIONS.TEAMS, {
 			_id: team_id
 		}).$promise.then(function (result) {
 			$scope.renovationTeam = result[0];
-			var team = $scope.renovationTeam;
-			for (var i in team.members) {
-				$scope.getMemberByEmail(team.members[i]);
-			}
-
 		}).catch(function (error) {
 			console.log("Error: ", error);
 		});
 
 	};
-
+	
+	/*TODO: switch with the appropriate route*/
 	$scope.getMemberByEmail = function (email) {
 		DatabaseService.query(COLLECTIONS.USERS, {
 			email: email
@@ -50,27 +33,47 @@ angular.module('ProjectHands.dashboard')
 
 	/******Variables Declarations******/
 	$scope.thisRenovation = "";
+	
+	/*TODO: switch with the appropriate route*/
+	DatabaseService.query(COLLECTIONS.RENOVATIONS, {
+			addr: {
+				city: $stateParams.city,
+				street: $stateParams.street,
+				num: $stateParams.num
+		}
+		}).$promise.then(function (result) {
+                $scope.thisRenovation = result[0];
+				$scope.initializeVariables();
+            }).catch(function (error) {
+                console.log("Error: ", error);
+     });
+	
+	
+	/******First call to get Renovation before initializing more variables******/
 	$scope.renovationNotFound = false;
-	$scope.renovationMembers = [];
 	$scope.renovationTeam = "";
 	$scope.editMessagesMode = false;
 	$scope.editTasksMode = false;
 	$scope.editToolsMode = false;
-	$scope.needToAssignTeam = ($scope.renovationCurrentStage === "עובד סוציאלי עודכן, יש צורך לשבץ צוות");
 	$scope.editStagesMode = false;
 	$scope.lastStage = "";
-	$scope.minDate = new Date();
-
-
-	/******First call to get Renovation before initializing more variables******/
-	$scope.getRenovation($stateParams.city, $stateParams.street, $stateParams.num);
-
+	$scope.minDate = "";
+	$scope.needToAssignTeam = "";
+	$scope.renovationChatRoom = "";
+	$scope.renovationStages = "";
+	$scope.renovationCurrentStage = "";
+	$scope.renovationProgress = "";
 
 	/******Initialize more Variables******/
-	$scope.renovationChatRoom = [$scope.thisRenovation.chat_id];
-	$scope.renovationStages = $scope.thisRenovation.renovation_stages;
-	$scope.renovationCurrentStage = $scope.thisRenovation.current_stage;
-	$scope.renovationProgress = Math.floor((100 / ($scope.renovationStages.length)) * ($scope.renovationStages.indexOf($scope.renovationCurrentStage) + 1));
+	$scope.initializeVariables = function(){
+		$scope.getRenovationTeam($scope.thisRenovation.team_id);
+		$scope.minDate = new Date();
+		$scope.needToAssignTeam = ($scope.renovationCurrentStage === "עובד סוציאלי עודכן, יש צורך לשבץ צוות");
+		$scope.renovationChatRoom = [$scope.thisRenovation.chat_id];
+		$scope.renovationStages = $scope.thisRenovation.renovation_stages;
+		$scope.renovationCurrentStage = $scope.thisRenovation.current_stage;
+		$scope.renovationProgress = Math.floor((100 / ($scope.renovationStages.length)) * ($scope.renovationStages.indexOf($scope.renovationCurrentStage) + 1));
+	}
 
 
 	/******Editing Mode Functions******/
@@ -94,6 +97,7 @@ angular.module('ProjectHands.dashboard')
 
 
 	/******Adding Dialogs******/
+	/*TODO: switch with the appropriate route for each updating of the variables*/
 	$scope.addTask = function ($event) {
 		var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
 		$mdDialog.show({
@@ -480,6 +484,7 @@ angular.module('ProjectHands.dashboard')
 
 
 	/******Deleting Dialogs******/
+	/*TODO: switch with the appropriate route for each delete of a variable*/
 	$scope.deleteTask = function (task) {
 		var reno = $scope.thisRenovation;
 		DatabaseService.update(
@@ -619,4 +624,38 @@ angular.module('ProjectHands.dashboard')
 	$scope.my_rsvp = $scope.checkRSVP($scope.myUser.email);
 	
 	
+	/******Information Dialogs******/
+	/**
+         * Invoke dialog showing the user details
+         * @param $event
+         * @param user {Object}
+         */
+        $scope.showUserDetails = function ($event, user) {
+            var isMobile = $mdMedia('sm') || $mdMedia('xs');
+
+            var temp = angular.copy(user);
+            temp.role = UtilsService.translateRole(temp.role);
+
+            $mdDialog.show({
+                controller: function ($scope, $mdDialog, user) {
+
+                    $scope.user = user;
+                    $scope.cancel = function () {
+                        $mdDialog.cancel();
+                    };
+
+                    $scope.submit = function () {
+                        $mdDialog.hide();
+                    }
+                },
+                templateUrl: '/modules/dashboard/templates/dialogs/userDetails.html',
+                parent: angular.element(document.body),
+                targetEvent: $event,
+                clickOutsideToClose: true,
+                fullscreen: isMobile,
+                locals: {
+                    user: temp
+                }
+            });
+        };
 });

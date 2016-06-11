@@ -116,6 +116,13 @@ md-menu-item > .md-button {
     bottom: 0;
     background-color: white;
 }
+.renovation-page.grid-tab{
+	max-height: 100%;
+	max-width: 100%;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+}
 .box h3 {
     text-align: center;
     position: relative;
