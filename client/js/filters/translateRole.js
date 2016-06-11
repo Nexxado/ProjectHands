@@ -11,9 +11,9 @@ angular.module('ProjectHands')
             case ROLES.VOLUNTEER:
                 return 'מתנדב';
             case ROLES.TEAM_LEAD:
-                return 'מנהל צוות';
+                return 'ראש צוות';
             case ROLES.MANAGER:
-                return 'מנהל כללי';
+                return 'מנהל';
             case ROLES.ADMIN:
                 return 'אדמין';
             default:
