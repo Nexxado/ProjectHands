@@ -10,6 +10,17 @@ angular.module('ProjectHands.dashboard')
         scope: {
             user: '='
         },
-        templateUrl: 'modules/dashboard/templates/directives/user-details.html'
+        templateUrl: 'modules/dashboard/templates/directives/user-details.html',
+        controller: function($scope) {
+
+            $scope.isEmpty = function(variable) {
+                if(typeof variable === 'string')
+                    return variable === '';
+                else if(Array.isArray(variable))
+                    return variable.length === 0;
+                else
+                    return true;
+            }
+        }
     };
 });

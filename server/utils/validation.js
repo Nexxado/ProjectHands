@@ -71,7 +71,11 @@ function validateSignup(user) {
         return false;
     }
 
-    if(!user.area || !user.area.length || (user.team_leader && user.team_leader.length > 1))
+    if(!Array.isArray(user.area) || !user.area.length 
+        || !Array.isArray(user.team_leader) || user.team_leader.length > 1 
+        || !Array.isArray(user.preferred_day)
+        || typeof user.remarks !== 'string'
+        || typeof user.extra !== 'string')
         return false;
 
     return validateEmail(user.email) && validatePassword(user.password) && validatePhone(user.phone) && validateString(user.name);
@@ -95,7 +99,11 @@ function validateOauthSignup(info) {
         return false;
     }
 
-    if(!info.area || !info.area.length || (info.team_leader && info.team_leader.length > 1))
+    if(!Array.isArray(info.area) || !info.area.length
+        || !Array.isArray(info.team_leader) || info.team_leader.length > 1
+        || !Array.isArray(info.preferred_day)
+        || typeof info.remarks !== 'string'
+        || typeof info.extra !== 'string')
         return false;
 
     return validatePhone(info.phone);
@@ -110,7 +118,7 @@ function validateMembers(members) {
     
     // members = JSON.parse(members);
 
-    if(typeof members !== 'object' || !Array.isArray(members))
+    if(!Array.isArray(members) || !members.length)
         return false;
 
     for(var i = 0; i < members.length; i++) {

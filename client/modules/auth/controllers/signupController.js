@@ -11,6 +11,7 @@ angular.module('ProjectHands.auth')
         getSelected($scope.volunteer_areas, $scope.user.area);
         getSelected($scope.preferred_day, $scope.user.preferred_day);
         getSelected($scope.team_leader, $scope.user.team_leader);
+        $scope.clearEmptyTextArea();
 
         AuthService.signup($scope.user).$promise
             .then(function (data) {

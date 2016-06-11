@@ -55,6 +55,9 @@ router.post("/signup", validation.validateParams, function (req, res) {
     try {
         var user = JSON.parse(req.body.user);
         user.email = user.email.toLowerCase();
+        user.team_leader = user.team_leader[0] || '';
+        if(info.remarks.match(/^\s+$/))
+            info.remarks = '';
 
         user.role = ROLES.ADMIN; //FIXME change initial role to ROLES.GUEST;
 
@@ -92,6 +95,10 @@ router.post('/signup_oauth', middleware.ensureAuthenticated, validation.validate
 
     try {
         var info = JSON.parse(req.body.info);
+        info.team_leader = info.team_leader[0] || '';
+        if(info.remarks.match(/^\s+$/))
+            info.remarks = '';
+
         authUtils.oauthSignup(req.user, info, function (error, result) {
 
             if (error)
