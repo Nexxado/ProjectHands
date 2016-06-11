@@ -232,3 +232,51 @@ md-menu-item > .md-button {
 	bottom: 0px;
 	left: 0px;
 }
+
+/* ==================================
+ * Dashboard Chat Sidenav
+ * ================================== */
+.dashboard-chat-sidenav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    height: 100%;
+}
+
+.dashboard-chat-sidenav md-backdrop {
+    position: fixed;
+}
+
+/* ==================================
+ * Nested ui-view animation
+ * ================================= */
+.dashboard-view-slide-top.ng-enter, .dashboard-view-slide-top.ng-leave {
+    transition: all 500ms ease;
+    -webkit-transition: all 500ms ease;
+    -moz-transition: all 500ms ease;
+}
+
+.dashboard-view-slide-top.ng-enter {
+    position: absolute;
+    width: 98%;
+    opacity: 0;
+    transform: translateY(-100%);
+}
+
+.dashboard-view-slide-top.ng-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.dashboard-view-slide-top.ng-leave {
+    position: absolute;
+    width: 98%;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dashboard-view-slide-top.ng-leave-active {
+    opacity: 0;
+    transform: translateY(-100%);
+}

@@ -12,14 +12,14 @@
                     <!-- Teams Search Input -->
                     <div class="toggle-fade toggle-slide-left" ng-hide="selectedTeam">
                         <md-input-container class="md-block md-icon-float rtl list-search-input">
-                            <input type="text" name="search-teams" ng-model="searchTeams"/>
+                            <input aria-label="search teams" type="text" name="search-teams" ng-model="searchTeams"/>
                             <md-icon class="material-icons">search</md-icon>
                         </md-input-container>
                     </div>
                     <!-- Team Members Search Input -->
                     <div class="toggle-fade toggle-slide-left" ng-show="selectedTeam">
                         <md-input-container class="md-block md-icon-float rtl list-search-input">
-                            <input type="text" name="search-team-members" ng-model="searchTeamMembers"/>
+                            <input aria-label="search team members" type="text" name="search-team-members" ng-model="searchTeamMembers"/>
                             <md-icon class="material-icons">search</md-icon>
                         </md-input-container>
                     </div>
@@ -74,7 +74,7 @@
                 <span flex></span>
                 <!-- Search Input -->
                 <md-input-container class="md-block md-icon-float rtl list-search-input">
-                    <input type="text" name="search-users" ng-model="searchUsers"/>
+                    <input aria-label="search users" type="text" name="search-users" ng-model="searchUsers"/>
                     <md-icon class="material-icons">search</md-icon>
                 </md-input-container>
             </div>

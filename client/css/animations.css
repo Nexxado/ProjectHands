@@ -108,6 +108,37 @@
     transform: translateX(100%);
 }
 
+/******************************/
+/***** UI-View Animations *****/
+/******************************/
+
+/***** Fade in/out *****/
+.view-fade.ng-enter, .view-fade.ng-leave {
+    transition: all 500ms ease;
+    -webkit-transition: all 500ms ease;
+    -moz-transition: all 500ms ease;
+}
+
+.view-fade.ng-enter {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+}
+
+.view-fade.ng-enter-active {
+    opacity: 1;
+}
+
+.view-fade.ng-leave {
+    position: absolute;
+    width: 100%;
+    opacity: 1;
+}
+
+.view-fade.ng-leave-active {
+    opacity: 0;
+}
+
 /**************************************/
 /***** List Animations - ngRepeat *****/
 /**************************************/
