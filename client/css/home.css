@@ -62,8 +62,13 @@
     top: 10px;
 }
 
+.home-photo-slider{
+    width: inherit;
+    height: inherit;
+}
+
 .slider {
-    width: 1000px;
+    width: 80%;
     height: 600px;
     overflow: hidden;
     position: relative;

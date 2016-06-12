@@ -1,60 +1,65 @@
 angular.module('ProjectHands.statistics')
+    .factory("StatisticsService", function ($rootScope, $resource, $cookies, $q) {
 
-    .controller('StatisticsController', function ($scope, StatisticsService) {
+        var baseUrl = '/api/statistics';
 
-        var year = 2001;
-        var month = 4;
-        var day_s = 1;
-        var day_e = 11;
+        function getVolunteersCountPerDate(year, month, dayFrom, dayTo) {
+            var date = {
+                year: year,
+                month: month,
+                dayFrom: dayFrom,
+                dayTo: dayTo
+            };
+            return $resource(baseUrl + '/VolunteersCountPerDate').get({date: JSON.stringify(date)});
+        }
 
-        StatisticsService.getVolunteersCountPerDate(year, month, day_s, day_e)
-            .$promise
-            .then(function (result) {
-                console.log('result ' + result.toString());
-            })
-            .catch(function (error) {
-                console.log('error ' + error.toString());
-            });
+        function getRenovationsVolunteersNumberPerDate(year, month, dayFrom, dayTo) {
+            var date = {
+                year: year,
+                month: month,
+                dayFrom: dayFrom,
+                dayTo: dayTo
+            };
+            return $resource(baseUrl + '/renovationsVolunteersNumberPerDate').get({date: JSON.stringify(date)});
+        }
 
+        function getRenovationsCostPerDate(year, month, dayFrom, dayTo) {
+            var date = {
+                year: year,
+                month: month,
+                dayFrom: dayFrom,
+                dayTo: dayTo
+            };
+            return $resource(baseUrl + '/renovationsCostPerDate').get({date: JSON.stringify(date)});
+        }
 
-        StatisticsService.getRenovationsVolunteersNumberPerDate(year, month, day_s, day_e)
-            .$promise
-            .then(function (result) {
-                console.log('result ' + result.toString());
-            })
-            .catch(function (error) {
-                console.log('error ' + error.toString());
-            });
+        function getRenovationsVolunteeringHoursPerDate(year, month, dayFrom, dayTo) {
+            var date = {
+                year: year,
+                month: month,
+                dayFrom: dayFrom,
+                dayTo: dayTo
+            };
+            return $resource(baseUrl + '/renovationsVolunteeringHoursPerDate').get({date: JSON.stringify(date)});
+        }
 
+        function getRenovationsPerDate(year, month, dayFrom, dayTo) {
+            var date = {
+                year: year,
+                month: month,
+                dayFrom: dayFrom,
+                dayTo: dayTo
+            };
 
-        StatisticsService.getRenovationsCostPerDate(year, month, day_s, day_e)
-            .$promise
-            .then(function (result) {
-                console.log('result ' + result.toString());
-            })
-            .catch(function (error) {
-                console.log('error ' + error.toString());
-            });
+            return $resource(baseUrl + '/renovationsPerDate').get({date: JSON.stringify(date)});
+        }
 
-
-        StatisticsService.getRenovationsVolunteeringHoursPerDate(year, month, day_s, day_e)
-            .$promise
-            .then(function (result) {
-                console.log('result ' + result.toString());
-            })
-            .catch(function (error) {
-                console.log('error ' + error.toString());
-            });
-
-
-        StatisticsService.getRenovationsPerDate(year, month, day_s, day_e)
-            .$promise
-            .then(function (result) {
-                console.log('result ' + result.toString());
-            })
-            .catch(function (error) {
-                console.log('error ' + error.toString());
-            });
-
+        return {
+            getVolunteersCountPerDate: getVolunteersCountPerDate,
+            getRenovationsVolunteersNumberPerDate: getRenovationsVolunteersNumberPerDate,
+            getRenovationsCostPerDate: getRenovationsCostPerDate,
+            getRenovationsVolunteeringHoursPerDate: getRenovationsVolunteeringHoursPerDate,
+            getRenovationsPerDate: getRenovationsPerDate
+        };
 
     });

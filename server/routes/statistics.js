@@ -4,7 +4,7 @@ var statisticsUtils = require('../utils/statistics');
 var debug = require('debug')('routes/statistics');
 var middleware = require('../utils/middleware');
 
-router.get('/VolunteersCountPerDate/:date', middleware.ensureAuthenticated, middleware.ensurePermission,
+router.get('/VolunteersCountPerDate/:date',
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
