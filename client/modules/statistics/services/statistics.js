@@ -3,50 +3,60 @@ angular.module('ProjectHands.statistics')
 
         var baseUrl = '/api/statistics';
 
-        function getVolunteersCountPerDate(year, month, dayFrom, dayTo) {
+        function getVolunteersCountPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo) {
             var date = {
-                year: year,
-                month: month,
+                yearFrom: yearFrom,
+                yearTo: yearTo,
+                monthFrom: monthFrom,
+                monthTo: monthTo,
                 dayFrom: dayFrom,
                 dayTo: dayTo
             };
             return $resource(baseUrl + '/VolunteersCountPerDate').get({date: JSON.stringify(date)});
         }
 
-        function getRenovationsVolunteersNumberPerDate(year, month, dayFrom, dayTo) {
+        function getRenovationsVolunteersNumberPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo) {
             var date = {
-                year: year,
-                month: month,
+                yearFrom: yearFrom,
+                yearTo: yearTo,
+                monthFrom: monthFrom,
+                monthTo: monthTo,
                 dayFrom: dayFrom,
                 dayTo: dayTo
             };
             return $resource(baseUrl + '/renovationsVolunteersNumberPerDate').get({date: JSON.stringify(date)});
         }
 
-        function getRenovationsCostPerDate(year, month, dayFrom, dayTo) {
+        function getRenovationsCostPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo) {
             var date = {
-                year: year,
-                month: month,
+                yearFrom: yearFrom,
+                yearTo: yearTo,
+                monthFrom: monthFrom,
+                monthTo: monthTo,
                 dayFrom: dayFrom,
                 dayTo: dayTo
             };
             return $resource(baseUrl + '/renovationsCostPerDate').get({date: JSON.stringify(date)});
         }
 
-        function getRenovationsVolunteeringHoursPerDate(year, month, dayFrom, dayTo) {
+        function getRenovationsVolunteeringHoursPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo) {
             var date = {
-                year: year,
-                month: month,
+                yearFrom: yearFrom,
+                yearTo: yearTo,
+                monthFrom: monthFrom,
+                monthTo: monthTo,
                 dayFrom: dayFrom,
                 dayTo: dayTo
             };
             return $resource(baseUrl + '/renovationsVolunteeringHoursPerDate').get({date: JSON.stringify(date)});
         }
 
-        function getRenovationsPerDate(year, month, dayFrom, dayTo) {
+        function getRenovationsPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo) {
             var date = {
-                year: year,
-                month: month,
+                yearFrom: yearFrom,
+                yearTo: yearTo,
+                monthFrom: monthFrom,
+                monthTo: monthTo,
                 dayFrom: dayFrom,
                 dayTo: dayTo
             };
