@@ -1,7 +1,67 @@
-<div style="background-color: var(--background-color)">
+<div class="rtl">
 
-    <div style="margin: 32px">
-        <paypal-button></paypal-button>
+    <div>
+
+        <div layout="row" layout-align="start center">
+            <h4>תאריך התחלה</h4>
+            <form name="startDateForm">
+                <md-datepicker name="startDateField"
+                               ng-model="startDate"
+                               md-placeholder="Enter date"
+                               required>
+
+                </md-datepicker>
+                <div class="stat-dp-validation-messages"
+                     ng-messages="startDateForm.dateField.$error">
+                    <div ng-message="valid">The entered value is not a date!</div>
+                    <div ng-message="required">This date is required!</div>
+                </div>
+            </form>
+
+            <h4>תאריך סיום</h4>
+            <form name="endDateForm">
+                <md-datepicker name="endDateField"
+                               ng-model="endDate"
+                               md-placeholder="Enter date"
+                               required>
+
+                </md-datepicker>
+                <div class="stat-dp-validation-messages"
+                     ng-messages="endDateForm.dateField.$error">
+                    <div ng-message="valid">The entered value is not a date!</div>
+                    <div ng-message="required">This date is required!</div>
+                </div>
+            </form>
+
+
+        </div>
+
+        <md-button class="md-raised md-primary" ng-click="submit()">קבל סטטיסטיקות</md-button>
+
+        <div>
+            <h3>מספר מתנדבים</h3>
+            <h4>תוצאה...</h4>
+        </div>
+
+        <div>
+            <h3>מספר מתנדבים לשיפוצים</h3>
+            <h4>תוצאה...</h4>
+        </div>
+
+        <div>
+            <h3>עלות השיפוצים</h3>
+            <h4>תוצאה...</h4>
+        </div>
+
+        <div>
+            <h3>שעות שיפוץ</h3>
+            <h4>תוצאה...</h4>
+        </div>
+
+        <div>
+            <h3>מספר שיפוצים</h3>
+            <h4>תוצאה...</h4>
+        </div>
     </div>
 
 

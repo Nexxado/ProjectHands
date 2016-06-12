@@ -9,8 +9,8 @@ router.get('/VolunteersCountPerDate/:date',
         try {
             var date = JSON.parse(req.params.date);
             debug("request data : ", date);
-            statisticsUtils.getVolunteersCountPerDate(date.year, date.month, date.dayFrom, date.dayTo, function (error, result) {
-                res.send(result);
+            statisticsUtils.getVolunteersCountPerDate(date.yearFrom, date.yearTo, date.monthFrom, date.monthTo, date.dayFrom, date.dayTo, function (error, result) {
+                res.send("" + result);
             });
         }
         catch (e) {
@@ -20,12 +20,12 @@ router.get('/VolunteersCountPerDate/:date',
     });
 
 
-router.get('/renovationsVolunteersNumberPerDate/:date', middleware.ensureAuthenticated, middleware.ensurePermission,
+router.get('/renovationsVolunteersNumberPerDate/:date',
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
             debug("request data : ", date);
-            statisticsUtils.getRenovationsVolunteersNumberPerDate(date.year, date.month, date.dayFrom, date.dayTo, function (error, result) {
+            statisticsUtils.getRenovationsVolunteersNumberPerDate(date.yearFrom, date.yearTo, date.monthFrom, date.monthTo, date.dayFrom, date.dayTo, function (error, result) {
                 res.send(result);
             });
         }
@@ -35,12 +35,12 @@ router.get('/renovationsVolunteersNumberPerDate/:date', middleware.ensureAuthent
         }
     });
 
-router.get('/renovationsCostPerDate/:date', middleware.ensureAuthenticated, middleware.ensurePermission,
+router.get('/renovationsCostPerDate/:date',
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
             debug("request data : ", date);
-            statisticsUtils.getRenovationsCostPerDate(date.year, date.month, date.dayFrom, date.dayTo, function (error, result) {
+            statisticsUtils.getRenovationsCostPerDate(date.yearFrom, date.yearTo, date.monthFrom, date.monthTo, date.dayFrom, date.dayTo, function (error, result) {
                 res.send(result);
             });
         }
@@ -50,12 +50,12 @@ router.get('/renovationsCostPerDate/:date', middleware.ensureAuthenticated, midd
         }
     });
 
-router.get('/renovationsVolunteeringHoursPerDate/:date', middleware.ensureAuthenticated, middleware.ensurePermission,
+router.get('/renovationsVolunteeringHoursPerDate/:date',
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
             debug("request data : ", date);
-            statisticsUtils.getRenovationsVolunteeringHoursPerDate(date.year, date.month, date.dayFrom, date.dayTo, function (error, result) {
+            statisticsUtils.getRenovationsVolunteeringHoursPerDate(date.yearFrom, date.yearTo, date.monthFrom, date.monthTo, date.dayFrom, date.dayTo, function (error, result) {
                 res.send(result);
             });
         }
@@ -65,12 +65,12 @@ router.get('/renovationsVolunteeringHoursPerDate/:date', middleware.ensureAuthen
         }
     });
 
-router.get('/renovationsPerDate/:date', middleware.ensureAuthenticated, middleware.ensurePermission,
+router.get('/renovationsPerDate/:date',
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
             debug("request data : ", date);
-            statisticsUtils.getRenovationsPerDate(date.year, date.month, date.dayFrom, date.dayTo, function (error, result) {
+            statisticsUtils.getRenovationsPerDate(date.yearFrom, date.yearTo, date.monthFrom, date.monthTo, date.dayFrom, date.dayTo, function (error, result) {
                 res.send(result);
             });
         }

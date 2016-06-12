@@ -3,49 +3,65 @@ angular.module('ProjectHands.statistics')
 
         var baseUrl = '/api/statistics';
 
-        function getVolunteersCountPerDate(year, month, dayFrom, dayTo) {
-            return $resource(baseUrl + '/VolunteersCountPerDate').get({
-                year: year,
-                month: month,
+        function getVolunteersCountPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo) {
+            var date = {
+                yearFrom: yearFrom,
+                yearTo: yearTo,
+                monthFrom: monthFrom,
+                monthTo: monthTo,
                 dayFrom: dayFrom,
                 dayTo: dayTo
-            });
+            };
+            return $resource(baseUrl + '/VolunteersCountPerDate').get({date: JSON.stringify(date)});
         }
 
-        function getRenovationsVolunteersNumberPerDate(year, month, dayFrom, dayTo) {
-            return $resource(baseUrl + '/renovationsVolunteersNumberPerDate').get({
-                year: year,
-                month: month,
+        function getRenovationsVolunteersNumberPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo) {
+            var date = {
+                yearFrom: yearFrom,
+                yearTo: yearTo,
+                monthFrom: monthFrom,
+                monthTo: monthTo,
                 dayFrom: dayFrom,
                 dayTo: dayTo
-            });
+            };
+            return $resource(baseUrl + '/renovationsVolunteersNumberPerDate').get({date: JSON.stringify(date)});
         }
 
-        function getRenovationsCostPerDate(year, month, dayFrom, dayTo) {
-            return $resource(baseUrl + '/renovationsCostPerDate').get({
-                year: year,
-                month: month,
+        function getRenovationsCostPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo) {
+            var date = {
+                yearFrom: yearFrom,
+                yearTo: yearTo,
+                monthFrom: monthFrom,
+                monthTo: monthTo,
                 dayFrom: dayFrom,
                 dayTo: dayTo
-            });
+            };
+            return $resource(baseUrl + '/renovationsCostPerDate').get({date: JSON.stringify(date)});
         }
 
-        function getRenovationsVolunteeringHoursPerDate(year, month, dayFrom, dayTo) {
-            return $resource(baseUrl + '/renovationsVolunteeringHoursPerDate').get({
-                year: year,
-                month: month,
+        function getRenovationsVolunteeringHoursPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo) {
+            var date = {
+                yearFrom: yearFrom,
+                yearTo: yearTo,
+                monthFrom: monthFrom,
+                monthTo: monthTo,
                 dayFrom: dayFrom,
                 dayTo: dayTo
-            });
+            };
+            return $resource(baseUrl + '/renovationsVolunteeringHoursPerDate').get({date: JSON.stringify(date)});
         }
 
-        function getRenovationsPerDate(year, month, dayFrom, dayTo) {
-            return $resource(baseUrl + '/renovationsPerDate').get({
-                year: year,
-                month: month,
+        function getRenovationsPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo) {
+            var date = {
+                yearFrom: yearFrom,
+                yearTo: yearTo,
+                monthFrom: monthFrom,
+                monthTo: monthTo,
                 dayFrom: dayFrom,
                 dayTo: dayTo
-            });
+            };
+
+            return $resource(baseUrl + '/renovationsPerDate').get({date: JSON.stringify(date)});
         }
 
         return {
