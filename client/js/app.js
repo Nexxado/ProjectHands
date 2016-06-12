@@ -1,6 +1,6 @@
 angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages', 'ngCookies', 'ngMaterial',
     'ui.router', 'ct.ui.router.extras', 'gridster', 'ui.calendar',
-    'ProjectHands.dashboard', 'ProjectHands.auth', 'ProjectHands.home', 'ProjectHands.photos', 'ngFileUpload'])
+    'ProjectHands.dashboard', 'ProjectHands.auth', 'ProjectHands.home', 'ProjectHands.photos', 'ngFileUpload', 'pascalprecht.translate'])
 
 
 .config(function ($mdThemingProvider, $provide) {

@@ -1,31 +1,31 @@
 <md-content flex-gt-sm="40" flex-offset-gt-sm="30" layout-padding>
     <div layout="column" layout-align="center center">
-        <h1>השלם תהליך הרשמה</h1>
+        <h1 translate>{{'COMPLETE_REGISTERATION'}}</h1>
     </div>
     <form class="signup-form" name="OAuthSignupForm" ng-submit="submit()" layout="column" novalidate>
         <!-- Phone Number-->
         <md-input-container class="md-icon-float md-block rtl">
-            <label>מס' טלפון</label>
+            <label translate>מס' טלפון</label>
             <input type="text" ng-pattern="regexPhone" name="phone" ng-model="info.phone" minlength="9" maxlength="10"
                    required/>
             <md-icon class="material-icons">phone</md-icon>
             <div ng-messages="OAuthSignupForm.phone.$error">
-                <div ng-message="required">
-                    שדה חובה
+                <div ng-message="required" translate>
+                    {{'REQUIRED'}}
                 </div>
-                <div ng-message="minlength">
-                    דרושים לפחות 9 ספרות
+                <div ng-message="minlength" translate>
+                    {{'PASSWORD_LENGTH'}}
                 </div>
-                <div ng-message="pattern">
-                    מספר אינו חוקי
+                <div ng-message="pattern" translate>
+                    {{'ILLEGAL_NUMBER'}}
                 </div>
             </div>
         </md-input-container>
         <!-- Volunteer Area -->
         <div class="volunteer-area">
             <fieldset dir="rtl" class="required">
-                <legend>אזור בו אתה יכול להתנדב - <b>שדה חובה</b></legend>
-                <div class="fieldset-subheader">ניתן לבחור כמה אזורים</div>
+                <legend translate>{{'VOLUNTEERING_AREA'}}<b translate>{{'REQUIRED'}}</b></legend>
+                <div class="fieldset-subheader" translate>{{'MULTIPLE_AREAS_CAN_BE_SELECTED'}}</div>
                 <div ng-repeat="area in volunteer_areas">
                     <md-checkbox class="rtl" ng-model="area.checked" name="volunteer_areas" ng-change="validateArea()">
                         {{ area.label }}
@@ -34,8 +34,8 @@
                         <input ng-show="$last" type="text" name="other_area" ng-model="area.input"
                                aria-label="area other input" ng-required="$last && area.checked"/>
                         <div ng-messages="OAuthSignupForm.other_area.$error">
-                            <div ng-message="required">
-                                שדה חובה
+                            <div ng-message="required" translate>
+                                {{'REQUIRED'}}
                             </div>
                         </div>
                     </md-input-container>
@@ -45,8 +45,8 @@
         <!-- Preferred Day -->
         <div class="preferred-day">
             <fieldset dir="rtl">
-                <legend>אם יש לך יום קבוע בשבוע שהיית מעדיף - אנא ציין:</legend>
-                <div class="fieldset-subheader">בוקר - 9:00 עד 14:00 אחה"צ - 16:00 עד 21:00</div>
+                <legend translate>{{'PREFERED_DAY'}}</legend>
+                <div class="fieldset-subheader" translate>{{'TIME_IN_DAY'}}</div>
                 <div ng-repeat="day in preferred_day">
                     <md-checkbox class="rtl" ng-model="day.checked" name="preferred_day">
                         {{ day.label }}
@@ -57,9 +57,8 @@
         <!-- Team Leader -->
         <div class="team-leader">
             <fieldset dir="rtl">
-                <legend>האם את/ה רוצה להיות ראש צוות?</legend>
-                <div class="fieldset-subheader">לראש הצוות יש שני תפקידים עיקריים: לבקר בבית המיועד לשיפוץ ולהכין
-                    תוכנית, ולהיות אחראי על התיאומים מול הצוות שלו.
+                <legend translate>{{'DO_YOU_WANT_TO_BE_TEAM_LEAD'}}</legend>
+                <div class="fieldset-subheader" translate> {{'TEAM_LEAD_ROLE'}}
                 </div>
                 <div ng-repeat="option in team_leader">
                     <md-checkbox class="rtl" ng-model="option.checked" name="team_leader"
@@ -76,11 +75,11 @@
         </md-input-container>
         <!-- Extra-->
         <div class="extra">
-            <div class="header">
-                *** האם יש תחום טכני ספציפי שאתה טוב/מנוסה בו?
+            <div class="header" translate>
+                {{'PREFERED_HATED_FIELD'}}
             </div>
-            <div class="subheader">
-                לדוגמא: בנייה בעץ, קרמיקה, חשמל, מנעולים, תריסים, צבע, עיצוב פנים וכו' כל מה שיכול לעזור...
+            <div class="subheader" translate>
+                {{'PREFERED_HATED_FIELD_EXAMPLE'}}
             </div>
         </div>
         <md-input-container class="md-block rtl">

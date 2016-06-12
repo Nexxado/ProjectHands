@@ -1,38 +1,38 @@
 <md-content layout-padding flex-gt-xs="30" flex-offset-gt-xs="35">
     <div layout="column" layout-align="center center">
-        <h1>דף כניסה</h1>
+        <h1 translate>{{'LOGIN_PAGE'}}</h1>
     </div>
 
     <form name="LoginForm" ng-submit="login()" layout="column" novalidate id="loginToastsAnchor">
         <md-input-container class="md-icon-float md-block rtl">
-            <label>אימייל</label>
+            <label translate>{{'EMAIL'}}</label>
             <input type="text" name="email" ng-model="email" ng-pattern="regexEmail" required />
             <md-icon class="material-icons">email</md-icon>
             <div ng-messages="LoginForm.email.$error">
-                <div ng-message="required">
-                    שדה חובה
+                <div ng-message="required" translate>
+                    {{'REQUIRED'}}
                 </div>
-                <div ng-message="pattern">
-                    אימייל שגוי
+                <div ng-message="pattern" translate>
+                    {{'WRONG_EMAIL'}}
                 </div>
             </div>
         </md-input-container>
         <md-input-container class="md-icon-float md-block rtl">
-            <label>סיסמה</label>
+            <label translate>{{'PASSWORD'}}</label>
             <input type="password" name="password" ng-model="password" required />
             <md-icon class="material-icons">lock_outline</md-icon>
             <div ng-messages="LoginForm.password.$error">
-                <div ng-message="required">
-                    שדה חובה
+                <div ng-message="required" translate>
+                    {{'REQUIRED'}}
                 </div>
             </div>
         </md-input-container>
         <div layout="row">
             <div>
-                <md-button type="submit" class="md-accent md-raised white">כניסה</md-button>
+                <md-button type="submit" class="md-accent md-raised white" translate>{{'LOGIN'}}</md-button>
             </div>
             <div>
-                <md-button ng-click="resetPassword($event)" class="md-warn">שכחתי סיסמה</md-button>
+                <md-button ng-click="resetPassword($event)" class="md-warn" translate>{{'FORGOT_PASSWORD'}}</md-button>
             </div>
         </div>
     </form>

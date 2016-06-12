@@ -2,23 +2,23 @@
     <div class="toggle-slide-right toggle-fade list-border dashboard-height" flex-gt-sm="50" flex hide-sm hide-xs ng-show="selectedUser">
         <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
             <div class="md-toolbar-tools">
-                <span>פרטי משתמש</span>
+                <span translate>USER_DETAILS</span>
             </div>
         </md-toolbar>
         <md-content class="signup-info rtl" layout="row" layout-padding>
             <div layout="column" class="signup-info-main">
-                <div class="title">שם: {{ selectedUser.name }}</div>
-                <div class="">אימייל: {{ selectedUser.email }}</div>
-                <div>מס' טלפון: {{ selectedUser.phone }}</div>
-                <div>תאריך הרשמה: {{ selectedUser.signupDate }}</div>
+                <div class="title"> {{ selectedUser.name }} {{'NAME'}}</div>
+                <div class=""> {{ selectedUser.email }} {{'EMAIL'}}</div>
+                <div>{{ selectedUser.phone }} {{'PHONE'}}</div>
+                <div>{{ selectedUser.signupDate }} {{'REGISTER_DATE'}}</div>
             </div>
             <span flex></span>
             <div class="signup-actions" layout="row" layout-align="center center">
-                <md-button class="md-raised approve-btn" ng-click="approveUser(selectedUser)">
-                    אשר משתמש
+                <md-button class="md-raised approve-btn" ng-click="approveUser(selectedUser)" translate>
+                    APPROVE_USER
                 </md-button>
-                <md-button class="md-warn md-raised" ng-click="deleteUser(selectedUser)">
-                    מחק משתמש
+                <md-button class="md-warn md-raised" ng-click="deleteUser(selectedUser)" translate>
+                    DELETE_USER
                 </md-button>
             </div>
         </md-content>
@@ -26,7 +26,7 @@
     <div flex-gt-sm="45" flex-offset-gt-sm="5" flex class="list-border dashboard-height">
         <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
             <div class="md-toolbar-tools">
-                <span>בקשות הצטרפות</span>
+                <span translate>JOIN_REQUESTS</span>
                 <span flex></span>
                 <md-input-container class="md-icon-float rtl list-search-input">
                     <input type="text" name="search" ng-model="search"/>

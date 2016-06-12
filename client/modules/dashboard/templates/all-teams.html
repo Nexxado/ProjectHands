@@ -3,7 +3,7 @@
     <div class="toggle-slide-right toggle-fade list-border dashboard-height admin-list" flex-gt-sm="50" flex>
         <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
             <div class="md-toolbar-tools">
-                <span>צוותים</span>
+                <span translate>TEAM</span>
                 <md-button class="md-icon-button" ng-click="createTeam($event)">
                     <md-icon class="material-icons">add</md-icon>
                 </md-button>
@@ -44,7 +44,7 @@
                     <md-button class="md-icon-button" ng-click="hideTeamMembers()">
                         <md-icon class="material-icons">keyboard_arrow_down</md-icon>
                     </md-button>
-                    <span>חברי צוות {{ selectedTeam.name }}</span>
+                    <span translate>{{ selectedTeam.name }} {{'SELECTED_TEAM_NAME'}} </span>
                     <md-button class="md-icon-button" ng-click="editTeam($event, selectedTeam)" style="float: left">
                         <md-icon class="material-icons">edit</md-icon>
                     </md-button>
@@ -67,7 +67,7 @@
     <div flex-gt-sm="45" flex-offset-gt-sm="5" flex class="list-border dashboard-height admin-list">
         <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
             <div class="md-toolbar-tools">
-                <span>משתמשים</span>
+                <span translate>USERS</span>
                 <span flex></span>
                 <!-- Search Input -->
                 <md-input-container class="md-block md-icon-float rtl list-search-input">

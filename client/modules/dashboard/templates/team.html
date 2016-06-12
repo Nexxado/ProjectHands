@@ -6,8 +6,9 @@
                 <span>{{team.name}}</span>
             </div>
 			<div>
-				<md-button class="md-raised md-warn" ng-click="deleteTeam($event,team)">מחיקה</md-button>
-				<md-button class="md-raised md-warn" ng-click="addTeamMembers($event,team)">הוספת חברי צוות</md-button>
+                <md-button class="md-raised md-warn" ng-click="deleteTeam($event,team)">{{'DELETE'}}</md-button>
+                <md-button class="md-raised md-warn" ng-click="addTeamMembers($event,team)">{{'ADD_TEAM_MEMBERS'}}
+                </md-button>
 			</div>
         </md-toolbar>
         <md-content>
@@ -19,7 +20,7 @@
                         <h3>{{member.name}}</h3>
                         <h4>{{member._id}}</h4>
                         <p>{{member.role}}</p>
-                        <p>תאריך הצטרפות: {{member.joined_date | date}}</p>
+                        <p> {{member.joined_date | date}} {{'JOIN_DATE'}}</p>
                     </div>
                     <span flex></span>
                     <img ng-src="{{member.avatar}}" class="md-avatar" alt="{{item.who}}" />
