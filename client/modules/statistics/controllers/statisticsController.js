@@ -16,24 +16,37 @@ angular.module('ProjectHands.statistics')
             if ($scope.startDateForm.$invalid || $scope.endDateForm.$invalid)
                 return;
 
-            console.log($scope.startDate.getUTCDate());
+            // console.log('UTCDate');
+            // console.log($scope.startDate.toUTCString());
+            // console.log($scope.endDate.toUTCString());
+            //
+            // var ISOStartDate = $scope.startDate.toISOString();
+            // var ISOEndDate = $scope.endDate.toISOString();
+
+            // console.log('ISODate');
+            // console.log(ISOStartDate);
+            // console.log(ISOEndDate);
 
             var startYear = $scope.startDate.getFullYear();
-            var startMonth = $scope.startDate.getMonth();
-            var startDay = $scope.startDate.getUTCDate();
+            var startMonth = $scope.startDate.getMonth() + 1;
+            var startDay = $scope.startDate.getDate();
 
             var endYear = $scope.endDate.getFullYear();
-            var endMonth = $scope.endDate.getMonth();
-            var endDay = $scope.endDate.getUTCDate();
+            var endMonth = $scope.endDate.getMonth() + 1;
+            var endDay = $scope.endDate.getDate();
 
-            console.log($scope.endDate);
+            console.log(startYear);
+            console.log(startMonth);
+            console.log(startDay);
+            console.log(endYear);
+            console.log(endMonth);
+            console.log(endDay);
 
-            $scope.VolunteersCountPerDate = '';
             StatisticsService.getVolunteersCountPerDate(startYear, endYear, startMonth, endMonth, startDay, endDay)
                 .$promise
                 .then(function (result) {
                     console.log('result ' + result.toString());
-                    $scope.volunteersCount = result.toString();
+                    $scope.volunteersCount = result;
                 })
                 .catch(function (error) {
                     console.log('error ' + error.toString());
@@ -43,7 +56,7 @@ angular.module('ProjectHands.statistics')
                 .$promise
                 .then(function (result) {
                     console.log('result ' + result.toString());
-                    $scope.renovationsVolunteersNumber = result.toString();
+                    $scope.renovationsVolunteersNumber = 'totalVolunteers ' + result.totalVolunteers;
                 })
                 .catch(function (error) {
                     console.log('error ' + error.toString());
@@ -54,7 +67,7 @@ angular.module('ProjectHands.statistics')
                 .$promise
                 .then(function (result) {
                     console.log('result ' + result.toString());
-                    $scope.renovationsCost = result.toString();
+                    $scope.renovationsCost = 'totalCost ' + result.totalCost;
                 })
                 .catch(function (error) {
                     console.log('error ' + error.toString());
@@ -65,7 +78,7 @@ angular.module('ProjectHands.statistics')
                 .$promise
                 .then(function (result) {
                     console.log('result ' + result.toString());
-                    $scope.renovationsVolunteeringHours = result.toString();
+                    $scope.renovationsVolunteeringHours = 'totalHours ' + result.totalHours;
                 })
                 .catch(function (error) {
                     console.log('error ' + error.toString());
@@ -76,17 +89,12 @@ angular.module('ProjectHands.statistics')
                 .$promise
                 .then(function (result) {
                     console.log('result ' + result.toString());
-                    $scope.renovations = result.toString();
+                    $scope.renovations = result;
                 })
                 .catch(function (error) {
                     console.log('error ' + error.toString());
                 });
 
         };
-
-
-
-
-
 
     });

@@ -19,7 +19,6 @@ router.get('/VolunteersCountPerDate/:date',
         }
     });
 
-
 router.get('/renovationsVolunteersNumberPerDate/:date',
     function (req, res) {
         try {
