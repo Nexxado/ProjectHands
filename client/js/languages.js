@@ -4,7 +4,7 @@ angular.module('ProjectHands')
 
         this.HE = {
             TEAM: 'צוותים',
-            USERS: 'משתמשים!',
+            USERS: 'משתמשים',
             SELECTED_TEAM_NAME: 'חברי צוות',
             SCHEDULE: 'לוח שנה',
             USER_DETAILS: 'פרטי משתמש',
@@ -58,7 +58,7 @@ angular.module('ProjectHands')
 
         this.AR = {
             TEAM: 'الفرق',
-            USERS: 'المستخدمين!',
+            USERS: 'المستخدمين',
             SELECTED_TEAM_NAME: 'اعضاء الفريق',
             SCHEDULE: 'التقويم',
             USER_DETAILS: 'معلومات المستخدم',
