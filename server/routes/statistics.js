@@ -70,7 +70,8 @@ router.get('/renovationsPerDate/:date',
             var date = JSON.parse(req.params.date);
             debug("request data : ", date);
             statisticsUtils.getRenovationsPerDate(date.yearFrom, date.yearTo, date.monthFrom, date.monthTo, date.dayFrom, date.dayTo, function (error, result) {
-                res.send(result);
+                //TODO change method to query and then you can return array
+                res.send({result: result});
             });
         }
         catch (e) {

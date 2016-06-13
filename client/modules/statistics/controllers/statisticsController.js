@@ -56,7 +56,7 @@ angular.module('ProjectHands.statistics')
                 .$promise
                 .then(function (result) {
                     console.log('result ' + result.toString());
-                    $scope.renovationsVolunteersNumber = 'totalVolunteers ' + result.totalVolunteers;
+                    $scope.renovationsVolunteersNumber =  result.totalVolunteers;
                 })
                 .catch(function (error) {
                     console.log('error ' + error.toString());
@@ -67,7 +67,7 @@ angular.module('ProjectHands.statistics')
                 .$promise
                 .then(function (result) {
                     console.log('result ' + result.toString());
-                    $scope.renovationsCost = 'totalCost ' + result.totalCost;
+                    $scope.renovationsCost =   result.totalCost;
                 })
                 .catch(function (error) {
                     console.log('error ' + error.toString());
@@ -78,7 +78,7 @@ angular.module('ProjectHands.statistics')
                 .$promise
                 .then(function (result) {
                     console.log('result ' + result.toString());
-                    $scope.renovationsVolunteeringHours = 'totalHours ' + result.totalHours;
+                    $scope.renovationsVolunteeringHours =  result.totalHours;
                 })
                 .catch(function (error) {
                     console.log('error ' + error.toString());
@@ -89,7 +89,7 @@ angular.module('ProjectHands.statistics')
                 .$promise
                 .then(function (result) {
                     console.log('result ' + result.toString());
-                    $scope.renovations = result;
+                    $scope.renovations = result.result;
                 })
                 .catch(function (error) {
                     console.log('error ' + error.toString());

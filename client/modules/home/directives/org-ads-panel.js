@@ -45,6 +45,7 @@ angular.module('ProjectHands.home')
                             console.log('error ' + error.toString());
                         });
                 }
+                
             }
         };
 
