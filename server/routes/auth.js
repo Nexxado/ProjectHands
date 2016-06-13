@@ -10,12 +10,17 @@ var middleware = require('../utils/middleware');
 var validation = require('../utils/validation');
 var serverSecret = process.env.SERVER_SECRET || config.SECRETS.serverSecret;
 var ROLES = config.ROLES;
-
+var BruteForce = require('../brute')();
 
 /**
  * User Login - match user password hash to hash in DB using passport strategy
  */
-router.post('/login', validation.validateParams, passport.authenticate('local'), sendUserInfo);
+router.post('/login', validation.validateParams, BruteForce.global.prevent, BruteForce.local.getMiddleware({
+    key: function (req, res, next) {
+        // prevent too many attempts for the same email
+        next(req.body.email);
+    }
+}), passport.authenticate('local'), sendUserInfo);
 
 /**
  * check if user is logged in - has an active session
@@ -55,13 +60,16 @@ router.post("/signup", validation.validateParams, function (req, res) {
     try {
         var user = JSON.parse(req.body.user);
         user.email = user.email.toLowerCase();
+        user.team_leader = user.team_leader[0] || '';
+        if (info.remarks.match(/^\s+$/))
+            info.remarks = '';
 
         user.role = ROLES.ADMIN; //FIXME change initial role to ROLES.GUEST;
 
         debug('signup user', user);
         delete user._id; //TODO check why user is receieved with _id = ''
 
-        user.joined_date = new Date().toISOString();
+        user.joined_date = new Date();
 
         authUtils.signUp(user, function (error, result) {
 
@@ -92,6 +100,10 @@ router.post('/signup_oauth', middleware.ensureAuthenticated, validation.validate
 
     try {
         var info = JSON.parse(req.body.info);
+        info.team_leader = info.team_leader[0] || '';
+        if (info.remarks.match(/^\s+$/))
+            info.remarks = '';
+
         authUtils.oauthSignup(req.user, info, function (error, result) {
 
             if (error)
@@ -159,58 +171,67 @@ router.get('/authenticate/:action', middleware.ensureAuthenticated, middleware.e
  * and the new , old password too, to kip the need to open a new page to enter the passwords
  * the old password is needed if changing password , if forgot option the new password is enough
  */
-router.post('/forgot', validation.validateParams, function (req, res) {
+router.post('/forgot', validation.validateParams,
+    BruteForce.global.prevent, BruteForce.local.getMiddleware({
+        key: function (req, res, next) {
+            // prevent too many attempts for the same email
+            next(req.body.email);
+        }
+    }), function (req, res) {
 
-    var email = req.body.email;
-    //  phone = req.params.phone;
-    var newPassword = req.body.new_password;
-    var oldPassword = req.body.old_password;
+        var email = req.body.email;
+        var newPassword = req.body.new_password;
+        var oldPassword = req.body.old_password;
 
-    /** in the case of change password , the user must be logged in*/
-    if (req.isAuthenticated()) {
-        authUtils.setPassword({email: email}, oldPassword, newPassword, true, function (error, result) {
-            if (error) {
-                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+        /** in the case of change password , the user must be logged in*/
+        if (req.isAuthenticated()) {
+            if (oldPassword !== undefined && newPassword !== undefined && newPassword === oldPassword) {
+                return res.redirect(encodeURI('/result/info/' + "please chose password that not match the old one"));
+
             }
-            else {
-                if (result !== config.MESSAGES.PASSWORD_UPDATE_SUCCESS) {
-                    return res.redirect(encodeURI('/result/error/' + result));
-
-                }
-
-                return res.redirect(encodeURI('/result/info/' + result));
-            }
-
-        });
-    }
-    else {
-        authUtils.ResetRequest(email, function (error, result) {
-            if (error) {
-                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
-            }
-            else {
-                /** the result will be the username if there is no errors*/
-                if (result === config.MESSAGES.USER_EMAIL_NOT_EXIST) {
-                    // writeToClient(res, result, "", HttpStatus.NOT_FOUND);
-                    return res.redirect(encodeURI('/result/error/' + config.MESSAGES.USER_EMAIL_NOT_EXIST));
+            authUtils.setPassword({email: email}, oldPassword, newPassword, true, function (error, result) {
+                if (error) {
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
                 }
                 else {
-                    var token = jwt.sign({
-                        email: email,
-                        newPassword: newPassword,
-                        iat: Math.floor(Date.now() / 1000)
-                    }, serverSecret, {algorithm: 'HS512'});
-                    var link = 'http://' + req.hostname + '/api/auth/reset/' + token;
-                    emailUtils.resetPasswordEmail(email, result, link);
+                    if (result !== config.MESSAGES.PASSWORD_UPDATE_SUCCESS) {
+                        return res.redirect(encodeURI('/result/error/' + result));
 
-                    var message = "Email has been sent to reset the password";
-                    return res.redirect(encodeURI('/result/info/' + message));
+                    }
+
+                    return res.redirect(encodeURI('/result/info/' + result));
                 }
-            }
-        });
-    }
 
-});
+            });
+        }
+        else {
+            authUtils.ResetRequest(email, function (error, result) {
+                if (error) {
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+                }
+                else {
+                    /** the result will be the username if there is no errors*/
+                    if (result === config.MESSAGES.USER_EMAIL_NOT_EXIST) {
+                        // writeToClient(res, result, "", HttpStatus.NOT_FOUND);
+                        return res.redirect(encodeURI('/result/error/' + config.MESSAGES.USER_EMAIL_NOT_EXIST));
+                    }
+                    else {
+                        var token = jwt.sign({
+                            email: email,
+                            newPassword: newPassword,
+                            iat: Math.floor(Date.now() / 1000)
+                        }, serverSecret, {algorithm: 'HS512'});
+                        var link = 'http://' + req.hostname + '/api/auth/reset/' + token;
+                        emailUtils.resetPasswordEmail(email, result, link);
+
+                        var message = "Email has been sent to reset the password";
+                        return res.redirect(encodeURI('/result/info/' + message));
+                    }
+                }
+            });
+        }
+
+    });
 
 /**
  * Reset password
@@ -233,35 +254,45 @@ router.get('/reset/:token', function (req, res) {
         });
     });
 });
-router.post('/changeEmailRequest', middleware.ensureAuthenticated, validation.validateParams, function (req, res) {
-    var oldEmail = req.body.oldEmail;
-    var newEmail = req.body.newEmail;
-
-    authUtils.ResetRequest(oldEmail, function (error, result) {
-        if (error) {
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+router.post('/changeEmailRequest', middleware.ensureAuthenticated, validation.validateParams,
+    BruteForce.global.prevent, BruteForce.local.getMiddleware({
+        key: function (req, res, next) {
+            // prevent too many attempts for the same email
+            next(req.body.oldEmail);
         }
-        else {
-            /** the result will be the username if there is no errors*/
-            if (result === config.MESSAGES.USER_EMAIL_NOT_EXIST) {
-                return res.redirect(encodeURI('/result/error/' + config.MESSAGES.USER_EMAIL_NOT_EXIST));
+    }), function (req, res) {
+        var oldEmail = req.body.oldEmail;
+        var newEmail = req.body.newEmail;
+        /** if they are equal , as no change will lbe done*/
+        if (oldEmail !== undefined && newEmail !== undefined && oldEmail === newEmail) {
+            return res.redirect(encodeURI('/result/info/' + "Please chose email that dose not match the original email"));
+        }
+
+        authUtils.ResetRequest(oldEmail, function (error, result) {
+            if (error) {
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
             }
             else {
-                var token = jwt.sign({
-                    oldEmail: oldEmail,
-                    newEmail: newEmail,
-                    username: result,
-                    iat: Math.floor(Date.now() / 1000)
-                }, serverSecret, {algorithm: 'HS512'});
-                var link = 'http://' + req.hostname + '/api/auth/changeEmail/' + token;
-                emailUtils.changeEmail(oldEmail, result, link);
+                /** the result will be the username if there is no errors*/
+                if (result === config.MESSAGES.USER_EMAIL_NOT_EXIST) {
+                    return res.redirect(encodeURI('/result/error/' + config.MESSAGES.USER_EMAIL_NOT_EXIST));
+                }
+                else {
+                    var token = jwt.sign({
+                        oldEmail: oldEmail,
+                        newEmail: newEmail,
+                        username: result,
+                        iat: Math.floor(Date.now() / 1000)
+                    }, serverSecret, {algorithm: 'HS512'});
+                    var link = 'http://' + req.hostname + '/api/auth/changeEmail/' + token;
+                    emailUtils.changeEmail(oldEmail, result, link);
 
-                var message = "Email has been sent to the current email in order to do the changes.";
-                return res.redirect(encodeURI('/result/info/' + message));
+                    var message = "Email has been sent to the current email in order to do the changes.";
+                    return res.redirect(encodeURI('/result/info/' + message));
+                }
             }
-        }
+        });
     });
-});
 /**
  * Change email when link is clicked
  */
@@ -295,8 +326,7 @@ router.get('/changeEmail/:token', function (req, res) {
 function sendUserInfo(req, res) {
 
     debug('sendUserInfo', req.user);
-
-    return res.send({
+    var userInfo = {
         success: true,
         name: req.user.name,
         email: req.user.email,
@@ -307,7 +337,17 @@ function sendUserInfo(req, res) {
         signup_complete: req.user.signup_complete,
         joined_date: req.user.joined_date,
         avatar: req.user.avatar
-    });
+    };
+
+
+    if(req.brute) {
+        req.brute.reset(function () {
+            res.send(userInfo);
+        });
+        return;
+    }
+
+    return res.send(userInfo);
 }
 
 /**

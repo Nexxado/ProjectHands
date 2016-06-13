@@ -3,20 +3,22 @@
  */
 angular.module('ProjectHands.dashboard')
 
-    .controller('JoinRequestController', function ($scope, UserService, UtilsService, $mdDialog, $mdMedia) {
+    .controller('JoinRequestController', function ($scope, UserService, UtilsService, ROLES, $mdDialog, $mdMedia) {
 
         $scope.search = '';
         $scope.signups = [];
         $scope.selectedUser;
+        $scope.selectedRole = ROLES.VOLUNTEER;
+        $scope.roles = [];
+
+        for(var role in ROLES) {
+            if(ROLES.hasOwnProperty(role) && ROLES[role] !== ROLES.GUEST)
+                $scope.roles.push(ROLES[role])
+        }
 
         UserService.getAllSignups().$promise
             .then(function (result) {
                 console.info('getAllSignups result', result);
-                result.forEach(function (user) {
-                    if (user.signupDate) {
-                        user.signupDate = UtilsService.dateToDDMMYYYY(new Date(user.signupDate));
-                    }
-                });
                 $scope.signups = result;
             })
             .catch(function (error) {
@@ -31,6 +33,7 @@ angular.module('ProjectHands.dashboard')
             if (!isMobile) {
                 if ($scope.selectedUser === user) {
                     $scope.selectedUser = undefined;
+                    $scope.selectedRole = ROLES.VOLUNTEER;
                     return;
                 }
 
@@ -38,15 +41,18 @@ angular.module('ProjectHands.dashboard')
             }
             else {
                 $mdDialog.show({
-                    controller: function ($scope, $mdDialog, user) {
+                    controller: function ($scope, $mdDialog, ROLES, user, roles) {
 
                         $scope.user = user;
+                        $scope.roles = roles;
+                        $scope.selectedRole = ROLES.VOLUNTEER;
+
                         $scope.cancel = function () {
                             $mdDialog.cancel();
                         };
 
                         $scope.submit = function (approve) {
-                            $mdDialog.hide(approve);
+                            $mdDialog.hide({approve: approve, role: $scope.selectedRole});
                         }
                     },
                     templateUrl: '/modules/dashboard/templates/dialogs/signupDetails.html',
@@ -55,13 +61,14 @@ angular.module('ProjectHands.dashboard')
                     clickOutsideToClose: true,
                     fullscreen: true,
                     locals: {
-                        user: user
+                        user: user,
+                        roles: $scope.roles
                     }
                 })
-                    .then(function (approve) {
-                        console.log('dialog result', approve);
-                        if(approve)
-                            $scope.approveUser(user);
+                    .then(function (result) {
+                        console.log('dialog result', result.approve);
+                        if(result.approve)
+                            $scope.approveUser(user, result.role);
                         else
                             $scope.deleteUser(user);
 
@@ -77,8 +84,8 @@ angular.module('ProjectHands.dashboard')
             return $scope.selectedUser === user;
         };
 
-        $scope.approveUser = function(user) {
-            UserService.approveUser(user.email, 'volunteer').$promise
+        $scope.approveUser = function(user, role) {
+            UserService.approveUser(user.email, role).$promise
                 .then(function(result) {
                     console.info('approveUser result', result);
                     removeUserFromList($scope.signups.indexOf(user));
@@ -102,5 +109,6 @@ angular.module('ProjectHands.dashboard')
         function removeUserFromList(index) {
             $scope.signups.splice(index, 1);
             $scope.selectedUser = undefined;
+            $scope.selectedRole = ROLES.VOLUNTEER;
         }
     });

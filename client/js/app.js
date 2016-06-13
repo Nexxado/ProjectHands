@@ -1,9 +1,10 @@
 angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages', 'ngCookies', 'ngMaterial',
-    'ui.router', 'ct.ui.router.extras', 'gridster', 'ui.calendar',
-    'ProjectHands.dashboard', 'ProjectHands.auth', 'ProjectHands.home', 'ProjectHands.photos', 'ngFileUpload', 'pascalprecht.translate'])
+    'ui.router', 'ct.ui.router.extras', 'gridster', 'ui.calendar', 'ProjectHands.dashboard', 'ProjectHands.auth',
+    'ProjectHands.home', 'ProjectHands.photos', 'ngFileUpload', 'angulartics', 'angulartics.google.analytics',
+    'pascalprecht.translate'])
 
 
-.config(function ($mdThemingProvider, $provide) {
+.config(function ($mdThemingProvider, $provide, $translateProvider, LanguagesProvider) {
     //Set Angular-Material Theme
     $mdThemingProvider.theme('default')
         .primaryPalette('blue')
@@ -21,6 +22,10 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
             $delegate(exception, cause);
         };
     });
+
+    $translateProvider.translations('he', LanguagesProvider.HE);
+    $translateProvider.translations('ar', LanguagesProvider.AR);
+    $translateProvider.preferredLanguage('he');
 })
 
 /**************************************/
@@ -33,7 +38,15 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     TEAMS: 'teams'
 })
 
-.run(function ($rootScope, $mdToast) {
+.run(function ($rootScope, $location, $mdToast) {
+    
+    var analytics = /localhost/.test($location.absUrl()) ? 'none' : 'auto';
+    if(analytics === 'auto')
+        console.info('Activating Analytics');
+
+    ga('create', 'UA-79134913-1', analytics);
+
+    $rootScope.rootToastAnchor = '#main-view';
 
 
     /*************************/

@@ -1,35 +1,44 @@
 <div layout="row" layout-align="end">
-    <div class="toggle-slide-right toggle-fade list-border dashboard-height" flex-gt-sm="50" flex hide-sm hide-xs ng-show="selectedUser">
+    <div class="toggle-slide-right toggle-fade list-border dashboard-height" flex-gt-sm="50" flex hide-sm hide-xs
+         ng-show="selectedUser">
         <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
             <div class="md-toolbar-tools">
-                <span translate>USER_DETAILS</span>
+                <span>פרטי משתמש</span>
             </div>
         </md-toolbar>
         <md-content class="signup-info rtl" layout="row" layout-padding>
-            <div layout="column" class="signup-info-main">
-                <div class="title"> {{ selectedUser.name }} {{'NAME'}}</div>
-                <div class=""> {{ selectedUser.email }} {{'EMAIL'}}</div>
-                <div>{{ selectedUser.phone }} {{'PHONE'}}</div>
-                <div>{{ selectedUser.signupDate }} {{'REGISTER_DATE'}}</div>
-            </div>
+            <user-details user="selectedUser"></user-details>
             <span flex></span>
-            <div class="signup-actions" layout="row" layout-align="center center">
-                <md-button class="md-raised approve-btn" ng-click="approveUser(selectedUser)" translate>
-                    APPROVE_USER
-                </md-button>
-                <md-button class="md-warn md-raised" ng-click="deleteUser(selectedUser)" translate>
-                    DELETE_USER
-                </md-button>
+            <div layout="column">
+                <div class="signup-actions" layout="row" layout-align="center center">
+                    <md-button class="md-raised approve-btn" ng-click="approveUser(selectedUser, selectedRole)">
+                        אשר משתמש
+                    </md-button>
+                    <md-button class="md-warn md-raised" ng-click="deleteUser(selectedUser)">
+                        מחק משתמש
+                    </md-button>
+                </div>
+                <!-- Role -->
+                <div class="signup-role" layout="row" flex>
+                    <md-input-container class="md-block rtl" flex="60">
+                        <label>תפקיד</label>
+                        <md-select name="role" ng-model="selectedRole" required>
+                            <md-option ng-value="role" ng-repeat="role in roles">
+                                {{ role | translateRole }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
             </div>
         </md-content>
     </div>
     <div flex-gt-sm="45" flex-offset-gt-sm="5" flex class="list-border dashboard-height">
         <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
             <div class="md-toolbar-tools">
-                <span translate>JOIN_REQUESTS</span>
+                <span>בקשות הצטרפות</span>
                 <span flex></span>
                 <md-input-container class="md-icon-float rtl list-search-input">
-                    <input type="text" name="search" ng-model="search"/>
+                    <input aria-label="search join requests" type="text" name="search" ng-model="search"/>
                     <md-icon class="material-icons">search</md-icon>
                 </md-input-container>
             </div>

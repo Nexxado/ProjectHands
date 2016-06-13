@@ -186,17 +186,23 @@ module.exports = {
 
             debug('login query result', result);
             var user = result[0];
+            if (user != undefined) {
+                bcrypt.compare(password, user.password, function (error, result) {
 
-            bcrypt.compare(password, user.password, function (error, result) {
+                    debug('bcrypt compare error', error);
+                    debug('bcrypt compare result', result);
 
-                debug('bcrypt compare error', error);
-                debug('bcrypt compare result', result);
+                    if (!result)
+                        user = null;
 
-                if (!result)
-                    user = null;
+                    callback(error, user);
+                });
+            }
+            else {
+                return callback("Incorrect email or password", result);
 
-                callback(error, user);
-            });
+            }
+
         });
     },
     /**

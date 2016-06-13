@@ -15,7 +15,8 @@
     color: white;
 }
 
-.signup-actions button.md-raised.approve-btn:hover {
+.signup-actions button.md-raised.approve-btn:hover,
+.signup-actions button.md-raised.approve-btn:focus {
     background-color: #00796B;
 }
 
@@ -24,6 +25,10 @@
     font-weight: bold;
     padding: 10px;
 
+}
+
+.signup-info .signup-role {
+    align-items: center;
 }
 
 .user-info .user-info-main .title {
@@ -37,6 +42,10 @@
     padding: 2px 10px;
 }
 
+.user-info .user-info-main .header {
+    font-weight: bold;
+}
+
 .list-signups {
     overflow-x: hidden;
 }
@@ -44,6 +53,10 @@
 .admin-list,
 .dialog-list {
     overflow: hidden;
+}
+
+.admin-list {
+    height: 100%;
 }
 
 .admin-list md-content {
@@ -63,4 +76,21 @@
 
 .list-search-input input {
     width: initial;
+}
+
+
+/**************************/
+/***** Edit User Form *****/
+/**************************/
+
+.edit-user-form md-input-container {
+    margin: 0;
+}
+
+.edit-user-form > md-input-container:first-of-type {
+    margin-top: 18px;
+}
+
+.edit-user-form md-input-container.md-icon-float > md-icon {
+    top: 10px;
 }

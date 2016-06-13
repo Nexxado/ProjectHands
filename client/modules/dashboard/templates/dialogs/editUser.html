@@ -1,0 +1,76 @@
+<md-dialog aria-label="Edit User Dialog" flex="60" flex-gt-md="45">
+    <form name="EditUserForm" ng-submit="submit()" novalidate>
+        <md-toolbar dir="rtl">
+            <div class="md-toolbar-tools">
+                <h2>עריכת משתמש</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content" layout="column" layout-gt-sm="row" layout-align="end">
+                <!-- User Info Container-->
+                <user-details user="user" layout="row" layout-padding flex="40"></user-details>
+                <!-- Input Container -->
+                <md-content class="edit-user-form" layout="column" flex="60" layout-padding>
+                    <!-- First name & Last name -->
+                    <md-input-container class="md-icon-float md-block rtl">
+                        <label>שם פרטי ושם משפחה</label>
+                        <input type="text" name="name" ng-model="user.name" required/>
+                        <md-icon class="material-icons">face</md-icon>
+                        <div ng-messages="EditUserForm.name.$error">
+                            <div ng-message="required">
+                                שדה חובה
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <!-- Phone Number-->
+                    <md-input-container class="md-icon-float md-block rtl">
+                        <label>מס' טלפון</label>
+                        <input type="text" ng-pattern="regexPhone" name="phone" ng-model="user.phone" minlength="9"
+                               maxlength="10"
+                               required/>
+                        <md-icon class="material-icons">phone</md-icon>
+                        <div ng-messages="EditUserForm.phone.$error">
+                            <div ng-message="required">
+                                שדה חובה
+                            </div>
+                            <div ng-message="minlength">
+                                דרושים לפחות 9 ספרות
+                            </div>
+                            <div ng-message="pattern">
+                                מספר אינו חוקי
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <!-- Role -->
+                    <div layout="row" layout-align="end" flex>
+                        <md-input-container class="md-icon-float md-block rtl" flex="25">
+                            <label>תפקיד</label>
+                            <md-icon class="material-icons">account_box</md-icon>
+                            <md-select name="role" ng-model="user.role" required ng-disabled="!changeRoleEnabled">
+                                <md-option ng-value="role" ng-repeat="role in roles">
+                                    {{ role | translateRole }}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </md-content>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions class="user-actions" layout-align="start" flex>
+            <md-button class="md-warn" ng-click="cancel()">
+                ביטול
+            </md-button>
+            <md-button class="md-primary md-raised" type="submit">
+                אישור
+            </md-button>
+            <span flex></span>
+            <md-button class="md-accent" ng-class="{'md-raised' : changeRoleEnabled}" ng-click="enableRoleChange()">
+                {{ changeRoleEnabled ? 'בטל שינוי תפקיד' : 'שנה תפקיד' }}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
