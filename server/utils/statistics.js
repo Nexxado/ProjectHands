@@ -13,14 +13,22 @@ const INVALID_DATE = "Invalid Date";
  * @param dayTo {int} : end day on the month
  * @returns {Object} : contains the fields in string format
  */
-function parseDateToStringFormat(year, month, dayFrom, dayTo) {
+function parseDateToStringFormat(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo) {
     var date = {};
-    date["year"] = "" + year;
-    if (month > 1 && month < 10) {
-        date["month"] = "0" + month;
+    date["yearFrom"] = "" + yearFrom;
+    date["yearTo"] = "" + yearTo;
+
+    if (monthFrom > 1 && monthFrom < 10) {
+        date["monthFrom"] = "0" + monthFrom;
     }
     else {
-        date["month"] = month;
+        date["monthFrom"] = monthFrom;
+    }
+    if (monthTo > 1 && monthTo < 10) {
+        date["monthTo"] = "0" + monthTo;
+    }
+    else {
+        date["monthTo"] = monthTo;
     }
     if (dayFrom >= 1 && dayFrom < 10) {
         date["dayFrom"] = "0" + dayFrom;
@@ -46,15 +54,17 @@ function parseDateToStringFormat(year, month, dayFrom, dayTo) {
  * @param dayTo {int} : end day on the month
  * @param callback
  */
-function getVolunteersCountPerDate(year, month, dayFrom, dayTo, callback) {
-    var date = parseDateToStringFormat(year, month, dayFrom, dayTo);
-    year = date.year;
-    month = date.month;
+function getVolunteersCountPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo, callback) {
+    var date = parseDateToStringFormat(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo);
+    yearFrom = date.yearFrom;
+    yearTo = date.yearTo;
+    monthFrom = date.monthFrom;
+    monthTo = date.monthTo;
     dayFrom = date.dayFrom;
     dayTo = date.dayTo;
 
-    var dateFrom = new Date(year + '-' + month + '-' + dayFrom + 'T00:00:00Z');
-    var dateTo = new Date(year + '-' + month + '-' + dayTo + 'T00:00:00Z');
+    var dateFrom = new Date(yearFrom + '-' + monthFrom + '-' + dayFrom + 'T00:00:00Z');
+    var dateTo = new Date(yearTo + '-' + monthTo + '-' + dayTo + 'T00:00:00Z');
     if (dateTo == INVALID_DATE || dateFrom == INVALID_DATE) {
         callback(null, 0)
     }
@@ -90,8 +100,8 @@ function getVolunteersCountPerDate(year, month, dayFrom, dayTo, callback) {
  * @param dayTo {int} : end day on the month
  * @param callback : Object[][renovationName:numberOfVolunteers , totalVolunteers:theWholeNumberOfColunteers]
  */
-function getRenovationsVolunteersNumberPerDate(year, month, dayFrom, dayTo, callback) {
-    getRenovationsPerDate(year, month, dayFrom, dayTo, function (error, result) {
+function getRenovationsVolunteersNumberPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo, callback) {
+    getRenovationsPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo, function (error, result) {
         if (error) {
             callback(error, result);
         }
@@ -134,8 +144,8 @@ function getRenovationsVolunteersNumberPerDate(year, month, dayFrom, dayTo, call
  * @param dayTo {int} : end day on the month
  * @param callback : Object[][renovationName:renovationMoney , totalCost:thecosts]
  */
-function getRenovationsCostPerDate(year, month, dayFrom, dayTo, callback) {
-    getRenovationsPerDate(year, month, dayFrom, dayTo, function (error, result) {
+function getRenovationsCostPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo, callback) {
+    getRenovationsPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo, function (error, result) {
         if (error) {
             callback(error, result);
         }
@@ -196,8 +206,8 @@ function getRenovationCost(renovation) {
  * @param dayTo {int} : end day on the month
  * @param callback : Object[renovationName,renovationHours]
  */
-function getRenovationsVolunteeringHoursPerDate(year, month, dayFrom, dayTo, callback) {
-    getRenovationsPerDate(year, month, dayFrom, dayTo, function (error, result) {
+function getRenovationsVolunteeringHoursPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo, callback) {
+    getRenovationsPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo, function (error, result) {
         if (error) {
             callback(error, result);
         }
@@ -256,15 +266,17 @@ function getRenovationVolunteeringHours(renovation) {
  * @param dayTo {int} : end day on the month
  * @param callback : Object[] with the renovations
  */
-function getRenovationsPerDate(year, month, dayFrom, dayTo, callback) {
-    var date = parseDateToStringFormat(year, month, dayFrom, dayTo);
-    year = date.year;
-    month = date.month;
+function getRenovationsPerDate(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo, callback) {
+    var date = parseDateToStringFormat(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo);
+    yearFrom = date.yearFrom;
+    yearTo = date.yearTo;
+    monthFrom = date.monthFrom;
+    monthTo = date.monthTo;
     dayFrom = date.dayFrom;
     dayTo = date.dayTo;
 
-    var dateFrom = new Date(year + '-' + month + '-' + dayFrom + 'T00:00:00Z');
-    var dateTo = new Date(year + '-' + month + '-' + dayTo + 'T00:00:00Z');
+    var dateFrom = new Date(yearFrom + '-' + monthFrom + '-' + dayFrom + 'T00:00:00Z');
+    var dateTo = new Date(yearTo + '-' + monthTo + '-' + dayTo + 'T00:00:00Z');
 
     /**
      * The flow
