@@ -74,7 +74,7 @@ angular.module('ProjectHands.auth')
                         return;
 
                     console.info('reseting password', $scope.reset);
-                    AuthService.resetPassword($rootScope.reset.email, $scope.reset.newPass1).$promise
+                    AuthService.resetPassword($scope.reset.email, $scope.reset.newPass1).$promise
                         .then(function (result) {
                             console.info('resetPassword result', result);
                             $mdDialog.hide(true);

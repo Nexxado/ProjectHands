@@ -55,6 +55,10 @@
     overflow: hidden;
 }
 
+.admin-list {
+    height: 100%;
+}
+
 .admin-list md-content {
     height: 78vh;
     overflow-y: auto;
