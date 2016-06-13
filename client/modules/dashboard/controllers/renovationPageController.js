@@ -4,52 +4,9 @@
 angular.module('ProjectHands.dashboard')
 
 .controller('RenovationPageController', function ($scope, $stateParams, $mdSidenav, $mdMedia, $mdDialog, DatabaseService, COLLECTIONS, UtilsService) {
-
-	/******Getters******/
 	
-	/*TODO: switch with the appropriate route*/
-	$scope.getRenovationTeam = function (team_id) {
-		DatabaseService.query(COLLECTIONS.TEAMS, {
-			_id: team_id
-		}).$promise.then(function (result) {
-			$scope.renovationTeam = result[0];
-		}).catch(function (error) {
-			console.log("Error: ", error);
-		});
-
-	};
-	
-	/*TODO: switch with the appropriate route*/
-	$scope.getMemberByEmail = function (email) {
-		DatabaseService.query(COLLECTIONS.USERS, {
-			email: email
-		}).$promise.then(function (result) {
-			$scope.renovationMembers.push(result[0]);
-		}).catch(function (error) {
-			console.log("Error: ", error);
-		});
-	};
-
-
 	/******Variables Declarations******/
 	$scope.thisRenovation = "";
-	
-	/*TODO: switch with the appropriate route*/
-	DatabaseService.query(COLLECTIONS.RENOVATIONS, {
-			addr: {
-				city: $stateParams.city,
-				street: $stateParams.street,
-				num: $stateParams.num
-		}
-		}).$promise.then(function (result) {
-                $scope.thisRenovation = result[0];
-				$scope.initializeVariables();
-            }).catch(function (error) {
-                console.log("Error: ", error);
-     });
-	
-	
-	/******First call to get Renovation before initializing more variables******/
 	$scope.renovationNotFound = false;
 	$scope.renovationTeam = "";
 	$scope.editMessagesMode = false;
@@ -62,19 +19,121 @@ angular.module('ProjectHands.dashboard')
 	$scope.renovationChatRoom = "";
 	$scope.renovationStages = "";
 	$scope.renovationCurrentStage = "";
-	$scope.renovationProgress = "";
+	$scope.renovationProgress = 0;
+	$scope.renovationMembers = [];
+	$scope.renovationStageImage = "";
+	$scope.defaultStagesImages = [
+		"/assets/img/renovation-page/first-visit.png",
+		"/assets/img/renovation-page/social-worker.png",
+		"/assets/img/renovation-page/team.png",
+		"/assets/img/renovation-page/team-leader-visit.png",
+		"/assets/img/renovation-page/planning.png",
+		"/assets/img/renovation-page/renovating.png",
+		"/assets/img/renovation-page/renovation-done.png",
+		"/assets/img/renovation-page/extra-stage.png",
+	]
+	
+	/******Getters******/
+	
+	$scope.checkMemberFound = function(name){
+		if(name !== null)
+			return true;
+		return false;
+	}
+	
+	$scope.checkTaskDone = function(done){
+		if(done === "true")
+			return true;
+		return false;
+	}
+	
+	$scope.checkToolBeingBrought = function(brought){
+		if(brought === "true")
+			return true;
+		return false;
+	}
+	
+	$scope.getMemberName = function(email){
+		for(var i in $scope.renovationMembers){
+			if($scope.renovationMembers[i].email === email)
+				return $scope.renovationMembers[i].name;
+		}
+		return null;
+	}
+	
+	/*TODO: switch with the appropriate route*/
+	$scope.getRenovationTeam = function (team_id) {
+		DatabaseService.query(COLLECTIONS.TEAMS, {
+			_id: team_id
+		}).$promise.then(function (result) {
+			$scope.renovationTeam = result[0];
+			$scope.getRenovationMembers($scope.renovationTeam);
+			
+		}).catch(function (error) {
+			console.log("Error: ", error);
+		});
 
+	};
+	
+	/*TODO: switch with the appropriate route*/
+	$scope.getRenovationMembers = function (team) {
+		$scope.renovationMembers = [];
+		console.log("getting members for ", team.name);
+		for(var i in team.members){
+			$scope.pushMemberByMail(team.members[i]);
+		}
+		$scope.initializeVariables();
+
+	};
+	
+	/*TODO: switch with the appropriate route*/
+	$scope.pushMemberByMail = function (email) {
+		DatabaseService.query(COLLECTIONS.USERS, {
+			email: email
+		}).$promise.then(function (result) {
+			$scope.renovationMembers.push(result[0]);
+		}).catch(function (error) {
+			console.log("Error: ", error);
+		});
+	};
+
+
+	/*TODO: switch with the appropriate route*/
+	DatabaseService.query(COLLECTIONS.RENOVATIONS, {
+			addr: {
+				city: $stateParams.city,
+				street: $stateParams.street,
+				num: $stateParams.num
+		}
+		}).$promise.then(function (result) {
+                $scope.thisRenovation = result[0];
+				$scope.getRenovationTeam($scope.thisRenovation.team_id);
+            }).catch(function (error) {
+                console.log("Error: ", error);
+     });
+	
+	
+	
 	/******Initialize more Variables******/
 	$scope.initializeVariables = function(){
-		$scope.getRenovationTeam($scope.thisRenovation.team_id);
 		$scope.minDate = new Date();
-		$scope.needToAssignTeam = ($scope.renovationCurrentStage === "עובד סוציאלי עודכן, יש צורך לשבץ צוות");
 		$scope.renovationChatRoom = [$scope.thisRenovation.chat_id];
 		$scope.renovationStages = $scope.thisRenovation.renovation_stages;
 		$scope.renovationCurrentStage = $scope.thisRenovation.current_stage;
+		$scope.needToAssignTeam = ($scope.renovationCurrentStage === $scope.defaultRenoStages[2]);
 		$scope.renovationProgress = Math.floor((100 / ($scope.renovationStages.length)) * ($scope.renovationStages.indexOf($scope.renovationCurrentStage) + 1));
+		$scope.getStageImage();
 	}
 
+	$scope.getStageImage = function(){
+		console.log("Getting stage image");
+		console.log("image was: ", $scope.renovationStageImage);
+		var index = $scope.defaultRenoStages.indexOf($scope.renovationCurrentStage);
+		if(index === -1)
+			index = $scope.defaultStagesImages.length - 1;
+		$scope.renovationStageImage = $scope.defaultStagesImages[index];
+		console.log("image is now: ", $scope.renovationStageImage);
+	}
 
 	/******Editing Mode Functions******/
 	$scope.editMessages = function () {
@@ -89,6 +148,148 @@ angular.module('ProjectHands.dashboard')
 		$scope.editToolsMode = !$scope.editToolsMode;
 	};
 
+	$scope.editPinned = function ($event, pinned) {
+		var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
+		$mdDialog.show({
+				controller: function ($scope, $mdToast, $mdDialog, oldPinned) {
+					$scope.pinned = {
+						title: oldPinned.title,
+						description: oldPinned.description,
+						added_date: oldPinned.added_date,
+					};
+					$scope.pinneds = [];
+					$scope.pinneds.push(oldPinned);
+					$scope.cancel = function () {
+						$mdDialog.cancel();
+					};
+
+					$scope.submit = function () {
+						if ($scope.AddPinnedForm.$invalid) {
+							return;
+						}
+						$scope.pinneds.push($scope.pinned)
+						$mdDialog.hide($scope.pinneds);
+					};
+				},
+				templateUrl: '/modules/dashboard/templates/dialogs/addPinnedDialog.html',
+				targetEvent: $event,
+				clickOutsideToClose: false,
+				fullscreen: useFullScreen,
+				locals: {
+					oldPinned: pinned
+				}
+			})
+			.then(function (pinneds) {
+				//Check for duplicates in tasks
+				var reno = $scope.thisRenovation;
+				DatabaseService.update(
+						COLLECTIONS.RENOVATIONS, {
+							addr: {
+								city: reno.addr.city,
+								street: reno.addr.street,
+								num: reno.addr.num
+							},
+							"pinned.title": pinneds[0].title
+						}, {
+							$set: {
+								"pinned.$.title": pinneds[1].title,
+								"pinned.$.description": pinneds[1].description,
+								"pinned.$.added_date": pinneds[1].added_date,
+							}
+						}, {}
+					)
+					.$promise.then(function (result) {
+						for (var i in $scope.thisRenovation.pinned) {
+							if ($scope.thisRenovation.pinned[i].title === pinneds[0].title) {
+								$scope.thisRenovation.pinned[i].title = pinneds[1].title;
+								$scope.thisRenovation.pinned[i].description = pinneds[1].description;
+								$scope.thisRenovation.pinned[i].added_date = pinneds[1].added_date;
+								break;
+							}
+						}
+					}).catch(function (error) {
+						console.log("Error: ", error);
+					});
+			
+				console.log("Dialog finished");
+
+			}, function () {
+				console.log('Dialog Canceled.');
+			});
+	};
+
+	$scope.editTask = function ($event, task) {
+		var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
+		$mdDialog.show({
+				controller: function ($scope, $mdToast, $mdDialog, oldTask) {
+					$scope.task = {
+						name: oldTask.name,
+						description: oldTask.description,
+						assigned_email: oldTask.assigned_email,
+						done: oldTask.done
+					};
+					$scope.tasks = [];
+					$scope.tasks.push(oldTask);
+					$scope.cancel = function () {
+						$mdDialog.cancel();
+					};
+
+					$scope.submit = function () {
+						if ($scope.AddTaskForm.$invalid) {
+							return;
+						}
+						$scope.tasks.push($scope.task)
+						$mdDialog.hide($scope.tasks);
+					};
+				},
+				templateUrl: '/modules/dashboard/templates/dialogs/addTaskDialog.html',
+				targetEvent: $event,
+				clickOutsideToClose: false,
+				fullscreen: useFullScreen,
+				locals: {
+					oldTask: task
+				}
+			})
+			.then(function (tasks) {
+				//Check for duplicates in tasks
+				var reno = $scope.thisRenovation;
+				DatabaseService.update(
+						COLLECTIONS.RENOVATIONS, {
+							addr: {
+								city: reno.addr.city,
+								street: reno.addr.street,
+								num: reno.addr.num
+							},
+							"tasks.name": tasks[0].name
+						}, {
+							$set: {
+								"tasks.$.name": tasks[1].name,
+								"tasks.$.description": tasks[1].description,
+								"tasks.$.assigned_email": tasks[1].assigned_email,
+								"tasks.$.done": tasks[1].done
+							}
+						}, {}
+					)
+					.$promise.then(function (result) {
+						for (var i in $scope.thisRenovation.tasks) {
+							if ($scope.thisRenovation.tasks[i].name === tasks[0].name) {
+								$scope.thisRenovation.tasks[i].name = tasks[1].name;
+								$scope.thisRenovation.tasks[i].description = tasks[1].description;
+								$scope.thisRenovation.tasks[i].assigned_email = tasks[1].assigned_email;
+								$scope.thisRenovation.tasks[i].done = tasks[1].done;
+								break;
+							}
+						}
+					}).catch(function (error) {
+						console.log("Error: ", error);
+					});
+			
+				console.log("Dialog finished");
+
+			}, function () {
+				console.log('Dialog Canceled.');
+			});
+	};
 
 	/******Misc Functions******/
 	$scope.calcRenoProgress = function () {
@@ -105,7 +306,7 @@ angular.module('ProjectHands.dashboard')
 					$scope.task = {
 						name: "",
 						description: "",
-						assigned_id: "",
+						assigned_email: "",
 						done: false
 					};
 					$scope.cancel = function () {
@@ -393,12 +594,13 @@ angular.module('ProjectHands.dashboard')
 			index = 0;
 		$scope.renovationCurrentStage = $scope.renovationStages[index];
 		$scope.calcRenoProgress();
-		if ($scope.renovationCurrentStage === "עובד סוציאלי עודכן, יש צורך לשבץ צוות") {
+		if ($scope.renovationCurrentStage === $scope.defaultRenoStages[2]) {
 			$scope.needToAssignTeam = true;
 		} else {
 			$scope.needToAssignTeam = false;
 		}
-
+		
+		$scope.getStageImage();
 	};
 
 	$scope.previousStage = function () {
@@ -408,12 +610,13 @@ angular.module('ProjectHands.dashboard')
 			index = $scope.renovationStages.length - 1;
 		$scope.renovationCurrentStage = $scope.renovationStages[index];
 		$scope.calcRenoProgress();
-		if ($scope.renovationCurrentStage === "עובד סוציאלי עודכן, יש צורך לשבץ צוות") {
+		if ($scope.renovationCurrentStage === $scope.defaultRenoStages[2]) {
 			$scope.needToAssignTeam = true;
 		} else {
 			$scope.needToAssignTeam = false;
 		}
-
+		
+		$scope.getStageImage();
 	};
 
 	$scope.finalizeRenovation = function ($event) {
@@ -572,6 +775,7 @@ angular.module('ProjectHands.dashboard')
 	}
 
 	$scope.confirmRSVP = function (email) {
+		console.log("user: ", $scope.user);
 		$scope.my_rsvp = true;
 		var reno = $scope.thisRenovation;
 		DatabaseService.update(
@@ -624,6 +828,127 @@ angular.module('ProjectHands.dashboard')
 	$scope.my_rsvp = $scope.checkRSVP($scope.myUser.email);
 	
 	
+	/******Task Utils******/
+	$scope.taskFilter = false;
+	
+	$scope.changeTaskFilter = function(){
+		$scope.taskFilter = !$scope.taskFilter;
+	}
+	
+	$scope.taskDone = function(task){
+		var reno = $scope.thisRenovation;
+		DatabaseService.update(
+			COLLECTIONS.RENOVATIONS, {
+				addr: {
+					city: reno.addr.city,
+					street: reno.addr.street,
+					num: reno.addr.num
+				},
+				"tasks.name": task.name
+			}, {
+				$set: {
+					"tasks.$.done": "true"
+				}
+			}, {}
+		)
+		.$promise.then(function (result) {
+			task.done = "true";
+			console.log("Task marked as done");
+		}).catch(function (error) {
+			console.log("Error: ", error);
+		});
+	};
+	
+	$scope.updateTaskAssignee = function(task, email){
+		var reno = $scope.thisRenovation;
+		DatabaseService.update(
+			COLLECTIONS.RENOVATIONS, {
+				addr: {
+					city: reno.addr.city,
+					street: reno.addr.street,
+					num: reno.addr.num
+				},
+				"tasks.name": task.name
+			}, {
+				$set: {
+					"tasks.$.assigned_email": email
+				}
+			}, {}
+		)
+		.$promise.then(function (result) {
+			console.log("New Assignee Assigned");
+		}).catch(function (error) {
+			console.log("Error: ", error);
+		});
+	};
+	
+	/******Reno Tools Utils******/
+	$scope.toolsFilter = false;
+	
+	$scope.changeToolsFilter = function(){
+		$scope.toolsFilter = !$scope.toolsFilter;
+	}
+	
+	$scope.isFromShed = function(tool){
+		if(tool.assigned === "shed"){
+			return true;
+		}
+		return false;
+	}
+	
+	$scope.bringTool = function(tool, email){
+		var reno = $scope.thisRenovation;
+		DatabaseService.update(
+			COLLECTIONS.RENOVATIONS, {
+				addr: {
+					city: reno.addr.city,
+					street: reno.addr.street,
+					num: reno.addr.num
+				},
+				"toolsNeeded.name": tool.name
+			}, {
+				$set: {
+					"toolsNeeded.$.being_brought": "true",
+					"toolsNeeded.$.assigned": email
+				}
+			}, {}
+		)
+		.$promise.then(function (result) {
+			tool.being_brought = "true";
+			tool.assigned = email; 
+			console.log("tool marked as being brought");
+		}).catch(function (error) {
+			console.log("Error: ", error);
+		});
+	};
+	
+	$scope.dontBringTool = function(tool){
+		var reno = $scope.thisRenovation;
+		DatabaseService.update(
+			COLLECTIONS.RENOVATIONS, {
+				addr: {
+					city: reno.addr.city,
+					street: reno.addr.street,
+					num: reno.addr.num
+				},
+				"toolsNeeded.name": tool.name
+			}, {
+				$set: {
+					"toolsNeeded.$.being_brought": "false",
+					"toolsNeeded.$.assigned": ""
+				}
+			}, {}
+		)
+		.$promise.then(function (result) {
+			tool.being_brought = "false";
+			tool.assigned = ""; 
+			console.log("tool marked as not being brought");
+		}).catch(function (error) {
+			console.log("Error: ", error);
+		});
+	};
+	
+	
 	/******Information Dialogs******/
 	/**
          * Invoke dialog showing the user details
@@ -658,4 +983,7 @@ angular.module('ProjectHands.dashboard')
                 }
             });
         };
+	
+
+	
 });

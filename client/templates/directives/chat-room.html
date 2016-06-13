@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="user-list toggle-slide-right" layout="column" flex="20" ng-show="showUsersList">
-            <div class="user" ng-repeat="user in users">{{ user }}</div>
+            <div class="user" ng-repeat="user in users track by $index">{{ user }}</div>
         </div>
     </div>
 </md-content>

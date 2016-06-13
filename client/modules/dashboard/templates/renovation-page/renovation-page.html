@@ -13,14 +13,14 @@
 								<i class="material-icons">chat</i> צ'אט
 							</div>
 						</md-button>
-						<md-button layout="row" ng-click="confirmRSVP(myUser.email)" class="md-raised md-primary rsvp-button" ng-hide="my_rsvp">
+						<md-button layout="row" ng-click="confirmRSVP(user.email)" class="md-raised md-accent rsvp-button" ng-hide="my_rsvp" layout-align="center center">
 							<div layout="row" layout-align="center center">
-								<i class="material-icons" style="padding-left:5px;">thumb_up</i> מאשר הגעה
+								אשר הגעה
 							</div>
 						</md-button>
-						<md-button layout="row" ng-click="declineRSVP(myUser.email)" class="md-raised md-accent rsvp-button" ng-show="my_rsvp">
+						<md-button layout="row" ng-click="declineRSVP(user.email)" class="md-raised md-primary rsvp-button" ng-show="my_rsvp" layout-align="center center">
 							<div layout="row" layout-align="center center">
-								<i class="material-icons" style="padding-left:5px;">thumb_down</i> מבטל אישר הגעה
+								<i class="material-icons" style="padding-left:5px;">thumb_up</i> מגיע
 							</div>
 						</md-button>
 					</div>
@@ -36,17 +36,23 @@
 											<!--TODO: make sure to disable tab if team not assigned yet-->
 											<div flex-gt-sm="45" flex-offset-gt-sm="5" flex class="renovation-page grid-tab box-header">
 												<div layout="row">
-													<h3>צוות: </h3> 
+													<h3>צוות: </h3>
 													<h3> {{renovationTeam.name}} </h3>
 												</div>
 
 												<md-content>
 													<md-list class="md-dense list-volunteers" flex>
-														<md-list-item class="md-2-line rtl list-slide-right" ng-repeat="member in renovationTeam.members" ng-click="showUserDetails($event, member)">
-															<div class="md-list-item-text" layout="column">
-																<h3>{{ member.name }}</h3>
-																<h4>{{ member.email }}</h4>
+														<md-list-item class="md-2-line rtl list-slide-right" ng-repeat="member in renovationMembers" ng-click="showUserDetails($event, member)">
+															<div class="renovation-user" layout="row">
+																<div class="md-list-item-text" layout="column">
+																	<h3>{{ member.name }}</h3>
+																	<h4>{{ member.email }}</h4>
+																</div>
+																<div class="arriving-icon" ng-show="checkRSVP(member.email)" layout="row" layout-align="center center">
+																	<i class="material-icons icon">thumb_up</i> <a class="text">- מגיע</a>
+																</div>
 															</div>
+															<md-divider></md-divider>
 														</md-list-item>
 													</md-list>
 												</md-content>
@@ -79,6 +85,9 @@
 															<md-button ng-click="deletePinned(pinned)" class="md-icon-button pinned-delete-button" layout="row" layout-align="center center">
 																<i class="material-icons">close</i>
 															</md-button>
+															<md-button ng-click="editPinned($event, pinned)" class="md-icon-button pinned-edit-button" layout="row" layout-align="center center">
+																<i class="material-icons">border_color</i>
+															</md-button>
 														</div>
 														<div>
 															<h2>{{pinned.title}}</h2>
@@ -90,6 +99,7 @@
 											</md-list>
 										</div>
 									</md-grid-tile>
+
 									<md-grid-tile class="" md-rowspan="2" md-colspan="2" md-rowspan-sm="2">
 										<div class="box-wrapper" layout="column">
 											<div layout="row" class="box-header">
@@ -106,8 +116,11 @@
 													<i class="material-icons">pan_tool</i>
 												</md-button>
 											</div>
+											<div class="stage-images" layout="column" layout-align="center center">
+												<img ng-src="{{renovationStageImage}}" alt="stage icon" />
+											</div>
 											<div style="height:75%;" layout="column" layout-align="center center">
-												<md-progress-circular md-mode="determinate" value="renovationProgress"></md-progress-circular>
+												<md-progress-linear md-mode="determinate" ng-value="renovationProgress" md-diameter="50"></md-progress-linear>
 												<h4>{{renovationProgress}}%</h4>
 											</div>
 											<div layout="row" ng-show="editStagesMode">
@@ -136,9 +149,12 @@
 								</md-grid-list>
 							</div>
 						</md-tab>
+
 						<md-tab label="פרטים נוספים">
 							<md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px" style="padding:10px;">
+
 								<md-grid-tile class="" md-rowspan="5" md-colspan="2" md-colspan-sm="2" md-rowspan-sm="2" md-colspan-xs="1">
+
 									<div class="box-wrapper renovation-inner-grid-list">
 										<div layout="row" class="box-header">
 											<h3>משימות</h3>
@@ -153,33 +169,60 @@
 											<md-button ng-show="editTasksMode" ng-click="editTasks()" class="md-accent" layout="row" layout-align="center center">
 												<i class="material-icons">mode_edit</i>
 											</md-button>
+											<md-button ng-show="taskFilter" ng-click="changeTaskFilter()" class="md-primary" layout="row" layout-align="center center">
+												בוצעו
+											</md-button>
+											<md-button ng-hide="taskFilter" ng-click="changeTaskFilter()" class="md-accent" layout="row" layout-align="center center">
+												לא בוצעו
+											</md-button>
 										</div>
 										<div>
 											<md-list>
-												<md-list-item class="md-2-line" ng-repeat="task in thisRenovation.tasks">
-													<div class=" renovation-task" layout="row" layout-align="center center">
+												<md-list-item class="md-2-line" ng-repeat="task in thisRenovation.tasks | filter:{ done: taskFilter }">
+													<div class=" renovation-task" layout="column">
 														<div layout="row" class="toggle-fade" ng-show="editTasksMode">
 															<span flex></span>
-															<md-button ng-click="deleteTask(task)" class="md-icon-button pinned-delete-button" layout="row" layout-align="center center">
+															<md-button ng-click="deleteTask(task)" class="md-icon-button task-delete-button" layout="row" layout-align="center center">
 																<i class="material-icons">close</i>
 															</md-button>
+															<md-button ng-click="editTask($event, task)" class="md-icon-button task-edit-button" layout="row" layout-align="center center">
+																<i class="material-icons">border_color</i>
+															</md-button>
+															<md-select aria-label="select task assignee" ng-change="updateTaskAssignee(task, task.assigned_email)" ng-model="task.assigned_email" class="task-assign-button">
+																<md-option ng-repeat="email in renovationTeam.members" value="{{email}}">
+																	{{getMemberName(email)}}
+																</md-option>
+															</md-select>
 														</div>
-														<div>
+														<div flex>
 															<h2>{{task.name}}</h2>
 															<p>{{task.description}}</p>
-															<p>{{getMemberByID(task.assigned_id).name}}</p>
+															<p>אחראי: <a ng-show="checkMemberFound(getMemberName(task.assigned_email))">{{getMemberName(task.assigned_email)}}</a></p>
+															<div ng-hide="checkTaskDone(task.done)">
+																<md-button layout="row" ng-click="taskDone(task)" class="md-raised md-primary" ng-show="user.email === task.assigned_email">
+																	<div layout="row" layout-align="center center">
+																		<i class="material-icons" style="padding-left:5px;">thumb_up</i> סיימתי משימה
+																	</div>
+																</md-button>
+															</div>
+															<i class="material-icons task-done-icon" ng-show="checkTaskDone(task.done)">done</i>
 														</div>
+														<md-divider></md-divider>
 													</div>
 												</md-list-item>
 											</md-list>
 										</div>
 									</div>
 								</md-grid-tile>
+
+
 								<md-grid-tile class="" md-rowspan="5" md-colspan="2" md-rowspan-sm="2" flex>
+
 									<div class="box-wrapper renovation-inner-grid-list">
 										<div layout="row" class="box-header">
-											<h3>כלים דרושים</h3>
+											<h3>כלים</h3>
 											<span flex></span>
+
 											<md-button ng-click="addTool($event)" class="md-primary" layout="row" layout-align="center center">
 												<i class="material-icons">add_circle</i>
 											</md-button>
@@ -189,50 +232,91 @@
 											<md-button ng-show="editToolsMode" ng-click="editTools()" class="md-accent" layout="row" layout-align="center center">
 												<i class="material-icons">mode_edit</i>
 											</md-button>
+											<md-button ng-show="toolsFilter" ng-click="changeToolsFilter()" class="md-primary" layout="row" layout-align="center center">
+												מביאים
+											</md-button>
+											<md-button ng-hide="toolsFilter" ng-click="changeToolsFilter()" class="md-accent" layout="row" layout-align="center center">
+												לא מביאים
+											</md-button>
 										</div>
 										<div>
-											<md-list class="md-dense" dir="rtl">
-												<md-list-item class="md-3-line" ng-repeat="tool in thisRenovation.toolsNeeded">
-													<span flex layout="row" layout-align="center center" class="padding">
-                        <div class="md-list-item-text toolbox-list-text" layout="column" dir="rtl">
-							<div layout="row" class="toggle-fade" ng-show="editToolsMode">
+											<md-list>
+												<md-list-item class="md-2-line" ng-repeat="tool in thisRenovation.toolsNeeded | filter:{ being_brought: toolsFilter }">
+													<div class=" renovation-task" layout="column">
+														<div layout="row" class="toggle-fade" ng-show="editToolsMode">
 															<span flex></span>
-													<md-button ng-click="deleteTool(tool)" class="md-icon-button pinned-delete-button" layout="row" layout-align="center center">
-														<i class="material-icons">close</i>
-													</md-button>
-										</div>
-										<div>
-											<h3>{{ tool.name }}</h3>
-											<h4>כמות: {{ tool.quantity }}</h4>
-											<p>הערה: {{ tool.comment }}</p>
+															<md-button ng-click="deleteTool(tool)" class="md-icon-button task-delete-button" layout="row" layout-align="center center">
+																<i class="material-icons">close</i>
+															</md-button>
+
+														</div>
+														<div flex>
+															<h2>{{tool.name}}</h2>
+															<p>{{tool.quantity}}</p>
+															<p>{{tool.comment}}</p>
+															<p>אחראי: <a ng-show="checkMemberFound(getMemberName(tool.assigned))">{{getMemberName(tool.assigned)}}</a><a ng-show="isFromShed(tool)">מהמחסן</a></p>
+
+															<div ng-hide="checkToolBeingBrought(tool.being_brought)">
+																<md-button layout="row" ng-click="bringTool(tool, user.email)" class="md-raised md-primary">
+																	<div layout="row" layout-align="center center">
+																		<i class="material-icons" style="padding-left:5px;">thumb_up</i> מביא את הכלי
+																	</div>
+																</md-button>
+															</div>
+
+															<div ng-show="checkToolBeingBrought(tool.being_brought) && user.email === tool.assigned">
+																<md-button layout="row" ng-click="dontBringTool(tool)" class="md-raised md-accent">
+																	<div layout="row" layout-align="center center">
+																		<i class="material-icons" style="padding-left:5px;">thumb_down</i> לא מביא את הכלי
+																	</div>
+																</md-button>
+															</div>
+															<div ng-show="user.role === 'admin'">
+																<div ng-hide="checkToolBeingBrought(tool.being_brought)">
+																	<md-button layout="row" ng-click="bringTool(tool, 'shed')" class="md-raised md-primary">
+																		<div layout="row" layout-align="center center">
+																			<i class="material-icons" style="padding-left:5px;">thumb_up</i> מהמחסן
+																		</div>
+																	</md-button>
+																</div>
+																<div ng-show="checkToolBeingBrought(tool.being_brought) && isFromShed(tool)">
+																	<md-button layout="row" ng-click="dontBringTool(tool)" class="md-raised md-accent">
+																		<div layout="row" layout-align="center center">
+																			<i class="material-icons" style="padding-left:5px;">thumb_down</i> לא מהמחסן
+																		</div>
+																	</md-button>
+																</div>
+															</div>
+															<i class="material-icons task-done-icon" ng-show="checkToolBeingBrought(tool.being_brought)">thumb_up</i>
+														</div>
+														<md-divider></md-divider>
+													</div>
+												</md-list-item>
+											</md-list>
 										</div>
 									</div>
-									</span>
-									<md-divider></md-divider>
-									</md-list-item>
-									<md-divider></md-divider>
-									</md-list>
+								</md-grid-tile>
+								<md-grid-tile class="" md-rowspan="2" md-colspan="2" md-colspan-sm="2" md-colspan-xs="1" md-rowspan-sm="2">
+									<div layout="column" class="box-wrapper">
+										<div layout="row" layout-align="center center" style="height: 100%; padding:1px;">
+<!--											<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2848.1677792216697!2d34.99999188673667!3d31.904929403828792!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1502cdb687a74b15%3A0x9bb5207a84b99291!2z15fXmNeZ15HXqiDXlNem16DXl9eg15nXnSAyLCDXnteV15PXmdei15nXnyDXnteb15HXmdedINeo16LXldeq!5e0!3m2!1siw!2sil!4v1461780210508" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>-->
+
+											<iframe width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDIFdyao6eob2Em308R2fU1N1uWWMnyNI4&q=Space+Needle,Seattle+WA" allowfullscreen>
+											</iframe>
+										</div>
+									</div>
+								</md-grid-tile>
+							</md-grid-list>
+						</md-tab>
+					</md-tabs>
+
 				</div>
+			</md-content>
 		</div>
-		</md-grid-tile>
-		<md-grid-tile class="" md-rowspan="2" md-colspan="2" md-colspan-sm="2" md-colspan-xs="1" md-rowspan-sm="2">
-			<div layout="column" class="box-wrapper">
-				<div layout="row" layout-align="center center" style="height: 100%; padding:1px;">
-					<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2848.1677792216697!2d34.99999188673667!3d31.904929403828792!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1502cdb687a74b15%3A0x9bb5207a84b99291!2z15fXmNeZ15HXqiDXlNem16DXl9eg15nXnSAyLCDXnteV15PXmdei15nXnyDXnteb15HXmdedINeo16LXldeq!5e0!3m2!1siw!2sil!4v1461780210508" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
-				</div>
-			</div>
-		</md-grid-tile>
-		</md-grid-list>
-		</md-tab>
-		</md-tabs>
-
 	</div>
-	</md-content>
-</div>
-</div>
 
-<!--Chat side tab-->
-<dashboard-chat-sidenav></dashboard-chat-sidenav>
+	<!--Chat side tab-->
+	<dashboard-chat-sidenav></dashboard-chat-sidenav>
 </div>
 <!--Place holder incase renovation wasnt found-->
 <div ng-show="renovationNotFound" layout="row" layout-align="center center">

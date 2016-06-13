@@ -166,7 +166,15 @@ angular.module('ProjectHands.dashboard')
         $scope.myTeam = "";
         /*All the renovations of project hands*/
         $scope.renovations = [];
-
+		/*Default renovation Stages*/
+		$scope.defaultRenoStages = ["ביקור ראשוני בדירה לבדיקת התאמה",
+            "הוחלט לשפץ, יש צורך לעדכן עובד סוציאלי",
+            "עובד סוציאלי עודכן, יש צורך לשבץ צוות",
+            "על ראש הצוות להגיע לביקור לצרכי תכנון",
+            "שלב ההכנות לשיפוץ",
+            "הדירה בשיפוץ",
+            "הסתיים השיפוץ"];
+	
         /*The first database query to run. getting Logged user, then his team, then all teams*/
         DatabaseService.query(COLLECTIONS.USERS, {
             email: $scope.user.email
@@ -236,16 +244,8 @@ angular.module('ProjectHands.dashboard')
                         "team_id": "",
                         "pinned": [],
                         "toolsNeeded": [],
-                        "renovation_stages": [
-                            "ביקור ראשוני בדירה לבדיקת התאמה",
-                            "הוחלט לשפץ, יש צורך לעדכן עובד סוציאלי",
-                            "עובד סוציאלי עודכן, יש צורך לשבץ צוות",
-                            "על ראש הצוות להגיע לביקור לצרכי תכנון",
-                            "שלב ההכנות לשיפוץ",
-                            "הדירה בשיפוץ",
-                            "הסתיים השיפוץ"
-                        ],
-                        "current_stage": "ביקור ראשוני בדירה לבדיקת התאמה"
+                        "renovation_stages": $scope.defaultRenoStages,
+                        "current_stage": $scope.defaultRenoStages[0]
                     };
                     $scope.cancel = function () {
                         $mdDialog.cancel();
