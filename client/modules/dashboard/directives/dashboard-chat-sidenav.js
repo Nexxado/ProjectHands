@@ -8,7 +8,7 @@ angular.module('ProjectHands.dashboard')
     };
 })
 
-.controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+.controller('dashboardChatSidenavCtrl', function ($scope, $timeout, $mdSidenav, $log) {
         $scope.toggleLeft = buildDelayedToggler('left');
         $scope.toggleRight = buildToggler('right');
         $scope.isOpenRight = function () {

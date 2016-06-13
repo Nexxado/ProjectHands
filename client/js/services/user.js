@@ -70,12 +70,27 @@ angular.module('ProjectHands')
             });
         }
 
+        /**
+         * Update a user's data
+         * Email is used only for Query and will not change.
+         * @param user {Object}
+         */
+        function updateUser(user) {
+            return $resource(baseUrl + '/update').save({
+                email: user.email,
+                name: user.name,
+                phone: user.phone,
+                role: user.role
+            });
+        }
+
         return {
             getUser: getUser,
             getAllUsers: getAllVolunteers,
             getAllSignups: getAllSignups,
             approveUser: approveUser,
             deleteUser: deleteUser,
-            updateRole: updateRole
+            updateRole: updateRole,
+            updateUser: updateUser
         };
     });

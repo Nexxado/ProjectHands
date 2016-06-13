@@ -6,6 +6,7 @@ var debug = require('debug')('app');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var cookieParser = require('cookie-parser');
+var helmet = require('helmet');
 var config = require('../config.json');
 var store = new MongoDBStore(
     {
@@ -40,6 +41,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(helmet());
 
 require('./passport')(passport);
 

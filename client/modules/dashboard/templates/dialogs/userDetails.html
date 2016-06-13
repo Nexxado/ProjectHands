@@ -1,4 +1,4 @@
-<md-dialog aria-label="User Details Dialog" flex="25">
+<md-dialog aria-label="User Details Dialog" flex="35" flex-gt-md="25">
     <md-toolbar dir="rtl">
         <div class="md-toolbar-tools">
             <h2>פרטי משתמש</h2>
@@ -10,15 +10,7 @@
     </md-toolbar>
     <md-dialog-content>
         <div class="md-dialog-content">
-            <md-content class="user-info rtl" layout="row" layout-padding>
-                <div layout="column" class="user-info-main">
-                    <div class="title">שם: {{ user.name }}</div>
-                    <div class="">אימייל: {{ user.email }}</div>
-                    <div>מס' טלפון: {{ user.phone }}</div>
-                    <div>תאריך הצטרפות: {{ user.joined_date }}</div>
-                    <div>תפקיד: {{ user.role }}</div>
-                </div>
-            </md-content>
+            <user-details user="user" layout="row" layout-padding></user-details>
         </div>
     </md-dialog-content>
     <md-dialog-actions class="user-actions" layout-align="start">

@@ -49,54 +49,11 @@ angular.module('ProjectHands')
         );
     }
 
-    /**
-     * Convert date object to DD/MM/YYYY string
-     * @param date {object}
-     */
-    function dateToDDMMYYYY(date) {
-        if(!date)
-            return '';
-
-        var day = date.getDate();
-        var month = date.getMonth() + 1;
-        var year = date.getFullYear();
-        if(day < 10)
-            day = '0' + day;
-        if(month < 10)
-            month = '0' + month;
-
-
-        return day + '/' + month + '/' + year;
-    }
-
-
-    /**
-     * Translate user role to hebrew
-     * @param role {String} : user role
-     * @returns {String} : role translated to hebrew
-     */
-    function translateRole(role) {
-        switch(role) {
-            case ROLES.GUEST:
-                return 'אורח';
-            case ROLES.VOLUNTEER:
-                return 'מתנדב';
-            case ROLES.TEAM_LEAD:
-                return 'מנהל צוות';
-            case ROLES.ADMIN:
-                return 'אדמין';
-            default:
-                return 'failed to translate role';
-        }
-
-    }
 
 
     return {
         parseTimestamp: parseTimestamp,
         toTitleCase: toTitleCase,
-        makeToast: makeToast,
-        dateToDDMMYYYY: dateToDDMMYYYY,
-        translateRole: translateRole
+        makeToast: makeToast
     };
 });

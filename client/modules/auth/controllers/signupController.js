@@ -11,6 +11,7 @@ angular.module('ProjectHands.auth')
         getSelected($scope.volunteer_areas, $scope.user.area);
         getSelected($scope.preferred_day, $scope.user.preferred_day);
         getSelected($scope.team_leader, $scope.user.team_leader);
+        $scope.clearEmptyTextArea();
 
         AuthService.signup($scope.user).$promise
             .then(function (data) {
@@ -155,8 +156,6 @@ angular.module('ProjectHands.auth')
 
     $scope.signupSuccess = false;
     $scope.toastAnchor = 'form';
-    $scope.regexPhone = /^0(5(2|3|4|7|8)|(2|3|4|8)|77 )-?\d{4}-?\d{3}$/;
-    $scope.regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
     /**
      * Workaround for angular material not respecting "rows" attribute on textarea tag

@@ -84,7 +84,9 @@ router.post('/approve', middleware.ensureAuthenticated, middleware.ensurePermiss
         if (req.queriedUser.approved)
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User already approved"});
 
-        mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, {$set: {approved: true, role: req.body.role}}, {},
+        mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, 
+            {$set: {approved: true, role: req.body.role}, $unset: {signupDate: ''}}, 
+            {},
             function (error, result) {
                 debug('approve', error, result.result);
 
@@ -130,6 +132,29 @@ router.post('/assign_role', middleware.ensureAuthenticated, middleware.ensurePer
                 return res.send({success: true});
             });
 
+    });
+
+
+/**
+ * Update user details
+ */
+router.post('/update', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureUserExists, function(req, res) {
+
+        var updatedData = {
+            name: req.body.name,
+            phone: req.body.phone,
+            role: req.body.role
+        };
+        
+        mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, {$set: updatedData}, {}, function(error, result) {
+            debug('update', error, result);
+            if (error || result.result.nModified === 0)
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed update user data"});
+
+            return res.send({success: true});
+        })
+        
     });
 
 
