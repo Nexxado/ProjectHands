@@ -326,7 +326,7 @@ router.get('/changeEmail/:token', function (req, res) {
 function sendUserInfo(req, res) {
 
     debug('sendUserInfo', req.user);
-    return res.send({
+    var userInfo = {
         success: true,
         name: req.user.name,
         email: req.user.email,
@@ -337,7 +337,17 @@ function sendUserInfo(req, res) {
         signup_complete: req.user.signup_complete,
         joined_date: req.user.joined_date,
         avatar: req.user.avatar
-    });
+    };
+
+
+    if(req.brute) {
+        req.brute.reset(function () {
+            res.send(userInfo);
+        });
+        return;
+    }
+
+    return res.send(userInfo);
 }
 
 /**
