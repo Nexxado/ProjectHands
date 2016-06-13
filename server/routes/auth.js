@@ -2,8 +2,6 @@ var router = require('express').Router();
 var HttpStatus = require('http-status-codes');
 var jwt = require('jsonwebtoken');
 var passport = require('passport');
-var ExpressBrute = require('express-brute');
-var moment = require('moment');
 var authUtils = require('../utils/auth');
 var debug = require('debug')('routes/auth');
 var emailUtils = require('../utils/email');
@@ -12,47 +10,12 @@ var middleware = require('../utils/middleware');
 var validation = require('../utils/validation');
 var serverSecret = process.env.SERVER_SECRET || config.SECRETS.serverSecret;
 var ROLES = config.ROLES;
-
-var store = new ExpressBrute.MemoryStore(); // stores state locally, don't use this in production
-
-var failCallback = function (req, res, next, nextValidRequestDate) {
-    return res.send(JSON.stringify({errMessage: ""}));
-};
-var handleStoreError = function (error) {
-    log.error(error); // log this error so we can figure out what went wrong
-    // cause node to exit, hopefully restarting the process fixes the problem
-    throw {
-        message: error.message,
-        parent: error.parent
-    };
-}
-
-// Start slowing requests after 5 failed attempts to do something for the same user
-var emailChange = new ExpressBrute(store, {
-    freeRetries: 5,
-    proxyDepth: 1,
-    minWait: 5 * 60 * 1000, // 5 minutes
-    maxWait: 60 * 60 * 1000, // 1 hour,
-    failCallback: failCallback,
-    handleStoreError: handleStoreError
-});
-// No more than 20 email-change per day per IP
-var globalBruteforce = new ExpressBrute(store, {
-    freeRetries: 40,
-    proxyDepth: 1,
-    attachResetToRequest: false,
-    refreshTimeoutOnRequest: false,
-    minWait: 25 * 60 * 60 * 1000, // 1 day 1 hour (should never reach this wait time)
-    maxWait: 25 * 60 * 60 * 1000, // 1 day 1 hour (should never reach this wait time)
-    lifetime: 24 * 60 * 60, // 1 day (seconds not milliseconds)
-    failCallback: failCallback,
-    handleStoreError: handleStoreError
-});
+var BruteForce = require('../brute')();
 
 /**
  * User Login - match user password hash to hash in DB using passport strategy
  */
-router.post('/login', validation.validateParams, globalBruteforce.prevent, emailChange.getMiddleware({
+router.post('/login', validation.validateParams, BruteForce.global.prevent, BruteForce.local.getMiddleware({
     key: function (req, res, next) {
         // prevent too many attempts for the same email
         next(req.body.email);
@@ -202,7 +165,7 @@ router.get('/authenticate/:action', middleware.ensureAuthenticated, middleware.e
  * the old password is needed if changing password , if forgot option the new password is enough
  */
 router.post('/forgot', validation.validateParams,
-    globalBruteforce.prevent, emailChange.getMiddleware({
+    BruteForce.global.prevent, BruteForce.local.getMiddleware({
         key: function (req, res, next) {
             // prevent too many attempts for the same email
             next(req.body.email);
@@ -285,7 +248,7 @@ router.get('/reset/:token', function (req, res) {
     });
 });
 router.post('/changeEmailRequest', middleware.ensureAuthenticated, validation.validateParams,
-    globalBruteforce.prevent, emailChange.getMiddleware({
+    BruteForce.global.prevent, BruteForce.local.getMiddleware({
         key: function (req, res, next) {
             // prevent too many attempts for the same email
             next(req.body.oldEmail);

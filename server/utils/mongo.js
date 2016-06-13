@@ -9,7 +9,9 @@
 
 var MongoClient = require('mongodb').MongoClient;
 var debug = require('debug')('mongoUtils');
-var COLLECTIONS = require('../../config.json').COLLECTIONS;
+var config = require('../../config.json');
+var COLLECTIONS = config.COLLECTIONS;
+var DB_URL = process.env.MONGODB_URL || config.mongoDBUrl;
 var _db;
 
 function ensureConstraints() {
@@ -43,10 +45,15 @@ function ensureConstraints() {
 module.exports = {
     /**
      * Connect to MongoDB
-     * @param url {string}
      */
-    connect: function (url) {
-        MongoClient.connect(url, function (err, db) {
+    connect: function () {
+
+        // if(_db) {
+        //     debug('Mongo Already connected');
+        //     return;
+        // }
+
+        MongoClient.connect(DB_URL, function (err, db) {
             if (err) {
                 debug("Error connecting to Mongo: ", err);
                 process.exit();

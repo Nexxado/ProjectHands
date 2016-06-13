@@ -2,13 +2,10 @@
 
 var app = require('../server/app');
 var mongoUtil = require('../server/utils/mongo');
-var config = require('../config.json');
 var debug = require('debug')('bin/www');
-
-var DB_URL = process.env.MONGODB_URL || config.mongoDBUrl;
 var port = process.env.PORT || 8080;
 
-mongoUtil.connect(DB_URL);
+mongoUtil.connect();
 
 var server = require('http').createServer(app);
 app.io.attach(server);

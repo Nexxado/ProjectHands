@@ -43,6 +43,7 @@
     "crypto-js": "^3.1.6",
     "express": "^4.13.4",
     "express-brute": "^0.6.0",
+    "express-brute-mongo": "^0.1.0",
     "express-session": "^1.13.0",
     "fullcalendar": "^2.7.0-beta",
     "google-auth-library": "^0.9.8",
