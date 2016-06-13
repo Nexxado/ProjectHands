@@ -1,6 +1,6 @@
 angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages', 'ngCookies', 'ngMaterial',
-    'ui.router', 'ct.ui.router.extras', 'gridster', 'ui.calendar',
-    'ProjectHands.dashboard', 'ProjectHands.auth', 'ProjectHands.home', 'ProjectHands.photos', 'ngFileUpload'])
+    'ui.router', 'ct.ui.router.extras', 'gridster', 'ui.calendar', 'ProjectHands.dashboard', 'ProjectHands.auth',
+    'ProjectHands.home', 'ProjectHands.photos', 'ngFileUpload', 'angulartics', 'angulartics.google.analytics'])
 
 
 .config(function ($mdThemingProvider, $provide) {
@@ -33,7 +33,13 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     TEAMS: 'teams'
 })
 
-.run(function ($rootScope, $mdToast) {
+.run(function ($rootScope, $location, $mdToast) {
+    
+    var analytics = /localhost/.test($location.absUrl()) ? 'none' : 'auto';
+    if(analytics === 'auto')
+        console.info('Activating Analytics');
+
+    ga('create', 'UA-79134913-1', analytics);
 
     $rootScope.rootToastAnchor = '#main-view';
 
