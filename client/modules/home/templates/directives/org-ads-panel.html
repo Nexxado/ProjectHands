@@ -8,10 +8,10 @@
         </md-input-container>
         <md-input-container>
             <label>תוכן</label>
-            <input ng-model="ad.text" type="email">
+            <input ng-model="ad.content">
         </md-input-container>
 
-        <md-button class="md-raised md-primary" ng-click="upload()">העלה</md-button>
+        <md-button class="md-raised md-primary" ng-click="upload(ad.title, ad.content)">העלה</md-button>
     </div>
 
     <div class="home-background"
@@ -26,11 +26,16 @@
                        layout ng-repeat="ad in ads"
                        flex-gt-sm="40"
                        flex="100">
-
             <div layout="column" layout-align="start start" class="org-ads">
-                <md-content>
-                    <H1 dir="rtl" lang="he">{{ad.header}}</H1>
-                    <H3 dir="rtl" lang="he">{{ad.text}}</H3>
+                <md-content style="width: 100px">
+
+                    <H1 dir="rtl" lang="he">{{ad.title}}</H1>
+                    <H3 dir="rtl" lang="he">{{ad.content}}</H3>
+                    <md-button ng-click="deleteAd(ad._id, $index)"
+                               class="md-fab delete-button"
+                               aria-label="Delete">
+                        <md-icon md-svg-src="assets/icons/ic_delete_white_24px.svg"></md-icon>
+                    </md-button>
                 </md-content>
             </div>
 

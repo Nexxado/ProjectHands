@@ -1,56 +1,57 @@
 {
-    "mongoDBUrl" : "mongodb://127.0.0.1:27017/hands",
-    "cookieToken": "token",
-    "cookieSession": "session",
-    "SECRETS": {
-        "serverSecret": "serverTestKey",
-        "sessionSecret": "projecthands session secret"
-    },
-    "AUTH": {
-        "google_client_id": "990301468716-ubc9ojva16mhq03k1sb88k2djruph8is.apps.googleusercontent.com",
-        "google_client_secret": "SPUQWJcDkLyQ5FHKu_cCLCUg",
-        "google_callback": "http://localhost:8080/api/auth/google/callback",
-        "facebook_app_id": "1078269265566476",
-        "facebook_app_secret": "5deb9c085f1669a0cd8d3150027519d3",
-        "facebook_callback": "http://localhost:8080/api/auth/facebook/callback"
-    },
-    "COLLECTIONS": {
-        "USERS": "users",
-        "RENOVATIONS": "renovations",
-        "TEAMS": "teams",
-        "CHATS": "chats",
-        "SIGNUPS": "signup_users",
-        "ACTIONS": "actions",
-        "PHOTOS": "photos",
-        "ADMIN": "admin"
-    },
-    "ROLES": {
-        "ADMIN": "admin",
-        "MANAGER": "manager",
-        "TEAM_LEAD": "teamLead",
-        "VOLUNTEER": "volunteer",
-        "GUEST": "guest"
-    },
-    "ACL": {
-        "VIEW_DASHBOARD": "acl_view_dashboard",
-        "CHANGE_STATUS": "acl_change_status",
-        "DATA_IMPORT_EXPORT": "acl_data_import_export",
-        "RENOVATION_GET_INFO": "acl_renovation_get_info",
-        "RENOVATION_GET_ALL": "acl_renovation_get_all",
-        "RENOVATION_CREATE": "acl_renovation_create",
-        "RENOVATION_EDIT": "acl_renovation_edit",
-        "RENOVATION_RSVP": "acl_renovation_rsvp",
-        "USER_ACTIONS": "acl_user_actions",
-        "TEAM_ACTIONS": "acl_team_actions",
-        "STATISTICS_ACTIONS": "acl_statistics_actions"
-    },
-    "MESSAGES": {
-      "DB_FETCH_ERROR": "Error has accord , please  try again",
-      "PASSWORD_NOT_MATCH_ERROR": "The password dose not match , please try again",
-      "PASSWORD_UPDATING_ERROR": "Error has accord while updating the password",
-      "PASSWORD_UPDATE_SUCCESS": "The password has been changed",
-      "USER_DATA_NOT_EXIST": "Wrong Email or Phone number",
-      "EMAIL_UPDATE_SUCCESS": "Email successfully updated",
-      "USER_EMAIL_NOT_EXIST": "Wrong Email"
-    }
+  "mongoDBUrl": "mongodb://127.0.0.1:27017/hands",
+  "cookieToken": "token",
+  "cookieSession": "session",
+  "SECRETS": {
+    "serverSecret": "serverTestKey",
+    "sessionSecret": "projecthands session secret"
+  },
+  "AUTH": {
+    "google_client_id": "990301468716-ubc9ojva16mhq03k1sb88k2djruph8is.apps.googleusercontent.com",
+    "google_client_secret": "SPUQWJcDkLyQ5FHKu_cCLCUg",
+    "google_callback": "http://localhost:8080/api/auth/google/callback",
+    "facebook_app_id": "1078269265566476",
+    "facebook_app_secret": "5deb9c085f1669a0cd8d3150027519d3",
+    "facebook_callback": "http://localhost:8080/api/auth/facebook/callback"
+  },
+  "COLLECTIONS": {
+    "USERS": "users",
+    "RENOVATIONS": "renovations",
+    "TEAMS": "teams",
+    "CHATS": "chats",
+    "SIGNUPS": "signup_users",
+    "ACTIONS": "actions",
+    "PHOTOS": "photos",
+    "ADS": "ads",
+    "ADMIN": "admin"
+  },
+  "ROLES": {
+    "ADMIN": "admin",
+    "MANAGER": "manager",
+    "TEAM_LEAD": "teamLead",
+    "VOLUNTEER": "volunteer",
+    "GUEST": "guest"
+  },
+  "ACL": {
+    "VIEW_DASHBOARD": "acl_view_dashboard",
+    "CHANGE_STATUS": "acl_change_status",
+    "DATA_IMPORT_EXPORT": "acl_data_import_export",
+    "RENOVATION_GET_INFO": "acl_renovation_get_info",
+    "RENOVATION_GET_ALL": "acl_renovation_get_all",
+    "RENOVATION_CREATE": "acl_renovation_create",
+    "RENOVATION_EDIT": "acl_renovation_edit",
+    "RENOVATION_RSVP": "acl_renovation_rsvp",
+    "USER_ACTIONS": "acl_user_actions",
+    "TEAM_ACTIONS": "acl_team_actions",
+    "STATISTICS_ACTIONS": "acl_statistics_actions"
+  },
+  "MESSAGES": {
+    "DB_FETCH_ERROR": "Error has accord , please  try again",
+    "PASSWORD_NOT_MATCH_ERROR": "The password dose not match , please try again",
+    "PASSWORD_UPDATING_ERROR": "Error has accord while updating the password",
+    "PASSWORD_UPDATE_SUCCESS": "The password has been changed",
+    "USER_DATA_NOT_EXIST": "Wrong Email or Phone number",
+    "EMAIL_UPDATE_SUCCESS": "Email successfully updated",
+    "USER_EMAIL_NOT_EXIST": "Wrong Email"
+  }
 }
