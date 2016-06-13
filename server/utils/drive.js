@@ -54,7 +54,7 @@ function authorize(credentials, callback) {
     });
 }
 /**
- * Get and store new token after prompting for user authorization, and then
+ * Get and sessionStore new token after prompting for user authorization, and then
  * execute the given callback with the authorized OAuth2 client.
  *
  * @param {google.auth.OAuth2} oauth2Client The OAuth2 client to get token for.
@@ -88,7 +88,7 @@ function getNewToken(oauth2Client, callback) {
 /**
  * Store token to disk be used in later program executions.
  *
- * @param {Object} token The token to store to disk.
+ * @param {Object} token The token to sessionStore to disk.
  */
 function storeToken(token) {
     try {
