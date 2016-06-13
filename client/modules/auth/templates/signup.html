@@ -30,7 +30,7 @@
         </md-input-container>
         <!-- Password -->
         <md-input-container class="md-icon-float md-block rtl">
-            <label>סיסמה</label>
+            <label translate="">PASSWORD</label>
             <input type="password" name="password" ng-model="user.password" ng-pattern="regexPassword" minlength="8"
                    maxlength="20" required/>
             <md-icon class="material-icons">lock_outline</md-icon>
@@ -67,7 +67,7 @@
         <!-- Volunteer Area -->
         <div class="volunteer-area">
             <fieldset dir="rtl" class="required">
-                <legend translate>{{'VOLUNTEERING_AREA'}}<b translate>{{'REQUIRED'}}</b></legend>
+                <legend><span translate>{{'VOLUNTEERING_AREA'}}</span> <b translate>{{'REQUIRED'}}</b></legend>
                 <div class="fieldset-subheader" translate>{{'MULTIPLE_AREAS_CAN_BE_SELECTED'}}</div>
                 <div ng-repeat="area in volunteer_areas">
                     <md-checkbox class="rtl" ng-model="area.checked" name="volunteer_areas" ng-change="validateArea()">
@@ -113,7 +113,7 @@
         </div>
         <!-- Remarks and Suggestions -->
         <md-input-container class="rtl md-block">
-            <label>הערות או הצעות</label>
+            <label translate="{{'ANY_NOTES'}}"></label>
             <textarea ng-model="user.remarks" maxlength="150" rows="5" ng-focus="clearEmptyTextArea()"></textarea>
         </md-input-container>
         <!-- Extra-->
@@ -130,7 +130,7 @@
         </md-input-container>
         <!-- Submit Button-->
         <div>
-            <md-button type="submit" class="md-accent md-raised white" translate>הירשם</md-button>
+            <md-button type="submit" class="md-accent md-raised white" translate="{{'REGISTER'}}"></md-button>
         </div>
     </form>
 </md-content>

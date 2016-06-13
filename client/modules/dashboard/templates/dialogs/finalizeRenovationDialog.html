@@ -2,7 +2,7 @@
     <form name="FinalizeRenovationForm" ng-submit="submit()" novalidate>
         <md-toolbar>
             <div class="md-toolbar-tools" dir="rtl">
-                <h2>הקצאת צוות ובחירת תאריך</h2>
+                <h2 translate="{{'PICKUP_TEAM_AND_TIME'}}"></h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="cancel()">
                     <md-icon class="material-icons">close</md-icon>
@@ -11,10 +11,10 @@
         </md-toolbar>
         <md-dialog-content>
             <div class="md-dialog-content">
-                <h3>השיפוץ הגיע לשלב בו מוקצה צוות לשיפוץ וניתן להתחיל בתכנונים. לצורך כל עלינו לבחור תאריך וצוות</h3>
+                <h3 translate>FINALIZE_RENOVATION_MESSAGE</h3>
                 <!-- Input Title -->
                 <md-input-container class="md-block md-icon-float rtl">
-                    <label>בחירת צוות</label>
+                    <label translate>CHOSE_TEAM</label>
                     <md-icon class="material-icons">title</md-icon>
                     <md-select ng-model="renovation.team">
                         <md-option ng-repeat="team in allTeams" ng-value="team">
@@ -22,7 +22,7 @@
                         </md-option>
                     </md-select>
                 </md-input-container>
-                    <label>בחירת תאריך</label>
+                <label translate>CHOSE_DATE</label>
                     <md-datepicker ng-model="date" md-min-date="minDate"></md-datepicker>
             </div>
         </md-dialog-content>

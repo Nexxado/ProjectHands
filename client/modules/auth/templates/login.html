@@ -29,10 +29,12 @@
         </md-input-container>
         <div layout="row">
             <div>
-                <md-button type="submit" class="md-accent md-raised white" translate>{{'LOGIN'}}</md-button>
+                <md-button type="submit" class="md-accent md-raised white"><span translate>{{'LOGIN'}}</span>
+                </md-button>
             </div>
             <div>
-                <md-button ng-click="resetPassword($event)" class="md-warn" translate>{{'FORGOT_PASSWORD'}}</md-button>
+                <md-button ng-click="resetPassword($event)" class="md-warn"><span
+                        translate> {{'FORGOT_PASSWORD'}}</span></md-button>
             </div>
         </div>
     </form>

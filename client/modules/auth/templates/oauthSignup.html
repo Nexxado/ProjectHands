@@ -5,7 +5,7 @@
     <form class="signup-form" name="OAuthSignupForm" ng-submit="submit()" layout="column" novalidate>
         <!-- Phone Number-->
         <md-input-container class="md-icon-float md-block rtl">
-            <label translate>מס' טלפון</label>
+            <label translate>PHONE</label>
             <input type="text" ng-pattern="regexPhone" name="phone" ng-model="info.phone" minlength="9" maxlength="10"
                    required/>
             <md-icon class="material-icons">phone</md-icon>
@@ -70,7 +70,7 @@
         </div>
         <!-- Remarks and Suggestions -->
         <md-input-container class="rtl md-block">
-            <label>הערות או הצעות</label>
+            <label translate=>{{'ANY_NOTES'}}</label>
             <textarea ng-model="info.remarks" maxlength="150" rows="5" ng-focus="clearEmptyTextArea()"></textarea>
         </md-input-container>
         <!-- Extra-->
@@ -86,7 +86,7 @@
             <input type="text" name="extra" ng-model="info.extra" aria-label="extra info"/>
         </md-input-container>
         <div>
-            <md-button type="submit" class="md-accent md-raised white">הירשם</md-button>
+            <md-button type="submit" class="md-accent md-raised white" translate="{{'REGISTER'}}"></md-button>
         </div>
     </form>
 </md-content>
