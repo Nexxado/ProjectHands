@@ -15,7 +15,7 @@ router.get('/VolunteersCountPerDate/:date',
         }
         catch (e) {
             res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: Failed to get volunteers count"});
-            debug("VolunteersCountPerDate error: ", error);
+            debug("VolunteersCountPerDate error: ", e);
         }
     });
 
@@ -31,7 +31,7 @@ router.get('/renovationsVolunteersNumberPerDate/:date',
         }
         catch (e) {
             res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: Failed to get volunteers count per renovation"});
-            debug("renovationsVolunteersNumberPerDate error: ", error);
+            debug("renovationsVolunteersNumberPerDate error: ", e);
         }
     });
 
@@ -46,7 +46,7 @@ router.get('/renovationsCostPerDate/:date',
         }
         catch (e) {
             res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: Failed to get cost per renovation"});
-            debug("getRenovationsCostPerDate error: ", error);
+            debug("getRenovationsCostPerDate error: ", e);
         }
     });
 
@@ -61,7 +61,7 @@ router.get('/renovationsVolunteeringHoursPerDate/:date',
         }
         catch (e) {
             res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: Failed to get volunteering hours per renovation"});
-            debug("getRenovationsVolunteeringHoursPerDate error: ", error);
+            debug("getRenovationsVolunteeringHoursPerDate error: ", e);
         }
     });
 
@@ -76,7 +76,7 @@ router.get('/renovationsPerDate/:date',
         }
         catch (e) {
             res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: Failed to get renovations for the specified date"});
-            debug("getRenovationsPerDate error: ", error);
+            debug("getRenovationsPerDate error: ", e);
         }
     });
 

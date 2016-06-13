@@ -5,7 +5,7 @@ angular.module('ProjectHands.statistics')
         $scope.startDate = new Date();
         $scope.endDate = new Date();
 
-        $scope.VolunteersCount = '';
+        $scope.volunteersCount = '';
         $scope.renovationsVolunteersNumber = '';
         $scope.renovationsCost = '';
         $scope.renovationsVolunteeringHours = '';
@@ -29,17 +29,17 @@ angular.module('ProjectHands.statistics')
             console.log($scope.endDate);
 
             $scope.VolunteersCountPerDate = '';
-            StatisticsService.getVolunteersCountPerDate(startYear, startMonth, startDay, startDay)
+            StatisticsService.getVolunteersCountPerDate(startYear, endYear, startMonth, endMonth, startDay, endDay)
                 .$promise
                 .then(function (result) {
                     console.log('result ' + result.toString());
-                    $scope.VolunteersCount = result.toString();
+                    $scope.volunteersCount = result.toString();
                 })
                 .catch(function (error) {
                     console.log('error ' + error.toString());
                 });
 
-            StatisticsService.getRenovationsVolunteersNumberPerDate(startYear, startMonth, startDay, startDay)
+            StatisticsService.getRenovationsVolunteersNumberPerDate(startYear, endYear, startMonth, endMonth, startDay, endDay)
                 .$promise
                 .then(function (result) {
                     console.log('result ' + result.toString());
@@ -50,7 +50,7 @@ angular.module('ProjectHands.statistics')
                 });
 
 
-            StatisticsService.getRenovationsCostPerDate(startYear, startMonth, startDay, startDay)
+            StatisticsService.getRenovationsCostPerDate(startYear, endYear, startMonth, endMonth, startDay, endDay)
                 .$promise
                 .then(function (result) {
                     console.log('result ' + result.toString());
@@ -61,7 +61,7 @@ angular.module('ProjectHands.statistics')
                 });
 
 
-            StatisticsService.getRenovationsVolunteeringHoursPerDate(startYear, startMonth, startDay, startDay)
+            StatisticsService.getRenovationsVolunteeringHoursPerDate(startYear, endYear, startMonth, endMonth, startDay, endDay)
                 .$promise
                 .then(function (result) {
                     console.log('result ' + result.toString());
@@ -72,7 +72,7 @@ angular.module('ProjectHands.statistics')
                 });
 
 
-            StatisticsService.getRenovationsPerDate(startYear, startMonth, startDay, startDay)
+            StatisticsService.getRenovationsPerDate(startYear, endYear, startMonth, endMonth, startDay, endDay)
                 .$promise
                 .then(function (result) {
                     console.log('result ' + result.toString());

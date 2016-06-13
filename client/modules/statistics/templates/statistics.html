@@ -1,9 +1,10 @@
-<div class="rtl">
+<md-content class="rtl" layout-padding="">
 
     <div>
 
         <div layout="row" layout-align="start center">
-            <h4>תאריך התחלה</h4>
+
+            <h4 style="padding: 32px">תאריך התחלה</h4>
             <form name="startDateForm">
                 <md-datepicker name="startDateField"
                                ng-model="startDate"
@@ -18,7 +19,7 @@
                 </div>
             </form>
 
-            <h4>תאריך סיום</h4>
+            <h4 style="padding: 32px">תאריך סיום</h4>
             <form name="endDateForm">
                 <md-datepicker name="endDateField"
                                ng-model="endDate"
@@ -33,38 +34,32 @@
                 </div>
             </form>
 
-
         </div>
-
         <md-button class="md-raised md-primary" ng-click="submit()">קבל סטטיסטיקות</md-button>
 
         <div>
             <h3>מספר מתנדבים</h3>
-            <h4>תוצאה...</h4>
+            <h4>{{volunteersCount}}</h4>
         </div>
-
         <div>
             <h3>מספר מתנדבים לשיפוצים</h3>
-            <h4>תוצאה...</h4>
+            <h4>{{renovationsVolunteersNumber}}</h4>
         </div>
-
         <div>
             <h3>עלות השיפוצים</h3>
-            <h4>תוצאה...</h4>
+            <h4>{{renovationsCost}}</h4>
         </div>
-
         <div>
             <h3>שעות שיפוץ</h3>
-            <h4>תוצאה...</h4>
+            <h4>{{renovationsVolunteeringHours}}</h4>
         </div>
-
         <div>
             <h3>מספר שיפוצים</h3>
-            <h4>תוצאה...</h4>
+            <h4>{{renovations}}</h4>
         </div>
     </div>
 
 
-</div>
+</md-content>
 
 
