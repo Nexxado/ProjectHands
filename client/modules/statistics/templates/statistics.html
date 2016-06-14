@@ -38,6 +38,7 @@
         <md-button class="md-raised md-primary" ng-click="submit()">קבל סטטיסטיקות</md-button>
 
         <div class="stat-table">
+            <h3>מידע כולל</h3>
             <table>
                 <tr>
                     <td>מספר מתנדבים</td>
@@ -59,34 +60,45 @@
             <div>
                 <h3> שיפוצים</h3>
                 <div ng-repeat="renovation in renovations">
-                    <table>
-                        <tr>
-                            <td>שם</td>
-                            <td>{{renovation.name}}</td>
-                        </tr>
+                    <div layout="row">
 
-                        <tr>
-                            <td>תאריך</td>
-                            <td>{{renovation.date}}</td>
-                        </tr>
-                    </table>
+                        <div layout-padding="24">
+                            <h4>פרטים בסיסיים</h4>
+                            <table>
+                                <tr>
+                                    <td>שם</td>
+                                    <td>{{renovation.name}}</td>
+                                </tr>
 
-                    <h4>hoursMap</h4>
+                                <tr>
+                                    <td>תאריך</td>
+                                    <td>{{renovation.date}}</td>
+                                </tr>
+                            </table>
+                        </div>
 
-                    <table>
-                        <tr ng-repeat='(key, value) in renovation.hoursMap'>
-                            <td>{{key}}</td>
-                            <td>{{value}}</td>
-                        </tr>
-                    </table>
+                        <div layout-padding="24">
+                            <h4>לוח שעות</h4>
+                            <table>
+                                <tr ng-repeat='(key, value) in renovation.hoursMap'>
+                                    <td>{{key}}</td>
+                                    <td>{{value}}</td>
+                                </tr>
+                            </table>
+                        </div>
 
-                    <h4>costMap</h4>
-                    <table>
-                        <tr ng-repeat='(key, value) in renovation.costMap'>
-                            <td>{{key}}</td>
-                            <td>{{value}}</td>
-                        <tr/>
-                    </table>
+                        <div layout-padding="24">
+                            <h4>לוח עלות</h4>
+                            <table>
+                                <tr ng-repeat='(key, value) in renovation.costMap'>
+                                    <td>{{key}}</td>
+                                    <td>{{value}}</td>
+                                <tr/>
+                            </table>
+                        </div>
+
+                    </div>
+
                     <hr>
                 </div>
 
