@@ -15,13 +15,13 @@
                     <span class="md-headline">{{myUser.name}}</span>
                     <span class="md-subhead">{{myUser.role}}</span>
                 </div>
-                <p translate> {{myUser._id}} {{'USER_ID'}}</p>
-                <p translate>{{myUser.address}} {{'ADDRESS'}}</p>
-                <p translate> {{myUser.email}} {{'EMAIL'}}</p>
-                <p translate> {{myUser.phone}} {{'PHONE'}}</p>
-                <p translate> {{myUser.about_me}} {{'ABOUT_ME'}}</p>
-                <p translate> {{myUser.total_renovations}} {{'RENOVATION_NUMBER_I_AM_IN'}}</p>
-                <p translate> {{myUser.joined_date | date}} {{'REGISTER_DATE'}}</p>
+                <p><span translate> {{'USER_ID'}}</span> {{myUser._id}} </p>
+                <p><span translate> {{'ADDRESS'}}</span> {{myUser.address}} </p>
+                <p><span translate> {{'EMAIL'}}</span> {{myUser.email}} </p>
+                <p><span translate> {{'PHONE'}}</span> {{myUser.phone}} </p>
+                <p><span translate> {{'ABOUT_ME'}}</span> {{myUser.about_me}} </p>
+                <p><span translate> {{'RENOVATION_NUMBER_I_AM_IN'}}</span> {{myUser.total_renovations}} </p>
+                <p><span translate> {{'REGISTER_DATE'}}</span> {{myUser.joined_date | date}} </p>
             </div>
             <div class="profile-pic profile-content-item">
                 <img src="{{myUser.avatar}}" alt="Avatar" height="100%" width="100%" />

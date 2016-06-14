@@ -2,7 +2,7 @@
     <form name="AddRenovationForm" ng-submit="submit()" novalidate>
         <md-toolbar>
             <div class="md-toolbar-tools" dir="rtl">
-                <h2>הוספת פרויקט חדש</h2>
+                <h2 translate="{{'ADD_NEW_PROJECT'}}">הוספת פרויקט חדש</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="cancel()">
                     <md-icon class="material-icons">close</md-icon>
@@ -12,34 +12,34 @@
         <md-dialog-content>
             <div class="md-dialog-content" dir="rtl">
                 <md-icon class="material-icons">gps_fixed</md-icon>
-                <label>כתובת</label>
+                <label translate="{{'ADDRESS'}}">כתובת</label>
                 <md-input-container class="md-block md-icon-float rtl">
-                    <label>עיר</label>
+                    <label translate="{{'CITY'}}">עיר</label>
                     <input type="text" name="city" ng-model="renovation.addr.city" required>
                     <md-tooltip md-delay="1000">העיר בה נמצאת הדירה</md-tooltip>
                     <div ng-messages="AddRenovationForm.city.$error">
-                        <div ng-message="required">
+                        <div ng-message="required" translate="{{'REQUIRED'}}">
                             שדה חובה
                         </div>
                     </div>
                 </md-input-container>
                 <md-input-container class="md-block md-icon-float rtl">
-                    <label>רחוב</label>
+                    <label translate="{{'STREET'}}">רחוב</label>
                     <input type="text" name="street" ng-model="renovation.addr.street" required>
-                    <md-tooltip md-delay="1000">הרחוב בו נמצאת הדירה</md-tooltip>
+                    <md-tooltip md-delay="1000"><span translate="{{'PROJECT_STREET'}}"></span></md-tooltip>
                     <div ng-messages="AddRenovationForm.street.$error">
-                        <div ng-message="required">
+                        <div ng-message="required" translate="{{'REQUIRED'}}">
                             שדה חובה
                         </div>
                     </div>
                 </md-input-container>
                 <md-input-container class="md-block md-icon-float rtl">
-                    <label>מספר</label>
+                    <label translate="{{'NUMBER'}}">מספר</label>
 
                     <input type="text" name="num" ng-model="renovation.addr.num" required>
-                    <md-tooltip md-delay="1000">מספר בית</md-tooltip>
+                    <md-tooltip md-delay="1000"><span translate="{{'HOUSE_NUMBER'}}"></span></md-tooltip>
                     <div ng-messages="AddRenovationForm.num.$error">
-                        <div ng-message="required">
+                        <div ng-message="required" translate="{{'REQUIRED'}}">
                             שדה חובה
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                     <input type="text" name="apt" ng-model="a" required>
                     <md-tooltip md-delay="1000">מספר הדירה</md-tooltip>
                     <div ng-messages="AddRenovationForm.apt.$error">
-                        <div ng-message="required">
+                        <div ng-message="required" translate="{{'REQUIRED'}}">
                             שדה חובה
                         </div>
                     </div>
@@ -58,8 +58,8 @@
             </div>
         </md-dialog-content>
         <md-dialog-actions>
-            <md-button ng-click="cancel()" class="md-warn">ביטול</md-button>
-            <md-button type="submit" class="md-primary">אישור</md-button>
+            <md-button ng-click="cancel()" class="md-warn" translate="{{'CANCEL'}}">ביטול</md-button>
+            <md-button type="submit" class="md-primary" translate="{{'APPROVE'}}">אישור</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

@@ -6,8 +6,10 @@
                 <span>{{team.name}}</span>
             </div>
 			<div>
-                <md-button class="md-raised md-warn" ng-click="deleteTeam($event,team)">{{'DELETE'}}</md-button>
-                <md-button class="md-raised md-warn" ng-click="addTeamMembers($event,team)">{{'ADD_TEAM_MEMBERS'}}
+                <md-button class="md-raised md-warn" ng-click="deleteTeam($event,team)"
+                           translate="{{'DELETE'}}"></md-button>
+                <md-button class="md-raised md-warn" ng-click="addTeamMembers($event,team)"
+                           translate="{{'ADD_TEAM_MEMBERS'}}">
                 </md-button>
 			</div>
         </md-toolbar>

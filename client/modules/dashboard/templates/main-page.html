@@ -1,54 +1,58 @@
-<md-button class="md-raised md-primary" ng-click="enableEditLayout()" ng-show="!editLayoutEnabled">התאמה אישית</md-button>
-<md-button class="md-raised md-accent" ng-click="disableEditLayout()" ng-show="editLayoutEnabled">סיום</md-button>
+<md-button class="md-raised md-primary" ng-click="enableEditLayout()" ng-show="!editLayoutEnabled"><span translate> {{'CUSTOMIZE'}}</span>
+</md-button>
+<md-button class="md-raised md-accent" ng-click="disableEditLayout()" ng-show="editLayoutEnabled"><span translate> {{'FINISH'}}</span>
+</md-button>
 <md-menu ng-hide="!editLayoutEnabled">
-    <md-button ng-click="$mdOpenMenu($event)" aria-label="Open sample menu"> חלונות להוספה </md-button>
+    <md-button ng-click="$mdOpenMenu($event)" aria-label="Open sample menu" translate="WINDOWS_TO_BE_ADDES"
+               translate="{['WINDOWS_TO_BE_ADDES'}}"> חלונות להוספה
+    </md-button>
     <md-menu-content>
         <md-menu-item layout="column" layout-align="center center" style="height:100%; overflow: hidden">
             <table style="width:100%">
                 <tr>
-                    <a class="sidenav-btn" translate>
+                    <a class="sidenav-btn">
                         <md-checkbox ng-model="widgets[0].active" aria-label="Tasks Widget"></md-checkbox>
-                        <span flex></span> {{'TASKS'}} </a>
+                        <span flex></span> <span translate="{{'TASKS'}}"> </span> </a>
                 </tr>
                 <tr>
-                    <a class="sidenav-btn" translate>
+                    <a class="sidenav-btn">
                         <md-checkbox ng-model="widgets[1].active" aria-label="Renovations Widget"></md-checkbox>
-                        <span flex></span>{{'PLANNED_RENOVATIONS'}}
+                        <span flex></span> <span translate="{{'PLANNED_RENOVATIONS'}}"></span>
 
                     </a>
                 </tr>
                 <tr>
-                    <a class="sidenav-btn" translate>
+                    <a class="sidenav-btn">
                         <md-checkbox ng-model="widgets[2].active" aria-label="Toolbox Widget"></md-checkbox>
-                        <span flex></span>{{'TOOL_BOX'}}
+                        <span flex></span> <span translate="{{'TOOL_BOX'}}"></span>
 
                     </a>
                 </tr>
                 <tr>
-                    <a class="sidenav-btn" translate>
+                    <a class="sidenav-btn">
                         <md-checkbox ng-model="widgets[3].active" aria-label="Team Widget"></md-checkbox>
-                        <span flex></span> {{'MY_TEAM'}}
+                        <span flex></span> <span translate="{{'MY_TEAM'}}"></span>
 
                     </a>
                 </tr>
                 <tr>
-                    <a class="sidenav-btn" translate>
+                    <a class="sidenav-btn">
                         <md-checkbox ng-model="widgets[4].active" aria-label="Calendar Widget"></md-checkbox>
-                        <span flex></span> {{'SCHEDULE'}}
+                        <span flex></span> <span translate="{{'SCHEDULE'}}"></span>
 
                     </a>
                 </tr>
                 <tr>
-                    <a class="sidenav-btn" translate>
+                    <a class="sidenav-btn">
                         <md-checkbox ng-model="widgets[5].active" aria-label="Profile Widget"></md-checkbox>
-                        <span flex></span> {{'USER_PROFILE'}}
+                        <span flex></span> <span translate="{{'USER_PROFILE'}}"></span>
 
                     </a>
                 </tr>
                 <tr>
-                    <a class="sidenav-btn" translate>
+                    <a class="sidenav-btn">
                         <md-checkbox ng-model="widgets[6].active" aria-label="Chat Widget"></md-checkbox>
-                        <span flex></span> {{'CHAT"}}
+                        <span flex></span><span translate="{{'CHAT'}}"></span>
 
                     </a>
                 </tr>

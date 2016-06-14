@@ -3,7 +3,7 @@
          ng-show="selectedUser">
         <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
             <div class="md-toolbar-tools">
-                <span>פרטי משתמש</span>
+                <span translate>{{'USER_DETAILS'}}</span>
             </div>
         </md-toolbar>
         <md-content class="signup-info rtl" layout="row" layout-padding>
@@ -12,16 +12,16 @@
             <div layout="column">
                 <div class="signup-actions" layout="row" layout-align="center center">
                     <md-button class="md-raised approve-btn" ng-click="approveUser(selectedUser, selectedRole)">
-                        אשר משתמש
+                        <span translate>{{'APPROVE_USER'}}</span>
                     </md-button>
                     <md-button class="md-warn md-raised" ng-click="deleteUser(selectedUser)">
-                        מחק משתמש
+                        <span translate>{{'DELETE_USER'}}</span>
                     </md-button>
                 </div>
                 <!-- Role -->
                 <div class="signup-role" layout="row" flex>
                     <md-input-container class="md-block rtl" flex="60">
-                        <label>תפקיד</label>
+                        <label translate>{{'JOB'}}</label>
                         <md-select name="role" ng-model="selectedRole" required>
                             <md-option ng-value="role" ng-repeat="role in roles">
                                 {{ role | translateRole }}
@@ -35,7 +35,7 @@
     <div flex-gt-sm="45" flex-offset-gt-sm="5" flex class="list-border dashboard-height">
         <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
             <div class="md-toolbar-tools">
-                <span>בקשות הצטרפות</span>
+                <span translate>{{'JOIN_REQUESTS'}}</span>
                 <span flex></span>
                 <md-input-container class="md-icon-float rtl list-search-input">
                     <input aria-label="search join requests" type="text" name="search" ng-model="search"/>

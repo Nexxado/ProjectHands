@@ -1,7 +1,7 @@
 <md-dialog aria-label="Signup Details Dialog" flex="25">
     <md-toolbar dir="rtl">
         <div class="md-toolbar-tools">
-            <h2>פרטי משתמש</h2>
+            <h2 translate="{{'USER_DETAILS'}}">פרטי משתמש</h2>
             <span flex></span>
             <md-button class="md-icon-button" ng-click="cancel()">
                 <md-icon class="material-icons">close</md-icon>
@@ -15,7 +15,7 @@
                 <!-- Role -->
                 <div class="signup-role" layout="row" flex>
                     <md-input-container class="md-block rtl" flex>
-                        <label>תפקיד</label>
+                        <label translate="{{'JOB'}}">תפקיד</label>
                         <md-select name="role" ng-model="selectedRole" required>
                             <md-option ng-value="role" ng-repeat="role in roles">
                                 {{ role | translateRole }}
@@ -28,14 +28,16 @@
     </md-dialog-content>
     <md-dialog-actions class="signup-actions" layout-align="start">
         <md-button class="md-warn" ng-click="cancel()">
-            ביטול
+            <span translate="{{'CANCEL'}}"></span>
+
         </md-button>
         <span flex></span>
         <md-button class="md-warn md-raised" ng-click="submit(false)">
-            מחק משתמש
+            <span translate="{{'DELETE_USER'}}"></span>
+
         </md-button>
         <md-button class="md-raised approve-btn" ng-click="submit(true)">
-            אשר משתמש
+            <span translate="{{'APPROVE_USER'}}"></span>
         </md-button>
     </md-dialog-actions>
 </md-dialog>

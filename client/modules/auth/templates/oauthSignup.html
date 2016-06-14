@@ -24,7 +24,7 @@
         <!-- Volunteer Area -->
         <div class="volunteer-area">
             <fieldset dir="rtl" class="required">
-                <legend translate>{{'VOLUNTEERING_AREA'}}<b translate>{{'REQUIRED'}}</b></legend>
+                <legend><span translate>{{'VOLUNTEERING_AREA'}}</span> <b translate>{{'REQUIRED'}}</b></legend>
                 <div class="fieldset-subheader" translate>{{'MULTIPLE_AREAS_CAN_BE_SELECTED'}}</div>
                 <div ng-repeat="area in volunteer_areas">
                     <md-checkbox class="rtl" ng-model="area.checked" name="volunteer_areas" ng-change="validateArea()">

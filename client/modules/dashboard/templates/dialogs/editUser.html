@@ -2,7 +2,7 @@
     <form name="EditUserForm" ng-submit="submit()" novalidate>
         <md-toolbar dir="rtl">
             <div class="md-toolbar-tools">
-                <h2>עריכת משתמש</h2>
+                <h2 translate="{{'EDIT_USER'}}">עריכת משתמש</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="cancel()">
                     <md-icon class="material-icons">close</md-icon>
@@ -17,30 +17,30 @@
                 <md-content class="edit-user-form" layout="column" flex="60" layout-padding>
                     <!-- First name & Last name -->
                     <md-input-container class="md-icon-float md-block rtl">
-                        <label>שם פרטי ושם משפחה</label>
+                        <label translate="{{'FULL_NAME'}}">שם פרטי ושם משפחה</label>
                         <input type="text" name="name" ng-model="user.name" required/>
                         <md-icon class="material-icons">face</md-icon>
                         <div ng-messages="EditUserForm.name.$error">
-                            <div ng-message="required">
+                            <div ng-message="required" translate="{{'REQUIRED'}}">
                                 שדה חובה
                             </div>
                         </div>
                     </md-input-container>
                     <!-- Phone Number-->
                     <md-input-container class="md-icon-float md-block rtl">
-                        <label>מס' טלפון</label>
+                        <label translate="{{'PHONE'}}">מס' טלפון</label>
                         <input type="text" ng-pattern="regexPhone" name="phone" ng-model="user.phone" minlength="9"
                                maxlength="10"
                                required/>
                         <md-icon class="material-icons">phone</md-icon>
                         <div ng-messages="EditUserForm.phone.$error">
-                            <div ng-message="required">
+                            <div ng-message="required" translate="{{'REQUIRED'}}">
                                 שדה חובה
                             </div>
-                            <div ng-message="minlength">
+                            <div ng-message="minlength" translate="{{'PASSWORD_LENGTH'}}">
                                 דרושים לפחות 9 ספרות
                             </div>
-                            <div ng-message="pattern">
+                            <div ng-message="pattern" translate="{{'ILLEGAL_NUMBER'}}">
                                 מספר אינו חוקי
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                     <!-- Role -->
                     <div layout="row" layout-align="end" flex>
                         <md-input-container class="md-icon-float md-block rtl" flex="25">
-                            <label>תפקיד</label>
+                            <label translate="{{'JOB'}}">תפקיד</label>
                             <md-icon class="material-icons">account_box</md-icon>
                             <md-select name="role" ng-model="user.role" required ng-disabled="!changeRoleEnabled">
                                 <md-option ng-value="role" ng-repeat="role in roles">
@@ -61,10 +61,10 @@
             </div>
         </md-dialog-content>
         <md-dialog-actions class="user-actions" layout-align="start" flex>
-            <md-button class="md-warn" ng-click="cancel()">
+            <md-button class="md-warn" ng-click="cancel()" translate="{{'CANCEL'}}">
                 ביטול
             </md-button>
-            <md-button class="md-primary md-raised" type="submit">
+            <md-button class="md-primary md-raised" type="submit" translate="{{'APPROVE'}}">
                 אישור
             </md-button>
             <span flex></span>

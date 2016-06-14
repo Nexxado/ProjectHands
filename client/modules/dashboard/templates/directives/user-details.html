@@ -1,39 +1,34 @@
 <div class="user-info rtl">
     <div layout="column" class="user-info-main">
         <!-- Basic Information -->
-        <div class="title">שם: {{ user.name }}</div>
-        <div><span class="header">אימייל:</span> {{ user.email }}</div>
-        <div><span class="header">מס' טלפון:</span> {{ user.phone }}</div>
+        <div class="title"><span translate="{{'NAME'}}"></span> {{ user.name }}</div>
+        <div><span class="header" translate="{{'EMAIL'}}">אימייל:</span> {{ user.email }}</div>
+        <div><span class="header" translate="{{'PHONE'}}">מס' טלפון:</span> {{ user.phone }}</div>
         <!-- Join / Signup date -->
-        <div ng-hide="user.signupDate"><span class="header">תאריך הצטרפות:</span> {{ user.joined_date | date: 'dd/MM/yyyy'}}</div>
-        <div ng-show="user.signupDate"><span class="header">תאריך הרשמה:</span> {{ user.signupDate | date: 'dd/MM/yyyy'}}</div>
+        <div ng-hide="user.signupDate"><span class="header" translate="{{'JOIN_DATE'}}">תאריך הצטרפות:</span> {{
+            user.joined_date | date: 'dd/MM/yyyy'}}
+        </div>
+        <div ng-show="user.signupDate"><span class="header" translate="{{'REGISTER_DATE'}}">תאריך הרשמה:</span> {{
+            user.signupDate | date: 'dd/MM/yyyy'}}
+        </div>
         <!-- Volunteer Areas -->
         <div>
-            <span class="header">איזורי התנדבות:</span>
+            <span class="header" translate="{{'VOLUNTEERING_AREAS'}}">איזורי התנדבות:</span>
             <span ng-repeat="area in user.area">{{area}}{{$last ? '' : ', '}}</span>
         </div>
         <!-- Current Role -->
-        <div><span class="header">תפקיד:</span> {{ user.role | translateRole }}</div>
+        <div><span class="header" translate="{{'JOB'}}">תפקיד:</span> {{ user.role | translateRole }}</div>
         <!-- Preferred Days -->
         <div>
-            <span class="header">ימים מועדפים:</span>
+            <span class="header" translate="{{'PERFERRED_VOLUNTEERING_DAYS'}}">ימים מועדפים:</span>
             <span ng-repeat="day in user.preferred_day">{{day}}{{$last ? '' : ', '}}</span>
-            <span ng-show="isEmpty(user.preferred_day)"> אין</span>
+            <span ng-show="isEmpty(user.preferred_day)" translate="{{'DOSENT_EXIST'}}"> אין</span>
         </div>
         <!-- Team Leader Aspirations -->
         <div>
-            <span class="header">רוצה להיות ראש צוות:</span> {{ user.team_leader }}
-            <span ng-show="isEmpty(user.team_leader)">אין</span>
-        </div>
-        <!-- Remarks -->
-        <div>
-            <span class="header">הערות:</span> {{ user.remarks }}
-            <span ng-show="isEmpty(user.remarks)">אין</span>
-        </div>
-        <!-- Extra Information -->
-        <div>
-            <span class="header">תחום טכני:</span> {{ user.extra }}
-            <span ng-show="isEmpty(user.extra)">אין</span>
+            <span class="header" translate="{{'DO_WANT_TO_BE_TEAM_LEAD'}}">רוצה להיות ראש צוות:</span> {{
+            user.team_leader }}
+            <span ng-show="isEmpty(user.team_leader)" translate="{{'DOSENT_EXIST'}}">אין</span>
         </div>
     </div>
 </div>

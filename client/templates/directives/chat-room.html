@@ -29,10 +29,10 @@
                     </div>
                     <div layout="row" flex>
                         <md-input-container flex class="md-icon-float md-block rtl">
-                            <label>כתוב הודעה</label>
+                            <label translate="{{'WRITE_A_MESSAGE'}}">כתוב הודעה</label>
                             <input name="message" type="text" ng-model="message.content" required/>
                             <div ng-messages="ChatMessageForm.message.$error">
-                                <div ng-message="required">
+                                <div ng-message="required" translate="{{'REQUIRED'}}">
                                     שדה חובה
                                 </div>
                             </div>
