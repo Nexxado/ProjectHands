@@ -18,6 +18,7 @@ module.exports = function(config) {
       'node_modules/jquery/dist/jquery.js',
       'node_modules/angular/angular.js',
       'node_modules/angular-*/angular-*.js',
+      'node_modules/angular-translate/dist/angular-translate.js',
       'node_modules/angular-ui-router/release/angular-ui-router.min.js',
       'node_modules/ui-router-extras/release/ct-ui-router-extras.min.js',
       'node_modules/angular-ui-calendar/src/calendar.js',
@@ -27,7 +28,6 @@ module.exports = function(config) {
       'node_modules/moment/min/moment.min.js',
       'node_modules/fullcalendar/dist/fullcalendar.min.js',
       'node_modules/fullcalendar/dist/gcal.js',
-      'node_modules/crypto-js/crypto-js.js',
       'client/**/*.module.js',
       'client/**/*.js',
       'client/test/*.test.js'
