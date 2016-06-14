@@ -1,12 +1,22 @@
 <md-content>
-    <div class="home-background" layout="column" layout-padding layout-wrap layout-fill ng-cloak
-         style="max-width: 1050px">
-        <md-whiteframe class="md-whiteframe-8dp sta white-background" layout ng-repeat="ad in ads">
+
+    <div class="home-background"
+         layout="row"
+         layout-align="center center"
+         layout-padding
+         layout-wrap
+         layout-fill
+         ng-cloak>
+
+        <md-whiteframe class="md-whiteframe-8dp sta white-background"
+                       layout ng-repeat="ad in ads"
+                       flex-gt-sm="40"
+                       flex="100">
 
             <div layout="column" layout-align="start start" class="org-ads">
                 <md-content>
-                    <H1 dir="rtl" lang="he">{{ad.header}}</H1>
-                    <H3 dir="rtl" lang="he">{{ad.text}}</H3>
+                    <H1 dir="rtl" lang="he">{{ad.title}}</H1>
+                    <H3 dir="rtl" lang="he">{{ad.content}}</H3>
                 </md-content>
             </div>
 

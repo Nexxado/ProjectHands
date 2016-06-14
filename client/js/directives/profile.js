@@ -5,48 +5,54 @@ angular.module('ProjectHands')
             restrict: 'E',
             replace: true,
             templateUrl: '/templates/directives/profile.html',
-            controller: function ($scope, $location, AuthService, PhotosService) {
+            controller: function ($scope, $location, PhotosService, $rootScope, UtilsService, SessionService, AuthService, AUTH_EVENTS,
+                                  $window, $mdDialog, $mdMedia) {
+
+                /**
+                 * Invoke changePassword Dialog
+                 * @param $event {Object}
+                 */
+                $scope.changePassword = function ($event) {
+                    var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
+
+                    $mdDialog.show({
+                        controller: 'ChangePasswordDialogController',
+                        templateUrl: '/templates/dialogs/changePassword.html',
+                        parent: angular.element(document.body),
+                        targetEvent: $event,
+                        clickOutsideToClose: true,
+                        fullscreen: useFullScreen
+                    })
+                        .then(function (result) {
+
+
+                        }, function () {
+                            //Dialog Canceled
+                        });
+                };
+
+                $scope.changeEmail = function () {
+
+                    if ($scope.ChangeEmailForm.$invalid)
+                        return;
+
+                    AuthService.changeEmailRequest($scope.profile.email, $scope.email)
+                        .$promise
+                        .then(function (result) {
+                            console.log(result);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+
+
+                };
 
                 $scope.isLoggedIn = false;
                 $scope.userHaveProfilePic = false;
 
-                $scope.change_password = {
-                    old: "",
-                    new: "",
-                    conf_new: ""
-                };
                 $scope.reset_password = {
                     new: ""
-                };
-
-                $scope.changePassword = function () {
-                    if ($scope.chPassForm.$invalid)
-                        return;
-
-                    if (!($scope.change_password.old === $scope.change_password.conf_new))
-                        return;
-
-                    AuthService.changePassword($scope.profile.email, $scope.change_password.old, $scope.change_password.new)
-                        .then(function (data) {
-
-                        })
-                        .catch(function (error) {
-
-                        });
-                    
-                    resetForm();
-                };
-                $scope.resetPassword = function () {
-                    if ($scope.resetPasswordForm.$invalid)
-                        return;
-
-                    AuthService.resetPassword($scope.profile.email, $scope.reset_password.new)
-                        .then(function (data) {
-
-                        })
-                        .catch(function (error) {
-
-                        });
                 };
 
                 var resetForm = function () {
@@ -59,14 +65,15 @@ angular.module('ProjectHands')
                         new: ""
                     };
                 };
-                
+
                 var album = '';
                 $scope.profilePic = {};
                 $scope.profilePicUrl = {};
 
                 $scope.profile = {};
 
-                AuthService.isLoggedIn().$promise
+                AuthService.isLoggedIn()
+                    .$promise
                     .then(function (result) {
                         $scope.isLoggedIn = true;
                         $scope.profile = result;
@@ -82,13 +89,14 @@ angular.module('ProjectHands')
                     PhotosService.getPhotos(album)
                         .then(function (data) {
                             $scope.profilePic = data[0];
-                            
-                            if($scope.profilePic === undefined)
+
+                            if ($scope.profilePic === undefined)
                                 $scope.userHaveProfilePic = false;
-                            else
+                            else {
                                 $scope.userHaveProfilePic = true;
-                            
-                            $scope.profilePicUrl = $scope.profilePic.web_link;
+                                $scope.profilePicUrl = $scope.profilePic.web_link;
+                            }
+
                         })
                         .catch(function (error) {
 
@@ -130,6 +138,7 @@ angular.module('ProjectHands')
                                         $scope.progress = false;
                                         // $scope.images.push(data);
                                         $scope.profilePicUrl = data.web_link;
+                                        $scope.userHaveProfilePic = true;
                                     })
                                     .catch(function (error) {
                                         console.log('uploadPhoto error ', error);

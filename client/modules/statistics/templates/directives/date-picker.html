@@ -1,0 +1,35 @@
+<md-content class="rtl">
+
+    <div layout="row" layout-align="start center">
+        <h4>תאריך התחלה</h4>
+        <form name="startDateForm">
+            <md-datepicker name="startDateField"
+                           ng-model="startDate"
+                           md-placeholder="Enter date"
+                           required>
+
+            </md-datepicker>
+            <div class="stat-dp-validation-messages"
+                 ng-messages="startDateForm.dateField.$error">
+                <div ng-message="valid">The entered value is not a date!</div>
+                <div ng-message="required">This date is required!</div>
+            </div>
+        </form>
+
+        <h4>תאריך סיום</h4>
+        <form name="endDateForm">
+            <md-datepicker name="endDateField"
+                           ng-model="endDate"
+                           md-placeholder="Enter date"
+                           required>
+
+            </md-datepicker>
+            <div class="stat-dp-validation-messages"
+                 ng-messages="endDateForm.dateField.$error">
+                <div ng-message="valid">The entered value is not a date!</div>
+                <div ng-message="required">This date is required!</div>
+            </div>
+        </form>
+    </div>
+</md-content>
+

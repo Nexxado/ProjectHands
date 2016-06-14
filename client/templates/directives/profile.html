@@ -1,48 +1,22 @@
 <md-content layout-padding layout="column" layout-align="center center">
 
     <div layout="row" ng-show="isLoggedIn">
-        <div class="profile-side-nav">
-            <md-card>
-                <md-toolbar layout="row" class="md-hue-3">
-                    <div class="md-toolbar-tools white">
-                        <span>Personal settings</span>
-                    </div>
-                </md-toolbar>
-                <md-content>
-                    <md-list flex>
-                        <md-list-item ng-click="showProfile()">
-                            <h3>Profile</h3>
-                        </md-list-item>
-                        <md-list-item class="md-3-line" ng-click="showAccount()">
-
-                            <h3>Account</h3>
-
-                        </md-list-item>
-                        <md-list-item class="md-3-line" ng-click="showEmails()">
-
-                            <h3>Emails</h3>
-
-                        </md-list-item>
-                    </md-list>
-                </md-content>
-            </md-card>
-        </div>
 
         <div ng-show="sProfiel" class="profile-main">
             <md-card>
                 <md-toolbar layout="row" class="md-hue-3">
-                    <div class="md-toolbar-tools white">
-                        <span>Your Profile</span>
+                    <div class="md-toolbar-tools white rtl">
+                        <span>פרופיל אישי</span>
                     </div>
                 </md-toolbar>
                 <md-divider></md-divider>
-                <md-card-content>
+                <md-card-content class="rtl">
                     <div layout="row">
                         <div layout-padding layout="column">
-                            <h3>Profile picture</h3>
+                            <h3>תמונת פרופיל</h3>
                             <img ng-show="userHaveProfilePic" ng-src={{profilePicUrl}} alt="profile pic"
                                  style="width: 200px;height: 200px;">
-                            <div ng-show="!userHaveProfilePic">You don't have profile pic</div>
+                            <div ng-show="!userHaveProfilePic">חסרה תמונת פרופיל</div>
                             <!--Drop File:-->
                             <div ngf-drop ngf-select ng-model="files" class="drop-box"
                                  ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
@@ -50,7 +24,7 @@
                                  ngf-pattern="'image/*,application/pdf'">
                                 <div layout-align="center center">
                                     <div ng-show="!progress">
-                                        Upload new picture
+                                       העלה תמונה חדשה
                                     </div>
                                     <div ng-show="progress">
                                         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
@@ -62,16 +36,16 @@
                         <div>
                             <md-card-content>
                                 <md-divider></md-divider>
-                                <h2>Name</h2>
+                                <h2>שם</h2>
                                 <h3>{{profile.name}}</h3>
                                 <md-divider></md-divider>
-                                <h2>Email</h2>
+                                <h2>אימייל</h2>
                                 <h3>{{profile.email}}</h3>
                                 <md-divider></md-divider>
-                                <h2>Role</h2>
+                                <h2>תפקיד</h2>
                                 <h3>{{profile.role}}</h3>
                                 <md-divider></md-divider>
-                                <h2>Phone</h2>
+                                <h2>מספר פלאפון</h2>
                                 <h3>{{profile.role}}</h3>
                                 <md-divider></md-divider>
                             </md-card-content>
@@ -82,107 +56,108 @@
             </md-card>
         </div>
 
-        <div ng-show="sAccount" class="profile-main">
+        <div ng-show="sAccount" class="profile-main rtl">
             <md-card>
                 <md-toolbar layout="row" class="md-hue-3">
                     <div class="md-toolbar-tools white">
-                        <span>Change Password</span>
+                        <span>שינוי סיסמא</span>
                     </div>
                 </md-toolbar>
                 <md-divider></md-divider>
                 <md-card-content>
-                    <form style="width: 400px;" name="chPassForm" ng-submit="changePassword()" layout="column"
-                          novalidate
-                          id="loginToastsAnchor">
+                    <!--<form style="width: 400px;" name="chPassForm" ng-submit="changePassword()" layout="column"-->
+                          <!--novalidate-->
+                          <!--id="loginToastsAnchor">-->
 
-                        <md-input-container class="md-icon-float md-block">
-                            <label>Old password</label>
-                            <input type="password" name="password" ng-model="change_password.old" required/>
-                            <md-icon class="material-icons">lock_outline</md-icon>
-                            <div ng-messages="chPassForm.password.$error">
-                                <div ng-message="required">
-                                    שדה חובה
-                                </div>
-                            </div>
-                        </md-input-container>
-                        <md-input-container class="md-icon-float md-block">
-                            <label>New password</label>
-                            <input type="password" name="password" ng-model="change_password.new" required/>
-                            <md-icon class="material-icons">lock_outline</md-icon>
-                            <div ng-messages="chPassForm.password.$error">
-                                <div ng-message="required">
-                                    שדה חובה
-                                </div>
-                            </div>
-                        </md-input-container>
-                        <md-input-container class="md-icon-float md-block">
-                            <label>Confirm new password</label>
-                            <input type="password" name="password" ng-model="change_password.conf_new" required/>
-                            <md-icon class="material-icons">lock_outline</md-icon>
-                            <div ng-messages="chPassForm.password.$error">
-                                <div ng-message="required">
-                                    שדה חובה
-                                </div>
-                            </div>
-                        </md-input-container>
-                        <div layout="row">
-                            <md-button type="submit" class="md-accent md-raised white">Update password</md-button>
+                        <!--<md-input-container class="md-icon-float md-block">-->
+                            <!--<label>Old password</label>-->
+                            <!--<input type="password" name="password" ng-model="change_password.old" required/>-->
+                            <!--<md-icon class="material-icons">lock_outline</md-icon>-->
+                            <!--<div ng-messages="chPassForm.password.$error">-->
+                                <!--<div ng-message="required">-->
+                                    <!--שדה חובה-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</md-input-container>-->
+                        <!--<md-input-container class="md-icon-float md-block">-->
+                            <!--<label>New password</label>-->
+                            <!--<input type="password" name="password" ng-model="change_password.new" required/>-->
+                            <!--<md-icon class="material-icons">lock_outline</md-icon>-->
+                            <!--<div ng-messages="chPassForm.password.$error">-->
+                                <!--<div ng-message="required">-->
+                                    <!--שדה חובה-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</md-input-container>-->
+                        <!--<md-input-container class="md-icon-float md-block">-->
+                            <!--<label>Confirm new password</label>-->
+                            <!--<input type="password" name="password" ng-model="change_password.conf_new" required/>-->
+                            <!--<md-icon class="material-icons">lock_outline</md-icon>-->
+                            <!--<div ng-messages="chPassForm.password.$error">-->
+                                <!--<div ng-message="required">-->
+                                    <!--שדה חובה-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</md-input-container>-->
+                        <!--<div layout="row">-->
+                            <!--<md-button type="submit" class="md-accent md-raised white">Update password</md-button>-->
 
-                        </div>
-                        <br/>
-                    </form>
-
-
+                        <!--</div>-->
+                        <!--<br/>-->
+                    <!--</form>-->
+                    <!--<md-button type="submit" class="md-accent md-raised white">Reset password</md-button>-->
+                    <md-button ng-click="changePassword($event)" class="md-warn">שנה סיסמה</md-button>
                 </md-card-content>
-                <md-toolbar layout="row" class="md-hue-3">
-                    <div class="md-toolbar-tools white">
-                        <span>Reset password</span>
-                    </div>
-                </md-toolbar>
-                <md-card-content>
-                    <form style="width: 400px;" name="resetPasswordForm" ng-submit="resetPassword()" layout="column"
-                          novalidate
-                          id="resetPassToastsAnchor">
+                <!--<md-toolbar layout="row" class="md-hue-3">-->
+                    <!--<div class="md-toolbar-tools white">-->
+                        <!--<span>Reset password</span>-->
+                    <!--</div>-->
+                <!--</md-toolbar>-->
+                <!--<md-card-content>-->
+                    <!--<form style="width: 400px;" name="resetPasswordForm" ng-submit="resetPassword()" layout="column"-->
+                          <!--novalidate-->
+                          <!--id="resetPassToastsAnchor">-->
 
-                        <md-input-container class="md-icon-float md-block">
-                            <label>New password</label>
-                            <input type="password" name="password" ng-model="reset_password.new" required/>
-                            <md-icon class="material-icons">lock_outline</md-icon>
-                            <div ng-messages="chPassForm.password.$error">
-                                <div ng-message="required">
-                                    שדה חובה
-                                </div>
-                            </div>
-                        </md-input-container>
+                        <!--<md-input-container class="md-icon-float md-block">-->
+                            <!--<label>New password</label>-->
+                            <!--<input type="password" name="password" ng-model="reset_password.new" required/>-->
+                            <!--<md-icon class="material-icons">lock_outline</md-icon>-->
+                            <!--<div ng-messages="chPassForm.password.$error">-->
+                                <!--<div ng-message="required">-->
+                                    <!--שדה חובה-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</md-input-container>-->
 
-                        <div layout="row">
+                        <!--<div layout="row">-->
 
-                            <md-button type="submit" class="md-accent md-raised white">Reset password</md-button>
-                        </div>
-                        <br/>
-                    </form>
-                </md-card-content>
+                            <!--<md-button type="submit" class="md-accent md-raised white">Reset password</md-button>-->
+                        <!--</div>-->
+                        <!--<br/>-->
+                    <!--</form>-->
+                <!--</md-card-content>-->
             </md-card>
         </div>
 
-        <div ng-show="sEmails" class="profile-main">
+        <div ng-show="sEmails" class="profile-main ראך">
             <md-card>
 
                 <md-toolbar layout="row" class="md-hue-3">
-                    <div class="md-toolbar-tools white">
-                        <span>Change Email</span>
+                    <div class="md-toolbar-tools white rtl">
+                        <span>עידכון אימייל</span>
                     </div>
                 </md-toolbar>
 
                 <md-divider></md-divider>
 
                 <md-card-content>
-                    <form name="ChEmailForm" ng-submit="login()" layout="column" novalidate id="ChEmailToastsAnchor">
+                    <form name="ChangeEmailForm"
+                          ng-submit="login()" layout="column" novalidate id="ChEmailToastsAnchor">
                         <md-input-container class="md-icon-float md-block rtl">
                             <label>אימייל</label>
                             <input type="text" name="email" ng-model="email" ng-pattern="regexEmail" required/>
                             <md-icon class="material-icons">email</md-icon>
-                            <div ng-messages="ChEmailForm.email.$error">
+                            <div ng-messages="ChangeEmailForm.email.$error">
                                 <div ng-message="required">
                                     שדה חובה
                                 </div>
@@ -193,12 +168,35 @@
                         </md-input-container>
 
                         <div>
-                            <md-button type="submit" class="md-accent md-raised white">Update email</md-button>
+                            <md-button ng-click="changeEmail()" class="md-accent md-raised white">עדכן אימייל</md-button>
                         </div>
                         <br/>
                     </form>
 
                 </md-card-content>
+            </md-card>
+        </div>
+
+        <div class="profile-side-nav">
+            <md-card>
+                <md-toolbar layout="row" class="md-hue-3">
+                    <div class="md-toolbar-tools white rtl">
+                        <span>הגדרות אישיות</span>
+                    </div>
+                </md-toolbar>
+                <md-content>
+                    <md-list flex class="rtl">
+                        <md-list-item ng-click="showProfile()">
+                            <h3>צְדוּדִית</h3>
+                        </md-list-item>
+                        <md-list-item class="md-3-line" ng-click="showAccount()">
+                            <h3>חשבון</h3>
+                        </md-list-item>
+                        <md-list-item class="md-3-line" ng-click="showEmails()">
+                            <h3>אימייל</h3>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
             </md-card>
         </div>
 

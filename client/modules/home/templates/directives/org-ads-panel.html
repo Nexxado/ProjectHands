@@ -1,0 +1,42 @@
+<md-content class="rtl home-background">
+    <div class="rtl" layout="column" layout-padding="48" style="width: 500px;">
+        <h4>צור תוכן נוסף</h4>
+        <md-input-container class="rtl">
+            <label>כותרת</label>
+            <input ng-model="ad.title">
+        </md-input-container>
+        <md-input-container class="rtl">
+            <label>תוכן</label>
+            <input ng-model="ad.content">
+        </md-input-container>
+
+        <md-button class="md-raised md-primary" ng-click="upload(ad.title, ad.content)">העלה</md-button>
+    </div>
+
+    <div class="home-background"
+         layout="row"
+         layout-align="center center"
+         layout-padding
+         layout-wrap
+         layout-fill
+         ng-cloak>
+
+        <md-whiteframe class="md-whiteframe-8dp sta white-background"
+                       layout ng-repeat="ad in ads"
+                       flex-gt-sm="40"
+                       flex="100">
+            <div layout="column" layout-align="start start" class="org-ads">
+                <md-content>
+                    <H1 dir="rtl" lang="he">{{ad.title}}</H1>
+                    <H3 dir="rtl" lang="he">{{ad.content}}</H3>
+                    <md-button ng-click="deleteAd(ad._id, $index)"
+                               class="md-fab delete-button-ads"
+                               aria-label="Delete">
+                        <md-icon md-svg-src="assets/icons/ic_delete_white_24px.svg"></md-icon>
+                    </md-button>
+                </md-content>
+            </div>
+
+        </md-whiteframe>
+    </div>
+</md-content>

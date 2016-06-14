@@ -1,10 +1,10 @@
 angular.module('ProjectHands.home')
 
-    .directive('orgAds', function () {
+    .directive('orgAdsPanel', function () {
         return {
             restrict: 'E',
             replace: true,
-            templateUrl: 'modules/home/templates/directives/org-ads.html',
+            templateUrl: 'modules/home/templates/directives/org-ads-panel.html',
             controller: function ($scope, HomeService) {
 
                 // $scope.ads = [
@@ -28,10 +28,15 @@ angular.module('ProjectHands.home')
                 //         header: "מאיפה הכסף?",
                 //         text: "מתרומות של אנשים טובים, כמובן. עלות שיפוץ דירה נעה בין 600 ל- 200 שקלים. הכסף מיועד לחומרי הבנייה בלבד, שנקנים במחירי עלות מעסקים שנרתמו לטובת הפרויקט. את כלי העבודה המתנדבים מביאים איתם מהבית."
                 //     }
-                // ]
+                // ];
+                
+                $scope.ad = {
+                    title: '',
+                    content: ''
+                };
 
                 $scope.ads = [];
-
+                
                 $scope.getAds = function () {
                     HomeService.getAds()
                         .then(function (result) {
@@ -44,6 +49,30 @@ angular.module('ProjectHands.home')
                 };
 
                 $scope.getAds();
+
+                $scope.upload = function (title, content) {
+                    HomeService.uploadAd(title, content)
+                        .then(function (result) {
+                            console.log('result ' + result.toString());
+                            $scope.ads.push(result.ops[0]);
+                        })
+                        .catch(function (error) {
+                            console.log('error ' + error.toString());
+                        });
+                };
+
+                $scope.deleteAd = function (id, index) {
+                    HomeService.deleteAd(id)
+                        .then(function (result) {
+                            console.log('result ' + result.toString());
+                            $scope.ads.splice(index, 1);
+
+                        })
+                        .catch(function (error) {
+                            console.log('error ' + error.toString());
+                        });
+                }
             }
         };
+
     });

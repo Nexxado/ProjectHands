@@ -22,6 +22,7 @@
         "SIGNUPS": "signup_users",
         "ACTIONS": "actions",
         "PHOTOS": "photos",
+        "ADS": "ads",
         "ADMIN": "admin",
         "BRUTE": "bruteforce"
     },

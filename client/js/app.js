@@ -1,7 +1,7 @@
 angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages', 'ngCookies', 'ngMaterial',
     'ui.router', 'ct.ui.router.extras', 'gridster', 'ui.calendar', 'ProjectHands.dashboard', 'ProjectHands.auth',
-    'ProjectHands.home', 'ProjectHands.photos', 'ngFileUpload', 'angulartics', 'angulartics.google.analytics',
-    'pascalprecht.translate'])
+    'ProjectHands.home', 'ProjectHands.photos', 'ProjectHands.statistics', 'ngFileUpload', 
+    'angulartics', 'angulartics.google.analytics', 'pascalprecht.translate'])
 
 
 .config(function ($mdThemingProvider, $provide, $translateProvider, LanguagesProvider) {
