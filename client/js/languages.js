@@ -56,7 +56,7 @@ angular.module('ProjectHands')
             ANY_NOTES: "הערות או הצעות",
             LOGOUT: "יציאה",
             ABOUT_US: "עלינו",
-            STATUS: "המצב בעת",
+            STATUS: "סטטוס",
             PROJECT_NAME: "פרויקט ידיים",
             PICKUP_TEAM_AND_TIME: "הקצאת צוות ובחירת תאריך",
             FINALIZE_RENOVATION_MESSAGE: "השיפוץ הגיע לשלב בו מוקצה צוות לשיפוץ וניתן להתחיל בתכנונים. לצורך כל עלינו לבחור תאריך וצוות",
