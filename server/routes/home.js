@@ -3,7 +3,7 @@ var mongoUtils = require('../utils/mongo');
 var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
 var HttpStatus = require('http-status-codes');
-
+var ObjectId = require('mongodb').ObjectID;
 /**
  * post for upload photos to sever using multipartyMiddleware
  * Expected Params:
@@ -28,6 +28,7 @@ router.post('/upload', function (req, res) {
             res.send(result);
         });
 });
+
 /**
  * post for delete photo from drive and db
  * Expected Params:
@@ -83,7 +84,7 @@ function getAds(callback) {
  */
 function deleteAd(id, callback) {
     mongoUtils.delete(COLLECTIONS.ADS, {
-        _id: id
+        _id: new ObjectId(id)
     }, callback);
 }
 module.exports = router;

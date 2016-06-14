@@ -56,10 +56,16 @@
     top: 50px;
 }
 
+
 .delete-button {
     position: absolute;
     right: 10px;
     top: 10px;
+}
+.delete-button-ads {
+    position: absolute;
+    left: 0px;
+    top: 0px;
 }
 
 .home-photo-slider{

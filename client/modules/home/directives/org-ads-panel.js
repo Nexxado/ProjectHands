@@ -29,14 +29,14 @@ angular.module('ProjectHands.home')
                 //         text: "מתרומות של אנשים טובים, כמובן. עלות שיפוץ דירה נעה בין 600 ל- 200 שקלים. הכסף מיועד לחומרי הבנייה בלבד, שנקנים במחירי עלות מעסקים שנרתמו לטובת הפרויקט. את כלי העבודה המתנדבים מביאים איתם מהבית."
                 //     }
                 // ];
-
-                $scope.ads = [];
-
+                
                 $scope.ad = {
                     title: '',
                     content: ''
                 };
 
+                $scope.ads = [];
+                
                 $scope.getAds = function () {
                     HomeService.getAds()
                         .then(function (result) {
@@ -65,6 +65,8 @@ angular.module('ProjectHands.home')
                     HomeService.deleteAd(id)
                         .then(function (result) {
                             console.log('result ' + result.toString());
+                            $scope.ads.splice(index, 1);
+
                         })
                         .catch(function (error) {
                             console.log('error ' + error.toString());

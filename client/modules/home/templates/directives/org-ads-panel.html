@@ -1,12 +1,11 @@
-<md-content class="rtl">
-
-
-    <div class="rtl" layout="column" layout-padding="48">
-        <md-input-container>
+<md-content class="rtl home-background">
+    <div class="rtl" layout="column" layout-padding="48" style="width: 500px;">
+        <h4>צור תוכן נוסף</h4>
+        <md-input-container class="rtl">
             <label>כותרת</label>
             <input ng-model="ad.title">
         </md-input-container>
-        <md-input-container>
+        <md-input-container class="rtl">
             <label>תוכן</label>
             <input ng-model="ad.content">
         </md-input-container>
@@ -27,12 +26,11 @@
                        flex-gt-sm="40"
                        flex="100">
             <div layout="column" layout-align="start start" class="org-ads">
-                <md-content style="width: 100px">
-
+                <md-content>
                     <H1 dir="rtl" lang="he">{{ad.title}}</H1>
                     <H3 dir="rtl" lang="he">{{ad.content}}</H3>
                     <md-button ng-click="deleteAd(ad._id, $index)"
-                               class="md-fab delete-button"
+                               class="md-fab delete-button-ads"
                                aria-label="Delete">
                         <md-icon md-svg-src="assets/icons/ic_delete_white_24px.svg"></md-icon>
                     </md-button>
