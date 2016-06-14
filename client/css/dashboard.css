@@ -116,6 +116,13 @@ md-menu-item > .md-button {
     bottom: 0;
     background-color: white;
 }
+.renovation-page.grid-tab{
+	max-height: 100%;
+	max-width: 100%;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
+}
 .box h3 {
     text-align: center;
     position: relative;
@@ -129,8 +136,8 @@ md-menu-item > .md-button {
 }
 
 .renovation-task{
-    display: inherit;
-    margin-right: 5%;
+    margin-right: 8%;
+	width: 100%;
 }
 .renovation-inner-grid-list{
     overflow: auto;
@@ -189,6 +196,46 @@ md-menu-item > .md-button {
 	position: absolute;
 	top: 10px;
 	left: 0;
+}
+.pinned-edit-button{
+	position: absolute;
+	top: 45px;
+	left: 0;
+}
+
+.task-edit-button{
+	position: absolute;
+	top: 45px;
+	left: 0;
+}
+.task-delete-button{
+	position: absolute;
+	top: 10px;
+	left: 0;
+}
+.task-assign-button{
+	position: absolute;
+	top: -10px;
+	left: 45px;
+}
+.task-done-icon{
+	position: absolute;
+	top: 85px;
+	left: 20px;
+	color: green;
+	font-size: 36px;
+}
+.renovation-user > .arriving-icon{
+	color: green;
+	position: absolute;
+	top: 18px;
+	left: 45px;
+}
+.arriving-icon > .icon{
+	font-size: 36px;
+}
+.arriving-icon > .text{
+	font-size: 18px;
 }
 .box-header {
     /*	margin-left: 5%; */
