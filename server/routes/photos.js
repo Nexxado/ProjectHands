@@ -36,7 +36,8 @@ router.post('/uploads', multipartyMiddleware, function (req, res) {
                 album: req.body.album
             };
 
-            savePhoto(result.file_id,
+            savePhoto(
+                result.file_id,
                 result.web_link,
                 req.body.album,
                 function (error, result) {

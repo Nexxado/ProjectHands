@@ -34,12 +34,12 @@ angular.module('ProjectHands')
             AuthService.changePassword($rootScope.user.email, $scope.passwords.oldPass, $scope.passwords.newPass1).$promise
                 .then(function (result) {
                     console.info('changePassword result', result);
-                    UtilsService.makeToast("שינוי סיסמה בוצע בהצלחה", $scope.rootToastAnchor, 'top right');
+                    // UtilsService.makeToast("שינוי סיסמה בוצע בהצלחה", $scope.rootToastAnchor, 'top right');
                     $mdDialog.hide(true);
                 })
                 .catch(function (error) {
                     console.info('changePassword error', error);
-                    UtilsService.makeToast("עדכון הסיסמה נכשל!", $scope.rootToastAnchor, 'top right');
+                    // UtilsService.makeToast("עדכון הסיסמה נכשל!", $scope.rootToastAnchor, 'top right');
                     $mdDialog.hide(false);
                 });
         };

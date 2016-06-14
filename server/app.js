@@ -60,6 +60,7 @@ app.use('/api/chat', require('./routes/chat'));
 app.use('/api/status', require('./routes/status'));
 app.use('/api/dataexchange', require('./routes/dataexchange'));
 app.use('/api/photos', require('./routes/photos'));
+app.use('/api/home', require('./routes/home'));
 app.use('/api/statistics', require('./routes/statistics'));
 app.use('/api/renovation', require('./routes/renovation'));
 app.use('/api/user', require('./routes/user'));

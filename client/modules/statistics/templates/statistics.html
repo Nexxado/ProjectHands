@@ -1,0 +1,115 @@
+<md-content class="rtl" layout-padding="">
+
+    <div>
+
+        <div layout="row" layout-align="start center">
+
+            <h4 style="padding: 32px">תאריך התחלה</h4>
+            <form name="startDateForm">
+                <md-datepicker name="startDateField"
+                               ng-model="startDate"
+                               md-placeholder="Enter date"
+                               required>
+
+                </md-datepicker>
+                <div class="stat-dp-validation-messages"
+                     ng-messages="startDateForm.dateField.$error">
+                    <div ng-message="valid">The entered value is not a date!</div>
+                    <div ng-message="required">This date is required!</div>
+                </div>
+            </form>
+
+            <h4 style="padding: 32px">תאריך סיום</h4>
+            <form name="endDateForm">
+                <md-datepicker name="endDateField"
+                               ng-model="endDate"
+                               md-placeholder="Enter date"
+                               required>
+
+                </md-datepicker>
+                <div class="stat-dp-validation-messages"
+                     ng-messages="endDateForm.dateField.$error">
+                    <div ng-message="valid">The entered value is not a date!</div>
+                    <div ng-message="required">This date is required!</div>
+                </div>
+            </form>
+
+        </div>
+        <md-button class="md-raised md-primary" ng-click="submit()">קבל סטטיסטיקות</md-button>
+
+        <div class="stat-table">
+            <h3>מידע כולל</h3>
+            <table>
+                <tr>
+                    <td>מספר מתנדבים</td>
+                    <td>{{volunteersCount}}</td>
+                </tr>
+                <tr>
+                    <td>מספר מתנדבים לשיפוצים</td>
+                    <td>{{renovationsVolunteersNumber}}</td>
+                </tr>
+                <tr>
+                    <td>עלות השיפוצים</td>
+                    <td>{{renovationsCost}}</td>
+                </tr>
+                <tr>
+                    <td>שעות שיפוץ</td>
+                    <td>{{renovationsVolunteeringHours}}</td>
+                </tr>
+            </table>
+            <div>
+                <h3> שיפוצים</h3>
+                <div ng-repeat="renovation in renovations">
+                    <div layout="row">
+
+                        <div layout-padding="24">
+                            <h4>פרטים בסיסיים</h4>
+                            <table>
+                                <tr>
+                                    <td>שם</td>
+                                    <td>{{renovation.name}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>תאריך</td>
+                                    <td>{{renovation.date}}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div layout-padding="24">
+                            <h4>לוח שעות</h4>
+                            <table>
+                                <tr ng-repeat='(key, value) in renovation.hoursMap'>
+                                    <td>{{key}}</td>
+                                    <td>{{value}}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div layout-padding="24">
+                            <h4>לוח עלות</h4>
+                            <table>
+                                <tr ng-repeat='(key, value) in renovation.costMap'>
+                                    <td>{{key}}</td>
+                                    <td>{{value}}</td>
+                                <tr/>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <hr>
+                </div>
+
+            </div>
+        </div>
+
+        <md-button class="md-raised md-primary" ng-click="export()">יצא ל - Excel</md-button>
+
+    </div>
+
+
+</md-content>
+
+

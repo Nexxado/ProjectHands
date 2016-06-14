@@ -4,7 +4,7 @@ var statisticsUtils = require('../utils/statistics');
 var debug = require('debug')('routes/statistics');
 var middleware = require('../utils/middleware');
 
-router.get('/VolunteersCountPerDate/:date', middleware.ensureAuthenticated, middleware.ensurePermission,
+router.get('/VolunteersCountPerDate/:date',
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
@@ -15,12 +15,11 @@ router.get('/VolunteersCountPerDate/:date', middleware.ensureAuthenticated, midd
         }
         catch (e) {
             res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: Failed to get volunteers count"});
-            debug("VolunteersCountPerDate error: ", error);
+            debug("VolunteersCountPerDate error: ", e);
         }
     });
 
-
-router.get('/renovationsVolunteersNumberPerDate/:date', middleware.ensureAuthenticated, middleware.ensurePermission,
+router.get('/renovationsVolunteersNumberPerDate/:date',
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
@@ -31,11 +30,11 @@ router.get('/renovationsVolunteersNumberPerDate/:date', middleware.ensureAuthent
         }
         catch (e) {
             res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: Failed to get volunteers count per renovation"});
-            debug("renovationsVolunteersNumberPerDate error: ", error);
+            debug("renovationsVolunteersNumberPerDate error: ", e);
         }
     });
 
-router.get('/renovationsCostPerDate/:date', middleware.ensureAuthenticated, middleware.ensurePermission,
+router.get('/renovationsCostPerDate/:date',
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
@@ -46,11 +45,11 @@ router.get('/renovationsCostPerDate/:date', middleware.ensureAuthenticated, midd
         }
         catch (e) {
             res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: Failed to get cost per renovation"});
-            debug("getRenovationsCostPerDate error: ", error);
+            debug("getRenovationsCostPerDate error: ", e);
         }
     });
 
-router.get('/renovationsVolunteeringHoursPerDate/:date', middleware.ensureAuthenticated, middleware.ensurePermission,
+router.get('/renovationsVolunteeringHoursPerDate/:date',
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
@@ -61,22 +60,23 @@ router.get('/renovationsVolunteeringHoursPerDate/:date', middleware.ensureAuthen
         }
         catch (e) {
             res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: Failed to get volunteering hours per renovation"});
-            debug("getRenovationsVolunteeringHoursPerDate error: ", error);
+            debug("getRenovationsVolunteeringHoursPerDate error: ", e);
         }
     });
 
-router.get('/renovationsPerDate/:date', middleware.ensureAuthenticated, middleware.ensurePermission,
+router.get('/renovationsPerDate/:date',
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
             debug("request data : ", date);
             statisticsUtils.getRenovationsPerDate(date.yearFrom, date.yearTo, date.monthFrom, date.monthTo, date.dayFrom, date.dayTo, function (error, result) {
-                res.send(result);
+                //TODO change method to query and then you can return array
+                res.send({result: result});
             });
         }
         catch (e) {
             res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Error: Failed to get renovations for the specified date"});
-            debug("getRenovationsPerDate error: ", error);
+            debug("getRenovationsPerDate error: ", e);
         }
     });
 
