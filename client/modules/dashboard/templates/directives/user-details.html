@@ -29,16 +29,16 @@
             <span class="header" translate="{{'DO_WANT_TO_BE_TEAM_LEAD'}}">רוצה להיות ראש צוות:</span> {{
             user.team_leader }}
             <span ng-show="isEmpty(user.team_leader)" translate="{{'DOSENT_EXIST'}}">אין</span>
-            <!-- Remarks -->
-            <div>
-                <span class="header" translate="{{'ANY_NOTES'}}">הערות:</span> {{ user.remarks }}
-                <span ng-show="isEmpty(user.remarks)" translate="{{'DOSENT_EXIST'}}">אין</span>
-            </div>
-            <!-- Extra Information -->
-            <div>
-                <span class="header" translate="{{'TECNICAL_FIELD'}}">תחום טכני:</span> {{ user.extra }}
-                <span ng-show="isEmpty(user.extra)" translate="{{'DOSENT_EXIST'}}">אין</span>
-            </div>
+        </div>
+        <!-- Remarks -->
+        <div>
+            <span class="header" translate="{{'ANY_NOTES'}}">הערות:</span> {{ user.remarks }}
+            <span ng-show="isEmpty(user.remarks)" translate="{{'DOSENT_EXIST'}}">אין</span>
+        </div>
+        <!-- Extra Information -->
+        <div>
+            <span class="header" translate="{{'TECNICAL_FIELD'}}">תחום טכני:</span> {{ user.extra }}
+            <span ng-show="isEmpty(user.extra)" translate="{{'DOSENT_EXIST'}}">אין</span>
         </div>
     </div>
 </div>

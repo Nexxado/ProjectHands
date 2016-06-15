@@ -8,12 +8,21 @@ angular.module('ProjectHands')
         var baseUrl = '/api/user';
 
         /**
-         * Get User info
+         * Get Full User info
          * @param email {String} : user's email
          * @returns {Promise}
          */
-        function getUser(email) {
+        function getFullUserInfo(email) {
             return $resource(baseUrl + '/get_info/:email').get({email: email});
+        }
+
+        /**
+         * Get Basic User info
+         * @param email {String} : user's email
+         * @returns {Promise}
+         */
+        function getBasicUserInfo(email) {
+            return $resource(baseUrl + '/basic/:email').get({email: email});
         }
 
         /**
@@ -85,7 +94,8 @@ angular.module('ProjectHands')
         }
 
         return {
-            getUser: getUser,
+            getFullUserInfo: getFullUserInfo,
+            getBasicUserInfo: getBasicUserInfo,
             getAllUsers: getAllVolunteers,
             getAllSignups: getAllSignups,
             approveUser: approveUser,

@@ -23,6 +23,7 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
         };
     });
 
+    $translateProvider.useSanitizeValueStrategy('escapeParameters'); //Setup HTML Sanitize strategy
     $translateProvider.translations('he', LanguagesProvider.HE);
     $translateProvider.translations('ar', LanguagesProvider.AR);
     $translateProvider.preferredLanguage('he');

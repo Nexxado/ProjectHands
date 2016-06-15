@@ -3,6 +3,7 @@ var HttpStatus = require('http-status-codes');
 var debug = require('debug')('routes/team');
 var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
+var ROLES = config.ROLES;
 var mongoUtils = require('../utils/mongo');
 var middleware = require('../utils/middleware');
 var validation = require('../utils/validation');
@@ -59,6 +60,18 @@ router.get('/all_teams', middleware.ensureAuthenticated, middleware.ensurePermis
 
         res.send(result);
     });
+});
+
+/**
+ * Get a team
+ */
+router.get('/get_team/:teamName', middleware.ensureAuthenticated, validation.validateParams, middleware.ensureTeamExists,
+    function(req, res) {
+
+        if(req.queriedTeam.members.indexOf(req.user.email) < 0 && req.user.role !== ROLES.ADMIN)
+            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Not Allowed"});
+
+        res.send(req.queriedTeam);
 });
 
 /**
@@ -148,7 +161,12 @@ router.post('/assign_to_renovation', middleware.ensureAuthenticated, middleware.
                 if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign renovation to team"});
 
-                res.send({success: true});
+                mongoUtils.update(COLLECTIONS.TEAMS, {team: req.body.teamName}, {$set: {renovation: renovation}}, {}, function(error, result) {
+                    if (error || result.result.nModified === 0)
+                        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign renovation to team"});
+
+                    res.send({success: true});
+                })
             });
     });
 

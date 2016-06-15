@@ -38,7 +38,7 @@
 
 }
 
-.user-info .user-info-main div {
+.user-info .user-info-main > div {
     padding: 2px 10px;
 }
 

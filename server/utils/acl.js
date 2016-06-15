@@ -12,6 +12,9 @@ module.exports = function (req, res, next) {
         case new RegExp(ACL.VIEW_DASHBOARD).test(req.originalUrl):
             req.action = ACL.VIEW_DASHBOARD;
             break;
+        case /user\/basic/.test(req.originalUrl):
+            req.action = ACL.USER_BASIC_INFO;
+            break;
         case /user\//.test(req.originalUrl):
             req.action = ACL.USER_ACTIONS;
             break;

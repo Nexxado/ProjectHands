@@ -9,7 +9,7 @@ var validation = require('../utils/validation');
 
 
 /**
- * Get user info
+ * Get full user info
  */
 router.get('/user_info/:email', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
     middleware.ensureUserExists, function (req, res) {
@@ -17,6 +17,22 @@ router.get('/user_info/:email', middleware.ensureAuthenticated, middleware.ensur
         delete req.queriedUser.password; //Don't send user password
         res.send(req.queriedUser);
     });
+
+
+/**
+ * Get basic user info
+ */
+router.get('/basic/:email', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureUserExists, function(req, res) {
+
+        var info = {
+            email: req.queriedUser.email,
+            name: req.queriedUser.name,
+            phone: req.queriedUser.phone
+        };
+
+        res.send(info);
+});
 
 /**
  * Get all volunteers

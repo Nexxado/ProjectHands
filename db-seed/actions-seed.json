@@ -9,6 +9,9 @@
 		"action": "acl_data_import_export",
 		"role": "admin"
 	} , {
+		"action": "acl_user_basic",
+		"role": "volunteer"
+	} , {
 		"action": "acl_user_actions",
 		"role": "admin"
 	} , {

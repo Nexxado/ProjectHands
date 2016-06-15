@@ -16,19 +16,19 @@ var middleware = {};
 /**
  * Middleware - Make sure user is logged in
  */
-middleware.ensureAuthenticated = function(req, res, next) {
+middleware.ensureAuthenticated = function (req, res, next) {
     if (req.isAuthenticated())
         return next();
 
-    res.status(HttpStatus.UNAUTHORIZED).send({errMessage : "Error: User is not logged in" });
+    res.status(HttpStatus.UNAUTHORIZED).send({errMessage: "Error: User is not logged in"});
 };
 
 /**
  * Check if a user is authorized to access a certain action
  */
-middleware.ensurePermission = function(req, res, next) {
+middleware.ensurePermission = function (req, res, next) {
 
-    if(!req.action)
+    if (!req.action)
         return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "No Action ID"});
     debug('ensurePermission request action', req.action);
     debug('ensurePermission user', req.user.role);
@@ -48,9 +48,11 @@ middleware.ensurePermission = function(req, res, next) {
 /**
  * Check User exists in the database
  */
-middleware.ensureUserExists = function(req, res, next) {
+middleware.ensureUserExists = function (req, res, next) {
 
-    mongoUtils.query(COLLECTIONS.USERS, {email: req.body.email}, function (error, result) {
+    var userEmail = {email: req.body.email || req.params.email};
+
+    mongoUtils.query(COLLECTIONS.USERS, userEmail, function (error, result) {
 
         if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to find user"});
@@ -63,13 +65,13 @@ middleware.ensureUserExists = function(req, res, next) {
 };
 
 /**
- * Check Multiple Users exists in teh database 
+ * Check Multiple Users exists in teh database
  */
-middleware.ensureMultipleUsersExists = function(req, res, next) {
+middleware.ensureMultipleUsersExists = function (req, res, next) {
 
     var members = req.body.members;
 
-    mongoUtils.query(COLLECTIONS.USERS, {email: {$in: members}}, function(error, result) {
+    mongoUtils.query(COLLECTIONS.USERS, {email: {$in: members}}, function (error, result) {
 
         if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to find users"});
@@ -83,13 +85,15 @@ middleware.ensureMultipleUsersExists = function(req, res, next) {
 /**
  * Check Team exists in the database
  */
-middleware.ensureTeamExists = function(req, res, next) {
+middleware.ensureTeamExists = function (req, res, next) {
 
-    mongoUtils.query(COLLECTIONS.TEAMS, {name: req.body.teamName}, function(error, result) {
+    var teamName = {name: req.body.teamName || req.params.teamName};
 
-        if(error)
+    mongoUtils.query(COLLECTIONS.TEAMS, teamName, function (error, result) {
+
+        if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to find team"});
-        else if(!result || !result.length)
+        else if (!result || !result.length)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Team does not exists"});
 
         req.queriedTeam = result[0];
@@ -100,21 +104,27 @@ middleware.ensureTeamExists = function(req, res, next) {
 /**
  * Check Renovation exists in the database
  */
-middleware.ensureRenovationExists = function(req, res, next) {
-
-    var renovation = {
-        addr: {
+middleware.ensureRenovationExists = function (req, res, next) {
+    var renovation = {};
+    if (Object.keys(req.body).length === 0 && req.body.constructor === Object) {
+        renovation.addr = {
+            city: req.params.city,
+            street: req.params.street,
+            num: req.params.num
+        };
+    } else {
+        renovation.addr = {
             city: req.body.city,
             street: req.body.street,
             num: req.body.num
-        }
-    };
+        };
+    }
 
-    mongoUtils.query(COLLECTIONS.RENOVATIONS, renovation, function(error, result) {
+    mongoUtils.query(COLLECTIONS.RENOVATIONS, renovation, function (error, result) {
 
-        if(error)
+        if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to find renovation"});
-        else if(!result || !result.length)
+        else if (!result || !result.length)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Renovation does not exists"});
 
         req.queriedRenovation = result[0];
@@ -122,5 +132,20 @@ middleware.ensureRenovationExists = function(req, res, next) {
     })
 };
 
+/**
+ * Get logged-in user's team.
+ */
+middleware.getUsersTeam = function (req, res, next) {
+
+    mongoUtils.query(COLLECTIONS.TEAMS, {members: req.user.email}, function (error, result) {
+
+        if (error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to get User's team"});
+
+        req.queriedTeam = result ? result[0] : undefined;
+        next();
+    })
+
+};
 
 module.exports = middleware;

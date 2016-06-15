@@ -291,6 +291,23 @@ md-menu-item > .md-button {
     height: 100%;
 }
 
+.dashboard-chat-sidenav md-sidenav {
+    max-width: inherit;
+    width: 33vw;
+}
+
+@media only screen and (min-width: 960px) and (max-width: 1280px) {
+    .dashboard-chat-sidenav md-sidenav {
+        width: 50vw;
+    }
+}
+
+@media only screen and (max-width: 960px) {
+    .dashboard-chat-sidenav md-sidenav {
+        width: 100vw;
+    }
+}
+
 .dashboard-chat-sidenav md-backdrop {
     position: fixed;
 }

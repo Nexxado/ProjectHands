@@ -3,8 +3,9 @@
  */
 angular.module('ProjectHands.dashboard')
 
-.controller('RenovationPageController', function ($scope, $stateParams, $mdSidenav, $mdMedia, $mdDialog, DatabaseService, COLLECTIONS, UtilsService) {
-	
+.controller('RenovationPageController', function ($scope, $stateParams, $mdSidenav, $mdMedia, $mdDialog,
+												  RenovationService, TeamService, UserService, DatabaseService, COLLECTIONS, UtilsService) {
+
 	/******Variables Declarations******/
 	$scope.thisRenovation = "";
 	$scope.renovationNotFound = false;
@@ -30,51 +31,51 @@ angular.module('ProjectHands.dashboard')
 		"/assets/img/renovation-page/planning.png",
 		"/assets/img/renovation-page/renovating.png",
 		"/assets/img/renovation-page/renovation-done.png",
-		"/assets/img/renovation-page/extra-stage.png",
-	]
-	
+		"/assets/img/renovation-page/extra-stage.png"
+	];
+
+
 	/******Getters******/
-	
+
 	$scope.checkMemberFound = function(name){
-		if(name !== null)
-			return true;
-		return false;
-	}
-	
+		return name !== null;
+	};
+
 	$scope.checkTaskDone = function(done){
-		if(done === "true")
-			return true;
-		return false;
-	}
-	
+		return done === "true";
+	};
+
 	$scope.checkToolBeingBrought = function(brought){
-		if(brought === "true")
-			return true;
-		return false;
-	}
-	
+		return brought === "true";
+	};
+
 	$scope.getMemberName = function(email){
 		for(var i in $scope.renovationMembers){
 			if($scope.renovationMembers[i].email === email)
 				return $scope.renovationMembers[i].name;
 		}
 		return null;
-	}
-	
+	};
+
 	/*TODO: switch with the appropriate route*/
-	$scope.getRenovationTeam = function (team_id) {
-		DatabaseService.query(COLLECTIONS.TEAMS, {
-			_id: team_id
-		}).$promise.then(function (result) {
-			$scope.renovationTeam = result[0];
-			$scope.getRenovationMembers($scope.renovationTeam);
-			
-		}).catch(function (error) {
-			console.log("Error: ", error);
-		});
+	$scope.getRenovationTeam = function (teamName) {
+		// DatabaseService.query(COLLECTIONS.TEAMS, {
+		// 	_id: team_id
+		// })
+        TeamService.getTeam(teamName).$promise
+            .then(function (result) {
+                if(result) {
+                    $scope.renovationTeam = result;
+                    $scope.getRenovationMembers($scope.renovationTeam);
+                }
+
+		    })
+            .catch(function (error) {
+			    console.log("Error: ", error);
+		    });
 
 	};
-	
+
 	/*TODO: switch with the appropriate route*/
 	$scope.getRenovationMembers = function (team) {
 		$scope.renovationMembers = [];
@@ -85,35 +86,43 @@ angular.module('ProjectHands.dashboard')
 		$scope.initializeVariables();
 
 	};
-	
+
 	/*TODO: switch with the appropriate route*/
 	$scope.pushMemberByMail = function (email) {
-		DatabaseService.query(COLLECTIONS.USERS, {
-			email: email
-		}).$promise.then(function (result) {
-			$scope.renovationMembers.push(result[0]);
-		}).catch(function (error) {
-			console.log("Error: ", error);
-		});
+		// DatabaseService.query(COLLECTIONS.USERS, {
+		// 	email: email
+		// })
+        UserService.getBasicUserInfo(email).$promise
+            .then(function (result) {
+			    $scope.renovationMembers.push(result);
+		    })
+            .catch(function (error) {
+			    console.log("Error: ", error);
+		    });
 	};
 
 
 	/*TODO: switch with the appropriate route*/
-	DatabaseService.query(COLLECTIONS.RENOVATIONS, {
-			addr: {
-				city: $stateParams.city,
-				street: $stateParams.street,
-				num: $stateParams.num
-		}
-		}).$promise.then(function (result) {
-                $scope.thisRenovation = result[0];
-				$scope.getRenovationTeam($scope.thisRenovation.team_id);
+	// DatabaseService.query(COLLECTIONS.RENOVATIONS, {
+	// 		addr: {
+	// 			city: $stateParams.city,
+	// 			street: $stateParams.street,
+	// 			num: $stateParams.num
+	// 	}})
+    RenovationService.getRenovation({
+            city: $stateParams.city,
+            street: $stateParams.street,
+            num: $stateParams.num
+        })
+        .$promise.then(function (result) {
+                $scope.thisRenovation = result.renovation;
+				$scope.getRenovationTeam($scope.thisRenovation.team);
             }).catch(function (error) {
                 console.log("Error: ", error);
      });
-	
-	
-	
+
+
+
 	/******Initialize more Variables******/
 	$scope.initializeVariables = function(){
 		$scope.minDate = new Date();
@@ -123,7 +132,7 @@ angular.module('ProjectHands.dashboard')
 		$scope.needToAssignTeam = ($scope.renovationCurrentStage === $scope.defaultRenoStages[2]);
 		$scope.renovationProgress = Math.floor((100 / ($scope.renovationStages.length)) * ($scope.renovationStages.indexOf($scope.renovationCurrentStage) + 1));
 		$scope.getStageImage();
-	}
+	};
 
 	$scope.getStageImage = function(){
 		console.log("Getting stage image");
@@ -133,7 +142,7 @@ angular.module('ProjectHands.dashboard')
 			index = $scope.defaultStagesImages.length - 1;
 		$scope.renovationStageImage = $scope.defaultStagesImages[index];
 		console.log("image is now: ", $scope.renovationStageImage);
-	}
+	};
 
 	/******Editing Mode Functions******/
 	$scope.editMessages = function () {
@@ -210,7 +219,7 @@ angular.module('ProjectHands.dashboard')
 					}).catch(function (error) {
 						console.log("Error: ", error);
 					});
-			
+
 				console.log("Dialog finished");
 
 			}, function () {
@@ -283,7 +292,7 @@ angular.module('ProjectHands.dashboard')
 					}).catch(function (error) {
 						console.log("Error: ", error);
 					});
-			
+
 				console.log("Dialog finished");
 
 			}, function () {
@@ -578,11 +587,7 @@ angular.module('ProjectHands.dashboard')
 				//if there was a problem, go back to the last stage that was valid
 				$scope.renovationCurrentStage = $scope.lastStage;
 			});
-			if ($scope.renovationCurrentStage === "עובד סוציאלי עודכן, יש צורך לשבץ צוות") {
-				$scope.needToAssignTeam = true;
-			} else {
-				$scope.needToAssignTeam = false;
-			}
+			$scope.needToAssignTeam = $scope.renovationCurrentStage === "עובד סוציאלי עודכן, יש צורך לשבץ צוות";
 		}
 
 	};
@@ -594,12 +599,8 @@ angular.module('ProjectHands.dashboard')
 			index = 0;
 		$scope.renovationCurrentStage = $scope.renovationStages[index];
 		$scope.calcRenoProgress();
-		if ($scope.renovationCurrentStage === $scope.defaultRenoStages[2]) {
-			$scope.needToAssignTeam = true;
-		} else {
-			$scope.needToAssignTeam = false;
-		}
-		
+		$scope.needToAssignTeam = $scope.renovationCurrentStage === $scope.defaultRenoStages[2];
+
 		$scope.getStageImage();
 	};
 
@@ -610,12 +611,8 @@ angular.module('ProjectHands.dashboard')
 			index = $scope.renovationStages.length - 1;
 		$scope.renovationCurrentStage = $scope.renovationStages[index];
 		$scope.calcRenoProgress();
-		if ($scope.renovationCurrentStage === $scope.defaultRenoStages[2]) {
-			$scope.needToAssignTeam = true;
-		} else {
-			$scope.needToAssignTeam = false;
-		}
-		
+		$scope.needToAssignTeam = $scope.renovationCurrentStage === $scope.defaultRenoStages[2];
+
 		$scope.getStageImage();
 	};
 
@@ -629,7 +626,7 @@ angular.module('ProjectHands.dashboard')
 
 					$scope.renovation = {
 						team: "",
-						date: "",
+						date: ""
 					};
 					$scope.cancel = function () {
 						$mdDialog.cancel();
@@ -656,20 +653,26 @@ angular.module('ProjectHands.dashboard')
 			.then(function (renovationAddedDetails) {
 				var reno = $scope.thisRenovation;
 				console.log("team we got is: ", renovationAddedDetails.team);
-				DatabaseService.update(
-						COLLECTIONS.RENOVATIONS, {
-							addr: {
-								city: reno.addr.city,
-								street: reno.addr.street,
-								num: reno.addr.num
-							}
-						}, {
-							$set: {
-								"team_id": renovationAddedDetails.team._id,
-								"date": renovationAddedDetails.date
-							}
-						}, {}
-					)
+                var addr = {
+                    city: reno.addr.city,
+                    street: reno.addr.street,
+                    num: reno.addr.num
+                };
+				// DatabaseService.update(
+				// 		COLLECTIONS.RENOVATIONS, {
+				// 			addr: {
+				// 				city: reno.addr.city,
+				// 				street: reno.addr.street,
+				// 				num: reno.addr.num
+				// 			}
+				// 		}, {
+				// 			$set: {
+				// 				"team_id": renovationAddedDetails.team._id,
+				// 				"date": renovationAddedDetails.date
+				// 			}
+				// 		}, {}
+				// 	)
+                TeamService.assignToRenovation(renovationAddedDetails.team.name, addr)
 					.$promise.then(function (result) {
 						$scope.thisRenovation.date = renovationAddedDetails.date;
 						$scope.thisRenovation.team_id = renovationAddedDetails.team._id;
@@ -772,7 +775,7 @@ angular.module('ProjectHands.dashboard')
 			}
 		}
 		return false;
-	}
+	};
 
 	$scope.confirmRSVP = function (email) {
 		console.log("user: ", $scope.user);
@@ -796,7 +799,7 @@ angular.module('ProjectHands.dashboard')
 			}).catch(function (error) {
 				console.log("Error: ", error);
 			});
-	}
+	};
 
 	$scope.declineRSVP = function (email) {
 		var reno = $scope.thisRenovation;
@@ -821,20 +824,20 @@ angular.module('ProjectHands.dashboard')
 			}).catch(function (error) {
 				console.log("Error: ", error);
 			});
-	}
-	
+	};
+
 	/*Variables*/
 	$scope.users_rsvp = $scope.thisRenovation.rsvp;
 	$scope.my_rsvp = $scope.checkRSVP($scope.myUser.email);
-	
-	
+
+
 	/******Task Utils******/
 	$scope.taskFilter = false;
-	
+
 	$scope.changeTaskFilter = function(){
 		$scope.taskFilter = !$scope.taskFilter;
-	}
-	
+	};
+
 	$scope.taskDone = function(task){
 		var reno = $scope.thisRenovation;
 		DatabaseService.update(
@@ -858,7 +861,7 @@ angular.module('ProjectHands.dashboard')
 			console.log("Error: ", error);
 		});
 	};
-	
+
 	$scope.updateTaskAssignee = function(task, email){
 		var reno = $scope.thisRenovation;
 		DatabaseService.update(
@@ -881,21 +884,18 @@ angular.module('ProjectHands.dashboard')
 			console.log("Error: ", error);
 		});
 	};
-	
+
 	/******Reno Tools Utils******/
 	$scope.toolsFilter = false;
-	
+
 	$scope.changeToolsFilter = function(){
 		$scope.toolsFilter = !$scope.toolsFilter;
-	}
-	
+	};
+
 	$scope.isFromShed = function(tool){
-		if(tool.assigned === "shed"){
-			return true;
-		}
-		return false;
-	}
-	
+		return tool.assigned === "shed";
+	};
+
 	$scope.bringTool = function(tool, email){
 		var reno = $scope.thisRenovation;
 		DatabaseService.update(
@@ -915,13 +915,13 @@ angular.module('ProjectHands.dashboard')
 		)
 		.$promise.then(function (result) {
 			tool.being_brought = "true";
-			tool.assigned = email; 
+			tool.assigned = email;
 			console.log("tool marked as being brought");
 		}).catch(function (error) {
 			console.log("Error: ", error);
 		});
 	};
-	
+
 	$scope.dontBringTool = function(tool){
 		var reno = $scope.thisRenovation;
 		DatabaseService.update(
@@ -941,14 +941,14 @@ angular.module('ProjectHands.dashboard')
 		)
 		.$promise.then(function (result) {
 			tool.being_brought = "false";
-			tool.assigned = ""; 
+			tool.assigned = "";
 			console.log("tool marked as not being brought");
 		}).catch(function (error) {
 			console.log("Error: ", error);
 		});
 	};
-	
-	
+
+
 	/******Information Dialogs******/
 	/**
          * Invoke dialog showing the user details
@@ -956,34 +956,34 @@ angular.module('ProjectHands.dashboard')
          * @param user {Object}
          */
         $scope.showUserDetails = function ($event, user) {
-            var isMobile = $mdMedia('sm') || $mdMedia('xs');
-
-            var temp = angular.copy(user);
-            temp.role = UtilsService.translateRole(temp.role);
-
-            $mdDialog.show({
-                controller: function ($scope, $mdDialog, user) {
-
-                    $scope.user = user;
-                    $scope.cancel = function () {
-                        $mdDialog.cancel();
-                    };
-
-                    $scope.submit = function () {
-                        $mdDialog.hide();
-                    }
-                },
-                templateUrl: '/modules/dashboard/templates/dialogs/userDetails.html',
-                parent: angular.element(document.body),
-                targetEvent: $event,
-                clickOutsideToClose: true,
-                fullscreen: isMobile,
-                locals: {
-                    user: temp
-                }
-            });
+            // var isMobile = $mdMedia('sm') || $mdMedia('xs');
+            //
+            // var temp = angular.copy(user);
+            // temp.role = UtilsService.translateRole(temp.role);
+            //
+            // $mdDialog.show({
+            //     controller: function ($scope, $mdDialog, user) {
+            //
+            //         $scope.user = user;
+            //         $scope.cancel = function () {
+            //             $mdDialog.cancel();
+            //         };
+            //
+            //         $scope.submit = function () {
+            //             $mdDialog.hide();
+            //         }
+            //     },
+            //     templateUrl: '/modules/dashboard/templates/dialogs/userDetails.html',
+            //     parent: angular.element(document.body),
+            //     targetEvent: $event,
+            //     clickOutsideToClose: true,
+            //     fullscreen: isMobile,
+            //     locals: {
+            //         user: temp
+            //     }
+            // });
         };
-	
 
-	
+
+
 });

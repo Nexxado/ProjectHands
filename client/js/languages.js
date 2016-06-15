@@ -26,6 +26,7 @@ angular.module('ProjectHands')
             JOIN_DATE: 'תאריך הצטרפות:',
             USER_ID: 'תעודת זהות:',
             ADDRESS: 'כתובת:',
+            TECNICAL_FIELD: "תחום טכני:",
             ABOUT_ME: 'קצת עליי:',
             LOGIN_PAGE: 'דף כניסה',
             RENOVATION_NUMBER_I_AM_IN: 'מס שיפוצים בהם השתתפתי:',
@@ -53,7 +54,7 @@ angular.module('ProjectHands')
             CHECK_EMAIL_TO_CONTINUE: 'בדוק את האימייל שלך בכדי להמשיך בתהליך',
             FULL_NAME: 'שם פרטי ושם משפחה',
             BACK_TO_HOME_PAGE: 'חזרה לדף הבית',
-            ANY_NOTES: "הערות או הצעות",
+            ANY_NOTES: "הערות:",
             LOGOUT: "יציאה",
             ABOUT_US: "עלינו",
             STATUS: "סטטוס",
@@ -95,7 +96,6 @@ angular.module('ProjectHands')
             SOLVE_PROBLEMS: "פיתרון בעיות",
             COLOR_SETTINGS: "הגדרות צבעים",
             LANGUAGES_SETTINGS: "הגדרות שפה",
-
             BUTTON_LANG_HE: 'עברית',
             BUTTON_LANG_AR: 'ערבית'
         };
@@ -123,6 +123,7 @@ angular.module('ProjectHands')
             JOIN_DATE: 'تاريخ الانضمام:',
             USER_ID: 'رقم الهوية:',
             ADDRESS: 'العنوان:',
+            TECNICAL_FIELD: "תחום טכני:", //TODO Translate this
             ABOUT_ME: 'عني:',
             LOGIN_PAGE: 'صفحة الدخول',
             RENOVATION_NUMBER_I_AM_IN: 'عدد التصليحات المشترك بها:',

@@ -9,16 +9,14 @@ angular.module('ProjectHands')
 
         /**
          * Get renovation info
-         * @param city {String}
-         * @param street {String}
-         * @param num {Number | String}
+         * @param address {object}
          * @returns {Promise}
          */
-        function getRenovation(city, street, num) {
+        function getRenovation(address) {
             return $resource(baseUrl + '/get_info/:city/:street/:num').get({
-                city: city,
-                street: street,
-                num: num
+                city: address.city,
+                street: address.street,
+                num: address.num
             });
         }
 

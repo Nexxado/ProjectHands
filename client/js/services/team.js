@@ -40,6 +40,16 @@ angular.module('ProjectHands')
         }
 
         /**
+         * Get team info
+         * @param teamName {string}
+         */
+        function getTeam(teamName) {
+            return $resource(baseUrl + '/get_team/:teamName').get({
+                teamName: teamName
+            });
+        }
+
+        /**
          * Add members to team
          * @param teamName {String}
          * @param members {Array} : members to add to team
@@ -68,17 +78,15 @@ angular.module('ProjectHands')
         /**
          * Assign team to work on a renovation
          * @param teamName {String}
-         * @param city {String}
-         * @param street {String}
-         * @param num {String}
+         * @param address {object} : contains city, street and house number
          * @returns {Promise}
          */
-        function assignToRenovation(teamName, city, street, num) {
+        function assignToRenovation(teamName, address) {
             return $resource(baseUrl + '/assign_to_renovation').save({
                 teamName: teamName,
-                city: city,
-                street: street,
-                num: num
+                city: address.city,
+                street: address.street,
+                num: address.num
             });
         }
 
@@ -100,6 +108,7 @@ angular.module('ProjectHands')
             createTeam: createTeam,
             deleteTeam: deleteTeam,
             getAllTeams: getAllTeams,
+            getTeam: getTeam,
             addMembers: addMembers,
             removeMembers: removeMembers,
             assignToRenovation: assignToRenovation,

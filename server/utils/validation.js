@@ -204,6 +204,9 @@ validation.validateParams = function(req, res, next) {
             break;
 
         case /renovation\/get_info/.test(req.originalUrl):
+            if(!validateString(req.params.city) || !validateString(req.params.street) || !validateString(req.params.num))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address"});
+            break;
         case /renovation\/create/.test(req.originalUrl):
         case /renovation\/rsvp/.test(req.originalUrl):
             if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num))
@@ -221,6 +224,7 @@ validation.validateParams = function(req, res, next) {
             break;
 
         case /user\/user_info/.test(req.originalUrl):
+        case /user\/basic/.test(req.originalUrl):
         case /user\/delete/.test(req.originalUrl):
             if(!validateEmail(req.params.email))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid user email"});
@@ -241,6 +245,7 @@ validation.validateParams = function(req, res, next) {
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name or email"});
             break;
 
+        case /team\/get_team/.test(req.originalUrl):
         case /team\/delete/.test(req.originalUrl):
             if(!validateString(req.params.teamName))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name"});

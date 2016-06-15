@@ -42,6 +42,7 @@
         "RENOVATION_CREATE": "acl_renovation_create",
         "RENOVATION_EDIT": "acl_renovation_edit",
         "RENOVATION_RSVP": "acl_renovation_rsvp",
+        "USER_BASIC_INFO": "acl_user_basic",
         "USER_ACTIONS": "acl_user_actions",
         "TEAM_ACTIONS": "acl_team_actions",
         "STATISTICS_ACTIONS": "acl_statistics_actions"
