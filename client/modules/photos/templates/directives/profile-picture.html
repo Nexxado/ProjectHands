@@ -1,0 +1,21 @@
+<div layout-padding layout="column">
+    <h3>תמונת פרופיל</h3>
+    <img ng-show="userHaveProfilePic" ng-src={{profilePicUrl}} alt="profile pic"
+         style="width: 200px;height: 200px;">
+    <div ng-show="!userHaveProfilePic">חסרה תמונת פרופיל</div>
+    <!--Drop File:-->
+    <div ngf-drop ngf-select ng-model="files" class="drop-box"
+         ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
+         accept="image/*,application/pdf"
+         ngf-pattern="'image/*,application/pdf'">
+        <div layout-align="center center">
+            <div ng-show="!progress">
+                העלה תמונה חדשה
+            </div>
+            <div ng-show="progress">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+        </div>
+    </div>
+    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+</div>
