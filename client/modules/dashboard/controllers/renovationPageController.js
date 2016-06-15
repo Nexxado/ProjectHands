@@ -675,8 +675,8 @@ angular.module('ProjectHands.dashboard')
                 TeamService.assignToRenovation(renovationAddedDetails.team.name, addr)
 					.$promise.then(function (result) {
 						$scope.thisRenovation.date = renovationAddedDetails.date;
-						$scope.thisRenovation.team_id = renovationAddedDetails.team._id;
-						$scope.getRenovationTeam($scope.thisRenovation.team_id);
+						$scope.thisRenovation.team = renovationAddedDetails.team;
+						$scope.getRenovationTeam($scope.thisRenovation.team.name);
 						$scope.nextStage();
 					}).catch(function (error) {
 						console.log("Error: ", error);

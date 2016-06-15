@@ -161,7 +161,7 @@ router.post('/assign_to_renovation', middleware.ensureAuthenticated, middleware.
                 if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign renovation to team"});
 
-                mongoUtils.update(COLLECTIONS.TEAMS, {team: req.body.teamName}, {$set: {renovation: renovation}}, {}, function(error, result) {
+                mongoUtils.update(COLLECTIONS.TEAMS, {name: req.body.teamName}, {$set: {renovation: renovation}}, {}, function(error, result) {
                     if (error || result.result.nModified === 0)
                         return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign renovation to team"});
 
