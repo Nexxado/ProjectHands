@@ -8,7 +8,7 @@ var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
 var HttpStatus = require('http-status-codes');
 
-//ACL - access for all login user
+//ACL -VOLUNTEER-
 //the router for profile pic
 /**
  * post for upload photos to sever using multipartyMiddleware
@@ -84,7 +84,7 @@ router.get('/profileGet', function (req, res) {
     })
 });
 
-//ACL - access  JUST for the web site admin
+//ACL -ADMIN-
 //the router for home page photos
 /**
  * post for upload photos to sever using multipartyMiddleware
@@ -161,7 +161,7 @@ router.get('/homeGet', function (req, res) {
     })
 });
 
-//ACL - access for renovation manager
+//ACL -TEAM_LEAD-
 //the router for renovation photos
 /**
  * post for upload photos to sever using multipartyMiddleware
@@ -238,7 +238,7 @@ router.get('/renoGet', function (req, res) {
     })
 });
 
-//-----NOT IN USE TODO delete ?
+//-----NOT IN USE TODO delete
 //the router for photos module
 /**
  * post for upload photos to sever using multipartyMiddleware
