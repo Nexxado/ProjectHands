@@ -8,6 +8,159 @@ var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
 var HttpStatus = require('http-status-codes');
 
+
+//the router for home profile pic
+//profile router
+/**
+ * post for upload photos to sever using multipartyMiddleware
+ * Expected Params:
+ * @param file {File} : photo file to be upload
+ * @param album {string} : album you want to save the photo to
+ */
+router.post('/profileUpload', multipartyMiddleware, function (req, res) {
+
+    if (req.body.album === undefined || req.body.album === null)
+        return res.status(HttpStatus.BAD_REQUEST).send("Error: missing album");
+
+    if (req.files.file === undefined || req.files.file === null)
+        return res.status(HttpStatus.BAD_REQUEST).send("Error: missing file");
+
+    driveUtils.uploadFile(
+        req.files.file.path,
+        req.body.album,
+        function (error, result) {
+            if (error)
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+
+            var photoData = {
+                file_id: result.file_id,
+                web_link: result.web_link,
+                album: req.body.album
+            };
+
+            savePhoto(
+                result.file_id,
+                result.web_link,
+                req.body.album,
+                function (error, result) {
+                    if (error)
+                        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+
+                    res.send(photoData);
+                });
+        });
+});
+/**
+ * Expected Params:
+ * @param file_id {string} : file id to by deleted
+ */
+router.delete('/profileDelete', function (req, res) {
+
+    if (req.query.file_id === undefined || req.query.file_id === null)
+        return res.status(HttpStatus.BAD_REQUEST).send("Missing file id");
+
+    driveUtils.deleteFile(req.query.file_id, function (error, result) {
+        if (error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+
+        deletePhoto(req.query.file_id, function (error, result) {
+            if (error)
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+
+            res.send({success: true});
+        })
+    });
+});
+/**
+ * gets album data from the db
+ * Expected Params:
+ * @param album {string} : album to by deleted
+ */
+router.get('/profileGet', function (req, res) {
+    getAlbum(req.query.album, function (error, result) {
+        if (error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+
+        res.send(result);
+    })
+});
+
+//the router for home page photos
+/**
+ * post for upload photos to sever using multipartyMiddleware
+ * Expected Params:
+ * @param file {File} : photo file to be upload
+ * @param album {string} : album you want to save the photo to
+ */
+router.post('/homeUpload', multipartyMiddleware, function (req, res) {
+
+    if (req.body.album === undefined || req.body.album === null)
+        return res.status(HttpStatus.BAD_REQUEST).send("Error: missing album");
+
+    if (req.files.file === undefined || req.files.file === null)
+        return res.status(HttpStatus.BAD_REQUEST).send("Error: missing file");
+
+    driveUtils.uploadFile(
+        req.files.file.path,
+        req.body.album,
+        function (error, result) {
+            if (error)
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+
+            var photoData = {
+                file_id: result.file_id,
+                web_link: result.web_link,
+                album: req.body.album
+            };
+
+            savePhoto(
+                result.file_id,
+                result.web_link,
+                req.body.album,
+                function (error, result) {
+                    if (error)
+                        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+
+                    res.send(photoData);
+                });
+        });
+});
+/**
+ * delete for delete photo from drive and db
+ * Expected Params:
+ * @param file_id {string} : file id to by deleted
+ */
+router.delete('/homeDelete', function (req, res) {
+
+    if (req.query.file_id === undefined || req.query.file_id === null)
+        return res.status(HttpStatus.BAD_REQUEST).send("Missing file id");
+
+    driveUtils.deleteFile(req.query.file_id, function (error, result) {
+        if (error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+
+        deletePhoto(req.query.file_id, function (error, result) {
+            if (error)
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+
+            res.send({success: true});
+        })
+    });
+});
+/**
+ * gets album data from the db
+ * Expected Params:
+ * @param album {string} : album to by deleted
+ */
+router.get('/homeGet', function (req, res) {
+    getAlbum(req.query.album, function (error, result) {
+        if (error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+
+        res.send(result);
+    })
+});
+
 //the router for photos module
 /**
  * post for upload photos to sever using multipartyMiddleware
@@ -49,7 +202,7 @@ router.post('/uploads', multipartyMiddleware, function (req, res) {
         });
 });
 /**
- * post for delete photo from drive and db
+ * delete for delete photo from drive and db
  * Expected Params:
  * @param file_id {string} : file id to by deleted
  */
@@ -70,7 +223,6 @@ router.delete('/delete', function (req, res) {
         })
     });
 });
-
 /**
  * gets album data from the db
  * Expected Params:

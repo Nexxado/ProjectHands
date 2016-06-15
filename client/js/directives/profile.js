@@ -86,7 +86,7 @@ angular.module('ProjectHands')
                     });
 
                 $scope.getProfilePic = function (album) {
-                    PhotosService.getPhotos(album)
+                    PhotosService.profileGet(album)
                         .then(function (data) {
                             $scope.profilePic = data[0];
 
@@ -115,7 +115,7 @@ angular.module('ProjectHands')
                 });
                 $scope.deletePhoto = function (fileId, index) {
                     $scope.progressDelete = true;
-                    PhotosService.deletePhoto(fileId)
+                    PhotosService.profileDelete(fileId)
                         .then(function (data) {
                             console.log('deletePhoto data', data);
                             //update album after delete
@@ -132,7 +132,7 @@ angular.module('ProjectHands')
                             var file = files[i];
                             if (!file.$error) {
                                 $scope.progress = true;
-                                PhotosService.uploadPhoto(album, file)
+                                PhotosService.profileUpload(album, file)
                                     .then(function (data) {
                                         console.log('uploadPhoto data', data);
                                         $scope.progress = false;
