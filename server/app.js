@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var helmet = require('helmet');
+var favicon = require('serve-favicon');
 var config = require('../config.json');
 var sessionStore = new MongoSessionStore(
     {
@@ -27,6 +28,7 @@ app.use('/vendor', express.static(__dirname + '/../node_modules/')); //Static Ro
 /**
  * App Configuration
  */
+app.use(favicon(__dirname + '/../client/assets/favicon.ico'));
 app.use(cookieParser());
 app.use(session({
     secret: process.env.SESSION_SECRET || config.SECRETS.sessionSecret,
