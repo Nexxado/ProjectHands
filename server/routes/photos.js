@@ -8,6 +8,8 @@ var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
 var HttpStatus = require('http-status-codes');
 
+
+//USE CASE - volunteer want to upload / delete profile pic
 //ACL -VOLUNTEER-
 //the router for profile pic
 /**
@@ -84,6 +86,7 @@ router.get('/profileGet', function (req, res) {
     })
 });
 
+//USE CASE - admin want to upload / delete to home page
 //ACL -ADMIN-
 //the router for home page photos
 /**
@@ -161,6 +164,7 @@ router.get('/homeGet', function (req, res) {
     })
 });
 
+//USE CASE -team leader want to upload / delete to his renovation
 //ACL -TEAM_LEAD-
 //the router for renovation photos
 /**
