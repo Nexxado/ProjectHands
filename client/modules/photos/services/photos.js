@@ -60,6 +60,61 @@ angular.module('ProjectHands.photos')
         ///
 
         ///home methods i am using the service in
+        function renoUpload(album, file) {
+            var deferred = $q.defer();
+            Upload.upload({
+                url: baseUrl + '/renoUpload',
+                data: {
+                    // username: $scope.username,
+                    album: album,
+                    file: file
+                }
+            }).then(function (resp) {
+                deferred.resolve(resp.data);
+            }, null, function (evt) {
+
+            }).catch(function (error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        }
+
+        function renoDelete(fileId) {
+            var deferred = $q.defer();
+            $resource(baseUrl + '/renoDelete').delete({
+                file_id: fileId
+            })
+                .$promise
+                .then(function (result) {
+                    deferred.resolve(result);
+
+                }, function (error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        }
+
+        function renoGet(album) {
+            var deferred = $q.defer();
+            $resource(baseUrl + '/renoGet').query({
+                album: album
+            }).$promise
+                .then(function (result) {
+                    console.log(result);
+                    deferred.resolve(result);
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
+        }
+        ///
+
+        ///
         function homeUpload(album, file) {
             var deferred = $q.defer();
             Upload.upload({
@@ -113,7 +168,7 @@ angular.module('ProjectHands.photos')
             return deferred.promise;
         }
         ///
-
+        
         function uploadPhoto(album, file) {
             var deferred = $q.defer();
             Upload.upload({
@@ -168,6 +223,9 @@ angular.module('ProjectHands.photos')
         }
 
         return {
+            renoUpload: renoUpload,
+            renoDelete: renoDelete,
+            renoGet: renoGet,
             homeUpload: homeUpload,
             homeDelete: homeDelete,
             homeGet: homeGet,

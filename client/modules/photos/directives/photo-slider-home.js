@@ -1,15 +1,15 @@
 angular.module('ProjectHands.photos')
 
-    .directive('photoSlider', function () {
+    .directive('photoSliderHome', function () {
         return {
             restrict: 'E',
             replace: true,
             scope: {album: '@'},
-            templateUrl: 'modules/photos/templates/directives/photo-slider.html',
+            templateUrl: 'modules/photos/templates/directives/photo-slider-home.html',
             controller: function ($scope, $interval, PhotosService) {
 
                 $scope.getPhotos = function (album) {
-                    PhotosService.getPhotos(album)
+                    PhotosService.homeGet(album)
                         .then(function (data) {
                             console.log('getPhotos data', data);
                             $scope.images = data;
