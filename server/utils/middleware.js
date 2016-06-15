@@ -148,4 +148,21 @@ middleware.getUsersTeam = function (req, res, next) {
 
 };
 
+/**
+ * Get logged-in user's upcoming renovation according to his\her team
+ * @link getUsersTeam success required.
+ */
+middleware.getUsersRenovation = function(req, res, next) {
+    if(!req.queriedTeam || !req.queriedTeam.renovation)
+        return next();
+
+    mongoUtils.query(COLLECTIONS.RENOVATIONS, req.queriedTeam.renovation, function(error, result) {
+        if(error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to get User's renovation"});
+
+        req.queriedRenovation = result ? result[0] : undefined;
+        next();
+    })
+};
+
 module.exports = middleware;

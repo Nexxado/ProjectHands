@@ -20,12 +20,12 @@ router.post('/login', validation.validateParams, BruteForce.global.prevent, Brut
         // prevent too many attempts for the same email
         next(req.body.email);
     }
-}), passport.authenticate('local'), middleware.getUsersTeam, sendUserInfo);
+}), passport.authenticate('local'), middleware.getUsersTeam, middleware.getUsersRenovation, sendUserInfo);
 
 /**
  * check if user is logged in - has an active session
  */
-router.get('/isLoggedIn', middleware.ensureAuthenticated, middleware.getUsersTeam, sendUserInfo);
+router.get('/isLoggedIn', middleware.ensureAuthenticated, middleware.getUsersTeam, middleware.getUsersRenovation, sendUserInfo);
 
 
 /**
@@ -337,7 +337,7 @@ function sendUserInfo(req, res) {
         signup_complete: req.user.signup_complete,
         joined_date: req.user.joined_date,
         avatar: req.user.avatar,
-        team: req.queriedTeam
+        renovation: req.queriedRenovation.addr
     };
 
 
