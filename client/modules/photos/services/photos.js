@@ -10,7 +10,6 @@ angular.module('ProjectHands.photos')
             Upload.upload({
                 url: baseUrl + '/profileUpload',
                 data: {
-                    // username: $scope.username,
                     album: album,
                     file: file
                 }
@@ -46,17 +45,16 @@ angular.module('ProjectHands.photos')
                 album: album
             }).$promise
                 .then(function (result) {
-                    console.log(result);
                     deferred.resolve(result);
 
                 })
                 .catch(function (error) {
-                    console.log(error);
                     deferred.reject(error);
                 });
 
             return deferred.promise;
         }
+
         ///
 
         ///home methods i am using the service in
@@ -65,7 +63,6 @@ angular.module('ProjectHands.photos')
             Upload.upload({
                 url: baseUrl + '/renoUpload',
                 data: {
-                    // username: $scope.username,
                     album: album,
                     file: file
                 }
@@ -101,17 +98,16 @@ angular.module('ProjectHands.photos')
                 album: album
             }).$promise
                 .then(function (result) {
-                    console.log(result);
                     deferred.resolve(result);
 
                 })
                 .catch(function (error) {
-                    console.log(error);
                     deferred.reject(error);
                 });
 
             return deferred.promise;
         }
+
         ///
 
         ///
@@ -120,7 +116,6 @@ angular.module('ProjectHands.photos')
             Upload.upload({
                 url: baseUrl + '/homeUpload',
                 data: {
-                    // username: $scope.username,
                     album: album,
                     file: file
                 }
@@ -156,25 +151,23 @@ angular.module('ProjectHands.photos')
                 album: album
             }).$promise
                 .then(function (result) {
-                    console.log(result);
                     deferred.resolve(result);
 
                 })
                 .catch(function (error) {
-                    console.log(error);
                     deferred.reject(error);
                 });
 
             return deferred.promise;
         }
+
         ///
-        
+
         function uploadPhoto(album, file) {
             var deferred = $q.defer();
             Upload.upload({
                 url: baseUrl + '/uploads',
                 data: {
-                    // username: $scope.username,
                     album: album,
                     file: file
                 }
@@ -231,9 +224,6 @@ angular.module('ProjectHands.photos')
             homeGet: homeGet,
             profileUpload: profileUpload,
             profileDelete: profileDelete,
-            profileGet: profileGet,
-            deletePhoto: deletePhoto,
-            getPhotos: getPhotos,
-            uploadPhoto: uploadPhoto
+            profileGet: profileGet
         };
     });

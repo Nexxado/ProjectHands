@@ -8,6 +8,14 @@ angular.module('ProjectHands.photos')
             templateUrl: 'modules/photos/templates/directives/user-avatar.html',
             controller: function ($scope, Upload, $timeout, PhotosService, AuthService, $mdDialog, $mdMedia) {
 
+                var album = '';
+                $scope.userHaveProfilePic = false;
+                $scope.profilePic = {};
+                $scope.profilePicUrl = {};
+                $scope.progress = false;
+                $scope.progressDelete = false;
+                
+                
                 AuthService.isLoggedIn()
                     .$promise
                     .then(function (result) {
@@ -15,21 +23,15 @@ angular.module('ProjectHands.photos')
                         $scope.profile = result;
                         album = $scope.profile.email;
                         $scope.getProfilePic(album);
-                        console.log(result);
                     })
                     .catch(function (error) {
                         $scope.isLoggedIn = false;
                     });
-
-                $scope.userHaveProfilePic = false;
-                var album = '';
-                $scope.profilePic = {};
-                $scope.profilePicUrl = {};
+                
                 $scope.getProfilePic = function (album) {
                     PhotosService.profileGet(album)
                         .then(function (data) {
                             $scope.profilePic = data[0];
-
                             if ($scope.profilePic === undefined)
                                 $scope.userHaveProfilePic = false;
                             else {
@@ -42,8 +44,7 @@ angular.module('ProjectHands.photos')
 
                         });
                 };
-                $scope.progress = false;
-                $scope.progressDelete = false;
+             
                 $scope.$watch('files', function () {
                     $scope.upload($scope.files);
                 });
@@ -56,13 +57,9 @@ angular.module('ProjectHands.photos')
                     $scope.progressDelete = true;
                     PhotosService.profileDelete(fileId)
                         .then(function (data) {
-                            console.log('deletePhoto data', data);
-                            //update album after delete
-                            // $scope.getPhotos($scope.album);
                             $scope.images.splice(index, 1);
                         })
                         .catch(function (error) {
-                            console.log('deletePhoto error ', error);
                         });
                 }
                 $scope.upload = function (files) {
@@ -73,14 +70,11 @@ angular.module('ProjectHands.photos')
                                 $scope.progress = true;
                                 PhotosService.profileUpload(album, file)
                                     .then(function (data) {
-                                        console.log('uploadPhoto data', data);
                                         $scope.progress = false;
-                                        // $scope.images.push(data);
                                         $scope.profilePicUrl = data.web_link;
                                         $scope.userHaveProfilePic = true;
                                     })
                                     .catch(function (error) {
-                                        console.log('uploadPhoto error ', error);
                                         $scope.progress = false;
                                     });
                             }
