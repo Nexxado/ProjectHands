@@ -12,10 +12,10 @@ var HttpStatus = require('http-status-codes');
 /**
  * USE CASE - volunteer want to upload profile pic
  * ACL -VOLUNTEER-
- * post for upload photos to sever using multipartyMiddleware
+ * post for upload profile picture
  * Expected Params:
  * @param file {File} : photo file to be upload
- * @param album {string} : album you want to save the photo to
+ * @param album {string} : your id (currently we use email as id) its the album
  */
 router.post('/profileUpload', multipartyMiddleware, function (req, res) {
 
@@ -76,9 +76,9 @@ router.delete('/profileDelete', function (req, res) {
 /**
  * USE CASE - volunteer want to view his profile pic or other volunteers profile pic
  * ACL -VOLUNTEER-
- * gets album data from the db
+ * gets profile pic from db
  * Expected Params:
- * @param album {string} : album to by deleted
+ * @param album {string} : your id (currently we use email as id) its the album
  */
 router.get('/profileGet', function (req, res) {
     profileGet(req.query.album, function (error, result) {
@@ -92,10 +92,10 @@ router.get('/profileGet', function (req, res) {
 /**
  * USE CASE - admin want to upload photos to home page
  * ACL -ADMIN-
- * post for upload photos to sever using multipartyMiddleware
+ * post for upload photos for home page slider
  * Expected Params:
  * @param file {File} : photo file to be upload
- * @param album {string} : album you want to save the photo to
+ * @param album {string} : need to be "home" the directive doing it
  */
 router.post('/homeUpload', multipartyMiddleware, function (req, res) {
 
@@ -133,7 +133,7 @@ router.post('/homeUpload', multipartyMiddleware, function (req, res) {
 /**
  * USE CASE - admin want to delete photos from home page
  * ACL -ADMIN-
- * delete for delete photo from drive and db
+ * delete : for delete photo from home db
  * Expected Params:
  * @param file_id {string} : file id to by deleted
  */
@@ -157,9 +157,9 @@ router.delete('/homeDelete', function (req, res) {
 /**
  * //USE CASE - GUEST visit the web site and see the photos in the homepage
  * //ACL -GUEST-
- * gets album data from the db
+ * gets home page photos
  * Expected Params:
- * @param album {string} : album to by deleted
+ * @param album {string} : home
  */
 router.get('/homeGet', function (req, res) {
     homeGet(req.query.album, function (error, result) {
@@ -174,10 +174,10 @@ router.get('/homeGet', function (req, res) {
 /**
  * USE CASE -team leader want to upload photos to his renovation
  * ACL -TEAM_LEAD-
- * post for upload photos to sever using multipartyMiddleware
+ * post for upload photos to to some renovation
  * Expected Params:
  * @param file {File} : photo file to be upload
- * @param album {string} : album you want to save the photo to
+ * @param album {string} : album (renovation) you want to save the photo to
  */
 router.post('/renoUpload', multipartyMiddleware, function (req, res) {
 
@@ -215,7 +215,7 @@ router.post('/renoUpload', multipartyMiddleware, function (req, res) {
 /**
  * USE CASE -team leader want to delete photos from his renovation
  * ACL -TEAM_LEAD-
- * delete for delete photo from drive and db
+ * delete to delete photo from renovation
  * Expected Params:
  * @param file_id {string} : file id to by deleted
  */
@@ -239,9 +239,9 @@ router.delete('/renoDelete', function (req, res) {
 /**
  * USE CASE - volunteer want to view photos of his renovation
  * ACL -VOLUNTEER-
- * gets album data from the db
+ * gets all renovation photos
  * Expected Params:
- * @param album {string} : album to by deleted
+ * @param album {string} : renovation album
  */
 router.get('/renoGet', function (req, res) {
     renoGet(req.query.album, function (error, result) {
@@ -365,7 +365,5 @@ function renoDelete(fileId, callback) {
         file_id: fileId
     }, callback);
 }
-
-
 
 module.exports = router;
