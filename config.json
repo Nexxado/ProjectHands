@@ -47,7 +47,12 @@
     "RENOVATION_RSVP": "acl_renovation_rsvp",
     "USER_ACTIONS": "acl_user_actions",
     "TEAM_ACTIONS": "acl_team_actions",
-    "STATISTICS_ACTIONS": "acl_statistics_actions"
+    "STATISTICS_ACTIONS": "acl_statistics_actions",
+    "PHOTOS_HOME": "acl_photos_homepage",
+    "PHOTOS_RENOVATION_EDIT": "acl_photos_renovation_edit",
+    "PHOTOS_RENOVATION_GET": "acl_photos_renovation_get",
+    "PHOTOS_PROFILE": "acl_photos_profile",
+    "HOME_ACTIONS": "acl_homepage_actions"
   },
   "MESSAGES": {
     "DB_FETCH_ERROR": "Error has accord , please  try again",

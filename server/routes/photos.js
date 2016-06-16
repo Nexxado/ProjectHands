@@ -1,12 +1,14 @@
 var fs = require('fs');
 var router = require('express').Router();
+var HttpStatus = require('http-status-codes');
 var multiparty = require('connect-multiparty');
 var multipartyMiddleware = multiparty();
 var driveUtils = require('../utils/drive');
 var mongoUtils = require('../utils/mongo');
 var config = require('../../config.json');
+var middleware = require('../utils/middleware');
+var validation = require('../utils/validation');
 var COLLECTIONS = config.COLLECTIONS;
-var HttpStatus = require('http-status-codes');
 
 
 /**
@@ -17,7 +19,7 @@ var HttpStatus = require('http-status-codes');
  * @param file {File} : photo file to be upload
  * @param album {string} : your id (currently we use email as id) its the album
  */
-router.post('/profileUpload', multipartyMiddleware, function (req, res) {
+router.post('/profileUpload', middleware.ensureAuthenticated, middleware.ensurePermission, multipartyMiddleware, function (req, res) {
 
     if (req.body.album === undefined || req.body.album === null)
         return res.status(HttpStatus.BAD_REQUEST).send("Error: missing album");
@@ -56,7 +58,7 @@ router.post('/profileUpload', multipartyMiddleware, function (req, res) {
  * Expected Params:
  * @param file_id {string} : file id to by deleted
  */
-router.delete('/profileDelete', function (req, res) {
+router.delete('/profileDelete', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
 
     if (req.query.file_id === undefined || req.query.file_id === null)
         return res.status(HttpStatus.BAD_REQUEST).send("Missing file id");
@@ -80,7 +82,7 @@ router.delete('/profileDelete', function (req, res) {
  * Expected Params:
  * @param album {string} : your id (currently we use email as id) its the album
  */
-router.get('/profileGet', function (req, res) {
+router.get('/profileGet', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
     profileGet(req.query.album, function (error, result) {
         if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
@@ -97,7 +99,7 @@ router.get('/profileGet', function (req, res) {
  * @param file {File} : photo file to be upload
  * @param album {string} : need to be "home" the directive doing it
  */
-router.post('/homeUpload', multipartyMiddleware, function (req, res) {
+router.post('/homeUpload', middleware.ensureAuthenticated, middleware.ensurePermission, multipartyMiddleware, function (req, res) {
 
     if (req.body.album === undefined || req.body.album === null)
         return res.status(HttpStatus.BAD_REQUEST).send("Error: missing album");
@@ -137,7 +139,7 @@ router.post('/homeUpload', multipartyMiddleware, function (req, res) {
  * Expected Params:
  * @param file_id {string} : file id to by deleted
  */
-router.delete('/homeDelete', function (req, res) {
+router.delete('/homeDelete', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
 
     if (req.query.file_id === undefined || req.query.file_id === null)
         return res.status(HttpStatus.BAD_REQUEST).send("Missing file id");
@@ -179,7 +181,7 @@ router.get('/homeGet', function (req, res) {
  * @param file {File} : photo file to be upload
  * @param album {string} : album (renovation) you want to save the photo to
  */
-router.post('/renoUpload', multipartyMiddleware, function (req, res) {
+router.post('/renoUpload', middleware.ensureAuthenticated, middleware.ensurePermission, multipartyMiddleware, function (req, res) {
 
     if (req.body.album === undefined || req.body.album === null)
         return res.status(HttpStatus.BAD_REQUEST).send("Error: missing album");
@@ -219,7 +221,7 @@ router.post('/renoUpload', multipartyMiddleware, function (req, res) {
  * Expected Params:
  * @param file_id {string} : file id to by deleted
  */
-router.delete('/renoDelete', function (req, res) {
+router.delete('/renoDelete', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
 
     if (req.query.file_id === undefined || req.query.file_id === null)
         return res.status(HttpStatus.BAD_REQUEST).send("Missing file id");
@@ -243,7 +245,7 @@ router.delete('/renoDelete', function (req, res) {
  * Expected Params:
  * @param album {string} : renovation album
  */
-router.get('/renoGet', function (req, res) {
+router.get('/renoGet', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
     renoGet(req.query.album, function (error, result) {
         if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);

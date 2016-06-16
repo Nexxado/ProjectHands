@@ -36,6 +36,21 @@ module.exports = function (req, res, next) {
         case /statistics\//.test(req.originalUrl):
             req.action = ACL.STATISTICS_ACTIONS ;
             break;
+        case /photos\/renoGet/.test(req.originalUrl):
+            req.action = ACL.PHOTOS_RENOVATION_GET;
+            break;
+        case /photos\/reno/.test(req.originalUrl):
+            req.action = ACL.PHOTOS_RENOVATION_EDIT;
+            break;
+        case /photos\/home/.test(req.originalUrl):
+            req.action = ACL.PHOTOS_HOME;
+            break;
+        case /photos\/profile/.test(req.originalUrl):
+            req.action = ACL.PHOTOS_PROFILE;
+            break;
+        case /home\//.test(req.originalUrl):
+            req.action = ACL.HOME_ACTIONS;
+            break;
     }
 
     next();

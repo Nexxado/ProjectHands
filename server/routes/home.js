@@ -1,6 +1,8 @@
 var router = require('express').Router();
 var mongoUtils = require('../utils/mongo');
 var config = require('../../config.json');
+var middleware = require('../utils/middleware');
+var validation = require('../utils/validation');
 var COLLECTIONS = config.COLLECTIONS;
 var HttpStatus = require('http-status-codes');
 var ObjectId = require('mongodb').ObjectID;
@@ -13,7 +15,7 @@ var ObjectId = require('mongodb').ObjectID;
  * @param title {string} : title
  * @param content {string} : content
  */
-router.post('/upload', function (req, res) {
+router.post('/upload', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
 
     if (req.body.title === undefined || req.body.title === null)
         return res.status(HttpStatus.BAD_REQUEST).send("Error: missing title");
@@ -39,7 +41,7 @@ router.post('/upload', function (req, res) {
  * Expected Params:
  * @param id {string} : ad id to by deleted
  */
-router.delete('/delete', function (req, res) {
+router.delete('/delete', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
 
     if (req.query.id === undefined || req.query.id === null)
         return res.status(HttpStatus.BAD_REQUEST).send("Missing id");
