@@ -262,6 +262,37 @@ validation.validateParams = function(req, res, next) {
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name or user email"});
             break;
 
+        case /home\/upload/.test(req.originalUrl):
+            if(!validateString(req.body.title) || !validateString(req.body.title))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "missing title or content"});
+            break;
+        
+        case /home\/delete/.test(req.originalUrl):
+            if(!validateString(req.query.id))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "missing id"});
+            break;
+        
+        case /photos\/profileUpload/.test(req.originalUrl):
+        case /photos\/homeUpload/.test(req.originalUrl):
+        case /photos\/renoUpload/.test(req.originalUrl):
+            if(!validateString(req.body.album) || !validateString(req.files.file))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "missing album"});
+            break;
+
+        case /photos\/profileDelete/.test(req.originalUrl):
+        case /photos\/homeDelete/.test(req.originalUrl):
+        case /photos\/renoDelete/.test(req.originalUrl):
+            if(!validateString(req.query.file_id))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Missing file id"});
+            break;
+
+        case /photos\/profileGet/.test(req.originalUrl):
+        case /photos\/homeGet/.test(req.originalUrl):
+        case /photos\/renoGet/.test(req.originalUrl):
+            if(!validateString(req.query.album))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Missing album"});
+            break;
+
         default:
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "No Validation Performed"});
     }

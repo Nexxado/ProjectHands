@@ -15,13 +15,7 @@ var ObjectId = require('mongodb').ObjectID;
  * @param title {string} : title
  * @param content {string} : content
  */
-router.post('/upload', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
-
-    if (req.body.title === undefined || req.body.title === null)
-        return res.status(HttpStatus.BAD_REQUEST).send("Error: missing title");
-
-    if (req.body.content === undefined || req.body.content === null)
-        return res.status(HttpStatus.BAD_REQUEST).send("Error: missing content");
+router.post('/upload', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams, function (req, res) {
 
     saveAd(
         req.body.title,
@@ -41,10 +35,7 @@ router.post('/upload', middleware.ensureAuthenticated, middleware.ensurePermissi
  * Expected Params:
  * @param id {string} : ad id to by deleted
  */
-router.delete('/delete', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
-
-    if (req.query.id === undefined || req.query.id === null)
-        return res.status(HttpStatus.BAD_REQUEST).send("Missing id");
+router.delete('/delete', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams, function (req, res) {
 
     deleteAd(req.query.id, function (error, result) {
         if (error)

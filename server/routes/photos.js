@@ -19,13 +19,11 @@ var COLLECTIONS = config.COLLECTIONS;
  * @param file {File} : photo file to be upload
  * @param album {string} : your id (currently we use email as id) its the album
  */
-router.post('/profileUpload', middleware.ensureAuthenticated, middleware.ensurePermission, multipartyMiddleware, function (req, res) {
-
-    if (req.body.album === undefined || req.body.album === null)
-        return res.status(HttpStatus.BAD_REQUEST).send("Error: missing album");
+router.post('/profileUpload', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    multipartyMiddleware, function (req, res) {
 
     if (req.files.file === undefined || req.files.file === null)
-        return res.status(HttpStatus.BAD_REQUEST).send("Error: missing file");
+        return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "missing file"});
 
     driveUtils.uploadFile(
         req.files.file.path,
@@ -58,10 +56,8 @@ router.post('/profileUpload', middleware.ensureAuthenticated, middleware.ensureP
  * Expected Params:
  * @param file_id {string} : file id to by deleted
  */
-router.delete('/profileDelete', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
-
-    if (req.query.file_id === undefined || req.query.file_id === null)
-        return res.status(HttpStatus.BAD_REQUEST).send("Missing file id");
+router.delete('/profileDelete', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    function (req, res) {
 
     driveUtils.deleteFile(req.query.file_id, function (error, result) {
         if (error)
@@ -82,7 +78,8 @@ router.delete('/profileDelete', middleware.ensureAuthenticated, middleware.ensur
  * Expected Params:
  * @param album {string} : your id (currently we use email as id) its the album
  */
-router.get('/profileGet', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
+router.get('/profileGet', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    function (req, res) {
     profileGet(req.query.album, function (error, result) {
         if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
@@ -99,10 +96,8 @@ router.get('/profileGet', middleware.ensureAuthenticated, middleware.ensurePermi
  * @param file {File} : photo file to be upload
  * @param album {string} : need to be "home" the directive doing it
  */
-router.post('/homeUpload', middleware.ensureAuthenticated, middleware.ensurePermission, multipartyMiddleware, function (req, res) {
-
-    if (req.body.album === undefined || req.body.album === null)
-        return res.status(HttpStatus.BAD_REQUEST).send("Error: missing album");
+router.post('/homeUpload', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    multipartyMiddleware, function (req, res) {
 
     if (req.files.file === undefined || req.files.file === null)
         return res.status(HttpStatus.BAD_REQUEST).send("Error: missing file");
@@ -139,10 +134,8 @@ router.post('/homeUpload', middleware.ensureAuthenticated, middleware.ensurePerm
  * Expected Params:
  * @param file_id {string} : file id to by deleted
  */
-router.delete('/homeDelete', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
-
-    if (req.query.file_id === undefined || req.query.file_id === null)
-        return res.status(HttpStatus.BAD_REQUEST).send("Missing file id");
+router.delete('/homeDelete', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    function (req, res) {
 
     driveUtils.deleteFile(req.query.file_id, function (error, result) {
         if (error)
@@ -163,7 +156,7 @@ router.delete('/homeDelete', middleware.ensureAuthenticated, middleware.ensurePe
  * Expected Params:
  * @param album {string} : home
  */
-router.get('/homeGet', function (req, res) {
+router.get('/homeGet', validation.validateParams, function (req, res) {
     homeGet(req.query.album, function (error, result) {
         if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
@@ -181,10 +174,8 @@ router.get('/homeGet', function (req, res) {
  * @param file {File} : photo file to be upload
  * @param album {string} : album (renovation) you want to save the photo to
  */
-router.post('/renoUpload', middleware.ensureAuthenticated, middleware.ensurePermission, multipartyMiddleware, function (req, res) {
-
-    if (req.body.album === undefined || req.body.album === null)
-        return res.status(HttpStatus.BAD_REQUEST).send("Error: missing album");
+router.post('/renoUpload', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    multipartyMiddleware, function (req, res) {
 
     if (req.files.file === undefined || req.files.file === null)
         return res.status(HttpStatus.BAD_REQUEST).send("Error: missing file");
@@ -221,10 +212,8 @@ router.post('/renoUpload', middleware.ensureAuthenticated, middleware.ensurePerm
  * Expected Params:
  * @param file_id {string} : file id to by deleted
  */
-router.delete('/renoDelete', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
-
-    if (req.query.file_id === undefined || req.query.file_id === null)
-        return res.status(HttpStatus.BAD_REQUEST).send("Missing file id");
+router.delete('/renoDelete', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    function (req, res) {
 
     driveUtils.deleteFile(req.query.file_id, function (error, result) {
         if (error)
@@ -245,7 +234,8 @@ router.delete('/renoDelete', middleware.ensureAuthenticated, middleware.ensurePe
  * Expected Params:
  * @param album {string} : renovation album
  */
-router.get('/renoGet', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
+router.get('/renoGet', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    function (req, res) {
     renoGet(req.query.album, function (error, result) {
         if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
