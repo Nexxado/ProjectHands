@@ -110,7 +110,7 @@
 												<h3>התקדמות השיפוץ</h3>
 												<span flex></span>
 
-												<md-button ng-show="editStagesMode" ng-click="addStage($event)" class="md-primary" layout="row" layout-align="center center">
+												<md-button ng-show="editStagesMode" ng-click="addStage($event)" class="md-primary toggle-fade" layout="row" layout-align="center center">
 													<i class="material-icons">add_circle</i>
 												</md-button>
 												<md-button ng-hide="editStagesMode" ng-click="enableEditStages()" class="md-primary" layout="row" layout-align="center center">
@@ -124,17 +124,17 @@
 												<img ng-src="{{renovationStageImage}}" alt="stage icon" />
 											</div>
 											<div style="height:75%;" layout="column" layout-align="center center">
-												<md-progress-linear md-mode="determinate" ng-value="renovationProgress" md-diameter="50"></md-progress-linear>
+												<md-progress-linear class="rtl" md-mode="determinate" ng-value="renovationProgress" md-diameter="50"></md-progress-linear>
 												<h4>{{renovationProgress}}%</h4>
 											</div>
-											<div layout="row" ng-show="editStagesMode">
+											<div layout="row" ng-show="editStagesMode" class="stages-controls toggle-fade">
 												<md-button ng-click="previousStage()" class="md-primary md-icon-button" layout="row" layout-align="center center">
 													<i class="material-icons">keyboard_arrow_right</i>
 												</md-button>
 
 												<span flex></span>
 
-												<md-button ng-show="needToAssignTeam" ng-click="finalizeRenovation()" class="md-primary" layout="row" layout-align="center center">
+												<md-button ng-show="needToAssignTeam" ng-click="finalizeRenovation($event)" class="md-primary" layout="row" layout-align="center center">
 													שבץ צוות
 												</md-button>
 

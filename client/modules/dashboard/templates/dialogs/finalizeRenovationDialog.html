@@ -11,24 +11,26 @@
         </md-toolbar>
         <md-dialog-content>
             <div class="md-dialog-content">
-                <h3 translate>FINALIZE_RENOVATION_MESSAGE</h3>
+                <h3 class="rtl" translate>FINALIZE_RENOVATION_MESSAGE</h3>
                 <!-- Input Title -->
                 <md-input-container class="md-block md-icon-float rtl">
                     <label translate>CHOSE_TEAM</label>
                     <md-icon class="material-icons">title</md-icon>
-                    <md-select ng-model="renovation.team">
+                    <md-select name="team" ng-model="renovation.team" required>
                         <md-option ng-repeat="team in allTeams" ng-value="team">
                             {{team.name}}
                         </md-option>
                     </md-select>
                 </md-input-container>
-                <label translate>CHOSE_DATE</label>
+                <div class="rtl">
+                    <label translate>CHOSE_DATE</label>
                     <md-datepicker ng-model="date" md-min-date="minDate"></md-datepicker>
+                </div>
             </div>
         </md-dialog-content>
-        <md-dialog-actions>
-            <md-button ng-click="cancel()" class="md-warn">ביטול</md-button>
+        <md-dialog-actions class="rtl">
             <md-button type="submit" class="md-primary">אישור</md-button>
+            <md-button ng-click="cancel()" class="md-warn">ביטול</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

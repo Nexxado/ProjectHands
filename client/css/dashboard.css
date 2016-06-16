@@ -143,6 +143,15 @@ md-menu-item > .md-button {
     overflow: auto;
 }
 
+.stages-controls {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    bottom: 20px;
+    padding: 0 5px;
+}
+
 /*==================================================
  * Effect 7
  * ===============================================*/

@@ -99,6 +99,10 @@ md-option {
     direction: rtl;
 }
 
+md-progress-linear.rtl {
+    transform: scale(-1);
+}
+
 /* INPUT */
 md-input-container.rtl label {
     right: 0;

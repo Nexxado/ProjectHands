@@ -633,6 +633,8 @@ angular.module('ProjectHands.dashboard')
 					};
 
 					$scope.submit = function () {
+						$scope.FinalizeRenovationForm.$setDirty();
+						$scope.FinalizeRenovationForm.team.$setDirty();
 						if ($scope.FinalizeRenovationForm.$invalid) {
 							return;
 						}
@@ -672,6 +674,7 @@ angular.module('ProjectHands.dashboard')
 				// 			}
 				// 		}, {}
 				// 	)
+				//TODO Update renovation date in the database
                 TeamService.assignToRenovation(renovationAddedDetails.team.name, addr)
 					.$promise.then(function (result) {
 						$scope.thisRenovation.date = renovationAddedDetails.date;
