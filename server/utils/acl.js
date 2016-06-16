@@ -22,6 +22,7 @@ module.exports = function (req, res, next) {
             req.action = ACL.TEAM_ACTIONS;
             break;
         case /renovation\/get_info/.test(req.originalUrl):
+        case /renovation\/done_task/.test(req.originalUrl):
             req.action = ACL.RENOVATION_GET_INFO;
             break;
         case /renovation\/get_all/.test(req.originalUrl):
@@ -30,11 +31,15 @@ module.exports = function (req, res, next) {
         case /renovation\/create/.test(req.originalUrl):
             req.action = ACL.RENOVATION_CREATE;
             break;
-        case /renovation\/edit/.test(req.originalUrl):
-            req.action = ACL.RENOVATION_EDIT;
-            break;
         case /renovation\/rsvp/.test(req.originalUrl):
             req.action = ACL.RENOVATION_RSVP;
+            break;
+        // case /renovation\/add_tool/.test(req.originalUrl):
+        // case /renovation\/delete_tool/.test(req.originalUrl):
+        // case /renovation\/update_stage/.test(req.originalUrl):
+        // case /renovation\/add_task/.test(req.originalUrl):
+        case /renovation\//.test(req.originalUrl):
+            req.action = ACL.RENOVATION_EDIT;
             break;
         case /statistics\//.test(req.originalUrl):
             req.action = ACL.STATISTICS_ACTIONS ;

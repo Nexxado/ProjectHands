@@ -76,17 +76,377 @@ router.post('/create', middleware.ensureAuthenticated, middleware.ensurePermissi
         })
     });
 
+/**
+ * Add needed Tool to renovation
+ */
+router.post('/add_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams, 
+    middleware.ensureRenovationExists, function(req, res) {
+
+        var renovation = {
+            addr: {
+                city: req.body.city,
+                street: req.body.street,
+                num: req.body.num
+            }
+        };
+
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$push: {toolsNeeded: req.body.tool}}, {}, 
+            function(error, result) {
+                
+                if(error || result.result.nModified === 0)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to add tool"});
+                
+                res.send({success: true});
+        });
+
+});
+
 
 /**
- * Edit a renovation
+ * Assign tool to user
  */
-router.post('/edit', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    function (req, res) {
+router.post('/assign_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureRenovationExists, middleware.ensureUserExists, function(req, res) {
 
-        //TODO if Team_LEAD, make sure the renovation belongs to his team
+        var renovation = {
+            addr: {
+                city: req.body.city,
+                street: req.body.street,
+                num: req.body.num
+            },
+            "toolsNeeded.name": req.body.tool.name
+        };
 
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {"toolsNeeded.$.being_brought": "true", "toolsNeeded.$.assigned": req.body.email}}, {},
+            function(error, result) {
+
+                if(error || result.result.nModified === 0)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign tool"});
+
+                res.send({success: true});
+            });
 
     });
+
+
+/**
+ * Assign tool to user
+ */
+router.post('/unassign_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureRenovationExists, function(req, res) {
+
+        var renovation = {
+            addr: {
+                city: req.body.city,
+                street: req.body.street,
+                num: req.body.num
+            },
+            "toolsNeeded.name": req.body.tool.name
+        };
+
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {"toolsNeeded.$.being_brought": "false", "toolsNeeded.$.assigned": ""}}, {},
+            function(error, result) {
+
+                if(error || result.result.nModified === 0)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to unassign tool"});
+
+                res.send({success: true});
+            });
+
+    });
+
+
+/**
+ * Delete tool needed from renovation
+ */
+router.post('/delete_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureRenovationExists, function(req, res) {
+
+        var renovation = {
+            addr: {
+                city: req.body.city,
+                street: req.body.street,
+                num: req.body.num
+            }
+        };
+
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$pull: {toolsNeeded: {name: req.body.tool.name}}}, {},
+            function(error, result) {
+
+                if(error || result.result.nModified === 0)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to delete tool"});
+
+                res.send({success: true});
+            });
+
+    });
+
+
+/**
+ * Add new task to renovation
+ */
+router.post('/add_task', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureRenovationExists, function(req, res) {
+
+        var renovation = {
+            addr: {
+                city: req.body.city,
+                street: req.body.street,
+                num: req.body.num
+            }
+        };
+
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$push: {tasks: req.body.task}}, {},
+            function(error, result) {
+
+                if(error || result.result.nModified === 0)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to create new task"});
+
+                res.send({success: true});
+            });
+
+    });
+
+
+/**
+ * Assign task to team member
+ */
+router.post('/assign_task', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureRenovationExists, middleware.ensureUserExists, function(req, res) {
+
+        var renovation = {
+            addr: {
+                city: req.body.city,
+                street: req.body.street,
+                num: req.body.num
+            },
+            "tasks.name": req.body.task.name
+        };
+
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {"tasks.$.assigned_email": req.body.email}}, {},
+            function(error, result) {
+
+                if(error || result.result.nModified === 0)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign task"});
+
+                res.send({success: true});
+            });
+
+    });
+
+/**
+ * Mark task in renovation as done
+ */
+router.post('/done_task', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureRenovationExists, function(req, res) {
+
+        var renovation = {
+            addr: {
+                city: req.body.city,
+                street: req.body.street,
+                num: req.body.num
+            },
+            "tasks.name": req.body.task.name
+        };
+
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {"tasks.$.done": "true"}}, {},
+            function(error, result) {
+
+                if(error || result.result.nModified === 0)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to mark task as done"});
+
+                res.send({success: true});
+            });
+
+    });
+
+
+/**
+ * Edit task
+ */
+router.post('/edit_task', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureRenovationExists, function(req, res) {
+
+        var renovation = {
+            addr: {
+                city: req.body.city,
+                street: req.body.street,
+                num: req.body.num
+            },
+            "tasks.name": req.body.tasks[0].name
+        };
+
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {
+                "tasks.$.name": req.body.tasks[1].name,
+                "tasks.$.description": req.body.tasks[1].description,
+                "tasks.$.assigned_email": req.body.tasks[1].assigned_email,
+                "tasks.$.done": req.body.tasks[1].done
+            }}, {},
+            function(error, result) {
+
+                if(error || result.result.nModified === 0)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to edit task"});
+
+                res.send({success: true});
+            });
+
+    });
+
+
+/**
+ * Delete task from renovation
+ */
+router.post('/delete_task', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureRenovationExists, function(req, res) {
+
+        var renovation = {
+            addr: {
+                city: req.body.city,
+                street: req.body.street,
+                num: req.body.num
+            }
+        };
+
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$pull: {tasks: {name: req.body.task.name}}}, {},
+            function(error, result) {
+
+                if(error || result.result.nModified === 0)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to delete task"});
+
+                res.send({success: true});
+            });
+
+    });
+
+/**
+ * Add pinned message to renovation
+ */
+router.post('/add_pinned', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureRenovationExists, function(req, res) {
+
+        var renovation = {
+            addr: {
+                city: req.body.city,
+                street: req.body.street,
+                num: req.body.num
+            }
+        };
+
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$push: {pinned: req.body.pinned}}, {},
+            function(error, result) {
+
+                if(error || result.result.nModified === 0)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to create new pinned message"});
+
+                res.send({success: true});
+            });
+
+    });
+
+
+/**
+ * Edit pinned message
+ */
+router.post('/edit_pinned', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureRenovationExists, function(req, res) {
+
+        var renovation = {
+            addr: {
+                city: req.body.city,
+                street: req.body.street,
+                num: req.body.num
+            },
+            "pinned.title": req.body.pinneds[0].title
+        };
+
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {
+                    "pinned.$.title": req.body.pinneds[1].title,
+                    "pinned.$.description": req.body.pinneds[1].description,
+                    "pinned.$.added_date": req.body.pinneds[1].added_date
+                }}, {},
+            function(error, result) {
+
+                if(error || result.result.nModified === 0)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to edit pinned message"});
+
+                res.send({success: true});
+            });
+
+    });
+
+/**
+ * Delete pinned message from renovation
+ */
+router.post('/delete_pinned', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureRenovationExists, function(req, res) {
+
+        var renovation = {
+            addr: {
+                city: req.body.city,
+                street: req.body.street,
+                num: req.body.num
+            }
+        };
+
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$pull: {pinned: {title: req.body.pinned.title}}}, {},
+            function(error, result) {
+
+                if(error || result.result.nModified === 0)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to delete pinned message"});
+
+                res.send({success: true});
+            });
+
+    });
+
+/**
+ * Add new custom stage to renovation
+ */
+router.post('/add_stage', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureRenovationExists, function(req, res) {
+
+        var renovation = {
+            addr: {
+                city: req.body.city,
+                street: req.body.street,
+                num: req.body.num
+            }
+        };
+
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$push: {renovation_stages: {$each: [req.body.stage.title], $position: req.body.index}}}, {},
+            function(error, result) {
+
+                if(error || result.result.nModified === 0)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to add new stage"});
+
+                res.send({success: true});
+            });
+
+    });
+
+/**
+ * Update Renovation stage
+ */
+router.post('/update_stage', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams, 
+    middleware.ensureRenovationExists, function(req, res) {
+        var renovation = {
+            addr: {
+                city: req.body.city,
+                street: req.body.street,
+                num: req.body.num
+            }
+        };
+
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {current_stage: req.body.stage}}, {},
+            function(error, result) {
+
+                if(error || result.result.nModified === 0)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to update stage"});
+
+                res.send({success: true});
+            });
+    });
+
 
 
 /**
@@ -118,7 +478,7 @@ router.post('/rsvp', middleware.ensureAuthenticated, middleware.ensurePermission
         //Update RSVP status
         mongoUtils.update(COLLECTIONS.RENOVATIONS, {addr: req.queriedRenovation.addr}, db_action, {}, function (error, result) {
 
-            if (error || !result.nModified)
+            if (error || result.result.nModified === 0)
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to change rsvp status"});
 
             res.send({rsvp: rsvpStatus});

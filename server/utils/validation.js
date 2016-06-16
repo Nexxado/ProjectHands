@@ -213,9 +213,54 @@ validation.validateParams = function(req, res, next) {
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address"});
             break;
 
-        case /renovation\/edit/.test(req.originalUrl):
-            if(false) //TODO Add params to check
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Please provide all required fields"});
+        case /renovation\/add_tool/.test(req.originalUrl):
+        case /renovation\/delete_tool/.test(req.originalUrl):
+        case /renovation\/unassign_tool/.test(req.originalUrl):
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || typeof req.body.tool === 'undefined')
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or tool"});
+            break;
+
+        case /renovation\/assign_tool/.test(req.originalUrl):
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || typeof req.body.tool === 'undefined' || !validateEmail(req.body.email))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address, tool or user email"});
+            break;
+
+        case /renovation\/add_task/.test(req.originalUrl):
+        case /renovation\/delete_task/.test(req.originalUrl):
+        case /renovation\/done_task/.test(req.originalUrl):
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || typeof req.body.task === 'undefined')
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or task"});
+            break;
+
+        case /renovation\/edit_task/.test(req.originalUrl):
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || !Array.isArray(req.body.tasks))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or task"});
+            break;
+
+        case /renovation\/assign_task/.test(req.originalUrl):
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || typeof req.body.task === 'undefined' || !validateEmail(req.body.email))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address, task or user email"});
+            break;
+
+        case /renovation\/add_pinned/.test(req.originalUrl):
+        case /renovation\/delete_pinned/.test(req.originalUrl):
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || typeof req.body.pinned === 'undefined')
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or pinned message"});
+            break;
+
+        case /renovation\/edit_pinned/.test(req.originalUrl):
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || !Array.isArray(req.body.pinneds))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or pinned message"});
+            break;
+
+        case /renovation\/add_stage/.test(req.originalUrl):
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || typeof req.body.stage === 'undefined' || typeof req.body.index === 'undefined')
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or stage params"});
+            break;
+        
+        case /renovation\/update_stage/.test(req.originalUrl):
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || !validateString(req.body.stage))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address"});
             break;
 
         case /user\/approve/.test(req.originalUrl):

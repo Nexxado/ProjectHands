@@ -13,12 +13,12 @@
 								<i class="material-icons">chat</i> צ'אט
 							</div>
 						</md-button>
-						<md-button layout="row" ng-click="confirmRSVP(user.email)" class="md-raised md-accent rsvp-button" ng-hide="my_rsvp" layout-align="center center">
+						<md-button layout="row" ng-click="toggleRSVP(user.email)" class="md-raised md-accent rsvp-button" ng-hide="my_rsvp" layout-align="center center">
 							<div layout="row" layout-align="center center">
 								אשר הגעה
 							</div>
 						</md-button>
-						<md-button layout="row" ng-click="declineRSVP(user.email)" class="md-raised md-primary rsvp-button" ng-show="my_rsvp" layout-align="center center">
+						<md-button layout="row" ng-click="toggleRSVP(user.email)" class="md-raised md-primary rsvp-button" ng-show="my_rsvp" layout-align="center center">
 							<div layout="row" layout-align="center center">
 								<i class="material-icons" style="padding-left:5px;">thumb_up</i> מגיע
 							</div>

@@ -87,7 +87,7 @@ middleware.ensureMultipleUsersExists = function (req, res, next) {
  */
 middleware.ensureTeamExists = function (req, res, next) {
 
-    var teamName = {name: req.body.teamName || req.params.teamName};
+    var teamName = {name: req.body.teamName || req.params.teamName || req.queriedRenovation.team};
 
     mongoUtils.query(COLLECTIONS.TEAMS, teamName, function (error, result) {
 

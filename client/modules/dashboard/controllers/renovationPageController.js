@@ -190,23 +190,24 @@ angular.module('ProjectHands.dashboard')
 			})
 			.then(function (pinneds) {
 				//Check for duplicates in tasks
-				var reno = $scope.thisRenovation;
-				DatabaseService.update(
-						COLLECTIONS.RENOVATIONS, {
-							addr: {
-								city: reno.addr.city,
-								street: reno.addr.street,
-								num: reno.addr.num
-							},
-							"pinned.title": pinneds[0].title
-						}, {
-							$set: {
-								"pinned.$.title": pinneds[1].title,
-								"pinned.$.description": pinneds[1].description,
-								"pinned.$.added_date": pinneds[1].added_date,
-							}
-						}, {}
-					)
+				// var reno = $scope.thisRenovation;
+				// DatabaseService.update(
+				// 		COLLECTIONS.RENOVATIONS, {
+				// 			addr: {
+				// 				city: reno.addr.city,
+				// 				street: reno.addr.street,
+				// 				num: reno.addr.num
+				// 			},
+				// 			"pinned.title": pinneds[0].title
+				// 		}, {
+				// 			$set: {
+				// 				"pinned.$.title": pinneds[1].title,
+				// 				"pinned.$.description": pinneds[1].description,
+				// 				"pinned.$.added_date": pinneds[1].added_date,
+				// 			}
+				// 		}, {}
+				// 	)
+				RenovationService.editPinned($scope.thisRenovation.addr, pinneds)
 					.$promise.then(function (result) {
 						for (var i in $scope.thisRenovation.pinned) {
 							if ($scope.thisRenovation.pinned[i].title === pinneds[0].title) {
@@ -261,24 +262,25 @@ angular.module('ProjectHands.dashboard')
 			})
 			.then(function (tasks) {
 				//Check for duplicates in tasks
-				var reno = $scope.thisRenovation;
-				DatabaseService.update(
-						COLLECTIONS.RENOVATIONS, {
-							addr: {
-								city: reno.addr.city,
-								street: reno.addr.street,
-								num: reno.addr.num
-							},
-							"tasks.name": tasks[0].name
-						}, {
-							$set: {
-								"tasks.$.name": tasks[1].name,
-								"tasks.$.description": tasks[1].description,
-								"tasks.$.assigned_email": tasks[1].assigned_email,
-								"tasks.$.done": tasks[1].done
-							}
-						}, {}
-					)
+				// var reno = $scope.thisRenovation;
+				// DatabaseService.update(
+				// 		COLLECTIONS.RENOVATIONS, {
+				// 			addr: {
+				// 				city: reno.addr.city,
+				// 				street: reno.addr.street,
+				// 				num: reno.addr.num
+				// 			},
+				// 			"tasks.name": tasks[0].name
+				// 		}, {
+				// 			$set: {
+				// 				"tasks.$.name": tasks[1].name,
+				// 				"tasks.$.description": tasks[1].description,
+				// 				"tasks.$.assigned_email": tasks[1].assigned_email,
+				// 				"tasks.$.done": tasks[1].done
+				// 			}
+				// 		}, {}
+				// 	)
+				RenovationService.editTask($scope.thisRenovation.addr, tasks)
 					.$promise.then(function (result) {
 						for (var i in $scope.thisRenovation.tasks) {
 							if ($scope.thisRenovation.tasks[i].name === tasks[0].name) {
@@ -343,20 +345,21 @@ angular.module('ProjectHands.dashboard')
 						throw new Error("Task Title already exists. Please choose a different title");
 					}
 				}
-				var reno = $scope.thisRenovation;
-				DatabaseService.update(
-						COLLECTIONS.RENOVATIONS, {
-							addr: {
-								city: reno.addr.city,
-								street: reno.addr.street,
-								num: reno.addr.num
-							}
-						}, {
-							$push: {
-								"tasks": newTask
-							}
-						}, {}
-					)
+				// var reno = $scope.thisRenovation;
+				// DatabaseService.update(
+				// 		COLLECTIONS.RENOVATIONS, {
+				// 			addr: {
+				// 				city: reno.addr.city,
+				// 				street: reno.addr.street,
+				// 				num: reno.addr.num
+				// 			}
+				// 		}, {
+				// 			$push: {
+				// 				"tasks": newTask
+				// 			}
+				// 		}, {}
+				// 	)
+				RenovationService.addTask($scope.thisRenovation.addr, newTask)
 					.$promise.then(function (result) {
 						$scope.thisRenovation.tasks.push(newTask);
 					}).catch(function (error) {
@@ -404,20 +407,21 @@ angular.module('ProjectHands.dashboard')
 						throw new Error("Pinned Title already exists. Please choose a different title");
 					}
 				}
-				var reno = $scope.thisRenovation;
-				DatabaseService.update(
-						COLLECTIONS.RENOVATIONS, {
-							addr: {
-								city: reno.addr.city,
-								street: reno.addr.street,
-								num: reno.addr.num
-							}
-						}, {
-							$push: {
-								"pinned": newPinned
-							}
-						}, {}
-					)
+				// var reno = $scope.thisRenovation;
+				// DatabaseService.update(
+				// 		COLLECTIONS.RENOVATIONS, {
+				// 			addr: {
+				// 				city: reno.addr.city,
+				// 				street: reno.addr.street,
+				// 				num: reno.addr.num
+				// 			}
+				// 		}, {
+				// 			$push: {
+				// 				"pinned": newPinned
+				// 			}
+				// 		}, {}
+				// 	)
+				RenovationService.addPinned($scope.thisRenovation.addr, newPinned)
 					.$promise.then(function (result) {
 						$scope.thisRenovation.pinned.push(newPinned);
 					}).catch(function (error) {
@@ -468,23 +472,24 @@ angular.module('ProjectHands.dashboard')
 					}
 				}
 				var push_index = $scope.thisRenovation.renovation_stages.indexOf(newStage.after_stage) + 1;
-				var reno = $scope.thisRenovation;
-				DatabaseService.update(
-						COLLECTIONS.RENOVATIONS, {
-							addr: {
-								city: reno.addr.city,
-								street: reno.addr.street,
-								num: reno.addr.num
-							}
-						}, {
-							$push: {
-								"renovation_stages": {
-									$each: [newStage.title],
-									$position: push_index
-								}
-							}
-						}, {}
-					)
+				// var reno = $scope.thisRenovation;
+				// DatabaseService.update(
+				// 		COLLECTIONS.RENOVATIONS, {
+				// 			addr: {
+				// 				city: reno.addr.city,
+				// 				street: reno.addr.street,
+				// 				num: reno.addr.num
+				// 			}
+				// 		}, {
+				// 			$push: {
+				// 				"renovation_stages": {
+				// 					$each: [newStage.title],
+				// 					$position: push_index
+				// 				}
+				// 			}
+				// 		}, {}
+				// 	)
+				RenovationService.addStage($scope.thisRenovation.addr, newStage, push_index)
 					.$promise.then(function (result) {
 						$scope.thisRenovation.renovation_stages.splice(push_index, 0, newStage.title);
 					}).catch(function (error) {
@@ -504,7 +509,9 @@ angular.module('ProjectHands.dashboard')
 					$scope.tool = {
 						name: "",
 						quantity: "",
-						comment: ""
+						comment: "",
+						assigned: "",
+						being_brought: false
 					};
 					$scope.cancel = function () {
 						$mdDialog.cancel();
@@ -533,20 +540,21 @@ angular.module('ProjectHands.dashboard')
 						throw new Error("Tool Name already exists. Please choose a different name");
 					}
 				}
-				var reno = $scope.thisRenovation;
-				DatabaseService.update(
-						COLLECTIONS.RENOVATIONS, {
-							addr: {
-								city: reno.addr.city,
-								street: reno.addr.street,
-								num: reno.addr.num
-							}
-						}, {
-							$push: {
-								"toolsNeeded": newTool
-							}
-						}, {}
-					)
+				// var reno = $scope.thisRenovation;
+				// DatabaseService.update(
+				// 		COLLECTIONS.RENOVATIONS, {
+				// 			addr: {
+				// 				city: reno.addr.city,
+				// 				street: reno.addr.street,
+				// 				num: reno.addr.num
+				// 			}
+				// 		}, {
+				// 			$push: {
+				// 				"toolsNeeded": newTool
+				// 			}
+				// 		}, {}
+				// 	)
+				RenovationService.addTool($scope.thisRenovation.addr, newTool)
 					.$promise.then(function (result) {
 						$scope.thisRenovation.toolsNeeded.push(newTool);
 					}).catch(function (error) {
@@ -569,20 +577,21 @@ angular.module('ProjectHands.dashboard')
 	$scope.disableEditStages = function () {
 		$scope.editStagesMode = false;
 		if ($scope.lastStage != $scope.renovationCurrentStage) {
-			var reno = $scope.thisRenovation;
-			DatabaseService.update(
-				COLLECTIONS.RENOVATIONS, {
-					addr: {
-						city: reno.addr.city,
-						street: reno.addr.street,
-						num: reno.addr.num
-					}
-				}, {
-					$set: {
-						"current_stage": $scope.renovationCurrentStage
-					}
-				}, {}
-			).$promise.then(function (result) {}).catch(function (error) {
+			// var reno = $scope.thisRenovation;
+			// DatabaseService.update(
+			// 	COLLECTIONS.RENOVATIONS, {
+			// 		addr: {
+			// 			city: reno.addr.city,
+			// 			street: reno.addr.street,
+			// 			num: reno.addr.num
+			// 		}
+			// 	}, {
+			// 		$set: {
+			// 			"current_stage": $scope.renovationCurrentStage
+			// 		}
+			// 	}, {})
+			RenovationService.updateStage($scope.thisRenovation.addr, $scope.renovationCurrentStage)
+				.$promise.then(function (result) {}).catch(function (error) {
 				console.log("Error: ", error);
 				//if there was a problem, go back to the last stage that was valid
 				$scope.renovationCurrentStage = $scope.lastStage;
@@ -695,22 +704,23 @@ angular.module('ProjectHands.dashboard')
 	/******Deleting Dialogs******/
 	/*TODO: switch with the appropriate route for each delete of a variable*/
 	$scope.deleteTask = function (task) {
-		var reno = $scope.thisRenovation;
-		DatabaseService.update(
-			COLLECTIONS.RENOVATIONS, {
-				addr: {
-					city: reno.addr.city,
-					street: reno.addr.street,
-					num: reno.addr.num
-				}
-			}, {
-				$pull: {
-					"tasks": {
-						'name': task.name
-					}
-				}
-			}, {}
-		).$promise.then(function (result) {
+		// var reno = $scope.thisRenovation;
+		// DatabaseService.update(
+		// 	COLLECTIONS.RENOVATIONS, {
+		// 		addr: {
+		// 			city: reno.addr.city,
+		// 			street: reno.addr.street,
+		// 			num: reno.addr.num
+		// 		}
+		// 	}, {
+		// 		$pull: {
+		// 			"tasks": {
+		// 				'name': task.name
+		// 			}
+		// 		}
+		// 	}, {})
+		RenovationService.deleteTask($scope.thisRenovation.addr, task)
+			.$promise.then(function (result) {
 			var index = $scope.thisRenovation.tasks.indexOf(task);
 			$scope.thisRenovation.tasks.splice(index, 1);
 		}).catch(function (error) {
@@ -719,22 +729,23 @@ angular.module('ProjectHands.dashboard')
 	};
 
 	$scope.deleteTool = function (tool) {
-		var reno = $scope.thisRenovation;
-		DatabaseService.update(
-			COLLECTIONS.RENOVATIONS, {
-				addr: {
-					city: reno.addr.city,
-					street: reno.addr.street,
-					num: reno.addr.num
-				}
-			}, {
-				$pull: {
-					"toolsNeeded": {
-						'name': tool.name
-					}
-				}
-			}, {}
-		).$promise.then(function (result) {
+		// var reno = $scope.thisRenovation;
+		// DatabaseService.update(
+		// 	COLLECTIONS.RENOVATIONS, {
+		// 		addr: {
+		// 			city: reno.addr.city,
+		// 			street: reno.addr.street,
+		// 			num: reno.addr.num
+		// 		}
+		// 	}, {
+		// 		$pull: {
+		// 			"toolsNeeded": {
+		// 				'name': tool.name
+		// 			}
+		// 		}
+		// 	}, {})
+		RenovationService.deleteTool($scope.thisRenovation.addr, tool)
+			.$promise.then(function (result) {
 			var index = $scope.thisRenovation.toolsNeeded.indexOf(tool);
 			$scope.thisRenovation.toolsNeeded.splice(index, 1);
 		}).catch(function (error) {
@@ -744,21 +755,22 @@ angular.module('ProjectHands.dashboard')
 
 	$scope.deletePinned = function (pinned) {
 		var reno = $scope.thisRenovation;
-		DatabaseService.update(
-			COLLECTIONS.RENOVATIONS, {
-				addr: {
-					city: reno.addr.city,
-					street: reno.addr.street,
-					num: reno.addr.num
-				}
-			}, {
-				$pull: {
-					"pinned": {
-						'title': pinned.title
-					}
-				}
-			}, {}
-		).$promise.then(function (result) {
+		// DatabaseService.update(
+		// 	COLLECTIONS.RENOVATIONS, {
+		// 		addr: {
+		// 			city: reno.addr.city,
+		// 			street: reno.addr.street,
+		// 			num: reno.addr.num
+		// 		}
+		// 	}, {
+		// 		$pull: {
+		// 			"pinned": {
+		// 				'title': pinned.title
+		// 			}
+		// 		}
+		// 	}, {})
+		RenovationService.deletePinned($scope.thisRenovation.addr, pinned)
+			.$promise.then(function (result) {
 			var index = $scope.thisRenovation.pinned.indexOf(pinned);
 			$scope.thisRenovation.pinned.splice(index, 1);
 
@@ -780,54 +792,61 @@ angular.module('ProjectHands.dashboard')
 		return false;
 	};
 
-	$scope.confirmRSVP = function (email) {
+	$scope.toggleRSVP = function (email) {
 		console.log("user: ", $scope.user);
 		$scope.my_rsvp = true;
 		var reno = $scope.thisRenovation;
-		DatabaseService.update(
-				COLLECTIONS.RENOVATIONS, {
-					addr: {
-						city: reno.addr.city,
-						street: reno.addr.street,
-						num: reno.addr.num
-					}
-				}, {
-					$push: {
-						"rsvp": email
-					}
-				}, {}
-			)
+		// DatabaseService.update(
+		// 		COLLECTIONS.RENOVATIONS, {
+		// 			addr: {
+		// 				city: reno.addr.city,
+		// 				street: reno.addr.street,
+		// 				num: reno.addr.num
+		// 			}
+		// 		}, {
+		// 			$push: {
+		// 				"rsvp": email
+		// 			}
+		// 		}, {}
+		// 	)
+		RenovationService.rsvp($scope.thisRenovation.addr)
 			.$promise.then(function (result) {
-				$scope.thisRenovation.rsvp.push(email);
+				$scope.my_rsvp = result.rsvp;
+				if(result.rsvp)
+					$scope.thisRenovation.rsvp.push(email);
+				else {
+					var index = $scope.thisRenovation.rsvp.indexOf(email);
+					$scope.thisRenovation.rsvp.splice(index, 1);
+				}
 			}).catch(function (error) {
 				console.log("Error: ", error);
 			});
 	};
 
-	$scope.declineRSVP = function (email) {
-		var reno = $scope.thisRenovation;
-		$scope.my_rsvp = false;
-		DatabaseService.update(
-				COLLECTIONS.RENOVATIONS, {
-					addr: {
-						city: reno.addr.city,
-						street: reno.addr.street,
-						num: reno.addr.num
-					}
-				}, {
-					$pull: {
-						"rsvp": email
-					}
-				}, {}
-			)
-			.$promise.then(function (result) {
-			console.log("removed " + email);
-				var index = $scope.thisRenovation.rsvp.indexOf(email);
-				$scope.thisRenovation.rsvp.splice(index, 1);
-			}).catch(function (error) {
-				console.log("Error: ", error);
-			});
-	};
+	// $scope.declineRSVP = function (email) {
+	// 	var reno = $scope.thisRenovation;
+	// 	$scope.my_rsvp = false;
+	// 	DatabaseService.update(
+	// 			COLLECTIONS.RENOVATIONS, {
+	// 				addr: {
+	// 					city: reno.addr.city,
+	// 					street: reno.addr.street,
+	// 					num: reno.addr.num
+	// 				}
+	// 			}, {
+	// 				$pull: {
+	// 					"rsvp": email
+	// 				}
+	// 			}, {}
+	// 		)
+	// 		.$promise.then(function (result) {
+	// 		console.log("removed " + email);
+	// 			var index = $scope.thisRenovation.rsvp.indexOf(email);
+	// 			$scope.thisRenovation.rsvp.splice(index, 1);
+	// 		}).catch(function (error) {
+	// 			console.log("Error: ", error);
+	// 		});
+	// };
 
 	/*Variables*/
 	$scope.users_rsvp = $scope.thisRenovation.rsvp;
@@ -842,21 +861,22 @@ angular.module('ProjectHands.dashboard')
 	};
 
 	$scope.taskDone = function(task){
-		var reno = $scope.thisRenovation;
-		DatabaseService.update(
-			COLLECTIONS.RENOVATIONS, {
-				addr: {
-					city: reno.addr.city,
-					street: reno.addr.street,
-					num: reno.addr.num
-				},
-				"tasks.name": task.name
-			}, {
-				$set: {
-					"tasks.$.done": "true"
-				}
-			}, {}
-		)
+		// var reno = $scope.thisRenovation;
+		// DatabaseService.update(
+		// 	COLLECTIONS.RENOVATIONS, {
+		// 		addr: {
+		// 			city: reno.addr.city,
+		// 			street: reno.addr.street,
+		// 			num: reno.addr.num
+		// 		},
+		// 		"tasks.name": task.name
+		// 	}, {
+		// 		$set: {
+		// 			"tasks.$.done": "true"
+		// 		}
+		// 	}, {}
+		// )
+		RenovationService.doneTask($scope.thisRenovation.addr, task)
 		.$promise.then(function (result) {
 			task.done = "true";
 			console.log("Task marked as done");
@@ -866,21 +886,22 @@ angular.module('ProjectHands.dashboard')
 	};
 
 	$scope.updateTaskAssignee = function(task, email){
-		var reno = $scope.thisRenovation;
-		DatabaseService.update(
-			COLLECTIONS.RENOVATIONS, {
-				addr: {
-					city: reno.addr.city,
-					street: reno.addr.street,
-					num: reno.addr.num
-				},
-				"tasks.name": task.name
-			}, {
-				$set: {
-					"tasks.$.assigned_email": email
-				}
-			}, {}
-		)
+		// var reno = $scope.thisRenovation;
+		// DatabaseService.update(
+		// 	COLLECTIONS.RENOVATIONS, {
+		// 		addr: {
+		// 			city: reno.addr.city,
+		// 			street: reno.addr.street,
+		// 			num: reno.addr.num
+		// 		},
+		// 		"tasks.name": task.name
+		// 	}, {
+		// 		$set: {
+		// 			"tasks.$.assigned_email": email
+		// 		}
+		// 	}, {}
+		// )
+		RenovationService.assignTask($scope.thisRenovation.addr, task, email)
 		.$promise.then(function (result) {
 			console.log("New Assignee Assigned");
 		}).catch(function (error) {
@@ -900,22 +921,23 @@ angular.module('ProjectHands.dashboard')
 	};
 
 	$scope.bringTool = function(tool, email){
-		var reno = $scope.thisRenovation;
-		DatabaseService.update(
-			COLLECTIONS.RENOVATIONS, {
-				addr: {
-					city: reno.addr.city,
-					street: reno.addr.street,
-					num: reno.addr.num
-				},
-				"toolsNeeded.name": tool.name
-			}, {
-				$set: {
-					"toolsNeeded.$.being_brought": "true",
-					"toolsNeeded.$.assigned": email
-				}
-			}, {}
-		)
+		// var reno = $scope.thisRenovation;
+		// DatabaseService.update(
+		// 	COLLECTIONS.RENOVATIONS, {
+		// 		addr: {
+		// 			city: reno.addr.city,
+		// 			street: reno.addr.street,
+		// 			num: reno.addr.num
+		// 		},
+		// 		"toolsNeeded.name": tool.name
+		// 	}, {
+		// 		$set: {
+		// 			"toolsNeeded.$.being_brought": "true",
+		// 			"toolsNeeded.$.assigned": email
+		// 		}
+		// 	}, {}
+		// )
+		RenovationService.assignTool($scope.thisRenovation.addr, tool, email)
 		.$promise.then(function (result) {
 			tool.being_brought = "true";
 			tool.assigned = email;
@@ -926,22 +948,23 @@ angular.module('ProjectHands.dashboard')
 	};
 
 	$scope.dontBringTool = function(tool){
-		var reno = $scope.thisRenovation;
-		DatabaseService.update(
-			COLLECTIONS.RENOVATIONS, {
-				addr: {
-					city: reno.addr.city,
-					street: reno.addr.street,
-					num: reno.addr.num
-				},
-				"toolsNeeded.name": tool.name
-			}, {
-				$set: {
-					"toolsNeeded.$.being_brought": "false",
-					"toolsNeeded.$.assigned": ""
-				}
-			}, {}
-		)
+		// var reno = $scope.thisRenovation;
+		// DatabaseService.update(
+		// 	COLLECTIONS.RENOVATIONS, {
+		// 		addr: {
+		// 			city: reno.addr.city,
+		// 			street: reno.addr.street,
+		// 			num: reno.addr.num
+		// 		},
+		// 		"toolsNeeded.name": tool.name
+		// 	}, {
+		// 		$set: {
+		// 			"toolsNeeded.$.being_brought": "false",
+		// 			"toolsNeeded.$.assigned": ""
+		// 		}
+		// 	}, {}
+		// )
+		RenovationService.unassignTool($scope.thisRenovation.addr, tool)
 		.$promise.then(function (result) {
 			tool.being_brought = "false";
 			tool.assigned = "";
