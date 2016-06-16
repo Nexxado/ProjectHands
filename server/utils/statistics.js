@@ -18,13 +18,13 @@ function parseDateToStringFormat(yearFrom, yearTo, monthFrom, monthTo, dayFrom, 
     date["yearFrom"] = "" + yearFrom;
     date["yearTo"] = "" + yearTo;
 
-    if (monthFrom > 1 && monthFrom < 10) {
+    if (monthFrom >= 1 && monthFrom <= 10) {
         date["monthFrom"] = "0" + monthFrom;
     }
     else {
         date["monthFrom"] = monthFrom;
     }
-    if (monthTo > 1 && monthTo < 10) {
+    if (monthTo >= 1 && monthTo <= 10) {
         date["monthTo"] = "0" + monthTo;
     }
     else {
