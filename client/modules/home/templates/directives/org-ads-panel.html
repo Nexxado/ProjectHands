@@ -1,16 +1,49 @@
 <md-content class="rtl home-background">
     <div class="rtl" layout="column" layout-padding="48" style="width: 500px;">
-        <h4>צור תוכן נוסף</h4>
-        <md-input-container class="rtl">
-            <label>כותרת</label>
-            <input ng-model="ad.title">
-        </md-input-container>
-        <md-input-container class="rtl">
-            <label>תוכן</label>
-            <input ng-model="ad.content">
-        </md-input-container>
 
-        <md-button class="md-raised md-primary" ng-click="upload(ad.title, ad.content)">העלה</md-button>
+        <form name="adsForm"
+              ng-submit="upload(ad.title, ad.content)"
+              layout="column"
+              novalidate
+              id="adsToastsAnchor">
+
+            <h4 translate>{{'CREATE_NEW_CONTENT'}}</h4>
+            <md-input-container class="md-icon-float md-block rtl">
+                <label translate>{{'TITLE'}}</label>
+
+                <input type="text"
+                       name="title"
+                       ng-model="ad.title"
+                       required />
+
+                <div ng-messages="adsForm.title.$error">
+                    <div ng-message="required" translate>
+                        {{'REQUIRED'}}
+                    </div>
+                </div>
+
+            </md-input-container>
+
+            <md-input-container class="md-icon-float md-block rtl">
+                <label translate>{{'CONTENT'}}</label>
+
+                <textarea name="content" ng-model="ad.content" required md-select-on-focus></textarea>
+
+                <div ng-messages="adsForm.content.$error">
+                    <div ng-message="required" translate>
+                        {{'REQUIRED'}}
+                    </div>
+                </div>
+            </md-input-container>
+
+            <div layout="row">
+                <div>
+                    <md-button type="submit" class="md-accent md-raised white">
+                        <span translate>{{'UPLOAD'}}</span>
+                    </md-button>
+                </div>
+            </div>
+        </form>
     </div>
 
     <div class="home-background"
@@ -25,8 +58,9 @@
                        layout ng-repeat="ad in ads"
                        flex-gt-sm="40"
                        flex="100">
-            <div layout="column" layout-align="start start" class="org-ads">
-                <md-content>
+
+            <div layout="column" layout-align="start start" class="org-ads" style="width: 100%;">
+                <md-content style="width: inherit;height: inherit">
                     <H1 dir="rtl" lang="he">{{ad.title}}</H1>
                     <H3 dir="rtl" lang="he">{{ad.content}}</H3>
                     <md-button ng-click="deleteAd(ad._id, $index)"
@@ -35,7 +69,10 @@
                         <md-icon md-svg-src="assets/icons/ic_delete_white_24px.svg"></md-icon>
                     </md-button>
                 </md-content>
+
             </div>
+
+
 
         </md-whiteframe>
     </div>

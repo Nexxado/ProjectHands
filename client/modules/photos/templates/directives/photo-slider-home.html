@@ -1,4 +1,8 @@
-<div class="container slider home-background" ng-mouseenter="isMouseOver = true" ng-mouseleave="isMouseOver = false" >
+<div class="container slider home-background"
+
+     ng-mouseenter="isMouseOver = true"
+     ng-mouseleave="isMouseOver = false" >
+
     <img ng-repeat="image in images"
          class="slide slide-animation  home-background"
          ng-src="{{image.web_link}}"

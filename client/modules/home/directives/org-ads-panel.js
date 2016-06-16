@@ -50,16 +50,29 @@ angular.module('ProjectHands.home')
 
                 $scope.getAds();
 
+
                 $scope.upload = function (title, content) {
+
+                    if ($scope.adsForm.$invalid)
+                        return;
+
                     HomeService.uploadAd(title, content)
                         .then(function (result) {
                             console.log('result ' + result.toString());
                             $scope.ads.push(result.ops[0]);
+                            resetForm();
                         })
                         .catch(function (error) {
                             console.log('error ' + error.toString());
                         });
                 };
+
+                function resetForm() {
+                    $scope.ad = {
+                        title: '',
+                        content: ''
+                    };
+                }
 
                 $scope.deleteAd = function (id, index) {
                     HomeService.deleteAd(id)

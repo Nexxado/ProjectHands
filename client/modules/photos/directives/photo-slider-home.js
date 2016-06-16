@@ -12,12 +12,21 @@ angular.module('ProjectHands.photos')
                     PhotosService.homeGet(album)
                         .then(function (data) {
                             console.log('getPhotos data', data);
-                            $scope.images = data;
+                            if (data.length == 0)
+                                setEmptyPhoto();
+                            else
+                                $scope.images = data;
                         })
                         .catch(function (error) {
                             console.log('getPhotos error ', error);
                         });
                 };
+
+                function setEmptyPhoto() {
+                    $scope.images = [
+                        {"web_link": "assets/img/empty-photo-slider.jpg"}
+                    ]
+                }
 
                 $scope.getPhotos($scope.album);
 
