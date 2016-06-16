@@ -4,4 +4,5 @@ mongoimport --db hands --collection renovations --type json --file ./renovations
 mongoimport --db hands --collection teams --type json --file ./teams-seed.json --jsonArray --drop
 mongoimport --db hands --collection actions --type json --file ./actions-seed.json --jsonArray --drop
 mongoimport --db hands --collection admin --type json --file ./admin-seed.json --jsonArray --drop
+mongoimport --db hands --collection ads --type json --file ./home-ads.json --jsonArray --drop
 pause
