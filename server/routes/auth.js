@@ -337,7 +337,7 @@ function sendUserInfo(req, res) {
         signup_complete: req.user.signup_complete,
         joined_date: req.user.joined_date,
         avatar: req.user.avatar,
-        renovation: req.queriedRenovation
+        renovation: req.queriedRenovation ? req.queriedRenovation.addr : undefined
     };
 
 

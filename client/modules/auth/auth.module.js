@@ -103,17 +103,21 @@ angular.module('ProjectHands.auth', [])
             console.info('AUTH_EVENTS.loginSuccess');
             if (typeof user.signup_complete === 'boolean' && user.signup_complete === false) {
                 return $state.go('signup_oauth');
-                // .then(function () {
-                //     UtilsService.makeToast('w00t w00t', $rootScope.rootToastAnchor, 'top right');
-                // });
+            }
+            
+            else if(user.renovation) {
+                return $state.go('dashboard.renovation', {
+                    city: user.renovation.city,
+                    street: user.renovation.street,
+                    num: user.renovation.num
+                });
             }
 
             var toState = ROLES_HIERARCHY.indexOf(user.role) > 0 ? defaultRedirectState : guestRedirectState;
 
-            $timeout(function () {
-                $rootScope.initNotifications();
-                // $rootScope.initChat();
-            });
+            // $timeout(function () {
+            //     $rootScope.initNotifications();
+            // });
 
             if ($state.is('login'))
                 $state.go(toState)

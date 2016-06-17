@@ -15,8 +15,11 @@
             <md-button aria-label="user profile" ui-sref="profile" ng-show="isLoggedIn">
                 {{ user.name }}
             </md-button>
-            <md-button class="remove-uppercase" ui-sref="dashboard" ui-sref-active="md-primary md-raised" ng-show="isLoggedIn">
-                Dashboard
+            <md-button ng-show="isLoggedIn && hasDashboardAccess()" class="remove-uppercase" ui-sref="dashboard" ui-sref-active="md-primary md-raised">
+                לוח בקרה
+            </md-button>
+            <md-button ng-show="isLoggedIn && showNextRenovation()" class="remove-uppercase" ui-sref="dashboard.renovation({city: user.renovation.city, street: user.renovation.street, num: user.renovation.num})" ui-sref-active="md-primary md-raised">
+                דף שיפוץ
             </md-button>
             <md-button ng-click="logout()" ng-show="isLoggedIn" translate="{{'LOGOUT'}}">
 
