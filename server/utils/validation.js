@@ -312,6 +312,11 @@ validation.validateParams = function(req, res, next) {
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name or user email"});
             break;
 
+        case /statistics\//.test(req.originalUrl):
+            if(typeof req.params.date === 'undefined')
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid date"});
+            break;
+
         default:
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "No Validation Performed"});
     }

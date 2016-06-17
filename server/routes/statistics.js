@@ -3,8 +3,9 @@ var HttpStatus = require('http-status-codes');
 var statisticsUtils = require('../utils/statistics');
 var debug = require('debug')('routes/statistics');
 var middleware = require('../utils/middleware');
+var validation = require('../utils/validation');
 
-router.get('/VolunteersCountPerDate/:date',
+router.get('/VolunteersCountPerDate/:date', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
@@ -19,7 +20,7 @@ router.get('/VolunteersCountPerDate/:date',
         }
     });
 
-router.get('/renovationsVolunteersNumberPerDate/:date',
+router.get('/renovationsVolunteersNumberPerDate/:date', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
@@ -34,7 +35,7 @@ router.get('/renovationsVolunteersNumberPerDate/:date',
         }
     });
 
-router.get('/renovationsCostPerDate/:date',
+router.get('/renovationsCostPerDate/:date', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
@@ -49,7 +50,7 @@ router.get('/renovationsCostPerDate/:date',
         }
     });
 
-router.get('/renovationsVolunteeringHoursPerDate/:date',
+router.get('/renovationsVolunteeringHoursPerDate/:date', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);
@@ -64,7 +65,7 @@ router.get('/renovationsVolunteeringHoursPerDate/:date',
         }
     });
 
-router.get('/renovationsPerDate/:date',
+router.get('/renovationsPerDate/:date', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
     function (req, res) {
         try {
             var date = JSON.parse(req.params.date);

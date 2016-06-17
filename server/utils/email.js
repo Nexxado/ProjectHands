@@ -6,8 +6,8 @@
 
 var nodemailer = require('nodemailer');
 var debug = require('debug')('utils/email');
-const email = "projhands@gmail.com";
-const password = "projecthands123456"; //FIXME in production, remove hardcoded password and email.
+const email = process.env.EMAIL_ADDR || "projhands@gmail.com";
+const password = process.env.EMAIL_PASS || "projecthands123456"; //FIXME in production, remove hardcoded password and email.
 
 var transporter = nodemailer.createTransport('smtps://' + email + ':' + password + '@smtp.gmail.com');
 
