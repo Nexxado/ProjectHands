@@ -1,5 +1,14 @@
 #main-view {
     height: calc(100vh - 64px);
+    background-color: #ededed;
+}
+
+#main-view > md-content {
+    background-color: #ededed;
+}
+
+#main-view > md-content > md-content {
+    background-color: #ededed;
 }
 
 .white {
@@ -179,4 +188,9 @@ md-list-item.rtl .md-secondary {
 
 md-toolbar.rtl {
     direction: rtl;
+}
+
+md-datepicker.rtl .md-datepicker-triangle-button.md-button.md-icon-button {
+    right: auto;
+    left: 0;
 }

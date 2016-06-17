@@ -21,7 +21,8 @@
     display: flex;
 }
 .dashboard-content {
-    background-color: white;
+    /*background-color: white;*/
+    background-color: #ededed;
     border-width: 1px;
     padding: 10px;
     /*    margin: 10px;*/

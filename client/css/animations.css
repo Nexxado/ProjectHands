@@ -2,7 +2,7 @@
 /***** Toggle Visibility Fade *****/
 /**********************************/
 .toggle-fade.ng-hide-add,
-.toggle-fade.ng-hide-remove  {
+.toggle-fade.ng-hide-remove {
     transition: all ease-in-out 500ms;
 }
 
@@ -18,7 +18,7 @@
 /***** Toggle Slide Right *****/
 /******************************/
 .toggle-slide-right.ng-hide-add,
-.toggle-slide-right.ng-hide-remove  {
+.toggle-slide-right.ng-hide-remove {
     transition: all ease-in-out 500ms;
 }
 
@@ -34,7 +34,7 @@
 /***** Toggle Slide Left *****/
 /*****************************/
 .toggle-slide-left.ng-hide-add,
-.toggle-slide-left.ng-hide-remove  {
+.toggle-slide-left.ng-hide-remove {
     transition: all ease-in-out 500ms;
 }
 
@@ -50,7 +50,7 @@
 /***** Toggle Slide Bottom *****/
 /*******************************/
 .toggle-slide-bottom.ng-hide-add,
-.toggle-slide-bottom.ng-hide-remove  {
+.toggle-slide-bottom.ng-hide-remove {
     transition: all ease-in-out 500ms;
 }
 
@@ -66,7 +66,7 @@
 /***** Toggle Slide Top *****/
 /****************************/
 .toggle-slide-top.ng-hide-add,
-.toggle-slide-top.ng-hide-remove  {
+.toggle-slide-top.ng-hide-remove {
     transition: all ease-in-out 500ms;
 }
 
@@ -143,7 +143,6 @@
 /***** List Animations - ngRepeat *****/
 /**************************************/
 
-
 /***** List item Slide in\out from Right *****/
 .list-slide-right.ng-enter {
     opacity: 0;
@@ -167,7 +166,6 @@
     transform: translateX(500px);
 }
 
-
 /***** List item Slide in\out from Left *****/
 .list-slide-left.ng-enter {
     opacity: 0;
@@ -189,4 +187,27 @@
 .list-slide-left.ng-leave-active {
     opacity: 0;
     transform: translateX(-500px);
+}
+
+/***** Chat Message Animation *****/
+.chat-message-animation.ng-enter {
+    transition: all ease-in-out 500ms;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.chat-message-animation.ng-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.chat-message-animation.ng-leave {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all ease-in-out 500ms;
+}
+
+.chat-message-animation.ng-leave-active {
+    transform: translateY(-50px);
+    opacity: 0;
 }

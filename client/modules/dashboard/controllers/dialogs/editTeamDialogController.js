@@ -3,7 +3,7 @@
  */
 angular.module('ProjectHands.dashboard')
 
-.controller('EditTeamDialogController', function($scope, TeamService, UserService, $mdDialog, team, users) {
+.controller('EditTeamDialogController', function($scope, TeamService, UserService, $mdDialog, $timeout, team, users) {
 
     $scope.users = users;
     $scope.team = team;
@@ -78,4 +78,25 @@ angular.module('ProjectHands.dashboard')
         if(usersRemoved.indexOf(user.email) >= 0)
             usersRemoved.splice(usersRemoved.indexOf(user.email), 1);
     };
+
+
+    //Scroll to bottom on new user in list
+    $scope.$watchCollection('users', function(newVal, oldVal, scope) {
+        if(newVal.length > oldVal.length)
+            scrollToBottom("#teamless-users-list");
+    });
+
+    //Scroll to bottom on new team member in list
+    $scope.$watchCollection('team.members_info', function(newVal, oldVal, scope) {
+        if(newVal.length > oldVal.length)
+            scrollToBottom("#team-members-list");
+    });
+
+
+    function scrollToBottom(elementSelector) {
+        $timeout(function () {
+            var element = angular.element(elementSelector);
+            element.scrollTop(element[0].scrollHeight);
+        });
+    }
 });
