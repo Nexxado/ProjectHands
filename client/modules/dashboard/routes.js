@@ -59,7 +59,7 @@ angular.module('ProjectHands.dashboard')
 
     .state('dashboard.statistics', {
         url: '/statistics',
-        templateUrl: 'modules/dashboard/templates/statistics.html'
+        templateUrl: 'modules/statistics/templates/statistics.html'
     })
 
     .state('dashboard.all-teams', {

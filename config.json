@@ -1,5 +1,5 @@
 {
-    "mongoDBUrl" : "mongodb://127.0.0.1:27017/hands",
+    "mongoDBUrl": "mongodb://127.0.0.1:27017/hands",
     "cookieToken": "token",
     "cookieSession": "session",
     "SECRETS": {
@@ -22,6 +22,9 @@
         "SIGNUPS": "signup_users",
         "ACTIONS": "actions",
         "PHOTOS": "photos",
+        "PROFILE_PIC": "profile_pic",
+        "HOME_PHOTOS": "home_photos",
+        "RENOVATION_PHOTOS": "renovation_photos",
         "ADS": "ads",
         "ADMIN": "admin",
         "BRUTE": "bruteforce"
@@ -45,7 +48,12 @@
         "USER_BASIC_INFO": "acl_user_basic",
         "USER_ACTIONS": "acl_user_actions",
         "TEAM_ACTIONS": "acl_team_actions",
-        "STATISTICS_ACTIONS": "acl_statistics_actions"
+        "STATISTICS_ACTIONS": "acl_statistics_actions",
+        "PHOTOS_HOME": "acl_photos_homepage",
+        "PHOTOS_RENOVATION_EDIT": "acl_photos_renovation_edit",
+        "PHOTOS_RENOVATION_GET": "acl_photos_renovation_get",
+        "PHOTOS_PROFILE": "acl_photos_profile",
+        "HOME_ACTIONS": "acl_homepage_actions"
     },
     "MESSAGES": {
       "DB_FETCH_ERROR": "Error has accord , please  try again",

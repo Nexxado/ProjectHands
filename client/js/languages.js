@@ -96,6 +96,14 @@ angular.module('ProjectHands')
             SOLVE_PROBLEMS: "פיתרון בעיות",
             COLOR_SETTINGS: "הגדרות צבעים",
             LANGUAGES_SETTINGS: "הגדרות שפה",
+
+            CREATE_NEW_CONTENT: "צור תוכן נוסף",
+            TITLE: "כותרת",
+            CONTENT: "תוכן",
+            UPLOAD: "העלה",
+            ADS: "מודעות",
+            PHOTOS: "תמונות",
+            
             BUTTON_LANG_HE: 'עברית',
             BUTTON_LANG_AR: 'ערבית'
         };

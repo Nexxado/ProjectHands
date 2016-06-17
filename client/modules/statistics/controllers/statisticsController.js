@@ -16,17 +16,6 @@ angular.module('ProjectHands.statistics')
             if ($scope.startDateForm.$invalid || $scope.endDateForm.$invalid)
                 return;
 
-            // console.log('UTCDate');
-            // console.log($scope.startDate.toUTCString());
-            // console.log($scope.endDate.toUTCString());
-            //
-            // var ISOStartDate = $scope.startDate.toISOString();
-            // var ISOEndDate = $scope.endDate.toISOString();
-
-            // console.log('ISODate');
-            // console.log(ISOStartDate);
-            // console.log(ISOEndDate);
-
             var startYear = $scope.startDate.getFullYear();
             var startMonth = $scope.startDate.getMonth() + 1;
             var startDay = $scope.startDate.getDate();

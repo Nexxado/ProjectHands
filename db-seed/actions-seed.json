@@ -35,5 +35,20 @@
 	} , {
 		"action": "acl_statistics_actions",
 		"role": "admin"
+	} , {
+		"action": "acl_photos_homepage",
+		"role": "admin"
+	} , {
+		"action": "acl_photos_renovation_edit",
+		"role": "team_lead"
+	} , {
+		"action": "acl_photos_renovation_get",
+		"role": "volunteer"
+	} , {
+		"action": "acl_photos_profile",
+		"role": "volunteer"
+	} , {
+		"action": "acl_homepage_actions",
+		"role": "admin"
 	}
 ]

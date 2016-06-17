@@ -1,22 +1,21 @@
 var router = require('express').Router();
 var mongoUtils = require('../utils/mongo');
 var config = require('../../config.json');
+var middleware = require('../utils/middleware');
+var validation = require('../utils/validation');
 var COLLECTIONS = config.COLLECTIONS;
 var HttpStatus = require('http-status-codes');
 var ObjectId = require('mongodb').ObjectID;
+
 /**
- * post for upload photos to sever using multipartyMiddleware
+ * //USE CASE - admin want to upload ad to home page
+ * //ACL -ADMIN-
+ * post for upload ad to sever
  * Expected Params:
- * @param file {File} : photo file to be upload
- * @param album {string} : album you want to save the photo to
+ * @param title {string} : title
+ * @param content {string} : content
  */
-router.post('/upload', function (req, res) {
-
-    if (req.body.title === undefined || req.body.title === null)
-        return res.status(HttpStatus.BAD_REQUEST).send("Error: missing title");
-
-    if (req.body.content === undefined || req.body.content === null)
-        return res.status(HttpStatus.BAD_REQUEST).send("Error: missing content");
+router.post('/upload', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams, function (req, res) {
 
     saveAd(
         req.body.title,
@@ -30,14 +29,13 @@ router.post('/upload', function (req, res) {
 });
 
 /**
- * post for delete photo from drive and db
+ * //USE CASE - admin want to  delete ad from home page
+ * //ACL -ADMIN-
+ * for delete ad from db
  * Expected Params:
- * @param file_id {string} : file id to by deleted
+ * @param id {string} : ad id to by deleted
  */
-router.delete('/delete', function (req, res) {
-
-    if (req.query.id === undefined || req.query.id === null)
-        return res.status(HttpStatus.BAD_REQUEST).send("Missing id");
+router.delete('/delete', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams, function (req, res) {
 
     deleteAd(req.query.id, function (error, result) {
         if (error)
@@ -48,7 +46,8 @@ router.delete('/delete', function (req, res) {
 });
 
 /**
- * @param album {string} : album to by deleted
+ * //USE CASE - GUEST visit the web site and see ads
+ * //ACL -GUEST-
  */
 router.get('/ads', function (req, res) {
     getAds(function (error, result) {
@@ -58,7 +57,6 @@ router.get('/ads', function (req, res) {
         res.send(result);
     })
 });
-
 
 //DB METHODS
 /**
@@ -78,9 +76,7 @@ function getAds(callback) {
     mongoUtils.query(COLLECTIONS.ADS, {}, callback);
 }
 /**
- * delete photo data from the db
- * @param fileId {String} : the drive file id
- * @param callback {Function} : callback holds err / success
+ *
  */
 function deleteAd(id, callback) {
     mongoUtils.delete(COLLECTIONS.ADS, {
