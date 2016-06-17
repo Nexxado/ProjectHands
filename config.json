@@ -38,6 +38,7 @@
     },
     "ACL": {
         "VIEW_DASHBOARD": "acl_view_dashboard",
+        "VIEW_EDIT_HOMEPAGE": "acl_view_edit_homepage",
         "CHANGE_STATUS": "acl_change_status",
         "DATA_IMPORT_EXPORT": "acl_data_import_export",
         "RENOVATION_GET_INFO": "acl_renovation_get_info",

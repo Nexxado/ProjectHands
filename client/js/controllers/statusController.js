@@ -3,7 +3,7 @@
  */
 angular.module('ProjectHands')
 
-    .controller('StatusController', function ($scope, $mdDialog, $mdMedia, UtilsService, StatusService, ROLES) {
+    .controller('StatusController', function ($scope, $mdDialog, $mdMedia, UtilsService, StatusService) {
 
         //View Model
         $scope.active = false;

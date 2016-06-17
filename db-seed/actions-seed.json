@@ -3,6 +3,9 @@
 		"action": "acl_view_dashboard",
 		"role": "volunteer"
 	} , {
+		"action": "acl_view_edit_homepage",
+		"role": "admin"
+	} , {
 		"action": "acl_change_status",
 		"role": "admin"
 	} , {

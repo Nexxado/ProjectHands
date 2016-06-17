@@ -1,16 +1,26 @@
-.status-message {
+.status-container {
+    width: 100%;
+    position: relative;
+}
+
+.status-container .status-message {
     margin: 10px;
     font-size: 1.6rem;
 }
 
-.status-indicator {
+.status-container .status-indicator {
     width: 200px;
     height: 200px;
     border-radius: 100px;
     border: 5px solid rgba(0, 0, 0, 0.5);
 }
 
-.status-indicator.active {
+.status-container .status-title {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.status-container .status-indicator.active {
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b4ddb4+0,83c783+17,52b152+33,008a00+67,005700+83,002400+100;Green+3D+%231 */
     background: #b4ddb4; /* Old browsers */
     /* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -21,7 +31,7 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b4ddb4', endColorstr='#002400', GradientType=1); /* IE6-8 fallback on horizontal gradient */
 }
 
-.status-indicator.not-active {
+.status-container .status-indicator.not-active {
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#a90329+0,8f0222+44,6d0019+100;Brown+Red+3D */
     background: #a90329; /* Old browsers */
     /* IE9 SVG, needs conditional override of 'filter' to 'none' */

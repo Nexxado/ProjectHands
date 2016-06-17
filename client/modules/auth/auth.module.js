@@ -21,7 +21,8 @@ angular.module('ProjectHands.auth', [])
     })
 
     .constant('ACL', {
-        VIEW_DASHBOARD: "acl_view_dashboard"
+        VIEW_DASHBOARD: "acl_view_dashboard",
+        VIEW_EDIT_HOMEPAGE: "acl_view_edit_homepage"
     })
 
     .constant('ROUTE_ERRORS', {

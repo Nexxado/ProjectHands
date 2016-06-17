@@ -7,10 +7,20 @@ angular.module('ProjectHands')
 
         var baseUrl = '/api/status';
 
+        /**
+         * Get current referral status
+         * @returns {Promise}
+         */
         function getStatus() {
             return $resource(baseUrl + '/get_status').get();
         }
 
+        /**
+         * Update referral status and message
+         * @param active {boolean}
+         * @param message {string}
+         * @returns {Promise}
+         */
         function updateStatus(active, message) {
             return $resource(baseUrl + '/update_status').save({
                 active: active,

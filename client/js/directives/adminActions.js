@@ -12,6 +12,10 @@ angular.module('ProjectHands')
         link: function compile(scope, element, attrs) {
 
             scope.hasAdminPermission = scope.user && scope.user.role === ROLES.ADMIN;
+
+            scope.$watch('user', function(newVal, oldVal, scope) {
+                scope.hasAdminPermission = scope.user && scope.user.role === ROLES.ADMIN;
+            });
             
             element.addClass('admin-actions-container');
             element.attr('ng-show', 'hasAdminPermission');
