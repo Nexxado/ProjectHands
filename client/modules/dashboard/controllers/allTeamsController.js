@@ -28,6 +28,7 @@ angular.module('ProjectHands.dashboard')
             })
             .catch(function (error) {
                 console.info('getAllUsers error', error);
+                UtilsService.makeToast(error.data.errMessage, $scope.rootToastAnchor, 'top right');
             });
 
 
@@ -144,7 +145,7 @@ angular.module('ProjectHands.dashboard')
                             $scope.selectedIndex = -1;
                         })
                         .catch(function(error) {
-
+                            UtilsService.makeToast(error.data.errMessage, $scope.rootToastAnchor, 'top right');
                         })
 
                 }, function () {
@@ -260,6 +261,7 @@ angular.module('ProjectHands.dashboard')
                 })
                 .catch(function (error) {
                     console.error('addMembers error', error);
+                    UtilsService.makeToast(error.data.errMessage, $scope.rootToastAnchor, 'top right');
                 })
         }
 
@@ -286,6 +288,7 @@ angular.module('ProjectHands.dashboard')
                 })
                 .catch(function (error) {
                     console.error('removeMembers error', error);
+                    UtilsService.makeToast(error.data.errMessage, $scope.rootToastAnchor, 'top right');
                 })
         }
 
@@ -317,6 +320,7 @@ angular.module('ProjectHands.dashboard')
                 })
                 .catch(function (error) {
                     console.error('assign manager error', error);
+                    UtilsService.makeToast(error.data.errMessage, $scope.rootToastAnchor, 'top right');
                 })
         }
 
@@ -334,6 +338,7 @@ angular.module('ProjectHands.dashboard')
                 })
                 .catch(function (error) {
                     console.info('getAllTeams error', error);
+                    UtilsService.makeToast(error.data.errMessage, $scope.rootToastAnchor, 'top right');
                 });
         }
 

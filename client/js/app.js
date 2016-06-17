@@ -49,6 +49,11 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
 
     $rootScope.rootToastAnchor = '#main-view';
 
+    //Scroll to top on state change.
+    $rootScope.$on('$stateChangeSuccess', function() {
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+    });
+
 
     /*************************/
     /***** DEBUG METHODS *****/

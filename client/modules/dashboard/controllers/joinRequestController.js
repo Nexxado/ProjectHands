@@ -23,6 +23,7 @@ angular.module('ProjectHands.dashboard')
             })
             .catch(function (error) {
                 console.info('getAllSignups error', error);
+                UtilsService.makeToast(error.data.errMessage, $scope.rootToastAnchor, 'top right');
             });
 
 
@@ -89,9 +90,11 @@ angular.module('ProjectHands.dashboard')
                 .then(function(result) {
                     console.info('approveUser result', result);
                     removeUserFromList($scope.signups.indexOf(user));
+                    UtilsService.makeToast(user.name + " אושר בהצלחה", $scope.rootToastAnchor, 'top right');
                 })
                 .catch(function(error) {
                     console.info('approveUser error', error);
+                    UtilsService.makeToast(error.data.errMessage, $scope.rootToastAnchor, 'top right');
                 });
         };
 
@@ -100,9 +103,11 @@ angular.module('ProjectHands.dashboard')
                 .then(function(result) {
                     console.info('deleteUser result', result);
                     removeUserFromList($scope.signups.indexOf(user));
+                    UtilsService.makeToast(user.name + " הוסר", $scope.rootToastAnchor, 'top right');
                 })
                 .catch(function(error) {
                     console.info('deleteUser error', error);
+                    UtilsService.makeToast(error.data.errMessage, $scope.rootToastAnchor, 'top right');
                 });
         };
 

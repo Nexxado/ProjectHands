@@ -75,10 +75,10 @@ angular.module('ProjectHands')
                         .then(function (result) {
                             $scope.active = result.active;
                             $scope.message = result.message;
-                            UtilsService.makeToast("הסטטוס עודכן בהצלחה!", $scope.rootToastAnchor, 'top right');
+                            UtilsService.makeToast("הסטטוס עודכן בהצלחה!", '.status-container', 'top left');
                         })
                         .catch(function (error) {
-                            UtilsService.makeToast("עדכון הסטטוס נכשל!", $scope.rootToastAnchor, 'top right');
+                            UtilsService.makeToast("עדכון הסטטוס נכשל!", '.status-container', 'top left');
                         });
 
                 }, function () {
