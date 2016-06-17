@@ -1,15 +1,15 @@
 <div class="dashboard-wrapper" ng-controller="DashboardController" layout="column">
 
 	<!--Top of page-->
-	<!--First Column-->
-	<dashboard-toolbar></dashboard-toolbar>
+<!--	First Column
+	<dashboard-toolbar></dashboard-toolbar>-->
 
 	<!--Left side of page-->
 	<!--Second Column-->
 	<div layout="row" class="dashboard-layout">
 		<!--First row-->
 		<!--Main part of Page - Content-->
-		<div class="dashboard-content-wrapper">
+		<div class="md-primary dashboard-content-wrapper">
 			<div class="dashboard-content dashboard-top-rounded-toolbar" style="position:relative;">
 				<ui-view class="dashboard-view-slide-top"></ui-view>
 			</div>
@@ -17,7 +17,7 @@
 
 		<!--Second row-->
 		<div layout="column" class="dashboard-navbar-wrapper">
-			<dashboard-sidenav-admin ng-show="{{myUser.role === admin}}"></dashboard-sidenav-admin>
+			<dashboard-sidenav-admin ng-show="user.role === ROLES.ADMIN"></dashboard-sidenav-admin>
 		</div>
 	</div>
 </div>

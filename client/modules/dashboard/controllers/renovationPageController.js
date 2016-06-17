@@ -6,6 +6,8 @@ angular.module('ProjectHands.dashboard')
 .controller('RenovationPageController', function ($scope, $stateParams, $mdSidenav, $mdMedia, $mdDialog,
 												  RenovationService, TeamService, UserService, DatabaseService, COLLECTIONS, UtilsService) {
 
+	
+	console.log("My role is: ", $scope.user.role);
 	/******Variables Declarations******/
 	$scope.thisRenovation = "";
 	$scope.renovationNotFound = false;
@@ -37,6 +39,18 @@ angular.module('ProjectHands.dashboard')
 
 	/******Getters******/
 
+	$scope.checkUserInTeam = function(email){
+		if($scope.renovationTeam === null || $scope.renovationTeam === "" || $scope.renovationMembers.length === 0){
+			return false;
+		}
+		if($scope.getMemberName(email) !== null){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
 	$scope.checkMemberFound = function(name){
 		return name !== null;
 	};
@@ -116,6 +130,9 @@ angular.module('ProjectHands.dashboard')
         })
         .$promise.then(function (result) {
                 $scope.thisRenovation = result.renovation;
+				if(!$scope.thisRenovation.rsvp){
+					$scope.thisRenovation.rsvp = [];
+				}
 				$scope.getRenovationTeam($scope.thisRenovation.team);
             }).catch(function (error) {
                 console.log("Error: ", error);

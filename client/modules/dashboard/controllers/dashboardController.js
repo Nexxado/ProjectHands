@@ -1,8 +1,7 @@
 angular.module('ProjectHands.dashboard')
 
-    .controller('DashboardController', function ($scope, DatabaseService, COLLECTIONS, $mdMedia, $mdDialog) {
-
-
+    .controller('DashboardController', function ($scope, DatabaseService, COLLECTIONS, $mdMedia, $mdDialog, ROLES) {
+		$scope.ROLES = ROLES;
         /*GRIDSTER SETTINGS - CAN BE DELETED ONCE GRIDSTER IS REMOVED*/
         /*******GRIDSTER SETTINGS START*******/
         $scope.editLayoutEnabled = false;
