@@ -7,7 +7,7 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
 .config(function ($mdThemingProvider, $provide, $translateProvider, LanguagesProvider) {
     //Set Angular-Material Theme
     $mdThemingProvider.theme('default')
-        .primaryPalette('blue')
+        .primaryPalette('indigo')
         .accentPalette('orange');
 
     //Decoration for ExceptionHandler

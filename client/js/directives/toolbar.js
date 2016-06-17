@@ -18,7 +18,8 @@ angular.module('ProjectHands')
             };
 
             $scope.showNextRenovation = function() {
-                return $scope.user && $scope.user.renovation && ROLES_HIERARCHY.indexOf($scope.user.role) >= ROLES_HIERARCHY.indexOf(ROLES.VOLUNTEER);
+                return $scope.user && $scope.user.renovation
+                    && ROLES_HIERARCHY.indexOf($scope.user.role) >= ROLES_HIERARCHY.indexOf(ROLES.VOLUNTEER) && $scope.user.role !== ROLES.ADMIN;
             }
 
         }

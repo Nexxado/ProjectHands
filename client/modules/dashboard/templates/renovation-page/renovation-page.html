@@ -62,7 +62,7 @@
 																	<h4>{{ member.email }}</h4>
 																	<p>{{ member.phone }}</p>
 																</div>
-																<div class="arriving-icon" ng-show="member.email !== renovationTeam.manager && checkRSVP(member.email)" layout="row" layout-align="center center">
+																<div class="arriving-icon toggle-fade" ng-show="member.email !== renovationTeam.manager && checkRSVP(member.email)" layout="row" layout-align="center center">
 																	<i class="material-icons icon">thumb_up</i> <a class="text">- מגיע</a>
 																</div>
 																<md-button ng-show="member.email === renovationTeam.manager" class="md-secondary md-primary md-icon-button toggle-fade">

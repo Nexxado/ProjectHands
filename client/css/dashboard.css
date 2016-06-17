@@ -4,12 +4,12 @@
 }
 .dashboard-sidenav-content {
     padding: 0 5px;
-    background-color: #2196F3;
+    background-color: #3F51B5;
     overflow: hidden;
 }
 .dashboard-navbar-wrapper {
-    background-color: #2196F3;
-    min-height: 100%;
+    background-color: #3F51B5;
+    min-height: 100vh;
 }
 .dashboard-wrapper {
     height: 100%;
