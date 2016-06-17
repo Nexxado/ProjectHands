@@ -12,7 +12,7 @@ angular.module('ProjectHands.dashboard')
         $scope.roles = [];
 
         for(var role in ROLES) {
-            if(ROLES.hasOwnProperty(role) && ROLES[role] !== ROLES.GUEST)
+            if(ROLES.hasOwnProperty(role) && ROLES[role] !== ROLES.GUEST && ROLES[role] !== ROLES.TEAM_LEAD)
                 $scope.roles.push(ROLES[role])
         }
 

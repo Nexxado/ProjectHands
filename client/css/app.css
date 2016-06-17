@@ -11,8 +11,17 @@
     background-color: #ededed;
 }
 
+.offwhite {
+    background-color: #ededed;
+}
+
 .white {
     color: white !important;
+}
+
+.rounded-top {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 md-toolbar.rounded-toolbar {

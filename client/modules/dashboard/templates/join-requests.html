@@ -1,7 +1,8 @@
 <div layout="row" layout-align="end">
+    <!-- Selected User Details -->
     <div class="toggle-slide-right toggle-fade list-border dashboard-height" flex-gt-sm="50" flex hide-sm hide-xs
-         ng-show="selectedUser">
-        <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
+         ng-show="selectedUser" md-whiteframe="2">
+        <md-toolbar layout="row" class="md-hue-3 rtl rounded-toolbar">
             <div class="md-toolbar-tools">
                 <span translate>{{'USER_DETAILS'}}</span>
             </div>
@@ -32,8 +33,9 @@
             </div>
         </md-content>
     </div>
-    <div flex-gt-sm="45" flex-offset-gt-sm="5" flex class="list-border dashboard-height">
-        <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
+    <!-- Join Requests List -->
+    <div flex-gt-sm="45" flex-offset-gt-sm="5" flex class="list-border dashboard-height" md-whiteframe="2">
+        <md-toolbar layout="row" class="md-hue-3 rtl rounded-toolbar">
             <div class="md-toolbar-tools">
                 <span translate>{{'JOIN_REQUESTS'}}</span>
                 <span flex></span>
