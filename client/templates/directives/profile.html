@@ -1,17 +1,42 @@
-<md-content layout-padding layout="column" layout-align="center center">
+<md-content class="offwhite-background" layout-padding layout="column" layout-align="center center">
 
-    <div layout="row" ng-show="isLoggedIn">
+    <div layout="column" layout-gt-sm="row" class="rtl profile-page-wrapper" ng-show="isLoggedIn" flex>
 
-        <div ng-show="sProfiel" class="profile-main">
-            <md-card>
-                <md-toolbar layout="row" class="md-hue-3">
+        <!-- Side Nav -->
+        <div class="profile-side-nav" flex="25">
+            <md-card md-whiteframe="2" class="rounded-top">
+                <md-toolbar layout="row" class="md-hue-3 rounded-toolbar">
+                    <div class="md-toolbar-tools white rtl">
+                        <span>הגדרות אישיות</span>
+                    </div>
+                </md-toolbar>
+                <md-content>
+                    <md-list flex class="rtl">
+                        <md-list-item ng-click="showProfile()">
+                            <h3>פרופיל</h3>
+                        </md-list-item>
+                        <md-list-item class="md-3-line" ng-click="showAccount()">
+                            <h3>חשבון</h3>
+                        </md-list-item>
+                        <!--<md-list-item class="md-3-line" ng-click="showEmails()">-->
+                        <!--<h3>אימייל</h3>-->
+                        <!--</md-list-item>-->
+                    </md-list>
+                </md-content>
+            </md-card>
+        </div>
+
+        <!-- Profile -->
+        <div ng-show="sProfiel" class="profile-main" flex="75">
+            <md-card class="rounded-top" md-whiteframe="2">
+                <md-toolbar layout="row" class="md-hue-3 rounded-toolbar">
                     <div class="md-toolbar-tools white rtl">
                         <span>פרופיל אישי</span>
                     </div>
                 </md-toolbar>
                 <md-divider></md-divider>
                 <md-card-content class="rtl">
-                    <div layout="row">
+                    <div layout="column" layout-gt-xs="row">
                         <profile-picture></profile-picture>
 
                         <div>
@@ -37,9 +62,10 @@
             </md-card>
         </div>
 
-        <div ng-show="sAccount" class="profile-main rtl">
-            <md-card>
-                <md-toolbar layout="row" class="md-hue-3">
+        <!-- Account Settings -->
+        <div ng-show="sAccount" class="profile-main rtl" flex="75">
+            <md-card class="rounded-top">
+                <md-toolbar layout="row" class="md-hue-3 rounded-toolbar">
                     <div class="md-toolbar-tools white">
                         <span>שינוי סיסמא</span>
                     </div>
@@ -117,29 +143,6 @@
                 <!--</md-card-content>-->
             <!--</md-card>-->
         <!--</div>-->
-
-        <div class="profile-side-nav">
-            <md-card>
-                <md-toolbar layout="row" class="md-hue-3">
-                    <div class="md-toolbar-tools white rtl">
-                        <span>הגדרות אישיות</span>
-                    </div>
-                </md-toolbar>
-                <md-content>
-                    <md-list flex class="rtl">
-                        <md-list-item ng-click="showProfile()">
-                            <h3>פרופיל</h3>
-                        </md-list-item>
-                        <md-list-item class="md-3-line" ng-click="showAccount()">
-                            <h3>חשבון</h3>
-                        </md-list-item>
-                        <!--<md-list-item class="md-3-line" ng-click="showEmails()">-->
-                            <!--<h3>אימייל</h3>-->
-                        <!--</md-list-item>-->
-                    </md-list>
-                </md-content>
-            </md-card>
-        </div>
 
     </div>
 

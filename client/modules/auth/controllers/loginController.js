@@ -52,7 +52,7 @@ angular.module('ProjectHands.auth')
         $mdDialog.show({
             controller: function ($scope, $mdDialog, AuthService, regexEmail) {
 
-                $scope.regexEmail = regexEmail
+                $scope.regexEmail = regexEmail;
 
                 //Input Models
                 $scope.reset = {

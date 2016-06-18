@@ -44,3 +44,8 @@
 .dragover {
     border: 5px dashed blue;
 }
+
+.profile-photo {
+    width: 200px;
+    max-width: 100%;
+}

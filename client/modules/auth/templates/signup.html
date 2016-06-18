@@ -1,4 +1,4 @@
-<md-content flex-gt-sm="40" flex-offset-gt-sm="30" layout-padding ng-hide="signupSuccess">
+<md-content flex-gt-sm="40" flex-offset-gt-sm="30" layout-padding md-whiteframe="1" ng-hide="signupSuccess">
     <div layout="column" layout-align="center center">
         <h1 translate>{{'REGISTER_MESSAGE'}}</h1>
     </div>
@@ -34,6 +34,7 @@
             <input type="password" name="password" ng-model="user.password" ng-pattern="regexPassword" minlength="8"
                    maxlength="20" required/>
             <md-icon class="material-icons">lock_outline</md-icon>
+            <md-tooltip style="font-size: 1rem" md-delay="500">סיסמה חייבת לכלול אות גדולה, אות קטנה ומספר ובאורך 8 תווים לפחות</md-tooltip>
             <div ng-messages="SignupForm.password.$error">
                 <div ng-message="required" translate>
                     {{'REQUIRED'}}
@@ -138,7 +139,6 @@
     <div layout="column" layout-align="center center" layout-padding>
         <h1 translate>{{'REGISTERED_SUCCESSFULLY'}}</h1>
         <h3 translate>{{'CHECK_EMAIL_TO_CONTINUE'}}</h3>
-        <md-button class="md-primary md-raised" ui-sref="home" style="width: 20%;" translate>{{'BACK_TO_HOME_PAGE'}}
-        </md-button>
+        <md-button class="md-primary md-raised" ui-sref="home" style="width: 20%;" translate="{{'BACK_TO_HOME_PAGE'}}"></md-button>
     </div>
 </md-content>

@@ -116,7 +116,7 @@ module.exports = function (passport) {
                     googleId: profile.id,
                     email: profile.emails[0].value,
                     name: profile.name.givenName + ' ' + profile.name.familyName,
-                    role: ROLES.ADMIN, //FIXME change initial role to ROLES.GUEST;
+                    role: ROLES.GUEST,
                     signup_complete: false,
                     approved: false,
                     joined_date: new Date()
@@ -181,7 +181,7 @@ module.exports = function (passport) {
                     facebookId: profile.id,
                     email: profile.emails[0].value,
                     name: profile.name.givenName + ' ' + profile.name.familyName,
-                    role: ROLES.ADMIN, //FIXME change initial role to ROLES.GUEST;
+                    role: ROLES.GUEST,
                     signup_complete: false,
                     approved: false,
                     joined_date: new Date()

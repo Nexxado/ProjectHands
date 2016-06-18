@@ -94,6 +94,7 @@ angular.module('ProjectHands')
             })
             .catch(function (error) {
                 console.log('chat query error', error);
+                UtilsService.makeToast(error.data.errMessage, '.chat-room', 'top right');
             });
     }
 

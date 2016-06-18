@@ -45,12 +45,13 @@
 	display: flex;
 }
 .dashboard-content {
-	background-color: white;
-	border-width: 1px;
-	padding: 10px;
-	margin: 12px;
-	width: 98%;
-	height: 100%;
+    /*background-color: white;*/
+    background-color: #ededed;
+    border-width: 1px;
+    padding: 10px;
+    /*    margin: 10px;*/
+    width: 98%;
+    height: 100%;
 }
 .dashboard-top-rounded-toolbar {
 	border-top-left-radius: 20px;

@@ -1,10 +1,10 @@
-:root {
-    --dot-size: 30px;
-    --dot-meargin: 20px;
-    --nav-buttom: 30px;
-    --dot-border: 1px;
-    --background-color: #C3DCF0;
-}
+/*:root {*/
+    /*--dot-size: 30px;*/
+    /*--dot-meargin: 20px;*/
+    /*--nav-buttom: 30px;*/
+    /*--dot-border: 1px;*/
+    /*--background-color: #C3DCF0;*/
+/*}*/
 
 .org-ads{
     padding: 24px;
@@ -24,14 +24,21 @@
     background-position: right;
 }
 
-.home-background{
-    background-color: var(--background-color);
-}
+/*.home-background{*/
+    /*background-color: var(--background-color);*/
+/*}*/
 .white-background{
     background-color: white;
 }
 
-.sta{
+.stat {
+    background-color: white;
+    /*padding: 8px;*/
+    padding: 5px 15px;
+    margin: 8px;
+}
+
+.info-card {
     background-color: white;
     padding: 8px;
     margin: 8px;
@@ -64,8 +71,8 @@
 }
 .delete-button-ads {
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
 }
 
 .home-photo-slider{
@@ -76,18 +83,27 @@
 
 .slider {
     width: 80%;
-    height: 600px;
+    /*height: 600px;*/
+    height: 70vw;
+    max-height: 600px;
     overflow: hidden;
     position: relative;
     background: #e6e6e6;
     border: 20px solid #FFF;
-    margin-top: 20px;
+    margin: 20px auto;
+    /*display: flex;*/
+    /*justify-content: center;*/
 }
 
 .slide {
     position: absolute;
     top: 0;
+    bottom: 0;
     left: 0;
+    right: 0;
+    margin: auto;
+    max-height: 600px;
+    max-width: 100%;
 }
 
 .arrow {
@@ -140,7 +156,7 @@ NAV
     position: absolute;
     z-index: 1002;
     left: 0;
-    bottom: var(--nav-buttom);
+    bottom: 30px;
     right: 0;
     height: 48px;
 }
@@ -168,7 +184,8 @@ NAV
 
 .dots .dot {
     position: relative;
-    margin: 10px var(--dot-meargin);
+    /*margin: 10px var(--dot-meargin);*/
+    margin: 5px 15px;
     width: 12px;
     height: 12px;
 }
@@ -177,26 +194,109 @@ NAV
     position: absolute;
     top: 2px;
     left: 2px;
-    width: var(--dot-size);
-    height: var(--dot-size);
+    /*width: var(--dot-size);*/
+    /*height: var(--dot-size);*/
     text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
-    background: #FFF;
-    border: var(--dot-border) solid black;
+    /*background: #FFF;*/
+    /*border: var(--dot-border) solid black;*/
     outline: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
     box-shadow: none;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-    -webkit-transition: background-color 0.25s, border-color 0.25s;
-    -moz-transition: background-color 0.25s, border-color 0.25s;
+    /*border-radius: 50%;*/
     transition: background-color 0.25s, border-color 0.25s;
 }
 
 .dots .dot a.active {
-    border-color: black;
-    background-color: transparent;
+    /*border-color: black;*/
+    /*background-color: transparent;*/
+}
+
+
+/****************************/
+/***** Slider Dot Style *****/
+/****************************/
+.dots .dot .outer {
+    height: 20px;
+    width: 20px;
+    /*display: block;*/
+    /*float: left;*/
+    margin: 10px 9px 10px 10px;
+    border: 3px solid #3F51B5;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.dots .dot .outer.active {
+    border: 3px solid #f08b3b;
+}
+
+.dots .dot .outer .inner {
+    transition: all 0.25s ease-in-out;
+    height: 16px;
+    width: 16px;
+    transform: scale(0);
+    display: block;
+    margin: 2px;
+    border-radius: 50%;
+    background-color: #f08b3b;
+    opacity: 0;
+}
+
+.dots .dot .outer.active .inner {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/** Hover Effect **/
+.dots .dot:hover .outer .inner {
+    transform: scale(0.7);
+    opacity: .5;
+}
+
+.dots .dot:hover .outer.active .inner {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/******************************/
+/***** Home Page Redesign *****/
+/******************************/
+
+.homepage-wrapper {
+    background-color: #C3DCF0;
+
+}
+
+.homepage-wrapper .homepage-content {
+    background-color: #ededed;
+}
+
+.homepage-wrapper .homepage-content .donate-info {
+    border: 32px solid white;
+    text-align: center;
+    background-color: white;
+}
+
+.homepage-wrapper .homepage-content .homepage-banner,
+.homepage-wrapper .homepage-footer {
+    width: 100%;
+}
+
+.homepage-wrapper .homepage-content .organization-info,
+.homepage-wrapper .homepage-content .organization-statistics {
+    background-color: #ededed;
+}
+
+.homepage-wrapper .homepage-content .organization-team-wrapper {
+    /*background-color: white;*/
+    width: 100%;
+}
+
+.homepage-wrapper .homepage-content .organization-team-content {
+    padding: 15px;
+}
+
+.homepage-wrapper .homepage-content .team-member {
+    margin: 0 5px;
 }

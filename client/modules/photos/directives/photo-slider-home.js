@@ -22,7 +22,7 @@ angular.module('ProjectHands.photos')
                 $scope.getPhotos($scope.album);
                 function setEmptyPhoto() {
                     $scope.images = [
-                        {"web_link": "assets/img/empty-photo-slider.jpg"}
+                        {"web_link": "assets/img/nopicture.png"}
                     ]
                 }
                 
@@ -44,10 +44,10 @@ angular.module('ProjectHands.photos')
                     $scope.currentIndex = ($scope.currentIndex > 0) ? --$scope.currentIndex : $scope.images.length - 1;
                 };
                 $scope.isMouseOver = false;
-                var interval = 10000 / 3;
+                var interval = 5000;
                 $interval(function () {
                     if ($scope.isMouseOver === false)
-                        $scope.nextSlide();
+                        $scope.prevSlide();
                 }, interval);//
             }
         };
@@ -57,7 +57,7 @@ angular.module('ProjectHands.photos')
             var scope = element.scope();
 
             if (className == 'ng-hide') {
-                var finishPoint = element.parent().width();
+                var finishPoint = element.parent().width() * 2;
                 if (scope.direction !== 'right') {
                     finishPoint = -finishPoint;
                 }
@@ -73,7 +73,7 @@ angular.module('ProjectHands.photos')
             if (className == 'ng-hide') {
                 element.removeClass('ng-hide');
 
-                var startPoint = element.parent().width();
+                var startPoint = element.parent().width() * 2;
                 if (scope.direction === 'right') {
                     startPoint = -startPoint;
                 }

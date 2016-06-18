@@ -6,8 +6,7 @@
     <img ng-repeat="image in images"
          class="slide slide-animation  home-background"
          ng-src="{{image.web_link}}"
-         ng-hide="!isCurrentSlideIndex($index)"
-         width=1000px height=600px >
+         ng-hide="!isCurrentSlideIndex($index)">
 
     <a class="arrow prev" href="#" ng-click="nextSlide()"></a>
     <a class="arrow next" href="#" ng-click="prevSlide()"></a>
@@ -15,9 +14,14 @@
     <nav class="nav">
         <div class="wrapper">
             <ul class="dots">
-                <li class="dot" ng-repeat="image in images">
-                    <a href="#" ng-class="{'active':isCurrentSlideIndex($index)}"
-                       ng-click="setCurrentSlideIndex($index);"></a></li>
+                <li ng-show="images.length > 1" class="dot" ng-repeat="image in images">
+                    <a class="outer" href="#" ng-class="{'active':isCurrentSlideIndex($index)}"
+                       ng-click="setCurrentSlideIndex($index);">
+                        <span class="inner"></span>
+                    </a>
+                    <!--<md-radio-button href="#" ng-class="{'active':isCurrentSlideIndex($index)}"-->
+                       <!--ng-click="setCurrentSlideIndex($index);"></md-radio-button>-->
+                </li>
             </ul>
         </div>
     </nav>

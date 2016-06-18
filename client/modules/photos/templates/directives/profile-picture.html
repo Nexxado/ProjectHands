@@ -1,10 +1,8 @@
 <div layout-padding layout="column">
     <h3>תמונת פרופיל</h3>
-    <img ng-show="userHaveProfilePic" ng-src={{profilePicUrl}} alt="profile pic"
-         style="width: 200px;height: 200px;">
+    <img ng-show="userHaveProfilePic" ng-src={{profilePicUrl}} alt="profile pic" class="profile-photo">
 
-    <img ng-show="!userHaveProfilePic" ng-src="assets/img/default-avatar.png" alt="profile pic"
-         style="width: 200px;height: 200px;">
+    <img ng-show="!userHaveProfilePic" ng-src="assets/img/default-avatar.png" alt="profile pic" class="profile-photo">
 
     <div ngf-drop ngf-select ng-model="files" class="drop-box"
          ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"

@@ -7,7 +7,7 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
 .config(function ($mdThemingProvider, $provide, $translateProvider, LanguagesProvider) {
     //Set Angular-Material Theme
     $mdThemingProvider.theme('default')
-        .primaryPalette('blue')
+        .primaryPalette('indigo')
         .accentPalette('orange');
 
     //Decoration for ExceptionHandler
@@ -48,6 +48,11 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     ga('create', 'UA-79134913-1', analytics);
 
     $rootScope.rootToastAnchor = '#main-view';
+
+    //Scroll to top on state change.
+    $rootScope.$on('$stateChangeSuccess', function() {
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+    });
 
 
     /*************************/

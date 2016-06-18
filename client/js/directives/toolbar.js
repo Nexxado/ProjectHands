@@ -5,7 +5,7 @@ angular.module('ProjectHands')
         restrict: 'E',
         replace: true,
         templateUrl: 'templates/directives/toolbar.html',
-        controller: function ($scope, AuthService, ROLES, $mdMedia) {
+        controller: function ($scope, AuthService, ROLES) {
             
             var ROLES_HIERARCHY = Object.keys(ROLES).map(function (key) {
                 return ROLES[key];
@@ -18,9 +18,10 @@ angular.module('ProjectHands')
             };
 
             $scope.showNextRenovation = function() {
-                return $scope.user && $scope.user.renovation && ROLES_HIERARCHY.indexOf($scope.user.role) >= ROLES_HIERARCHY.indexOf(ROLES.VOLUNTEER);
-            };
-			
+                return $scope.user && $scope.user.renovation
+                    && ROLES_HIERARCHY.indexOf($scope.user.role) >= ROLES_HIERARCHY.indexOf(ROLES.VOLUNTEER) && $scope.user.role !== ROLES.ADMIN;
+            }
+
         }
     };
 });

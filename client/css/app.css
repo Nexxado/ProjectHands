@@ -1,9 +1,19 @@
 #main-view {
     height: calc(100vh - 64px);
+    background-color: #ededed;
+}
+
+.offwhite-background {
+    background-color: #ededed;
 }
 
 .white {
     color: white !important;
+}
+
+.rounded-top {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 md-toolbar.rounded-toolbar {
@@ -179,4 +189,9 @@ md-list-item.rtl .md-secondary {
 
 md-toolbar.rtl {
     direction: rtl;
+}
+
+md-datepicker.rtl .md-datepicker-triangle-button.md-button.md-icon-button {
+    right: auto;
+    left: 0;
 }

@@ -1,8 +1,9 @@
-<div style="position: relative; background-color: var(--background-color)">
+<div class="homepage-wrapper">
 
-    <div layout="column" layout-align="center center">
+    <div class="homepage-content" md-whiteframe="1" layout="column" layout-align="center center"
+         flex flex-gt-sm="90" flex-offset-gt-sm="5" flex-gt-md="80" flex-offset-gt-md="10">
 
-        <div>
+        <div class="homepage-banner">
             <img ng-src="assets/img/home/hands.jpg" style="width: 100%">
         </div>
         <!--PHOTO SLIDER-->
@@ -18,31 +19,32 @@
             <statistics></statistics>
         </div>
         <!--THE TEAM-->
-        <div style="margin: 32px">
+        <div class="organization-team-wrapper">
             <team></team>
         </div>
 
-        <!-- Referral Status -->
-        <div class="status-container" layout="column" layout-align="center center" layout-padding ng-controller="StatusController">
-            <div class="status-title">פניות לשיפוצים</div>
-            <div class="status-indicator" ng-class="active ? 'active' : 'not-active'"></div>
-            <div class="status-message">{{ message }}</div>
-            <md-button class="md-primary md-raised" href="/assets/referral-form.docx" target="_self">טופס פנייה</md-button>
-            <!-- Admin Control Panel -->
-            <div admin-actions>
-                <md-button ng-click="updateStatusDialog($event)">עדכן סטטוס הפניות</md-button>
-                <md-button ui-sref="home-panel">עריכת תוכן דף הבית</md-button>
+        <div md-whiteframe="2" class="homepage-footer">
+            <!-- Referral Status -->
+            <div class="status-container rtl" layout="column" layout-align="center center" layout-padding ng-controller="StatusController">
+                <div class="status-title">פניות לשיפוצים</div>
+                <div class="status-indicator" ng-class="active ? 'active' : 'not-active'"></div>
+                <div class="status-message">{{ message }}</div>
+                <md-button class="md-primary md-raised btn-referral" href="/assets/referral-form.docx" target="_self">טופס פנייה</md-button>
+                <!-- Admin Control Panel -->
+                <div admin-actions>
+                    <md-button ng-click="updateStatusDialog($event)">עדכן סטטוס הפניות</md-button>
+                    <md-button ui-sref="home-panel">עריכת תוכן דף הבית</md-button>
+                </div>
             </div>
-        </div>
 
-        <!--DONATE-->
-        <div style="margin: 32px">
-            <paypal-button></paypal-button>
+            <!--DONATE-->
+            <div class="donate-info">
+                <paypal-button></paypal-button>
+            </div>
         </div>
 
         <!--goto home panel-->
         <!--<md-button ui-sref="home-panel">home-panel</md-button>-->
 
     </div>
-
-
+</div>

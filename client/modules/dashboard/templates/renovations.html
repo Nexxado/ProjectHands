@@ -1,21 +1,24 @@
-<md-toolbar layout="row" layout-align="none center" class="md-primary dashboard-top-rounded-toolbar">
-    <md-button ng-click="addRenovation($event)" class="md-fab md-primary md-mini" layout="row" layout-align="center center">
-        <i class="material-icons">add_circle</i>
-    </md-button>
-    <span flex></span>
-    <div class="md-toolbar-tools" dir="rtl">
-        <span translate>PLANNED_RENOVATIONS</span>
-    </div>
-
-</md-toolbar>
-
-<md-content>
-    <md-list flex>
-        <md-list-item class="md-3-line" ng-repeat="renovation in renovations" ui-sref="dashboard.renovation({city: renovation.addr.city, street: renovation.addr.street, num: renovation.addr.num})" ng-click="">
-            <div class="md-list-item-text hebrew-text" layout="column" dir="rtl">
-                <h3>{{ renovation.addr.street }} {{renovation.addr.num}}, {{renovation.addr.city}}</h3>
-                <p>{{ myTeam.name }}</p>
-            </div>
-        </md-list-item>
-    </md-list>
-</md-content>
+<div md-whiteframe="2" class="dashboard-top-rounded-toolbar">
+    <md-toolbar layout="row" layout-align="none center" class="md-hue-1 dashboard-top-rounded-toolbar">
+        <md-button ng-click="addRenovation($event)" class="md-fab md-primary md-mini" layout="row"
+                   layout-align="center center">
+            <i class="material-icons">add_circle</i>
+        </md-button>
+        <span flex></span>
+        <div class="md-toolbar-tools" dir="rtl">
+            <span translate>PLANNED_RENOVATIONS</span>
+        </div>
+    </md-toolbar>
+    <md-content>
+        <md-list flex>
+            <md-list-item class="md-3-line" ng-repeat="renovation in renovations"
+                          ui-sref="dashboard.renovation({city: renovation.addr.city, street: renovation.addr.street, num: renovation.addr.num})"
+                          ng-click="">
+                <div class="md-list-item-text hebrew-text" layout="column" dir="rtl">
+                    <h3>{{ renovation.addr.street }} {{renovation.addr.num}}, {{renovation.addr.city}}</h3>
+                    <p>{{ myTeam.name }}</p>
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</div>
