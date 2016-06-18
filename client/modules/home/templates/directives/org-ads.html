@@ -1,25 +1,25 @@
 <md-content>
 
-    <div class="home-background"
+    <div class="organization-info"
          layout="row"
-         layout-align="center center"
+         layout-align="center none"
          layout-padding
          layout-wrap
          layout-fill
          ng-cloak>
 
-        <md-whiteframe class="md-whiteframe-8dp sta white-background"
-                       layout ng-repeat="ad in ads"
+        <div class="md-whiteframe-5dp sta white-background"
+                       layout="column" layout-gt-sm="row" ng-repeat="ad in ads"
                        flex-gt-sm="40"
                        flex="100">
 
-            <div layout="column" layout-align="start start" class="org-ads">
+            <div layout="column" class="org-ads">
                 <md-content>
                     <H1 dir="rtl" lang="he">{{ad.title}}</H1>
                     <H3 dir="rtl" lang="he">{{ad.content}}</H3>
                 </md-content>
             </div>
 
-        </md-whiteframe>
+        </div>
     </div>
 </md-content>

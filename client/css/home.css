@@ -1,10 +1,10 @@
-:root {
-    --dot-size: 30px;
-    --dot-meargin: 20px;
-    --nav-buttom: 30px;
-    --dot-border: 1px;
-    --background-color: #C3DCF0;
-}
+/*:root {*/
+    /*--dot-size: 30px;*/
+    /*--dot-meargin: 20px;*/
+    /*--nav-buttom: 30px;*/
+    /*--dot-border: 1px;*/
+    /*--background-color: #C3DCF0;*/
+/*}*/
 
 .org-ads{
     padding: 24px;
@@ -24,9 +24,9 @@
     background-position: right;
 }
 
-.home-background{
-    background-color: var(--background-color);
-}
+/*.home-background{*/
+    /*background-color: var(--background-color);*/
+/*}*/
 .white-background{
     background-color: white;
 }
@@ -64,8 +64,8 @@
 }
 .delete-button-ads {
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
 }
 
 .home-photo-slider{
@@ -76,7 +76,9 @@
 
 .slider {
     width: 80%;
-    height: 600px;
+    /*height: 600px;*/
+    height: 70vw;
+    max-height: 600px;
     overflow: hidden;
     position: relative;
     background: #e6e6e6;
@@ -147,7 +149,7 @@ NAV
     position: absolute;
     z-index: 1002;
     left: 0;
-    bottom: var(--nav-buttom);
+    bottom: 30px;
     right: 0;
     height: 48px;
 }
@@ -248,4 +250,39 @@ NAV
 .dots .dot:hover .outer.active .inner {
     transform: scale(1);
     opacity: 1;
+}
+
+/******************************/
+/***** Home Page Redesign *****/
+/******************************/
+
+.homepage-wrapper {
+    background-color: #C3DCF0;
+
+}
+
+.homepage-wrapper .homepage-content {
+    background-color: #ededed;
+}
+
+.homepage-wrapper .homepage-content .homepage-banner {
+    width: 100%;
+}
+
+.homepage-wrapper .homepage-content .organization-info,
+.homepage-wrapper .homepage-content .organization-statistics {
+    background-color: #ededed;
+}
+
+.homepage-wrapper .homepage-content .organization-team-wrapper {
+    /*background-color: white;*/
+    width: 100%;
+}
+
+.homepage-wrapper .homepage-content .organization-team-content {
+    padding: 15px;
+}
+
+.homepage-wrapper .homepage-content .team-member {
+    margin: 0 5px;
 }
