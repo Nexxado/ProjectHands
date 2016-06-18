@@ -9,15 +9,15 @@
 	<div layout="row" class="dashboard-layout">
 		<!--First row-->
 		<!--Main part of Page - Content-->
-		<div class="md-primary dashboard-content-wrapper">
+		<md-toolbar class="md-primary dashboard-content-wrapper">
 			<div class="dashboard-content dashboard-top-rounded-toolbar" style="position:relative;">
 				<ui-view class="dashboard-view-slide-top"></ui-view>
 			</div>
-		</div>
+		</md-toolbar>
 
 		<!--Second row-->
-		<div layout="column" class="dashboard-navbar-wrapper">
+		<md-toolbar layout="column" class="dashboard-navbar-wrapper">
 			<dashboard-sidenav-admin ng-show="user.role === ROLES.ADMIN"></dashboard-sidenav-admin>
-		</div>
+		</md-toolbar>
 	</div>
 </div>
