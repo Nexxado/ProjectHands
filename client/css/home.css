@@ -88,10 +88,11 @@
 
 .slide {
     position: absolute;
-    /*top: 0;*/
+    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
-    margin: 0 auto;
+    margin: auto;
     max-height: 600px;
     max-width: 100%;
 }
@@ -174,7 +175,8 @@ NAV
 
 .dots .dot {
     position: relative;
-    margin: 10px var(--dot-meargin);
+    /*margin: 10px var(--dot-meargin);*/
+    margin: 5px 15px;
     width: 12px;
     height: 12px;
 }
@@ -183,8 +185,8 @@ NAV
     position: absolute;
     top: 2px;
     left: 2px;
-    width: var(--dot-size);
-    height: var(--dot-size);
+    /*width: var(--dot-size);*/
+    /*height: var(--dot-size);*/
     text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -206,8 +208,8 @@ NAV
 /***** Slider Dot Style *****/
 /****************************/
 .dots .dot .outer {
-    /*height: 20px;*/
-    /*width: 20px;*/
+    height: 20px;
+    width: 20px;
     /*display: block;*/
     /*float: left;*/
     margin: 10px 9px 10px 10px;
@@ -222,11 +224,11 @@ NAV
 
 .dots .dot .outer .inner {
     transition: all 0.25s ease-in-out;
-    height: 22px;
-    width: 22px;
+    height: 16px;
+    width: 16px;
     transform: scale(0);
     display: block;
-    margin: 4px;
+    margin: 2px;
     border-radius: 50%;
     background-color: #f08b3b;
     opacity: 0;

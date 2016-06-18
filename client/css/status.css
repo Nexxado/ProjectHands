@@ -9,8 +9,8 @@
 }
 
 .status-container .status-indicator {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     border-radius: 100px;
     border: 5px solid rgba(0, 0, 0, 0.5);
 }
@@ -18,6 +18,10 @@
 .status-container .status-title {
     font-weight: bold;
     font-size: 2rem;
+}
+
+.status-container .btn-referral {
+    padding: 0;
 }
 
 .status-container .status-indicator.active {

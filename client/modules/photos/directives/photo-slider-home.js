@@ -22,12 +22,7 @@ angular.module('ProjectHands.photos')
                 $scope.getPhotos($scope.album);
                 function setEmptyPhoto() {
                     $scope.images = [
-                        {"web_link": "assets/img/empty-photo-slider.jpg"},
-                        {"web_link": "assets/img/empty-photo-slider.jpg"},
-                        {"web_link": "assets/img/empty-photo-slider.jpg"},
-                        {"web_link": "assets/img/empty-photo-slider.jpg"},
-                        {"web_link": "assets/img/empty-photo-slider.jpg"},
-                        {"web_link": "assets/img/empty-photo-slider.jpg"}
+                        {"web_link": "assets/img/nopicture.png"}
                     ]
                 }
                 

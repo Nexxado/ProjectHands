@@ -14,7 +14,7 @@
     <nav class="nav">
         <div class="wrapper">
             <ul class="dots">
-                <li class="dot" ng-repeat="image in images">
+                <li ng-show="images.length > 1" class="dot" ng-repeat="image in images">
                     <a class="outer" href="#" ng-class="{'active':isCurrentSlideIndex($index)}"
                        ng-click="setCurrentSlideIndex($index);">
                         <span class="inner"></span>
