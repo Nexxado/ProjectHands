@@ -57,6 +57,11 @@
 
 .admin-list {
     height: 100%;
+    background-color: white
+}
+
+.white-background {
+    background-color: white;
 }
 
 .admin-list md-content {

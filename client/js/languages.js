@@ -3,7 +3,7 @@ angular.module('ProjectHands')
     .provider('Languages', function () {
 
         this.HE = {
-            TEAM: 'צוותים',
+            TEAM: 'מתנדבים וצוותים',
             USERS: 'משתמשים',
             SELECTED_TEAM_NAME: 'חברי צוות',
             SCHEDULE: 'לוח שנה',

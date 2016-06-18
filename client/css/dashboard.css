@@ -13,6 +13,7 @@
 	max-width: 170px;
 	padding: 0 6px;
 	z-index: 1;
+	border-bottom-left-radius: 25px;
 }
 .main-page-image {
 	max-width: 100%;
@@ -284,6 +285,11 @@ md-menu-item > .md-button {
 .renovation-tabs {
 	background-color: white;
 }
+
+.renovation-tabs md-grid-list {
+	background-color: #ededed;
+}
+
 .box-wrapper {
 	margin: 2%;
 	height: 100%;
