@@ -37,6 +37,8 @@ Please visit our wiki for furthur project info:
 * [Iteration 3 - HLB&SUF](../../wiki/Iteration-3)
 * [Iteration 4 - SNF](../../wiki/Iteration-4)
 * [Iteration 5 - CUTU](../../wiki/Iteration-5)
+* [Iteration 6 - FMF](../../wiki/Iteration-6)
+* [Iteration 7 - UX & Bug Fixes](../../wiki/Iteration-7)
 
 
 ### License
