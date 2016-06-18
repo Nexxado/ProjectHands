@@ -1,3 +1,46 @@
+<div>
+
+	<md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px">
+		<md-grid-tile md-rowspan="2" md-colspan="2" ui-sref="dashboard.all-teams">
+			<img class="main-page-image" ng-src="/assets/img/MainPage/Teams.png" alt="stage icon" />
+			<md-grid-tile-footer class="main-page-grid-footer rtl">
+				<h3>צוותים</h3>
+				<h4>כל הצוותים של פרויקט ידיים</h4>
+			</md-grid-tile-footer>
+		</md-grid-tile>
+		<md-grid-tile md-rowspan="2" md-colspan="2" ui-sref="dashboard.renovations">
+			<img class="main-page-image" ng-src="/assets/img/MainPage/Renovations.png" alt="stage icon" />
+			<md-grid-tile-footer class="main-page-grid-footer rtl">
+				<h3>שיפוצים מתוכננים</h3>
+				<h4>כל השיפוצים שמתוכננים בעתיד</h4>
+			</md-grid-tile-footer>
+		</md-grid-tile>
+		<md-grid-tile  md-rowspan="2" md-colspan="2" ui-sref="dashboard.calendar">
+			<img class="main-page-image" ng-src="/assets/img/MainPage/Calendar.png" alt="stage icon" />
+			<md-grid-tile-footer class="main-page-grid-footer rtl">
+				<h3>לוח שנה</h3>
+				<h4>לוח שנה שמציג את כל האירועים הקרובים</h4>
+			</md-grid-tile-footer>
+		</md-grid-tile>
+		<md-grid-tile md-rowspan="2" md-colspan="2" ui-sref="dashboard.statistics">
+			<img class="main-page-image" ng-src="/assets/img/MainPage/Statistics.png" alt="stage icon" />
+			<md-grid-tile-footer class="main-page-grid-footer rtl">
+				<h3>סטטיסטיקות</h3>
+				<h4>סטטיסטיקות של כל הפרויקטים והאנשים של פרויקט ידיים</h4>
+			</md-grid-tile-footer>
+		</md-grid-tile>
+		<md-grid-tile md-rowspan="2" md-colspan="2" ui-sref="dashboard.join-requests">
+			<img class="main-page-image" ng-src="/assets/img/MainPage/NewMembers.png" alt="stage icon" />
+			<md-grid-tile-footer class="main-page-grid-footer rtl">
+				<h3>בקשות הצטרפות</h3>
+				<h4>כל האנשים שנרשמו וצריכים לקבל אישור הצטרפות</h4>
+			</md-grid-tile-footer>
+		</md-grid-tile>
+	</md-grid-list>
+</div>
+
+
+<!--
 <md-button class="md-raised md-primary" ng-click="enableEditLayout()" ng-show="!editLayoutEnabled"><span translate> {{'CUSTOMIZE'}}</span>
 </md-button>
 <md-button class="md-raised md-accent" ng-click="disableEditLayout()" ng-show="editLayoutEnabled"><span translate> {{'FINISH'}}</span>
@@ -62,14 +105,6 @@
     </md-menu-content>
 </md-menu>
 
-<!--Checking Mobile Mode for Debugging \/ -->
-<!--
-<md-button ng-click="toggleIsMobile()">Is Mobile: {{gridsterOpts.isMobile}}</md-button>
-<md-button ng-click="toggleMobileModeEnabled()">Mobile Mode Enabled: {{gridsterOpts.mobileModeEnabled}}</md-button>
--->
-<!--Checking Mobile Mode for Debugging /\ -->
-
-
 
 <div gridster="gridsterOpts">
     <li gridster-item="item" ng-model="widgets[0]" class="grid-item" ng-if="widgets[0].active">
@@ -94,3 +129,4 @@
         <chat user="me" rooms="rooms"></chat>
     </li>
 </div>
+-->

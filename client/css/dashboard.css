@@ -1,7 +1,6 @@
 .dashboard-sidenav {
 	background-color: white;
 	width: 100%;
-	
 }
 .dashboard-sidenav-content {
 	padding: 0 5px;
@@ -9,14 +8,35 @@
 	overflow: hidden;
 }
 .dashboard-navbar-wrapper {
-/*	background-color: #2196F3;*/
+	/*	background-color: #2196F3;*/
 	min-height: 100%;
 	max-width: 170px;
-	padding-right: 12px;
+	padding: 0 6px;
 	z-index: 1;
+}
+.main-page-image {
+	max-width: 100%;
+	max-height: 100%;
+	cursor: pointer;
+}
+.main-page-grid-footer{
+	text-align: center;
+	cursor: pointer;
+	width: 79%;
+    left: 11%;
+    border-bottom-left-radius: 35px;
+    border-bottom-right-radius: 35px;
+	bottom: 42px;
+}
+.main-page-grid-footer > figcaption{
+	width: 100%;
 }
 .dashboard-wrapper {
 	height: 100%;
+}
+.sidenav-title{
+	width: 100%;
+	text-align: center;
 }
 .sidenav-btn {
 	min-width: 100%;
@@ -269,10 +289,9 @@ md-menu-item > .md-button {
 	width: 100%;
 	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 	background-color: white;
+	overflow-x: hidden;
 }
-.test {
-	background-color: grey;
-}
+
 .shadow-text {
 	/*    margin: 50px auto;*/
 	text-align: center;
