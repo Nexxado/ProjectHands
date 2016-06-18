@@ -31,7 +31,14 @@
     background-color: white;
 }
 
-.sta{
+.stat {
+    background-color: white;
+    /*padding: 8px;*/
+    padding: 5px 15px;
+    margin: 8px;
+}
+
+.info-card {
     background-color: white;
     padding: 8px;
     margin: 8px;
@@ -265,7 +272,14 @@ NAV
     background-color: #ededed;
 }
 
-.homepage-wrapper .homepage-content .homepage-banner {
+.homepage-wrapper .homepage-content .donate-info {
+    border: 32px solid white;
+    text-align: center;
+    background-color: white;
+}
+
+.homepage-wrapper .homepage-content .homepage-banner,
+.homepage-wrapper .homepage-footer {
     width: 100%;
 }
 

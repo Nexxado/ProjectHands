@@ -23,22 +23,24 @@
             <team></team>
         </div>
 
-        <!-- Referral Status -->
-        <div class="status-container" layout="column" layout-align="center center" layout-padding ng-controller="StatusController">
-            <div class="status-title">פניות לשיפוצים</div>
-            <div class="status-indicator" ng-class="active ? 'active' : 'not-active'"></div>
-            <div class="status-message">{{ message }}</div>
-            <md-button class="md-primary md-raised btn-referral" href="/assets/referral-form.docx" target="_self">טופס פנייה</md-button>
-            <!-- Admin Control Panel -->
-            <div admin-actions>
-                <md-button ng-click="updateStatusDialog($event)">עדכן סטטוס הפניות</md-button>
-                <md-button ui-sref="home-panel">עריכת תוכן דף הבית</md-button>
+        <div md-whiteframe="2" class="homepage-footer">
+            <!-- Referral Status -->
+            <div class="status-container rtl" layout="column" layout-align="center center" layout-padding ng-controller="StatusController">
+                <div class="status-title">פניות לשיפוצים</div>
+                <div class="status-indicator" ng-class="active ? 'active' : 'not-active'"></div>
+                <div class="status-message">{{ message }}</div>
+                <md-button class="md-primary md-raised btn-referral" href="/assets/referral-form.docx" target="_self">טופס פנייה</md-button>
+                <!-- Admin Control Panel -->
+                <div admin-actions>
+                    <md-button ng-click="updateStatusDialog($event)">עדכן סטטוס הפניות</md-button>
+                    <md-button ui-sref="home-panel">עריכת תוכן דף הבית</md-button>
+                </div>
             </div>
-        </div>
 
-        <!--DONATE-->
-        <div style="margin: 32px">
-            <paypal-button></paypal-button>
+            <!--DONATE-->
+            <div class="donate-info">
+                <paypal-button></paypal-button>
+            </div>
         </div>
 
         <!--goto home panel-->
