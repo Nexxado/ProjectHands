@@ -1,29 +1,73 @@
 <header>
-    <md-toolbar md-whiteframe="2">
-        <div class="md-toolbar-tools">
-            <!-- Banner -->
-            <a class="toolbar-logo" ui-sref="home"><img src="assets/img/logo.jpg"></a>
-            <md-button ui-sref="home" translate="{{'PROJECT_NAME'}}"></md-button>
-            <span flex></span>
-            <!-- Buttons -->
-            <md-button ui-sref="signup" ng-hide="isLoggedIn" translate="{{'REGISTER'}}">
+	<md-toolbar md-whiteframe="2">
+		<div class="md-toolbar-tools">
+			<!-- Banner -->
+			<a class="toolbar-logo" ui-sref="home"><img src="assets/img/logo.jpg"></a>
+			<md-button ui-sref="home" translate="{{'PROJECT_NAME'}}"></md-button>
+			<span flex></span>
+			<!-- Buttons -->
+			<md-button ui-sref="signup" ng-hide="isLoggedIn" translate="{{'REGISTER'}}">
 
-            </md-button>
-            <md-button ui-sref="login" ng-hide="isLoggedIn" translate="{{'LOGIN'}}">
+			</md-button>
+			<md-button ui-sref="login" ng-hide="isLoggedIn" translate="{{'LOGIN'}}">
 
-            </md-button>
-            <md-button aria-label="user profile" ui-sref="profile" ng-show="isLoggedIn">
-                {{ user.name }}
-            </md-button>
-            <md-button ng-show="isLoggedIn && hasDashboardAccess()" class="remove-uppercase" ui-sref="dashboard" ui-sref-active="md-primary md-raised">
-                לוח בקרה
-            </md-button>
-            <md-button ng-show="isLoggedIn && showNextRenovation()" class="remove-uppercase" ui-sref="dashboard.renovation({city: user.renovation.city, street: user.renovation.street, num: user.renovation.num})" ui-sref-active="md-primary md-raised">
-                דף שיפוץ
-            </md-button>
-            <md-button ng-click="logout()" ng-show="isLoggedIn" translate="{{'LOGOUT'}}">
+			</md-button>
+			<md-button aria-label="user profile" ui-sref="profile" ng-show="isLoggedIn">
+				{{ user.name }}
+			</md-button>
+			
+			<md-button ng-click="logout()" ng-show="isLoggedIn" translate="{{'LOGOUT'}}">
 
-            </md-button>
-        </div>
-    </md-toolbar>
+			</md-button>
+			
+			<md-button ng-show="isLoggedIn && showNextRenovation()" class="remove-uppercase" ui-sref="dashboard.renovation({city: user.renovation.city, street: user.renovation.street, num: user.renovation.num})" ui-sref-active="md-primary md-raised">
+				דף שיפוץ
+			</md-button>
+			
+			<md-button ng-show="isLoggedIn && hasDashboardAccess()" class="remove-uppercase" ui-sref="dashboard" ui-sref-active="md-primary md-raised" hide-sm hide-xs>
+				לוח בקרה
+			</md-button>
+
+			<!--A Menu button to Replace Admin-Sidenav when in small or x-small screen size-->
+			<div hide-md hide-lg hide-xl>
+				<md-menu md-position-mode="target-right target">
+					<!-- Trigger element is a md-button with an icon -->
+					<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+						<i class="material-icons">menu</i>
+					</md-button>
+					<md-menu-content>
+						<md-menu-item layout="column" layout-align="center center" style="height:100%; overflow: hidden;">
+							<table style="width:100%">
+								<tr>
+									<md-button class="sidenav-btn md-raised" ui-sref="dashboard.main-page" layout="row" layout-align="center center"><i class="material-icons">dashboard</i><span flex></span>
+										<span translate>DASHBOARD</span></md-button>
+								</tr>
+								<tr>
+									<md-button class="sidenav-btn md-raised" ui-sref="dashboard.renovations" layout="row" layout-align="center center"><i class="material-icons">build</i><span flex></span> <span translate>{{'PLANNED_RENOVATIONS'}}</span></md-button>
+								</tr>
+								<tr>
+									<md-button class="sidenav-btn md-raised" ui-sref="dashboard.calendar" layout="row" layout-align="center center"><i class="material-icons">today</i><span flex></span> <span translate>{{'SCHEDULE'}}</span></md-button>
+								</tr>
+
+								<tr>
+									<md-button class="sidenav-btn md-raised" ui-sref="dashboard.statistics" layout="row" layout-align="center center"><i class="material-icons">equalizer</i><span flex></span>
+										<span translate>{{'STATISTICS'}}</span></md-button>
+								</tr>
+								<tr>
+									<md-button class="sidenav-btn md-raised" ui-sref="dashboard.all-teams" layout="row" layout-align="center center"><i class="material-icons">recent_actors</i><span flex></span> <span translate>{{'TEAM'}}</span></md-button>
+								</tr>
+								<tr>
+									<md-button class="sidenav-btn md-raised" ui-sref="dashboard.join-requests" layout="row" layout-align="center center"><i class="material-icons">person_add</i><span flex></span>
+										<span translate>{{'JOIN_REQUESTS'}}</span></md-button>
+								</tr>
+							</table>
+						</md-menu-item>
+					</md-menu-content>
+				</md-menu>
+			</div>
+
+
+
+		</div>
+	</md-toolbar>
 </header>

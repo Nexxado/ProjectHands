@@ -1,85 +1,82 @@
 <div>
-    <md-toolbar>
-        <div class="md-toolbar-tools">
-            <h2>
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>
           <md-button class="md-primary" ui-sref="dashboard.userProfile"> {{myUser.name}} </md-button>
         </h2>
-            <span flex></span>
-            <md-menu>
-                <!-- Trigger element is a md-button with an icon -->
-                <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-                    <i class="material-icons">email</i>
-                </md-button>
-                <md-menu-content>
-                    <md-menu-item>
-                        <md-list>
-                            <md-list-item class="md-2-line" ng-repeat="todo in todos">
-                                <md-checkbox ng-model="todo.done"></md-checkbox>
-                                <div class="md-list-item-text">
-                                    <h3>{{todo.title}}</h3>
-                                    <p>{{todo.description}}</p>
-                                </div>
-                            </md-list-item>
-                        </md-list>
-                    </md-menu-item>
-                </md-menu-content>
-            </md-menu>
-            <md-menu>
-                <!-- Trigger element is a md-button with an icon -->
-                <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-                    <i class="material-icons">notifications</i>
-                </md-button>
-                <md-menu-content>
-                    <md-menu-item>
-                        <md-list>
-                            <md-list-item class="md-2-line" ng-repeat="notification in notifications">
-                                <md-checkbox ng-model="notification.read"></md-checkbox>
-                                <div class="md-list-item-text">
-                                    <h3>{{notification.title}}</h3>
-                                    <p>{{notification.description}}</p>
-                                </div>
-                            </md-list-item>
-                        </md-list>
-                    </md-menu-item>
-                </md-menu-content>
-            </md-menu>
-            <md-menu>
-                <!-- Trigger element is a md-button with an icon -->
-                <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
-                    <i class="material-icons">settings</i>
-                </md-button>
-                <md-menu-content>
-                    <md-menu-item layout="column" layout-align="center center" style="height:100%; overflow: hidden;">
-                        <table style="width:100%">
-                            <tr>
-                                <md-button class="sidenav-btn" layout="row" layout-align="center center"><span
-                                        translate="{{'CHANGE_DETAILS'}}"></span> <span flex></span><i
-                                        class="material-icons">settings_applications</i></md-button>
-                            </tr>
-                            <tr>
-                                <md-button class="sidenav-btn" layout="row" layout-align="center center"><span
-                                        translate="{{'CHANGE_TEAM_REQUEST'}}"></span> <span flex></span><i
-                                        class="material-icons">perm_identity</i></md-button>
-                            </tr>
-                            <tr>
-                                <md-button class="sidenav-btn" layout="row" layout-align="center center"><span
-                                        translate="{{'SOLVE_PROBLEMS'}}"></span> <span flex></span><i
-                                        class="material-icons">report_problem</i></md-button>
-                            </tr>
-                            <tr>
-                                <md-button class="sidenav-btn" layout="row" layout-align="center center"><span
-                                        translate="{{'COLOR_SETTINGS'}}"></span> <span flex></span><i
-                                        class="material-icons">invert_colors</i></md-button>
-                            </tr>
-                            <tr>
-                                <md-button class="sidenav-btn" layout="row" layout-align="center center"><span
-                                        translate="{{'LANGUAGES_SETTINGS'}}"></span> <span flex></span><i
-                                        class="material-icons">font_download</i></md-button>
-                            </tr>
-                        </table>
-                    </md-menu-item>
-                </md-menu-content>
-            </md-menu>
-        </div>
-    </md-toolbar>
+			<span flex></span>
+			<md-menu>
+				<!-- Trigger element is a md-button with an icon -->
+				<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+					<i class="material-icons">email</i>
+				</md-button>
+				<md-menu-content>
+					<md-menu-item>
+						<md-list>
+							<md-list-item class="md-2-line" ng-repeat="todo in todos">
+								<md-checkbox ng-model="todo.done"></md-checkbox>
+								<div class="md-list-item-text">
+									<h3>{{todo.title}}</h3>
+									<p>{{todo.description}}</p>
+								</div>
+							</md-list-item>
+						</md-list>
+					</md-menu-item>
+				</md-menu-content>
+			</md-menu>
+			<md-menu>
+				<!-- Trigger element is a md-button with an icon -->
+				<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+					<i class="material-icons">notifications</i>
+				</md-button>
+				<md-menu-content>
+					<md-menu-item>
+						<md-list>
+							<md-list-item class="md-2-line" ng-repeat="notification in notifications">
+								<md-checkbox ng-model="notification.read"></md-checkbox>
+								<div class="md-list-item-text">
+									<h3>{{notification.title}}</h3>
+									<p>{{notification.description}}</p>
+								</div>
+							</md-list-item>
+						</md-list>
+					</md-menu-item>
+				</md-menu-content>
+			</md-menu>
+			<md-menu>
+				<!-- Trigger element is a md-button with an icon -->
+				<md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open sample menu">
+					<i class="material-icons">settings</i>
+				</md-button>
+				<md-menu-content>
+					<md-menu-item layout="column" layout-align="center center" style="height:100%; overflow: hidden;">
+						<table style="width:100%">
+							<tr>
+								<md-button class="sidenav-btn md-raised" ui-sref="dashboard.main-page" layout="row" layout-align="center center"><i class="material-icons">dashboard</i><span flex></span>
+									<span translate>DASHBOARD</span></md-button>
+							</tr>
+							<tr>
+								<md-button class="sidenav-btn md-raised" ui-sref="dashboard.renovations" layout="row" layout-align="center center"><i class="material-icons">build</i><span flex></span> <span translate>{{'PLANNED_RENOVATIONS'}}</span></md-button>
+							</tr>
+							<tr>
+								<md-button class="sidenav-btn md-raised" ui-sref="dashboard.calendar" layout="row" layout-align="center center"><i class="material-icons">today</i><span flex></span> <span translate>{{'SCHEDULE'}}</span></md-button>
+							</tr>
+
+							<tr>
+								<md-button class="sidenav-btn md-raised" ui-sref="dashboard.statistics" layout="row" layout-align="center center"><i class="material-icons">equalizer</i><span flex></span>
+									<span translate>{{'STATISTICS'}}</span></md-button>
+							</tr>
+							<tr>
+								<md-button class="sidenav-btn md-raised" ui-sref="dashboard.all-teams" layout="row" layout-align="center center"><i class="material-icons">recent_actors</i><span flex></span> <span translate>{{'TEAM'}}</span></md-button>
+							</tr>
+							<tr>
+								<md-button class="sidenav-btn md-raised" ui-sref="dashboard.join-requests" layout="row" layout-align="center center"><i class="material-icons">person_add</i><span flex></span>
+									<span translate>{{'JOIN_REQUESTS'}}</span></md-button>
+							</tr>
+						</table>
+					</md-menu-item>
+				</md-menu-content>
+			</md-menu>
+		</div>
+	</md-toolbar>
 </div>
