@@ -61,8 +61,8 @@ router.post("/signup", validation.validateParams, function (req, res) {
         var user = JSON.parse(req.body.user);
         user.email = user.email.toLowerCase();
         user.team_leader = user.team_leader[0] || '';
-        if (info.remarks.match(/^\s+$/))
-            info.remarks = '';
+        if (user.remarks.match(/^\s+$/))
+            user.remarks = '';
 
         user.role = ROLES.ADMIN; //FIXME change initial role to ROLES.GUEST;
 
