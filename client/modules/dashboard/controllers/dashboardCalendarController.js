@@ -1,7 +1,17 @@
 angular.module("ProjectHands.dashboard")
 
-.controller("DashboardCalendarController", function($scope, $compile, uiCalendarConfig, $mdMedia, $mdDialog) {
+.controller("DashboardCalendarController", function($scope, $compile, uiCalendarConfig, $mdMedia, $mdDialog, RenovationService) {
 
+	
+/* event source that contains custom events on the scope */
+/*Event Format: {title: '', start: new Date(year, month, day), end: new Date(year,month,day), allDay: Bool},*/
+$scope.events = [];
+	
+for(var i in $scope.renovations){
+	var title = $scope.renovations[i].addr.city + ", " + $scope.renovations[i].addr.street + " " + $scope.renovations[i].addr.num;
+	var date = new Date($scope.renovations[i].date);
+	$scope.events.push({title: title, start: date, end: date, allDay: true})
+}
 	
 //$scope.eventSources = [];
 var date = new Date();
@@ -15,11 +25,7 @@ $scope.eventSource = {
 	className: 'gcal-event', // an option!
 	currentTimezone: 'America/Chicago' // an option!
 };
-/* event source that contains custom events on the scope */
-/*Event Format: {title: '', start: new Date(year, month, day), end: new Date(year,month,day), allDay: Bool},*/
-$scope.events = [
-	{title: 'Haha', start: new Date(y, m, 21), end: new Date(y,m,25), allDay: false}
-    ];
+
 /* event source that calls a function on every view switch */
 $scope.eventsF = function (start, end, timezone, callback) {
 	var s = new Date(start).getTime() / 1000;
@@ -88,61 +94,8 @@ $scope.addRemoveEventSource = function (sources, source) {
 	}
 };
 /* add custom event*/
-$scope.addEvent = function ($event) {
-	var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
-		$mdDialog.show({
-				controller: function ($scope, $mdToast, $mdDialog) {
-					$scope.event = {
-						title: '',
-						start: '',
-						end: '',
-						allDay: ''
-					};
-					$scope.cancel = function () {
-						$mdDialog.cancel();
-					};
-
-					$scope.submit = function () {
-						if ($scope.AddEventForm.$invalid) {
-							return;
-						}
-						$mdDialog.hide($scope.event);
-					};
-				},
-				templateUrl: '/modules/dashboard/templates/dialogs/addEventDialog.html',
-				targetEvent: $event,
-				clickOutsideToClose: false,
-				fullscreen: useFullScreen,
-				locals: {}
-			})
-			.then(function (newEvent) {
-				//Check for duplicates in tasks
-			
-				// var reno = $scope.thisRenovation;
-				// DatabaseService.update(
-				// 		COLLECTIONS.RENOVATIONS, {
-				// 			addr: {
-				// 				city: reno.addr.city,
-				// 				street: reno.addr.street,
-				// 				num: reno.addr.num
-				// 			}
-				// 		}, {
-				// 			$push: {
-				// 				"tasks": newTask
-				// 			}
-				// 		}, {}
-				// 	)
-				RenovationService.addTask($scope.thisRenovation.addr, newTask)
-					.$promise.then(function (result) {
-						$scope.thisRenovation.tasks.push(newTask);
-					}).catch(function (error) {
-						console.log("Error: ", error);
-					});
-				console.log("Dialog finished");
-
-			}, function () {
-				console.log('Dialog Canceled.');
-			});
+$scope.addEvent = function () {
+	
 };
 /* remove event */
 $scope.remove = function (index) {
