@@ -48,7 +48,8 @@ angular.module('ProjectHands.dashboard')
 
     .state('dashboard.calendar', {
         url: '/calendar',
-        templateUrl: 'modules/dashboard/templates/calendar.html'
+        templateUrl: 'modules/dashboard/templates/calendar.html',
+		controller: 'DashboardCalendarController'
     })
 
     .state('dashboard.userProfile', {

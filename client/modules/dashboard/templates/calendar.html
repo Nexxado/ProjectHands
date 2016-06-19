@@ -1,9 +1,12 @@
 <div md-whiteframe="2" class="rounded-top">
-    <md-toolbar layout="row" layout-align="none center" class="md-primary md-hue-1 dashboard-top-rounded-toolbar">
-        <span flex></span>
-        <div class="md-toolbar-tools" dir="rtl">
-            <span translate=>SCHEDULE</span>
-        </div>
-    </md-toolbar>
-    <div class="calendar" ui-calendar="uiConfig.calendar" ng-model="eventSources"></div>
+	<md-toolbar layout="row" layout-align="none center" class="md-primary md-hue-1 dashboard-top-rounded-toolbar">
+		<span flex></span>
+		<div class="md-toolbar-tools" dir="rtl">
+			<span translate>SCHEDULE</span>
+		</div>
+	</md-toolbar>
+	<md-button ng-click="changeView('agendaWeek', 'renoCalendar')" class="md-primary">שינוי לשבועי</md-button>
+	<md-button ng-click="changeView('agendaDay', 'renoCalendar')" class="md-primary">שינוי ליומי</md-button>
+	<md-button ng-click="changeView('month', 'renoCalendar')" class="md-primary">שינוי לחודשי</md-button>
+	<div calendar="renoCalendar" ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
 </div>

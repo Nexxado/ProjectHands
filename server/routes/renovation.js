@@ -64,6 +64,22 @@ router.post('/create', middleware.ensureAuthenticated, middleware.ensurePermissi
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to create renovation"});
             else if (result && result.length)
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Renovation already exists"});
+				renovation.tasks = [];
+				renovation.pinned = [];
+            	renovation.toolsNeeded = [];
+				renovation.rsvp = [];
+            	renovation.renovation_stages = [
+					"ביקור ראשוני בדירה לבדיקת התאמה",
+					"הוחלט לשפץ, יש צורך לעדכן עובד סוציאלי",
+					"עובד סוציאלי עודכן, יש צורך לשבץ צוות",
+					"על ראש הצוות להגיע לביקור לצרכי תכנון",
+					"שלב ההכנות לשיפוץ",
+					"הדירה בשיפוץ",
+					"הסתיים השיפוץ"
+				];
+			renovation.chat_id = renovation.chat_id = req.body.city + ' ' + req.body.street + ' ' + req.body.num;
+            renovation.current_stage = renovation.renovation_stages[0];
+            renovation.created = new Date();
 
             renovation.tasks = [];
             renovation.pinned = [];

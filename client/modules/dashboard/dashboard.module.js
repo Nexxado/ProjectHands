@@ -1,4 +1,4 @@
-angular.module('ProjectHands.dashboard', ['ngMaterial'])
+angular.module('ProjectHands.dashboard', ['ngMaterial', 'ui.calendar'])
 
 /**************************************/
 /***** Application Wide Constants *****/
