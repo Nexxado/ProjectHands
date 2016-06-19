@@ -207,6 +207,7 @@ md-menu-item > .md-button {
     width: 100%;
     top: 45px;
     padding: 0 5px;
+    left: 0;
 }
 
 /*==================================================
@@ -295,14 +296,15 @@ md-menu-item > .md-button {
 
 .task-done-icon {
     position: absolute;
-    top: 85px;
+    /*top: 85px;*/
+    bottom: 15px;
     left: 20px;
-    color: green;
+    color: #4CAF50;
     font-size: 36px;
 }
 
 .renovation-user > .arriving-icon {
-    color: green;
+    color: #4CAF50;
     position: absolute;
     top: 18px;
     left: 45px;
@@ -319,6 +321,7 @@ md-menu-item > .md-button {
 .box-header {
     /*	margin-left: 5%; */
     margin-right: 5%;
+    align-items: center;
 }
 
 .stages-text {
@@ -331,6 +334,7 @@ md-menu-item > .md-button {
 .stage-images {
     margin: 10px 0;
     height: 100%;
+    overflow: hidden;
 }
 
 .renovation-tabs {
@@ -342,12 +346,13 @@ md-menu-item > .md-button {
 }
 
 .box-wrapper {
-    margin: 2%;
-    height: 100%;
+    margin: 5px;
+    /*height: 100%;*/
     width: 100%;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
     background-color: white;
     overflow-x: hidden;
+    position: relative;
 }
 
 .shadow-text {
@@ -518,4 +523,18 @@ md-menu-item > .md-button {
     .dashboard-list {
         margin-bottom: 10px;
     }
+}
+
+/**** Renovation Layout *****/
+div.renovation-tab-content {
+    background-color: #ededed;
+}
+
+div.renovation-tab-content .renovation-list {
+    padding: 10px;
+    max-height: 70vh;
+}
+
+div.renovation-tab-content .renovation-list .md-button.md-icon-button {
+    margin: 2px 6px;
 }
