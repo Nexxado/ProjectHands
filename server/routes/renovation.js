@@ -130,7 +130,7 @@ router.post('/assign_tool', middleware.ensureAuthenticated, middleware.ensurePer
 
 
 /**
- * Assign tool to user
+ * Unassign tool from user
  */
 router.post('/unassign_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
     middleware.ensureRenovationExists, function(req, res) {
@@ -417,7 +417,7 @@ router.post('/add_stage', middleware.ensureAuthenticated, middleware.ensurePermi
             function(error, result) {
 
                 if(error || result.result.nModified === 0)
-                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to add new stage"});
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to add new renovation stage"});
 
                 res.send({success: true});
             });
@@ -441,7 +441,7 @@ router.post('/update_stage', middleware.ensureAuthenticated, middleware.ensurePe
             function(error, result) {
 
                 if(error || result.result.nModified === 0)
-                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to update stage"});
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to update renovation stage"});
 
                 res.send({success: true});
             });

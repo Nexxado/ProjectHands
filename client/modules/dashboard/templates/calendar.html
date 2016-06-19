@@ -1,7 +1,9 @@
-<md-toolbar layout="row" layout-align="none center" class="md-primary dashboard-top-rounded-toolbar">
-            <span flex></span>
-            <div class="md-toolbar-tools" dir="rtl">
-                <span translate=>SCHEDULE</span>
-            </div>
-        </md-toolbar>
-<div ui-calendar="uiConfig.calendar" ng-model="eventSources"></div>
+<div md-whiteframe="2" class="rounded-top">
+    <md-toolbar layout="row" layout-align="none center" class="md-primary md-hue-1 dashboard-top-rounded-toolbar">
+        <span flex></span>
+        <div class="md-toolbar-tools" dir="rtl">
+            <span translate=>SCHEDULE</span>
+        </div>
+    </md-toolbar>
+    <div class="calendar" ui-calendar="uiConfig.calendar" ng-model="eventSources"></div>
+</div>

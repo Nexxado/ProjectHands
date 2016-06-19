@@ -255,12 +255,12 @@ validation.validateParams = function(req, res, next) {
 
         case /renovation\/add_stage/.test(req.originalUrl):
             if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || typeof req.body.stage === 'undefined' || typeof req.body.index === 'undefined')
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or stage params"});
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or stage"});
             break;
         
         case /renovation\/update_stage/.test(req.originalUrl):
             if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || !validateString(req.body.stage))
-                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address"});
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or stage"});
             break;
 
         case /user\/approve/.test(req.originalUrl):

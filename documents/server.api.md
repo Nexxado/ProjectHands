@@ -23,16 +23,39 @@
     * [Import Data](#import-data)
     * [Export Data](#export-data)
 * [**Photos**](#photos)
-    * [Upload Photos](#upload-photos)
-    * [Delete Photos](#delete-photos)
-    * [Get Album Data](#get-album-data)
+    * [Home Page Photos](#home-page-photos)
+    * [Renovation Photos](#renovation-photos)
+    * [Profile Picture](#profile-picture)
+* [**Home**](#home)
+    * [Upload Ad](#upload-ad)
+    * [Delete Ad](#delete-ad)
+    * [Get Ads](#get-ads)
 * [**Renovations**](#renovations)
     * [Get Renovation Info](#get-renovation-info)
     * [Get All Renovations](#get-all-renovations)
     * [Create Renovation](#create-renovation)
     * [Renovation RSVP](#renovation-rsvp)
+    * Renovation Tools
+        * [Add Tool](#add-tool)
+        * [Assign Tool](#assign-tool)
+        * [Unassign Tool](#unassign-tool)
+        * [Delete Tool](#delete-tool)
+    * Renovation Tasks
+        * [Add Task](#add-task)
+        * [Assign Task](#assign-task)
+        * [Finished Task](#finished-task)
+        * [Edit Task](#edit-task)
+        * [Delete Task](#delete-task)
+    * Renovation Pinned Messages
+        * [Add Pinned Message](#add-pinned-message)
+        * [Edit Pinned Message](#edit-pinned-message)
+        * [Delete Pinned Message](#delete-pinned-message)
+    * Renovation Stages
+        * [Add Renovation Stage](#add-renovation-stage)
+        * [Update Renovation Stage](#update-renovation-stage) 
 * [**Users**](#users)
-    * [Get User Info](#get-user-info)
+    * [Get User Full Info](#get-user-full-info)
+    * [Get User Basic Info](#get-user-basic-info)
     * [Get All Users](#get-all-users)
     * [Get All Sign-ups](#get-all-sign-ups)
     * [Approve User](#approve-user)
@@ -43,6 +66,7 @@
     * [Create Team](#create-team)
     * [Delete Team](#delete-team)
     * [Get All Teams](#get-all-teams)
+    * [Get Team](#get-team)
     * [Add Members](#add-members)
     * [Remove Members](#remove-members)
     * [Assign To Renovation](#assign-to-renovation)
@@ -428,20 +452,22 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 
 ## Photos
 
-### Upload Photos
+### Home page photos
 
-#### Request
+#### Upload Photos
+
+##### Request
 
 | Method | Url |
 |---|---|
-| POST | /api/photos/uploads |
+| POST | /api/photos/homeUpload|
 
 | Type  | Params | Values |
 |---|---|---|
 | FILES | file    | File     |
 | BODY  | album   | string   |
 
-#### Response
+##### Response
 
 | Status  | Response |
 |---|---|
@@ -450,19 +476,19 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 |400   | {errMessage: "Error: missing file"}  |
 |500   | {errMessage: "Error: file not saved"}  |
 
-### Delete Photos
+#### Delete Photo
 
-#### Request
+###### Request
 
 | Method | Url |
 |---|---|
-| DELETE | /api/photos/delete |
+| DELETE | /api/photos/homeDelete|
 
 | Type  | Params | Values |
 |---|---|---|
 | QUERY | file_id  | string    |
 
-#### Response
+###### Response
 
 | Status  | Response |
 |---|---|
@@ -471,27 +497,227 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 
 ---
 
-### Get Album Data
+#### Get Home Photos Data
 
-#### Request
+##### Request
 
 | Method | Url |
 |---|---|
-| GET | /api/photos/album |
+| GET | /api/photos/homeGet|
 
 | Type  | Params | Values |
 |---|---|---|
 | QUERY | album   | string  |
 
-#### Response
+##### Response
 
 | Status  | Response |
 |---|---|
 |200   | [{album: string, file_id: string, web_link: string},...]  |
 |500   | {errMessage: "Couldn't find album"} |
 
+
+
+### Renovation photos
+
+#### Upload Photos
+
+##### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/photos/renoUpload|
+
+| Type  | Params | Values |
+|---|---|---|
+| FILES | file    | File     |
+| BODY  | album   | string   |
+
+##### Response
+
+| Status  | Response |
+|---|---|
+|200   | {album: string, file_id: string, web_link: string} |
+|400   | {errMessage: "Error: missing album"}  |
+|400   | {errMessage: "Error: missing file"}  |
+|500   | {errMessage: "Error: file not saved"}  |
+
+#### Delete Renovation Photo
+
+##### Request
+
+| Method | Url |
+|---|---|
+| DELETE | /api/photos/renoDelete|
+
+| Type  | Params | Values |
+|---|---|---|
+| QUERY | file_id  | string    |
+
+##### Response
+
+| Status  | Response |
+|---|---|
+|200   | {success: true}  |
+|500   | {errMessage: "Error: file not deleted"} |
+
 ---
 
+#### Get Renovation Photos Data
+
+##### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/photos/renoGet|
+
+| Type  | Params | Values |
+|---|---|---|
+| QUERY | album   | string  |
+
+##### Response
+
+| Status  | Response |
+|---|---|
+|200   | [{album: string, file_id: string, web_link: string},...]  |
+|500   | {errMessage: "Couldn't find album"} |
+
+
+
+### Profile picture
+
+#### Upload Profile Picture
+
+##### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/photos/profileUpload|
+
+| Type  | Params | Values |
+|---|---|---|
+| FILES | file    | File     |
+| BODY  | album   | string   |
+
+##### Response
+
+| Status  | Response |
+|---|---|
+|200   | {album: string, file_id: string, web_link: string} |
+|400   | {errMessage: "Error: missing album"}  |
+|400   | {errMessage: "Error: missing file"}  |
+|500   | {errMessage: "Error: file not saved"}  |
+
+#### Delete Profile Picture
+
+##### Request
+
+| Method | Url |
+|---|---|
+| DELETE | /api/photos/profileDelete|
+
+| Type  | Params | Values |
+|---|---|---|
+| QUERY | file_id  | string    |
+
+##### Response
+
+| Status  | Response |
+|---|---|
+|200   | {success: true}  |
+|500   | {errMessage: "Error: file not deleted"} |
+
+---
+
+#### Get Profile Picture Data
+
+##### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/photos/profileGet|
+
+| Type  | Params | Values |
+|---|---|---|
+| QUERY | album   | string  |
+
+##### Response
+
+| Status  | Response |
+|---|---|
+|200   | [{album: string, file_id: string, web_link: string},...]  |
+|500   | {errMessage: "Couldn't find album"} |
+
+
+---
+
+---
+
+### Home
+
+#### Upload Ad
+
+##### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/home/upload|
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | title     | string   |
+| BODY | content   | string   |
+
+##### Response
+
+| Status  | Response |
+|---|---|
+|200   | {_id: string, title: string, content: string} |
+|400   | {errMessage: "Error: missing title"}  |
+|400   | {errMessage: "Error: missing content"}  |
+|500   | {errMessage: "Error: ad not saved"}  |
+
+#### Delete Ad
+
+##### Request
+
+| Method | Url |
+|---|---|
+| DELETE | /api/home/delete|
+
+| Type  | Params | Values |
+|---|---|---|
+| QUERY | id  | string    |
+
+##### Response
+
+| Status  | Response |
+|---|---|
+|200   | {success: true}  |
+|500   | {errMessage: "Error: ad not deleted"} |
+
+---
+
+#### Get Ads
+
+##### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/home/ads|
+
+| Type  | Params | Values |
+|---|---|---|
+|   |     |    |
+
+##### Response
+
+| Status  | Response |
+|---|---|
+|200   | [{_id: string, title: string, content: string},...]  |
+|500   | {errMessage: "Couldn't find ads"} |
+
+---
 ---
 
 ## Renovations
@@ -606,11 +832,408 @@ Updates a user's RSVP status for a renovation.
 
 ---
 
+### Add Tool
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/renovation/add_tool |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | city  | String  |
+| BODY | street  | String  |
+| BODY | num  | int  |
+| BODY | tool  | object  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "No renovation matches the address"} |
+| 400 | {errMessage: "Invalid renovation address"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovation"} |
+| 500 | {errMessage: "Failed to add tool"} |
+
+---
+
+### Assign Tool
+User assigns himself to bring tool
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/renovation/assign_tool |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | city  | String  |
+| BODY | street  | String  |
+| BODY | num  | int  |
+| BODY | tool  | object  |
+| BODY | email  | string  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "No renovation matches the address"} |
+| 400 | {errMessage: "Invalid renovation address or tool"} |
+| 400 | {errMessage: "User does not exists"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovation"} |
+| 500 | {errMessage: "Failed to assign tool"} |
+
+---
+
+### Unassign Tool
+User Unassigns himself from bringing a tool
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/renovation/unassign_tool |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | city  | String  |
+| BODY | street  | String  |
+| BODY | num  | int  |
+| BODY | tool  | object  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "No renovation matches the address"} |
+| 400 | {errMessage: "Invalid renovation address or tool"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovation"} |
+| 500 | {errMessage: "Failed to unassign tool"} |
+
+---
+
+### Delete Tool
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/renovation/delete_tool |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | city  | String  |
+| BODY | street  | String  |
+| BODY | num  | int  |
+| BODY | tool  | object  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "No renovation matches the address"} |
+| 400 | {errMessage: "Invalid renovation address or tool"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovation"} |
+| 500 | {errMessage: "Failed to delete tool"} |
+
+---
+
+### Add Task
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/renovation/add_task |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | city  | String  |
+| BODY | street  | String  |
+| BODY | num  | int  |
+| BODY | task  | object  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "No renovation matches the address"} |
+| 400 | {errMessage: "Invalid renovation address or task"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovation"} |
+| 500 | {errMessage: "Failed to add task"} |
+
+---
+
+### Assign Task
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/renovation/assign_task |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | city  | String  |
+| BODY | street  | String  |
+| BODY | num  | int  |
+| BODY | task  | object  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "No renovation matches the address"} |
+| 400 | {errMessage: "Invalid renovation address or task"} |
+| 400 | {errMessage: "User does not exists"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovation"} |
+| 500 | {errMessage: "Failed to assign task"} |
+
+---
+
+### Finished Task
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/renovation/done_task |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | city  | String  |
+| BODY | street  | String  |
+| BODY | num  | int  |
+| BODY | task  | object  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "No renovation matches the address"} |
+| 400 | {errMessage: "Invalid renovation address or task"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovation"} |
+| 500 | {errMessage: "Failed to mark task as done"} |
+
+---
+
+### Edit Task
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/renovation/edit_task |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | city  | String  |
+| BODY | street  | String  |
+| BODY | num  | int  |
+| BODY | task  | object  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "No renovation matches the address"} |
+| 400 | {errMessage: "Invalid renovation address or task"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovation"} |
+| 500 | {errMessage: "Failed to edit task"} |
+
+---
+
+### Delete Task
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/renovation/delete_task |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | city  | String  |
+| BODY | street  | String  |
+| BODY | num  | int  |
+| BODY | task  | object  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "No renovation matches the address"} |
+| 400 | {errMessage: "Invalid renovation address or task"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovation"} |
+| 500 | {errMessage: "Failed to delete task"} |
+
+---
+
+### Add Pinned Message
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/renovation/add_pinned |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | city  | String  |
+| BODY | street  | String  |
+| BODY | num  | int  |
+| BODY | pinned | object  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "No renovation matches the address"} |
+| 400 | {errMessage: "Invalid renovation address or pinned message"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovation"} |
+| 500 | {errMessage: "Failed to create new pinned message"} |
+
+---
+
+### Edit Pinned Message
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/renovation/edit_pinned |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | city  | String  |
+| BODY | street  | String  |
+| BODY | num  | int  |
+| BODY | pinned | object  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "No renovation matches the address"} |
+| 400 | {errMessage: "Invalid renovation address or pinned message"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovation"} |
+| 500 | {errMessage: "Failed to edit pinned message"} |
+
+---
+
+### Delete Pinned Message
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/renovation/delete_pinned |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | city  | String  |
+| BODY | street  | String  |
+| BODY | num  | int  |
+| BODY | pinned | object  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "No renovation matches the address"} |
+| 400 | {errMessage: "Invalid renovation address or pinned message"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovation"} |
+| 500 | {errMessage: "Failed to delete pinned message"} |
+
+---
+
+### Add Renovation Stage
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/renovation/add_stage |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | city  | String  |
+| BODY | street  | String  |
+| BODY | num  | int  |
+| BODY | stage | object  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "No renovation matches the address"} |
+| 400 | {errMessage: "Invalid renovation address or pinned message"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovation"} |
+| 500 | {errMessage: "Failed to add new renovation stage"} |
+
+---
+
+### Update Renovation Stage
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/renovation/update_stage |
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | city  | String  |
+| BODY | street  | String  |
+| BODY | num  | int  |
+| BODY | stage | object  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {success: true} |
+| 400 | {errMessage: "No renovation matches the address"} |
+| 400 | {errMessage: "Invalid renovation address or pinned message"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovation"} |
+| 500 | {errMessage: "Failed to update renovation stage"} |
+
+---
+
 ---
 
 ## Users
 
-### Get User Info
+### Get User Full Info
 
 #### Request
 
@@ -627,6 +1250,31 @@ Updates a user's RSVP status for a renovation.
 | Status  | Response |
 |---|---|
 | 200 | {email: "", name: "", role: "", ...} |
+| 400 | {errMessage: "Invalid user email"} |
+| 400 | {errMessage: "User does not exists"} |
+| 401 | {errMessage: "Error: User is not logged in"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find user"} |
+
+---
+
+### Get User Basic Info
+
+#### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/user/basic/:email |
+
+| Type  | Params | Values |
+|---|---|---|
+| PARAMS | email | String |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | {email: "", name: "", phone: ""} |
 | 400 | {errMessage: "Invalid user email"} |
 | 400 | {errMessage: "User does not exists"} |
 | 401 | {errMessage: "Error: User is not logged in"} |
@@ -865,6 +1513,29 @@ Approve a user to join Project Hands
 | Status  | Response |
 |---|---|
 | 200 | [{name: "", manager: "", members: []}, {...}, ...] |
+| 401 | {errMessage: "Error: User is not logged in"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to get teams"} |
+
+---
+
+### Get Team
+
+#### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/team/get_team/:teamName |
+
+| Type  | Params | Values |
+|---|---|---|
+| PARAMS  |  teamName | String |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | [{name: "", manager: "", members: []}] |
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to get teams"} |
