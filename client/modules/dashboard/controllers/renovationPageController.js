@@ -36,7 +36,15 @@ angular.module('ProjectHands.dashboard')
 		"/assets/img/renovation-page/extra-stage.png"
 	];
 
-
+	$scope.allTeams = [];
+	TeamService.getAllTeams()
+	.$promise.then(function(result){
+		$scope.allTeams = result;
+	})
+	.catch(function(error){
+		console.log("Error: ", error);
+	});
+	
 	/******Getters******/
 
 	$scope.checkUserInTeam = function(email){
@@ -130,6 +138,7 @@ angular.module('ProjectHands.dashboard')
         })
         .$promise.then(function (result) {
                 $scope.thisRenovation = result.renovation;
+				console.log("THIS RENOVATION IS ", result.renovation);
 				if(!$scope.thisRenovation.rsvp){
 					$scope.thisRenovation.rsvp = [];
 				}
@@ -142,13 +151,18 @@ angular.module('ProjectHands.dashboard')
 
 	/******Initialize more Variables******/
 	$scope.initializeVariables = function(){
+		console.log("Initialized Variables");
+		console.log("this reno is: ", $scope.thisRenovation);
 		$scope.minDate = new Date();
 		$scope.renovationChatRoom = [$scope.thisRenovation.chat_id];
 		$scope.renovationStages = $scope.thisRenovation.renovation_stages;
+		console.log("reno stages ", $scope.renovationStages);
 		$scope.renovationCurrentStage = $scope.thisRenovation.current_stage;
 		$scope.needToAssignTeam = ($scope.renovationCurrentStage === $scope.defaultRenoStages[2]);
 		$scope.renovationProgress = Math.floor((100 / ($scope.renovationStages.length)) * ($scope.renovationStages.indexOf($scope.renovationCurrentStage) + 1));
 		$scope.getStageImage();
+		
+		console.log("reno stage ", $scope.renovationCurrentStage);
 	};
 
 	$scope.getStageImage = function(){
@@ -706,7 +720,9 @@ angular.module('ProjectHands.dashboard')
 						$scope.thisRenovation.date = renovationAddedDetails.date;
 						$scope.thisRenovation.team = renovationAddedDetails.team;
 						$scope.getRenovationTeam($scope.thisRenovation.team.name);
+//						$scope.enableEditStages();
 						$scope.nextStage();
+//						$scope.disableEditStages();
 					}).catch(function (error) {
 						console.log("Error: ", error);
 					});
