@@ -1,42 +1,50 @@
-<div>
+<div layout="row" flex layout-wrap layout-align="center center">
 
-	<md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px">
-		<md-grid-tile md-rowspan="2" md-colspan="2" ui-sref="dashboard.all-teams">
-			<img class="main-page-image" ng-src="/assets/img/MainPage/Teams.png" alt="stage icon" />
-			<md-grid-tile-footer class="main-page-grid-footer rtl">
-				<h3>צוותים</h3>
-				<h4>כל הצוותים של פרויקט ידיים</h4>
-			</md-grid-tile-footer>
-		</md-grid-tile>
-		<md-grid-tile md-rowspan="2" md-colspan="2" ui-sref="dashboard.renovations">
-			<img class="main-page-image" ng-src="/assets/img/MainPage/Renovations.png" alt="stage icon" />
-			<md-grid-tile-footer class="main-page-grid-footer rtl">
-				<h3>שיפוצים מתוכננים</h3>
-				<h4>כל השיפוצים שמתוכננים בעתיד</h4>
-			</md-grid-tile-footer>
-		</md-grid-tile>
-		<md-grid-tile  md-rowspan="2" md-colspan="2" ui-sref="dashboard.calendar">
-			<img class="main-page-image" ng-src="/assets/img/MainPage/Calendar.png" alt="stage icon" />
-			<md-grid-tile-footer class="main-page-grid-footer rtl">
-				<h3>לוח שנה</h3>
-				<h4>לוח שנה שמציג את כל האירועים הקרובים</h4>
-			</md-grid-tile-footer>
-		</md-grid-tile>
-		<md-grid-tile md-rowspan="2" md-colspan="2" ui-sref="dashboard.statistics">
-			<img class="main-page-image" ng-src="/assets/img/MainPage/Statistics.png" alt="stage icon" />
-			<md-grid-tile-footer class="main-page-grid-footer rtl">
-				<h3>סטטיסטיקות</h3>
-				<h4>סטטיסטיקות של כל הפרויקטים והאנשים של פרויקט ידיים</h4>
-			</md-grid-tile-footer>
-		</md-grid-tile>
-		<md-grid-tile md-rowspan="2" md-colspan="2" ui-sref="dashboard.join-requests">
-			<img class="main-page-image" ng-src="/assets/img/MainPage/NewMembers.png" alt="stage icon" />
-			<md-grid-tile-footer class="main-page-grid-footer rtl">
-				<h3>בקשות הצטרפות</h3>
-				<h4>כל האנשים שנרשמו וצריכים לקבל אישור הצטרפות</h4>
-			</md-grid-tile-footer>
-		</md-grid-tile>
-	</md-grid-list>
+	<div class="dashboard-link" ng-repeat="link in dashboardLinks" ui-sref="{{ link.state }}" flex="100" flex-sm="50" flex-gt-sm="33">
+		<img class="main-page-image" ng-src="/assets/img/MainPage/{{link.img}}" alt="stage icon" />
+		<div class="link-footer">
+			<h3>{{ link.title }}</h3>
+			<h4>{{ link.desc }}</h4>
+		</div>
+	</div>
+
+	<!--<md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px">-->
+		<!--<md-grid-tile md-rowspan="2" md-colspan="2" ui-sref="dashboard.all-teams">-->
+			<!--<img class="main-page-image" ng-src="/assets/img/MainPage/Teams.png" alt="stage icon" />-->
+			<!--<md-grid-tile-footer class="main-page-grid-footer rtl">-->
+				<!--<h3>צוותים</h3>-->
+				<!--<h4>כל הצוותים של פרויקט ידיים</h4>-->
+			<!--</md-grid-tile-footer>-->
+		<!--</md-grid-tile>-->
+		<!--<md-grid-tile md-rowspan="2" md-colspan="2" ui-sref="dashboard.renovations">-->
+			<!--<img class="main-page-image" ng-src="/assets/img/MainPage/Renovations.png" alt="stage icon" />-->
+			<!--<md-grid-tile-footer class="main-page-grid-footer rtl">-->
+				<!--<h3>שיפוצים מתוכננים</h3>-->
+				<!--<h4>כל השיפוצים שמתוכננים בעתיד</h4>-->
+			<!--</md-grid-tile-footer>-->
+		<!--</md-grid-tile>-->
+		<!--<md-grid-tile  md-rowspan="2" md-colspan="2" ui-sref="dashboard.calendar">-->
+			<!--<img class="main-page-image" ng-src="/assets/img/MainPage/Calendar.png" alt="stage icon" />-->
+			<!--<md-grid-tile-footer class="main-page-grid-footer rtl">-->
+				<!--<h3>לוח שנה</h3>-->
+				<!--<h4>לוח שנה שמציג את כל האירועים הקרובים</h4>-->
+			<!--</md-grid-tile-footer>-->
+		<!--</md-grid-tile>-->
+		<!--<md-grid-tile md-rowspan="2" md-colspan="2" ui-sref="dashboard.statistics">-->
+			<!--<img class="main-page-image" ng-src="/assets/img/MainPage/Statistics.png" alt="stage icon" />-->
+			<!--<md-grid-tile-footer class="main-page-grid-footer rtl">-->
+				<!--<h3>סטטיסטיקות</h3>-->
+				<!--<h4>סטטיסטיקות של כל הפרויקטים והאנשים של פרויקט ידיים</h4>-->
+			<!--</md-grid-tile-footer>-->
+		<!--</md-grid-tile>-->
+		<!--<md-grid-tile md-rowspan="2" md-colspan="2" ui-sref="dashboard.join-requests">-->
+			<!--<img class="main-page-image" ng-src="/assets/img/MainPage/NewMembers.png" alt="stage icon" />-->
+			<!--<md-grid-tile-footer class="main-page-grid-footer rtl">-->
+				<!--<h3>בקשות הצטרפות</h3>-->
+				<!--<h4>כל האנשים שנרשמו וצריכים לקבל אישור הצטרפות</h4>-->
+			<!--</md-grid-tile-footer>-->
+		<!--</md-grid-tile>-->
+	<!--</md-grid-list>-->
 </div>
 
 

@@ -1,23 +1,23 @@
 <div layout="column" layout-gt-sm="row" layout-align="end">
     <!-- Teams List -->
-    <div class="toggle-slide-right toggle-fade list-border dashboard-height admin-list" md-whiteframe="2" flex-gt-sm="50" flex>
+    <div class="toggle-slide-right toggle-fade dashboard-list dashboard-height admin-list" md-whiteframe="2" flex-gt-sm="50" flex>
         <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
-            <div class="md-toolbar-tools">
-                <span translate>TEAM</span>
+            <div class="md-toolbar-tools" layout-align="none center">
+                <span translate>צוותים</span>
                 <md-button class="md-icon-button" ng-click="createTeam($event)">
                     <md-icon class="material-icons">add</md-icon>
                 </md-button>
                 <span flex></span>
                 <div>
                     <!-- Teams Search Input -->
-                    <div class="toggle-fade toggle-slide-left" ng-hide="selectedTeam">
+                    <div class="toolbar-search toggle-fade toggle-slide-left" flex ng-hide="selectedTeam">
                         <md-input-container class="md-block md-icon-float rtl list-search-input">
                             <input aria-label="search teams" type="text" name="search-teams" ng-model="searchTeams"/>
                             <md-icon class="material-icons">search</md-icon>
                         </md-input-container>
                     </div>
                     <!-- Team Members Search Input -->
-                    <div class="toggle-fade toggle-slide-left" ng-show="selectedTeam">
+                    <div class="toolbar-search toggle-fade toggle-slide-left" flex ng-show="selectedTeam">
                         <md-input-container class="md-block md-icon-float rtl list-search-input">
                             <input aria-label="search team members" type="text" name="search-team-members" ng-model="searchTeamMembers"/>
                             <md-icon class="material-icons">search</md-icon>
@@ -67,7 +67,7 @@
         </md-content>
     </div>
     <!-- Users List -->
-    <div flex-gt-sm="45" flex-offset-gt-sm="5" flex class="list-border dashboard-height admin-list" md-whiteframe="2">
+    <div flex-gt-sm="45" flex-offset-gt-sm="5" flex class="dashboard-list dashboard-height admin-list" md-whiteframe="2">
         <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
             <div class="md-toolbar-tools">
                 <span translate>USERS</span>
