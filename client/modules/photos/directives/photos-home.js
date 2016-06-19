@@ -38,7 +38,7 @@ angular.module('ProjectHands.photos')
                         fullscreen: useFullScreen
                     })
                         .then(function (answer) {
-                            $scope.status = 'You said the information was "' + answer + '".';
+                            $scope.status = '' + answer + '".';
                         }, function () {
                             $scope.status = 'You cancelled the dialog.';
                         });
