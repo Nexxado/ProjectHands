@@ -64,23 +64,8 @@ router.post('/create', middleware.ensureAuthenticated, middleware.ensurePermissi
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to create renovation"});
             else if (result && result.length)
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Renovation already exists"});
-				renovation.tasks = [];
-				renovation.pinned = [];
-            	renovation.toolsNeeded = [];
-				renovation.rsvp = [];
-            	renovation.renovation_stages = [
-					"ביקור ראשוני בדירה לבדיקת התאמה",
-					"הוחלט לשפץ, יש צורך לעדכן עובד סוציאלי",
-					"עובד סוציאלי עודכן, יש צורך לשבץ צוות",
-					"על ראש הצוות להגיע לביקור לצרכי תכנון",
-					"שלב ההכנות לשיפוץ",
-					"הדירה בשיפוץ",
-					"הסתיים השיפוץ"
-				];
-			renovation.chat_id = renovation.chat_id = req.body.city + ' ' + req.body.street + ' ' + req.body.num;
-            renovation.current_stage = renovation.renovation_stages[0];
-            renovation.created = new Date();
 
+            //TODO Move to separate method
             renovation.tasks = [];
             renovation.pinned = [];
             renovation.toolsNeeded = [];
@@ -112,8 +97,8 @@ router.post('/create', middleware.ensureAuthenticated, middleware.ensurePermissi
 /**
  * Add needed Tool to renovation
  */
-router.post('/add_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams, 
-    middleware.ensureRenovationExists, function(req, res) {
+router.post('/add_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureRenovationExists, function (req, res) {
 
         var renovation = {
             addr: {
@@ -123,23 +108,23 @@ router.post('/add_tool', middleware.ensureAuthenticated, middleware.ensurePermis
             }
         };
 
-        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$push: {toolsNeeded: req.body.tool}}, {}, 
-            function(error, result) {
-                
-                if(error || result.result.nModified === 0)
-                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to add tool"});
-                
-                res.send({success: true});
-        });
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$push: {toolsNeeded: req.body.tool}}, {},
+            function (error, result) {
 
-});
+                if (error || result.result.nModified === 0)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to add tool"});
+
+                res.send({success: true});
+            });
+
+    });
 
 
 /**
  * Assign tool to user
  */
 router.post('/assign_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, middleware.ensureUserExists, function(req, res) {
+    middleware.ensureRenovationExists, middleware.ensureUserExists, function (req, res) {
 
         var renovation = {
             addr: {
@@ -150,10 +135,15 @@ router.post('/assign_tool', middleware.ensureAuthenticated, middleware.ensurePer
             "toolsNeeded.name": req.body.tool.name
         };
 
-        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {"toolsNeeded.$.being_brought": "true", "toolsNeeded.$.assigned": req.body.email}}, {},
-            function(error, result) {
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {
+                $set: {
+                    "toolsNeeded.$.being_brought": "true",
+                    "toolsNeeded.$.assigned": req.body.email
+                }
+            }, {},
+            function (error, result) {
 
-                if(error || result.result.nModified === 0)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign tool"});
 
                 res.send({success: true});
@@ -166,7 +156,7 @@ router.post('/assign_tool', middleware.ensureAuthenticated, middleware.ensurePer
  * Unassign tool from user
  */
 router.post('/unassign_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, function(req, res) {
+    middleware.ensureRenovationExists, function (req, res) {
 
         var renovation = {
             addr: {
@@ -177,10 +167,15 @@ router.post('/unassign_tool', middleware.ensureAuthenticated, middleware.ensureP
             "toolsNeeded.name": req.body.tool.name
         };
 
-        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {"toolsNeeded.$.being_brought": "false", "toolsNeeded.$.assigned": ""}}, {},
-            function(error, result) {
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {
+                $set: {
+                    "toolsNeeded.$.being_brought": "false",
+                    "toolsNeeded.$.assigned": ""
+                }
+            }, {},
+            function (error, result) {
 
-                if(error || result.result.nModified === 0)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to unassign tool"});
 
                 res.send({success: true});
@@ -193,7 +188,7 @@ router.post('/unassign_tool', middleware.ensureAuthenticated, middleware.ensureP
  * Delete tool needed from renovation
  */
 router.post('/delete_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, function(req, res) {
+    middleware.ensureRenovationExists, function (req, res) {
 
         var renovation = {
             addr: {
@@ -204,9 +199,9 @@ router.post('/delete_tool', middleware.ensureAuthenticated, middleware.ensurePer
         };
 
         mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$pull: {toolsNeeded: {name: req.body.tool.name}}}, {},
-            function(error, result) {
+            function (error, result) {
 
-                if(error || result.result.nModified === 0)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to delete tool"});
 
                 res.send({success: true});
@@ -219,7 +214,7 @@ router.post('/delete_tool', middleware.ensureAuthenticated, middleware.ensurePer
  * Add new task to renovation
  */
 router.post('/add_task', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, function(req, res) {
+    middleware.ensureRenovationExists, function (req, res) {
 
         var renovation = {
             addr: {
@@ -230,9 +225,9 @@ router.post('/add_task', middleware.ensureAuthenticated, middleware.ensurePermis
         };
 
         mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$push: {tasks: req.body.task}}, {},
-            function(error, result) {
+            function (error, result) {
 
-                if(error || result.result.nModified === 0)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to create new task"});
 
                 res.send({success: true});
@@ -245,7 +240,7 @@ router.post('/add_task', middleware.ensureAuthenticated, middleware.ensurePermis
  * Assign task to team member
  */
 router.post('/assign_task', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, middleware.ensureUserExists, function(req, res) {
+    middleware.ensureRenovationExists, middleware.ensureUserExists, function (req, res) {
 
         var renovation = {
             addr: {
@@ -257,9 +252,9 @@ router.post('/assign_task', middleware.ensureAuthenticated, middleware.ensurePer
         };
 
         mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {"tasks.$.assigned_email": req.body.email}}, {},
-            function(error, result) {
+            function (error, result) {
 
-                if(error || result.result.nModified === 0)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign task"});
 
                 res.send({success: true});
@@ -271,7 +266,7 @@ router.post('/assign_task', middleware.ensureAuthenticated, middleware.ensurePer
  * Mark task in renovation as done
  */
 router.post('/done_task', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, function(req, res) {
+    middleware.ensureRenovationExists, function (req, res) {
 
         var renovation = {
             addr: {
@@ -283,9 +278,9 @@ router.post('/done_task', middleware.ensureAuthenticated, middleware.ensurePermi
         };
 
         mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {"tasks.$.done": "true"}}, {},
-            function(error, result) {
+            function (error, result) {
 
-                if(error || result.result.nModified === 0)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to mark task as done"});
 
                 res.send({success: true});
@@ -298,7 +293,7 @@ router.post('/done_task', middleware.ensureAuthenticated, middleware.ensurePermi
  * Edit task
  */
 router.post('/edit_task', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, function(req, res) {
+    middleware.ensureRenovationExists, function (req, res) {
 
         var renovation = {
             addr: {
@@ -309,15 +304,17 @@ router.post('/edit_task', middleware.ensureAuthenticated, middleware.ensurePermi
             "tasks.name": req.body.tasks[0].name
         };
 
-        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {
-                "tasks.$.name": req.body.tasks[1].name,
-                "tasks.$.description": req.body.tasks[1].description,
-                "tasks.$.assigned_email": req.body.tasks[1].assigned_email,
-                "tasks.$.done": req.body.tasks[1].done
-            }}, {},
-            function(error, result) {
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {
+                $set: {
+                    "tasks.$.name": req.body.tasks[1].name,
+                    "tasks.$.description": req.body.tasks[1].description,
+                    "tasks.$.assigned_email": req.body.tasks[1].assigned_email,
+                    "tasks.$.done": req.body.tasks[1].done
+                }
+            }, {},
+            function (error, result) {
 
-                if(error || result.result.nModified === 0)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to edit task"});
 
                 res.send({success: true});
@@ -330,7 +327,7 @@ router.post('/edit_task', middleware.ensureAuthenticated, middleware.ensurePermi
  * Delete task from renovation
  */
 router.post('/delete_task', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, function(req, res) {
+    middleware.ensureRenovationExists, function (req, res) {
 
         var renovation = {
             addr: {
@@ -341,9 +338,9 @@ router.post('/delete_task', middleware.ensureAuthenticated, middleware.ensurePer
         };
 
         mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$pull: {tasks: {name: req.body.task.name}}}, {},
-            function(error, result) {
+            function (error, result) {
 
-                if(error || result.result.nModified === 0)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to delete task"});
 
                 res.send({success: true});
@@ -355,7 +352,7 @@ router.post('/delete_task', middleware.ensureAuthenticated, middleware.ensurePer
  * Add pinned message to renovation
  */
 router.post('/add_pinned', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, function(req, res) {
+    middleware.ensureRenovationExists, function (req, res) {
 
         var renovation = {
             addr: {
@@ -366,9 +363,9 @@ router.post('/add_pinned', middleware.ensureAuthenticated, middleware.ensurePerm
         };
 
         mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$push: {pinned: req.body.pinned}}, {},
-            function(error, result) {
+            function (error, result) {
 
-                if(error || result.result.nModified === 0)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to create new pinned message"});
 
                 res.send({success: true});
@@ -381,7 +378,7 @@ router.post('/add_pinned', middleware.ensureAuthenticated, middleware.ensurePerm
  * Edit pinned message
  */
 router.post('/edit_pinned', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, function(req, res) {
+    middleware.ensureRenovationExists, function (req, res) {
 
         var renovation = {
             addr: {
@@ -392,14 +389,16 @@ router.post('/edit_pinned', middleware.ensureAuthenticated, middleware.ensurePer
             "pinned.title": req.body.pinneds[0].title
         };
 
-        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {
+                $set: {
                     "pinned.$.title": req.body.pinneds[1].title,
                     "pinned.$.description": req.body.pinneds[1].description,
                     "pinned.$.added_date": req.body.pinneds[1].added_date
-                }}, {},
-            function(error, result) {
+                }
+            }, {},
+            function (error, result) {
 
-                if(error || result.result.nModified === 0)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to edit pinned message"});
 
                 res.send({success: true});
@@ -411,7 +410,7 @@ router.post('/edit_pinned', middleware.ensureAuthenticated, middleware.ensurePer
  * Delete pinned message from renovation
  */
 router.post('/delete_pinned', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, function(req, res) {
+    middleware.ensureRenovationExists, function (req, res) {
 
         var renovation = {
             addr: {
@@ -422,9 +421,9 @@ router.post('/delete_pinned', middleware.ensureAuthenticated, middleware.ensureP
         };
 
         mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$pull: {pinned: {title: req.body.pinned.title}}}, {},
-            function(error, result) {
+            function (error, result) {
 
-                if(error || result.result.nModified === 0)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to delete pinned message"});
 
                 res.send({success: true});
@@ -436,7 +435,7 @@ router.post('/delete_pinned', middleware.ensureAuthenticated, middleware.ensureP
  * Add new custom stage to renovation
  */
 router.post('/add_stage', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, function(req, res) {
+    middleware.ensureRenovationExists, function (req, res) {
 
         var renovation = {
             addr: {
@@ -446,10 +445,17 @@ router.post('/add_stage', middleware.ensureAuthenticated, middleware.ensurePermi
             }
         };
 
-        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$push: {renovation_stages: {$each: [req.body.stage.title], $position: req.body.index}}}, {},
-            function(error, result) {
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {
+                $push: {
+                    renovation_stages: {
+                        $each: [req.body.stage.title],
+                        $position: req.body.index
+                    }
+                }
+            }, {},
+            function (error, result) {
 
-                if(error || result.result.nModified === 0)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to add new renovation stage"});
 
                 res.send({success: true});
@@ -460,8 +466,8 @@ router.post('/add_stage', middleware.ensureAuthenticated, middleware.ensurePermi
 /**
  * Update Renovation stage
  */
-router.post('/update_stage', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams, 
-    middleware.ensureRenovationExists, function(req, res) {
+router.post('/update_stage', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureRenovationExists, function (req, res) {
         var renovation = {
             addr: {
                 city: req.body.city,
@@ -471,15 +477,14 @@ router.post('/update_stage', middleware.ensureAuthenticated, middleware.ensurePe
         };
 
         mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {current_stage: req.body.stage}}, {},
-            function(error, result) {
+            function (error, result) {
 
-                if(error || result.result.nModified === 0)
+                if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to update renovation stage"});
 
                 res.send({success: true});
             });
     });
-
 
 
 /**
