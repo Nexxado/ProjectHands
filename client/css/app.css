@@ -220,3 +220,7 @@ md-datepicker.rtl .md-datepicker-triangle-button.md-button.md-icon-button {
     right: auto;
     left: 0;
 }
+
+md-menu-content.rtl md-menu-item > .md-button md-icon {
+    margin: auto 0 auto 16px;
+}
