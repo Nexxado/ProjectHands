@@ -1,213 +1,179 @@
 .dashboard-sidenav {
-    background-color: white;
-    width: 100%;
+	background-color: white;
+	width: 100%;
 }
-
 .dashboard-sidenav-content {
-    padding: 0 5px;
-    /*    background-color: #2196F3;*/
-    overflow: hidden;
+	padding: 0 5px;
+	/*    background-color: #2196F3;*/
+	overflow: hidden;
 }
-
 .dashboard-navbar-wrapper {
-    /*	background-color: #2196F3;*/
-    min-height: 100%;
-    max-width: 170px;
-    padding: 0 6px;
-    z-index: 1;
-    border-bottom-left-radius: 25px;
+	/*	background-color: #2196F3;*/
+	min-height: 100%;
+	max-width: 170px;
+	padding: 0 6px;
+	z-index: 1;
+	border-bottom-left-radius: 25px;
 }
-
 .main-page-image {
-    max-width: 100%;
-    max-height: 100%;
-    cursor: pointer;
+	max-width: 100%;
+	max-height: 100%;
+	cursor: pointer;
 }
-
 .main-page-grid-footer {
-    text-align: center;
-    cursor: pointer;
-    width: 79%;
-    left: 11%;
-    border-bottom-left-radius: 35px;
-    border-bottom-right-radius: 35px;
-    bottom: 42px;
+	text-align: center;
+	cursor: pointer;
+	width: 79%;
+	left: 11%;
+	border-bottom-left-radius: 35px;
+	border-bottom-right-radius: 35px;
+	bottom: 42px;
 }
-
 .main-page-grid-footer > figcaption {
-    width: 100%;
+	width: 100%;
 }
-
 .dashboard-wrapper {
-    height: 100%;
+	height: 100%;
 }
-
 .sidenav-title {
-    width: 100%;
-    text-align: center;
+	width: 100%;
+	text-align: center;
 }
-
 .sidenav-btn {
-    min-width: 100%;
-    text-transform: none;
-    background-color: white;
-    display: flex;
+	min-width: 100%;
+	text-transform: none;
+	background-color: white;
+	display: flex;
 }
-
 .dashboard-content {
-    /* background-color: white; */
-    background-color: #ededed;
-    border-width: 1px;
-     padding: 10px;
-    /* margin: 10px; */
-    /* width: 98%; */
-    height: 100%;
+	/* background-color: white; */
+	background-color: #ededed;
+	border-width: 1px;
+	padding: 10px;
+	/* margin: 10px; */
+	/* width: 98%; */
+	height: 100%;
 }
-
 .dashboard-top-rounded-toolbar {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
 }
-
 .dashboard-content-wrapper {
-    /*    background-color: #2196F3;*/
-    /*	padding: 10px;*/
-    width: 100%;
-    height: 100%;
+	/*    background-color: #2196F3;*/
+	/*	padding: 10px;*/
+	width: 100%;
+	height: 100%;
 }
-
 .grid-item {
-    border-color: black;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    border-style: solid;
-    border-width: 1px;
-    overflow: auto;
+	border-color: black;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	border-style: solid;
+	border-width: 1px;
+	overflow: auto;
 }
-
 md-menu-item > .md-button {
-    display: flex;
+	display: flex;
 }
-
 .dashboard-layout {
-    height: 100%;
+	height: 100%;
 }
-
 .profile-actions {
-    width: 5%;
-    height: 100%;
+	width: 5%;
+	height: 100%;
 }
-
 .profile-page {
-    text-align: center;
-    font-family: "Times New Roman", Times, serif;
-    padding: 10px;
+	text-align: center;
+	font-family: "Times New Roman", Times, serif;
+	padding: 10px;
 }
-
 .padding {
-    padding: 15px;
+	padding: 15px;
 }
-
 .profile-content-item {
-    margin-left: 10px;
-    margin-right: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
-
 .dashboard-list-text {
-    font-family: cursive;
+	font-family: cursive;
 }
-
 .dashboard-special-list-item {
-    background-color: whitesmoke;
+	background-color: whitesmoke;
 }
-
 .hebrew-text {
-    text-align: right;
+	text-align: right;
 }
-
 .renovation-map {
-    padding: 10px;
-    border-color: black;
-    border-style: solid;
-    border-width: 1px;
-    height: 100%;
+	padding: 10px;
+	border-color: black;
+	border-style: solid;
+	border-width: 1px;
+	height: 100%;
 }
-
 .renovation-page-tab-wrapper {
-    width: 99%;
+	width: 99%;
 }
-
 .renovation-page-chat-wrapper {
-    width: 5%;
-    margin-left: 10px;
-    margin-right: 10px;
+	width: 5%;
+	margin-left: 10px;
+	margin-right: 10px;
 }
-
 .renovation-page-map-wrapper {
-    width: 50%;
-    min-width: 500px;
-    min-height: 500px;
+	width: 50%;
+	min-width: 500px;
+	min-height: 500px;
 }
-
 .renovation-page-tab-control,
 .renovation-page-tab-control .renovation-header {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    /*    padding-top: 5%;*/
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	/*    padding-top: 5%;*/
 }
-
 .renovation-header {
-    background-image: url("/assets/img/renoPageHeader2.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    text-align: center;
-    position: relative;
+	background-image: url("/assets/img/renoPageHeader2.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	text-align: center;
+	position: relative;
 }
-
 .renovation-header .chat-button {
-    position: absolute;
-    bottom: 0;
-    background-color: white;
+	position: absolute;
+	bottom: 0;
+	background-color: white;
 }
-
 .renovation-page.grid-tab {
-    max-height: 100%;
-    max-width: 100%;
-    height: 100%;
-    width: 100%;
-    overflow: auto;
+	max-height: 100%;
+	max-width: 100%;
+	height: 100%;
+	width: 100%;
+	overflow: auto;
 }
-
 .box h3 {
-    text-align: center;
-    position: relative;
-    top: 80px;
+	text-align: center;
+	position: relative;
+	top: 80px;
 }
-
 .box {
-    /*	width:70%;*/
-    /*	height:200px;*/
-    background: white;
-    margin: 40px auto;
+	/*	width:70%;*/
+	/*	height:200px;*/
+	background: white;
+	margin: 40px auto;
 }
-
 .renovation-task {
-    margin-right: 8%;
-    width: 100%;
+	margin-right: 8%;
+	width: 100%;
 }
-
 .renovation-inner-grid-list {
-    overflow: auto;
+	overflow: auto;
 }
-
 .stages-controls {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    width: 100%;
-    top: 45px;
-    padding: 0 5px;
-    left: 0;
+	display: flex;
+	align-items: center;
+	position: absolute;
+	width: 100%;
+	top: 45px;
+	padding: 0 5px;
+	left: 0;
 }
 
 /*==================================================
@@ -215,27 +181,25 @@ md-menu-item > .md-button {
  * ===============================================*/
 
 .effect7 {
-    position: relative;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+	position: relative;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
-
 .effect7:before,
 .effect7:after {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-    top: 0;
-    bottom: 0;
-    left: 10px;
-    right: 10px;
-    border-radius: 100px / 10px;
+	content: "";
+	position: absolute;
+	z-index: -1;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+	top: 0;
+	bottom: 0;
+	left: 10px;
+	right: 10px;
+	border-radius: 100px / 10px;
 }
-
 .effect7:after {
-    right: 10px;
-    left: auto;
-    transform: skew(8deg) rotate(3deg);
+	right: 10px;
+	left: auto;
+	transform: skew(8deg) rotate(3deg);
 }
 
 /*==================================================
@@ -243,143 +207,121 @@ md-menu-item > .md-button {
  * ===============================================*/
 
 .pinned-frame {
-    border-color: burlywood;
-    border-width: 7px;
-    border-style: solid;
-    border-radius: 5px;
-    min-height: 100px;
-    min-weight: 100px;
-    padding: 15px;
+	border-color: burlywood;
+	border-width: 7px;
+	border-style: solid;
+	border-radius: 5px;
+	min-height: 100px;
+	min-weight: 100px;
+	padding: 15px;
 }
-
 .pinned-message {
-    background-color: #ffffb3;
-    min-height: 50px;
-    min-width: 50px;
+	background-color: #ffffb3;
+	min-height: 50px;
+	min-width: 50px;
 }
-
 .pinned-wrapper {
-    margin-left: 5px;
-    margin-right: 5px;
-    position: relative;
+	margin-left: 5px;
+	margin-right: 5px;
+	position: relative;
 }
-
 .pinned-delete-button {
-    position: absolute;
-    top: 10px;
-    left: 0;
+	position: absolute;
+	top: 10px;
+	left: 0;
 }
-
 .pinned-edit-button {
-    position: absolute;
-    top: 45px;
-    left: 0;
+	position: absolute;
+	top: 45px;
+	left: 0;
 }
-
 .task-edit-button {
-    position: absolute;
-    top: 45px;
-    left: 0;
+	position: absolute;
+	top: 45px;
+	left: 0;
 }
-
 .task-delete-button {
-    position: absolute;
-    top: 10px;
-    left: 0;
+	position: absolute;
+	top: 10px;
+	left: 0;
 }
-
 .task-assign-button {
-    position: absolute;
-    top: -10px;
-    left: 45px;
+	position: absolute;
+	top: -10px;
+	left: 45px;
 }
-
 .task-done-icon {
-    position: absolute;
-    /*top: 85px;*/
-    bottom: 15px;
-    left: 20px;
-    color: #4CAF50;
-    font-size: 36px;
+	position: absolute;
+	/*top: 85px;*/
+	bottom: 15px;
+	left: 20px;
+	color: #4CAF50;
+	font-size: 36px;
 }
-
 .renovation-user > .arriving-icon {
-    color: #4CAF50;
-    position: absolute;
-    top: 18px;
-    left: 45px;
+	color: #4CAF50;
+	position: absolute;
+	top: 18px;
+	left: 45px;
 }
-
 .arriving-icon > .icon {
-    font-size: 36px;
+	font-size: 36px;
 }
-
 .arriving-icon > .text {
-    font-size: 18px;
+	font-size: 18px;
 }
-
 .box-header {
-    /*	margin-left: 5%; */
-    margin-right: 5%;
-    align-items: center;
+	/*	margin-left: 5%; */
+	margin-right: 5%;
+	align-items: center;
 }
-
 .stages-text {
-    text-align: center;
-    font-weight: bold;
-    margin: 10px 0;
-    font-size: 1.2rem;
+	text-align: center;
+	font-weight: bold;
+	margin: 10px 0;
+	font-size: 1.2rem;
 }
-
 .stage-images {
-    margin: 10px 0;
-    height: 100%;
-    overflow: hidden;
+	margin: 10px 0;
+	height: 100%;
+	overflow: hidden;
 }
-
 .renovation-tabs {
-    background-color: white;
+	background-color: white;
 }
-
 .renovation-tabs md-grid-list {
-    background-color: #ededed;
+	background-color: #ededed;
 }
-
 .box-wrapper {
-    margin: 5px;
-    /*height: 100%;*/
-    width: 100%;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-    background-color: white;
-    overflow-x: hidden;
-    position: relative;
+	margin: 5px;
+	/*height: 100%;*/
+	width: 100%;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+	background-color: white;
+	overflow-x: hidden;
+	position: relative;
 }
-
 .shadow-text {
-    /*    margin: 50px auto;*/
-    text-align: center;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    color: white;
-    opacity: 1;
+	/*    margin: 50px auto;*/
+	text-align: center;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+	color: white;
+	opacity: 1;
 }
-
 .shadow-text.medium {
-    font: 700 40px 'Bitter';
+	font: 700 40px 'Bitter';
 }
-
 .shadow-text.large {
-    font: 700 80px 'Bitter';
+	font: 700 80px 'Bitter';
 }
-
 .dialog.list {
-    overflow: auto;
-    max-height: 30%;
+	overflow: auto;
+	max-height: 30%;
 }
-
 .rsvp-button {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
 }
 
 /* ==================================
@@ -387,32 +329,28 @@ md-menu-item > .md-button {
  * ================================== */
 
 .dashboard-chat-sidenav {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 100;
-    height: 100%;
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 100;
+	height: 100%;
 }
-
 .dashboard-chat-sidenav md-sidenav {
-    max-width: inherit;
-    width: 33vw;
+	max-width: inherit;
+	width: 33vw;
 }
-
 @media only screen and (min-width: 960px) and (max-width: 1280px) {
-    .dashboard-chat-sidenav md-sidenav {
-        width: 50vw;
-    }
+	.dashboard-chat-sidenav md-sidenav {
+		width: 50vw;
+	}
 }
-
 @media only screen and (max-width: 960px) {
-    .dashboard-chat-sidenav md-sidenav {
-        width: 100vw;
-    }
+	.dashboard-chat-sidenav md-sidenav {
+		width: 100vw;
+	}
 }
-
 .dashboard-chat-sidenav md-backdrop {
-    position: fixed;
+	position: fixed;
 }
 
 /* ==================================
@@ -421,120 +359,120 @@ md-menu-item > .md-button {
 
 .dashboard-view-slide-top.ng-enter,
 .dashboard-view-slide-top.ng-leave {
-    transition: all 500ms ease;
-    -webkit-transition: all 500ms ease;
-    -moz-transition: all 500ms ease;
+	transition: all 500ms ease;
+	-webkit-transition: all 500ms ease;
+	-moz-transition: all 500ms ease;
 }
-
 .dashboard-view-slide-top.ng-enter {
-    position: absolute;
-    width: 98%;
-    opacity: 0;
-    transform: translateY(-100%);
+	position: absolute;
+	width: 98%;
+	opacity: 0;
+	transform: translateY(-100%);
 }
-
 .dashboard-view-slide-top.ng-enter-active {
-    opacity: 1;
-    transform: translateX(0);
+	opacity: 1;
+	transform: translateX(0);
 }
-
 .dashboard-view-slide-top.ng-leave {
-    position: absolute;
-    width: 98%;
-    opacity: 1;
-    transform: translateY(0);
+	position: absolute;
+	width: 98%;
+	opacity: 1;
+	transform: translateY(0);
 }
-
 .dashboard-view-slide-top.ng-leave-active {
-    opacity: 0;
-    transform: translateY(-100%);
+	opacity: 0;
+	transform: translateY(-100%);
 }
 
 /***************************/
+
+
 /***** Main page links *****/
+
+
 /***************************/
 
 .dashboard-link {
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
+	position: relative;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
 }
-
 .dashboard-link img {
-    height: 100%;
-    width: 100%;
+	height: 100%;
+	width: 100%;
 }
-
 .dashboard-link .link-footer {
-    pointer-events: none;
-    position: absolute;
-    line-height: 1;
-    text-align: center;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 15px;
-    padding: 0 10px;
-    bottom: 11%;
-    left: 12%;
-    width: 72%;
-    margin: auto;
+	pointer-events: none;
+	position: absolute;
+	line-height: 1;
+	text-align: center;
+	color: white;
+	background-color: rgba(0, 0, 0, 0.3);
+	border-radius: 15px;
+	padding: 0 10px;
+	bottom: 11%;
+	left: 12%;
+	width: 72%;
+	margin: auto;
 }
-
 .dashboard-link .link-footer h4,
 .dashboard-link .link-footer h3 {
-    margin: 10px 0;
+	margin: 10px 0;
 }
 
 /**** Dashboard Lists *****/
+
 .dashboard-list {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
 }
-
 .dashboard-list md-toolbar {
-    border-top-right-radius: 15px;
-    border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	border-top-left-radius: 15px;
 }
-
 .dashboard-list .md-toolbar-tools {
-    overflow: hidden;
+	overflow: hidden;
 }
-
 .dashboard-list .md-toolbar-tools md-input-container {
-    max-height: 40px;
+	max-height: 40px;
 }
-
 .dashboard-list .md-toolbar-tools md-input-container input {
-    max-width: 100%;
+	max-width: 100%;
 }
-
 .dashboard-list .md-toolbar-tools > .md-button.md-icon-button {
-    min-width: 40px;
+	min-width: 40px;
 }
-
 .dashboard-list .md-toolbar-tools .toolbar-search {
-    display: flex;
+	display: flex;
 }
 
 /***** Small and below styles *****/
+
 @media only screen and (max-width: 960px) {
-    .dashboard-list {
-        margin-bottom: 10px;
-    }
+	.dashboard-list {
+		margin-bottom: 10px;
+	}
 }
 
+
+.finalize-renovation-text{
+	text-align: center;
+}
 /**** Renovation Layout *****/
+
+.renovation-list-text {
+	font-size: 18px;
+	font-weight: bold;
+}
 div.renovation-tab-content {
-    background-color: #ededed;
+	background-color: #ededed;
 }
-
 div.renovation-tab-content .renovation-list {
-    padding: 10px;
-    max-height: 70vh;
+	padding: 10px;
+	max-height: 70vh;
 }
-
 div.renovation-tab-content .renovation-list .md-button.md-icon-button {
-    margin: 2px 6px;
+	margin: 2px 6px;
 }

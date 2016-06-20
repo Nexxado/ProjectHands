@@ -1,29 +1,29 @@
 angular.module("ProjectHands.dashboard")
 
-.controller("DashboardCalendarController", function ($scope, $compile, uiCalendarConfig, $mdMedia, $mdDialog, RenovationService, $state) {
+.controller("DashboardCalendarController", function ($scope, $compile, uiCalendarConfig, $mdMedia, $mdDialog, RenovationService, $state, $window) {
 
 
 	$scope.eventSources = [];
 	$scope.eventSources2 = [];
-	
+
 	/* event source that contains custom events on the scope */
 	/*Event Format: {title: '', start: new Date(year, month, day), end: new Date(year,month,day), allDay: Bool},*/
 	$scope.events = [];
 	$scope.allRenovations = [];
 
-	$scope.renderAllEvents = function(){
+	$scope.renderAllEvents = function () {
 		console.log("Rendered All Events");
-			uiCalendarConfig.calendars.renoCalendar.fullCalendar('removeEvents');
-			uiCalendarConfig.calendars.renoCalendar.fullCalendar('addEventSource', $scope.calEventsExt);
+		uiCalendarConfig.calendars.renoCalendar.fullCalendar('removeEvents');
+		uiCalendarConfig.calendars.renoCalendar.fullCalendar('addEventSource', $scope.calEventsExt);
 	}
-	
-	
+
+
 	RenovationService.getAll()
 		.$promise.then(function (result) {
-		console.log("get all was called!@#!#!@#@#!@#");
+			console.log("get all was called!@#!#!@#@#!@#");
 			$scope.allRenovations = [];
-			 for(var j = 0; j < result.length; j++){
-				if(result[j].addr !== null){
+			for (var j = 0; j < result.length; j++) {
+				if (result[j].addr !== null) {
 					$scope.allRenovations.push(result[j]);
 				}
 			}
@@ -39,10 +39,10 @@ angular.module("ProjectHands.dashboard")
 					addr: $scope.allRenovations[i].addr
 				})
 			}
-		
+
 			$scope.renderAllEvents();
 		}).catch(function (error) {
-		console.log("get all was called ERROR!@#!#!@#@#!@#");
+			console.log("get all was called ERROR!@#!#!@#@#!@#");
 			console.log("Error: ", error);
 		});
 
@@ -81,10 +81,14 @@ angular.module("ProjectHands.dashboard")
 	};
 	/* alert on eventClick */
 	$scope.alertOnEventClick = function (date, jsEvent, view) {
-		$state.go('dashboard.renovation', {city: date.addr.city, street: date.addr.street, num: date.addr.num} );
+		$state.go('dashboard.renovation', {
+			city: date.addr.city,
+			street: date.addr.street,
+			num: date.addr.num
+		});
 		console.log("date is ", date, " jsEvent is: ", jsEvent, " view is: ", view);
 		console.log("the addr is ", date.addr);
-		
+
 	};
 	/* alert on Drop */
 	$scope.alertOnDrop = function (event, delta, revertFunc, jsEvent, ui, view) {
@@ -136,7 +140,7 @@ angular.module("ProjectHands.dashboard")
 	/* config object */
 	$scope.uiConfig = {
 		calendar: {
-			height: 850,
+			height: window.innerWidth/4 + window.innerHeight/2,
 			editable: false,
 			header: {
 				left: '',
@@ -152,6 +156,11 @@ angular.module("ProjectHands.dashboard")
 		}
 	};
 
+	$scope.resizeCalendar = function () {
+		$scope.uiConfig.calendar.height = window.innerWidth/3 + window.innerHeight/4;
+	}
+	
+
 	//$scope.changeLang = function () {
 	// 	if($scope.changeTo === 'Hebrew'){
 	//		$scope.uiConfig.calendar.dayNames = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
@@ -165,9 +174,9 @@ angular.module("ProjectHands.dashboard")
 	//	}
 	//};
 	/* event sources array*/
-//	$scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
-//	$scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
+	//	$scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
+	//	$scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
 
-	
-	
+
+
 });

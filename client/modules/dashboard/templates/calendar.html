@@ -5,8 +5,13 @@
 			<span translate>SCHEDULE</span>
 		</div>
 	</md-toolbar>
-	<md-button ng-click="changeView('agendaWeek', 'renoCalendar')" class="md-primary">שינוי לשבועי</md-button>
-	<md-button ng-click="changeView('agendaDay', 'renoCalendar')" class="md-primary">שינוי ליומי</md-button>
-	<md-button ng-click="changeView('month', 'renoCalendar')" class="md-primary">שינוי לחודשי</md-button>
+	<div layout="column" layout-align="center center">
+		<div>תצוגות לוח שנה</div>
+		<div layout="row">
+			<md-button ng-click="changeView('agendaWeek', 'renoCalendar')" class="md-primary">שבועי</md-button>
+			<md-button ng-click="changeView('agendaDay', 'renoCalendar')" class="md-primary">יומי</md-button>
+			<md-button ng-click="changeView('month', 'renoCalendar')" class="md-primary">חודשי</md-button>
+		</div>
+	</div>
 	<div calendar="renoCalendar" ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
 </div>
