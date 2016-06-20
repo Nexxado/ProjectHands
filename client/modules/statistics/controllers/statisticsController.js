@@ -14,6 +14,12 @@ angular.module('ProjectHands.statistics')
         $scope.fixDate = function (date) {
             return date.split("T")[0];
         };
+
+        //if its no data in the filed print no data
+        $scope.noData = function (s) {
+            if (s === '')
+                return 'NO DATA';
+        };
         $scope.submit = function () {
 
             if ($scope.startDateForm.$invalid || $scope.endDateForm.$invalid)
