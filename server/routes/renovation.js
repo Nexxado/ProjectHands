@@ -42,6 +42,23 @@ router.get('/get_all', middleware.ensureAuthenticated, middleware.ensurePermissi
     });
 });
 
+/**
+ * Get all future renovations
+ */
+router.get('/get_future', middleware.ensureAuthenticated, middleware.ensurePermission,  function (req, res) {
+
+    var date = new Date(new Date().getTime() - (24 * 60 * 60 * 1000));
+
+    mongoUtils.query(COLLECTIONS.RENOVATIONS, {date: {$gte: date.toISOString()}}, function (error, result) {
+        if (error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to find renovations"});
+        else if (!result.length)
+            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "No renovations found"});
+
+        res.send(result);
+    });
+});
+
 
 /**
  * Create a renovation
@@ -145,6 +162,37 @@ router.post('/assign_tool', middleware.ensureAuthenticated, middleware.ensurePer
 
                 if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign tool"});
+
+                res.send({success: true});
+            });
+
+    });
+
+/**
+ * Assign tool to shed
+ */
+router.post('/shed_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureRenovationExists, function (req, res) {
+
+        var renovation = {
+            addr: {
+                city: req.body.city,
+                street: req.body.street,
+                num: req.body.num
+            },
+            "toolsNeeded.name": req.body.tool.name
+        };
+
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {
+                $set: {
+                    "toolsNeeded.$.being_brought": "true",
+                    "toolsNeeded.$.assigned": "shed"
+                }
+            }, {},
+            function (error, result) {
+
+                if (error || result.result.nModified === 0)
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign tool to shed"});
 
                 res.send({success: true});
             });

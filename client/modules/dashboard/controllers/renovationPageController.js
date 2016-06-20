@@ -6,7 +6,7 @@ angular.module('ProjectHands.dashboard')
 .controller('RenovationPageController', function ($scope, $stateParams, $mdSidenav, $mdMedia, $mdDialog,
 												  RenovationService, TeamService, UserService, DatabaseService, COLLECTIONS, UtilsService) {
 
-	
+
 	console.log("My role is: ", $scope.user.role);
 	/******Variables Declarations******/
 	$scope.thisRenovation = "";
@@ -44,7 +44,7 @@ angular.module('ProjectHands.dashboard')
 	.catch(function(error){
 		console.log("Error: ", error);
 	});
-	
+
 	/******Getters******/
 
 	$scope.checkUserInTeam = function(email){
@@ -58,7 +58,7 @@ angular.module('ProjectHands.dashboard')
 			return false;
 		}
 	}
-	
+
 	$scope.checkMemberFound = function(name){
 		return name !== null;
 	};
@@ -161,7 +161,7 @@ angular.module('ProjectHands.dashboard')
 		$scope.needToAssignTeam = ($scope.renovationCurrentStage === $scope.defaultRenoStages[2]);
 		$scope.renovationProgress = Math.floor((100 / ($scope.renovationStages.length)) * ($scope.renovationStages.indexOf($scope.renovationCurrentStage) + 1));
 		$scope.getStageImage();
-		
+
 		console.log("reno stage ", $scope.renovationCurrentStage);
 	};
 
@@ -701,7 +701,7 @@ angular.module('ProjectHands.dashboard')
                     street: reno.addr.street,
                     num: reno.addr.num
                 };
-			
+
 			/*COMMENT THIS SECTION WHEN ROUTES FIX DATE ISSUE*/
 // 				 DatabaseService.update(
 // 				 		COLLECTIONS.RENOVATIONS, {
@@ -728,8 +728,8 @@ angular.module('ProjectHands.dashboard')
 // 					});
 //				 
 				/*END OF SECTION*/
-				 
-				 
+
+
 				//TODO Update renovation date in the database
                 TeamService.assignToRenovation(renovationAddedDetails.team.name, renovationAddedDetails.date, addr)
 					.$promise.then(function (result) {
@@ -969,7 +969,7 @@ angular.module('ProjectHands.dashboard')
 		return tool.assigned === "shed";
 	};
 
-	$scope.bringTool = function(tool, email){
+	$scope.bringTool = function(tool, assignee){
 		// var reno = $scope.thisRenovation;
 		// DatabaseService.update(
 		// 	COLLECTIONS.RENOVATIONS, {
@@ -986,14 +986,29 @@ angular.module('ProjectHands.dashboard')
 		// 		}
 		// 	}, {}
 		// )
-		RenovationService.assignTool($scope.thisRenovation.addr, tool, email)
-		.$promise.then(function (result) {
-			tool.being_brought = "true";
-			tool.assigned = email;
-			console.log("tool marked as being brought");
-		}).catch(function (error) {
-			console.log("Error: ", error);
-		});
+
+		if(assignee === 'shed') {
+			RenovationService.shedTool($scope.thisRenovation.addr, tool).$promise
+                .then(function (result) {
+                    tool.being_brought = "true";
+                    tool.assigned = assignee;
+                    console.log("tool marked as being brought");
+                })
+                .catch(function (error) {
+                    console.log("Error: ", error);
+                });
+
+		} else {
+            RenovationService.assignTool($scope.thisRenovation.addr, tool, assignee).$promise
+                .then(function (result) {
+                    tool.being_brought = "true";
+                    tool.assigned = assignee;
+                    console.log("tool marked as being brought");
+                })
+                .catch(function (error) {
+                    console.log("Error: ", error);
+                });
+		}
 	};
 
 	$scope.dontBringTool = function(tool){

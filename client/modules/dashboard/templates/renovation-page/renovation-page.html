@@ -42,13 +42,15 @@
 
                     <!--Renovation Tabs - Main part and Secondary part -->
                     <md-tabs md-dynamic-height md-border-bottom md-stretch-tabs="always" md-swipe-content
-                             class="renovation-tabs" dir="ltr">
+                             class="renovation-tabs">
                         <!--First Tab - Renovation Details -->
                         <md-tab label="פרטי שיפוץ" flex>
-                            <div class="renovation-tab-content" flex layout="row" layout-align="center none" layout-align-gt-sm="none none" layout-wrap ng-cloak>
+                            <div class="renovation-tab-content" flex layout="row" layout-align="center none"
+                                 layout-align-gt-sm="none none" layout-wrap ng-cloak>
 
                                 <!--Renovation Team Box	-->
-                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33" flex-gt-md="25">
+                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33"
+                                     flex-gt-md="25">
                                     <div class="box-wrapper renovation-inner-grid-list">
 
                                         <!--TODO: make sure to disable tab if team not assigned yet-->
@@ -90,26 +92,30 @@
                                 </div>
 
                                 <!--Pinned Messages Box	-->
-                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33" flex-gt-md="25">
+                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33"
+                                     flex-gt-md="35">
                                     <div class="box-wrapper renovation-inner-grid-list">
                                         <div layout="row" class="box-header">
                                             <h3>הודעות חשובות</h3>
                                             <span flex></span>
 
-                                            <md-button ng-click="addPinned($event)" class="md-primary md-icon-button" layout="row"
+                                            <md-button ng-click="addPinned($event)" class="md-primary md-icon-button"
+                                                       layout="row"
                                                        layout-align="center center"
                                                        ng-hide="user.role === ROLES.VOLUNTEER">
                                                 <md-icon class="material-icons">add_circle</md-icon>
                                             </md-button>
 
                                             <md-button ng-hide="user.role === ROLES.VOLUNTEER || editMessagesMode"
-                                                       ng-click="editMessages()" class="md-primary md-icon-button" layout="row"
+                                                       ng-click="editMessages()" class="md-primary md-icon-button"
+                                                       layout="row"
                                                        layout-align="center center">
-                                                <md-icon class="material-icons">mode_edit</i>
+                                                <md-icon class="material-icons">mode_edit</md-icon>
                                             </md-button>
 
                                             <md-button ng-show="user.role !== ROLES.VOLUNTEER && editMessagesMode"
-                                                       ng-click="editMessages()" class="md-accent md-icon-button" layout="row"
+                                                       ng-click="editMessages()" class="md-accent md-icon-button"
+                                                       layout="row"
                                                        layout-align="center center">
                                                 <md-icon class="material-icons">mode_edit</md-icon>
                                             </md-button>
@@ -144,7 +150,8 @@
                                 </div>
 
                                 <!--Renovation Stage Box -->
-                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33" flex-gt-md="25">
+                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33"
+                                     flex-gt-md="25">
                                     <div class="box-wrapper" layout="column">
                                         <div layout="row" class="box-header">
                                             <h3>התקדמות השיפוץ</h3>
@@ -158,13 +165,15 @@
                                             </md-button>
 
                                             <md-button ng-hide="user.role === ROLES.VOLUNTEER || editStagesMode"
-                                                       ng-click="enableEditStages()" class="md-primary md-icon-button" layout="row"
+                                                       ng-click="enableEditStages()" class="md-primary md-icon-button"
+                                                       layout="row"
                                                        layout-align="center center">
                                                 <md-icon class="material-icons">pan_tool</md-icon>
                                             </md-button>
 
                                             <md-button ng-show="user.role !== ROLES.VOLUNTEER && editStagesMode"
-                                                       ng-click="disableEditStages()" class="md-accent md-icon-button" layout="row"
+                                                       ng-click="disableEditStages()" class="md-accent md-icon-button"
+                                                       layout="row"
                                                        layout-align="center center">
                                                 <md-icon class="material-icons">pan_tool</md-icon>
                                             </md-button>
@@ -216,28 +225,33 @@
                         <!--Second Tab - Renovation Sub Details -->
                         <md-tab label="פרטים נוספים">
                             <!--The Grid list for all Boxes in page -->
-                            <div class="renovation-tab-content" flex layout="row" layout-align="center none" layout-align-gt-sm="none none" layout-wrap>
+                            <div class="renovation-tab-content" flex layout="row" layout-align="center none"
+                                 layout-align-gt-sm="none none" layout-wrap>
 
                                 <!--Tasks Box -->
-                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33" flex-gt-md="25">
+                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33"
+                                     flex-gt-md="35">
 
                                     <div class="box-wrapper renovation-inner-grid-list">
                                         <div layout="row" class="box-header">
                                             <h3>משימות</h3>
                                             <span flex></span>
 
-                                            <md-button ng-click="addTask($event)" class="md-primary md-icon-button" layout="row"
+                                            <md-button ng-click="addTask($event)" class="md-primary md-icon-button"
+                                                       layout="row"
                                                        layout-align="center center"
                                                        ng-hide="user.role === ROLES.VOLUNTEER">
                                                 <md-icon class="material-icons">add_circle</md-icon>
                                             </md-button>
                                             <md-button ng-hide="editTasksMode || user.role === ROLES.VOLUNTEER"
-                                                       ng-click="editTasks()" class="md-primary md-icon-button" layout="row"
+                                                       ng-click="editTasks()" class="md-primary md-icon-button"
+                                                       layout="row"
                                                        layout-align="center center">
                                                 <md-icon class="material-icons">mode_edit</md-icon>
                                             </md-button>
                                             <md-button ng-show="editTasksMode && user.role !== ROLES.VOLUNTEER"
-                                                       ng-click="editTasks()" class="md-accent md-icon-button" layout="row"
+                                                       ng-click="editTasks()" class="md-accent md-icon-button"
+                                                       layout="row"
                                                        layout-align="center center">
                                                 <md-icon class="material-icons">mode_edit</md-icon>
                                             </md-button>
@@ -289,13 +303,16 @@
                                                                            ng-show="user.email === task.assigned_email">
                                                                     <div layout="row" layout-align="center center">
                                                                         <md-icon class="material-icons"
-                                                                           style="padding-left:5px;">thumb_up</md-icon> סיימתי
+                                                                                 style="padding-left:5px;">thumb_up
+                                                                        </md-icon>
+                                                                        סיימתי
                                                                         משימה
                                                                     </div>
                                                                 </md-button>
                                                             </div>
                                                             <md-icon class="material-icons task-done-icon"
-                                                               ng-show="checkTaskDone(task.done)">done</md-icon>
+                                                                     ng-show="checkTaskDone(task.done)">done
+                                                            </md-icon>
                                                         </div>
                                                         <md-divider></md-divider>
                                                     </div>
@@ -306,25 +323,29 @@
                                 </div>
 
                                 <!--Tools Box -->
-                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33" flex-gt-md="25">
+                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33"
+                                     flex-gt-md="40">
 
                                     <div class="box-wrapper renovation-inner-grid-list">
                                         <div layout="row" class="box-header">
                                             <h3>כלים</h3>
                                             <span flex></span>
 
-                                            <md-button ng-click="addTool($event)" class="md-primary md-icon-button" layout="row"
+                                            <md-button ng-click="addTool($event)" class="md-primary md-icon-button"
+                                                       layout="row"
                                                        layout-align="center center"
                                                        ng-hide="user.role === ROLES.VOLUNTEER">
                                                 <md-icon class="material-icons">add_circle</md-icon>
                                             </md-button>
                                             <md-button ng-hide="editToolsMode || user.role === ROLES.VOLUNTEER"
-                                                       ng-click="editTools()" class="md-primary md-icon-button" layout="row"
+                                                       ng-click="editTools()" class="md-primary md-icon-button"
+                                                       layout="row"
                                                        layout-align="center center">
                                                 <md-icon class="material-icons">mode_edit</md-icon>
                                             </md-button>
                                             <md-button ng-show="editToolsMode && user.role !== ROLES.VOLUNTEER"
-                                                       ng-click="editTools()" class="md-accent md-icon-button" layout="row"
+                                                       ng-click="editTools()" class="md-accent md-icon-button"
+                                                       layout="row"
                                                        layout-align="center center">
                                                 <md-icon class="material-icons">mode_edit</md-icon>
                                             </md-button>
@@ -359,54 +380,67 @@
                                                                     ng-show="checkMemberFound(getMemberName(tool.assigned))">{{getMemberName(tool.assigned)}}</a><a
                                                                     ng-show="isFromShed(tool)">מהמחסן</a></p>
 
-                                                            <div ng-hide="checkToolBeingBrought(tool.being_brought)">
-                                                                <md-button layout="row"
-                                                                           ng-click="bringTool(tool, user.email)"
-                                                                           class="md-raised md-primary">
-                                                                    <div layout="row" layout-align="center center">
-                                                                        <md-icon class="material-icons"
-                                                                           style="padding-left:5px;">thumb_up</md-icon> מביא
-                                                                        את הכלי
-                                                                    </div>
-                                                                </md-button>
-                                                            </div>
-
-                                                            <div ng-show="checkToolBeingBrought(tool.being_brought) && user.email === tool.assigned">
-                                                                <md-button layout="row" ng-click="dontBringTool(tool)"
-                                                                           class="md-raised md-accent">
-                                                                    <div layout="row" layout-align="center center">
-                                                                        <md-icon class="material-icons"
-                                                                           style="padding-left:5px;">thumb_down</md-icon> לא
-                                                                        מביא את הכלי
-                                                                    </div>
-                                                                </md-button>
-                                                            </div>
-                                                            <div ng-hide="user.role === ROLES.VOLUNTEER">
+                                                            <div layout="row" layout-wrap style="margin-bottom: 5px;">
                                                                 <div ng-hide="checkToolBeingBrought(tool.being_brought)">
-                                                                    <md-button layout="row"
-                                                                               ng-click="bringTool(tool, 'shed')"
-                                                                               class="md-raised md-primary">
+                                                                    <md-button
+                                                                            ng-click="bringTool(tool, user.email)"
+                                                                            class="md-raised md-primary">
                                                                         <div layout="row" layout-align="center center">
                                                                             <md-icon class="material-icons"
-                                                                               style="padding-left:5px;">thumb_up</md-icon>
-                                                                            מהמחסן
+                                                                                     style="padding-left:5px;">thumb_up
+                                                                            </md-icon>
+                                                                            מביא
+                                                                            את הכלי
                                                                         </div>
                                                                     </md-button>
                                                                 </div>
-                                                                <div ng-show="checkToolBeingBrought(tool.being_brought) && isFromShed(tool) && user.role !== ROLES.VOLUNTEER">
-                                                                    <md-button layout="row"
-                                                                               ng-click="dontBringTool(tool)"
+
+                                                                <div ng-show="checkToolBeingBrought(tool.being_brought) && user.email === tool.assigned">
+                                                                    <md-button ng-click="dontBringTool(tool)"
                                                                                class="md-raised md-accent">
                                                                         <div layout="row" layout-align="center center">
                                                                             <md-icon class="material-icons"
-                                                                               style="padding-left:5px;">thumb_down</md-icon>
-                                                                            לא מהמחסן
+                                                                                     style="padding-left:5px;">
+                                                                                thumb_down
+                                                                            </md-icon>
+                                                                            לא
+                                                                            מביא את הכלי
                                                                         </div>
                                                                     </md-button>
                                                                 </div>
+                                                                <div ng-hide="user.role === ROLES.VOLUNTEER">
+                                                                    <div ng-hide="checkToolBeingBrought(tool.being_brought)">
+                                                                        <md-button
+                                                                                ng-click="bringTool(tool, 'shed')"
+                                                                                class="md-raised md-primary">
+                                                                            <div layout="row"
+                                                                                 layout-align="center center">
+                                                                                <md-icon class="material-icons"
+                                                                                         style="padding-left:5px;">
+                                                                                    thumb_up
+                                                                                </md-icon>
+                                                                                מהמחסן
+                                                                            </div>
+                                                                        </md-button>
+                                                                    </div>
+                                                                    <div ng-show="checkToolBeingBrought(tool.being_brought) && isFromShed(tool) && user.role !== ROLES.VOLUNTEER">
+                                                                        <md-button
+                                                                                ng-click="dontBringTool(tool)"
+                                                                                class="md-raised md-accent">
+                                                                            <div layout="row"
+                                                                                 layout-align="center center">
+                                                                                <md-icon class="material-icons"
+                                                                                         style="padding-left:5px;">
+                                                                                    thumb_down
+                                                                                </md-icon>
+                                                                                לא מהמחסן
+                                                                            </div>
+                                                                        </md-button>
+                                                                    </div>
+                                                                </div>
+                                                                <i class="material-icons task-done-icon"
+                                                                   ng-show="checkToolBeingBrought(tool.being_brought)">thumb_up</i>
                                                             </div>
-                                                            <i class="material-icons task-done-icon"
-                                                               ng-show="checkToolBeingBrought(tool.being_brought)">thumb_up</i>
                                                         </div>
                                                         <md-divider></md-divider>
                                                     </div>
@@ -416,7 +450,8 @@
                                     </div>
                                 </div>
                                 <!--Renovation Map Box -->
-                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33" flex-gt-md="25">
+                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33"
+                                     flex-gt-md="25">
                                     <div layout="column" class="box-wrapper">
                                         <div layout="row" layout-align="center center"
                                              style="height: 100%; padding:1px;">

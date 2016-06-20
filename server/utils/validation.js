@@ -159,7 +159,7 @@ function isEmpty(string) {
     return string === '';
 }
 
-
+//TODO this code needs to be optimized - for realz!
 /**
  * Middleware to validate request params according to request path
  */
@@ -223,6 +223,11 @@ validation.validateParams = function(req, res, next) {
         case /renovation\/assign_tool/.test(req.originalUrl):
             if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || typeof req.body.tool === 'undefined' || !validateEmail(req.body.email))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address, tool or user email"});
+            break;
+
+        case /renovation\/shed_tool/.test(req.originalUrl):
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || typeof req.body.tool === 'undefined')
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or tool"});
             break;
 
         case /renovation\/add_task/.test(req.originalUrl):

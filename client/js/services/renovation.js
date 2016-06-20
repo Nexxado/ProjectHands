@@ -29,6 +29,14 @@ angular.module('ProjectHands')
         }
 
         /**
+         * Get all Future(!) renovations in database
+         * @returns {Promise}
+         */
+        function getAllFutureRenovations() {
+            return $resource(baseUrl + '/get_future').query();
+        }
+
+        /**
          * Create Renovation
          * @param city {String}
          * @param street {String}
@@ -86,6 +94,21 @@ angular.module('ProjectHands')
                 num: address.num,
                 tool: tool,
                 email: email
+            });
+        }
+
+        /**
+         * Assign tool to Shed
+         * @param address {object} : renovation's address
+         * @param tool {object} : tool to assign
+         * @returns {Promise}
+         */
+        function shedTool(address, tool) {
+            return $resource(baseUrl + '/shed_tool').save({
+                city: address.city,
+                street: address.street,
+                num: address.num,
+                tool: tool
             });
         }
 
@@ -276,10 +299,12 @@ angular.module('ProjectHands')
         return {
             getRenovation: getRenovation,
             getAll: getAll,
+            getAllFutureRenovations: getAllFutureRenovations,
             create: create,
             rsvp: rsvp,
             addTool: addTool,
             assignTool: assignTool,
+            shedTool: shedTool,
             unassignTool: unassignTool,
             deleteTool: deleteTool,
             addTask: addTask,

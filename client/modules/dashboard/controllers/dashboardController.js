@@ -67,7 +67,8 @@ angular.module('ProjectHands.dashboard')
 	/*Function to get all renovations of Project Hands*/
 	$scope.getRenovations = function () {
 		console.log("called all renovations");
-		RenovationService.getAll()
+		// RenovationService.getAll() //TODO change back to getALL if there are issues
+		RenovationService.getAllFutureRenovations()
 			.$promise.then(function (result) {
 				$scope.renovations = result;
 			}).catch(function (error) {
