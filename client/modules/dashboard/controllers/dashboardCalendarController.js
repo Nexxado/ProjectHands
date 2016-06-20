@@ -8,6 +8,7 @@ angular.module("ProjectHands.dashboard")
 	$scope.events = [];
 	$scope.renovations = [];
 
+
 	RenovationService.getAll()
 		.$promise.then(function (result) {
 
@@ -26,8 +27,6 @@ angular.module("ProjectHands.dashboard")
 		}).catch(function (error) {
 			console.log("Error: ", error);
 		});
-
-
 
 	//$scope.eventSources = [];
 	var date = new Date();

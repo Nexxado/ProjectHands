@@ -700,23 +700,22 @@ angular.module('ProjectHands.dashboard')
                     street: reno.addr.street,
                     num: reno.addr.num
                 };
-				// DatabaseService.update(
-				// 		COLLECTIONS.RENOVATIONS, {
-				// 			addr: {
-				// 				city: reno.addr.city,
-				// 				street: reno.addr.street,
-				// 				num: reno.addr.num
-				// 			}
-				// 		}, {
-				// 			$set: {
-				// 				"team_id": renovationAddedDetails.team._id,
-				// 				"date": renovationAddedDetails.date
-				// 			}
-				// 		}, {}
-				// 	)
-				//TODO Update renovation date in the database
-                TeamService.assignToRenovation(renovationAddedDetails.team.name, addr)
-					.$promise.then(function (result) {
+			
+			/*COMMENT THIS SECTION WHEN ROUTES FIX DATE ISSUE*/
+				 DatabaseService.update(
+				 		COLLECTIONS.RENOVATIONS, {
+				 			addr: {
+				 				city: reno.addr.city,
+				 				street: reno.addr.street,
+				 				num: reno.addr.num
+				 			}
+				 		}, {
+				 			$set: {
+				 				"team_id": renovationAddedDetails.team._id,
+				 				"date": renovationAddedDetails.date
+				 			}
+				 		}, {}
+				 	).$promise.then(function (result) {
 						$scope.thisRenovation.date = renovationAddedDetails.date;
 						$scope.thisRenovation.team = renovationAddedDetails.team;
 						$scope.getRenovationTeam($scope.thisRenovation.team.name);
@@ -726,6 +725,22 @@ angular.module('ProjectHands.dashboard')
 					}).catch(function (error) {
 						console.log("Error: ", error);
 					});
+				 
+				/*END OF SECTION*/
+				 
+				 
+				//TODO Update renovation date in the database
+//                 TeamService.assignToRenovation(renovationAddedDetails.team.name, addr)
+//					.$promise.then(function (result) {
+//						$scope.thisRenovation.date = renovationAddedDetails.date;
+//						$scope.thisRenovation.team = renovationAddedDetails.team;
+//						$scope.getRenovationTeam($scope.thisRenovation.team.name);
+////						$scope.enableEditStages();
+//						$scope.nextStage();
+////						$scope.disableEditStages();
+//					}).catch(function (error) {
+//						console.log("Error: ", error);
+//					});
 				console.log("Dialog finished");
 
 			}, function () {
