@@ -1,57 +1,74 @@
 [
-	{
-		"action": "acl_view_dashboard",
-		"role": "volunteer"
-	} , {
-		"action": "acl_view_edit_homepage",
-		"role": "admin"
-	} , {
-		"action": "acl_change_status",
-		"role": "admin"
-	} , {
-		"action": "acl_data_import_export",
-		"role": "admin"
-	} , {
-		"action": "acl_user_basic",
-		"role": "volunteer"
-	} , {
-		"action": "acl_user_actions",
-		"role": "admin"
-	} , {
-		"action": "acl_renovation_get_info",
-		"role": "volunteer"
-	} , {
-		"action": "acl_renovation_get_all",
-		"role": "admin"
-	} , {
-		"action": "acl_renovation_create",
-		"role": "admin"
-	} , {
-		"action": "acl_renovation_edit",
-		"role": "team_lead"
-	} , {
-		"action": "acl_renovation_rsvp",
-		"role": "volunteer"
-	} , {
-		"action": "acl_team_actions",
-		"role": "admin"
-	} , {
-		"action": "acl_statistics_actions",
-		"role": "admin"
-	} , {
-		"action": "acl_photos_homepage",
-		"role": "admin"
-	} , {
-		"action": "acl_photos_renovation_edit",
-		"role": "team_lead"
-	} , {
-		"action": "acl_photos_renovation_get",
-		"role": "volunteer"
-	} , {
-		"action": "acl_photos_profile",
-		"role": "volunteer"
-	} , {
-		"action": "acl_homepage_actions",
-		"role": "admin"
-	}
+  {
+    "action": "acl_view_dashboard",
+    "role": "volunteer"
+  },
+  {
+    "action": "acl_view_edit_homepage",
+    "role": "admin"
+  },
+  {
+    "action": "acl_change_status",
+    "role": "admin"
+  },
+  {
+    "action": "acl_data_import_export",
+    "role": "admin"
+  },
+  {
+    "action": "acl_user_basic",
+    "role": "volunteer"
+  },
+  {
+    "action": "acl_user_actions",
+    "role": "admin"
+  },
+  {
+    "action": "acl_renovation_get_info",
+    "role": "volunteer"
+  },
+  {
+    "action": "acl_renovation_get_all",
+    "role": "admin"
+  },
+  {
+    "action": "acl_renovation_create",
+    "role": "admin"
+  },
+  {
+    "action": "acl_renovation_edit",
+    "role": "team_lead"
+  },
+  {
+    "action": "acl_renovation_rsvp",
+    "role": "volunteer"
+  },
+  {
+    "action": "acl_team_actions",
+    "role": "admin"
+  },
+  {
+    "action": "acl_statistics_actions",
+    "role": "admin"
+  },
+  {
+    "action": "acl_photos_homepage",
+    "role": "admin"
+  },
+  {
+    "action": "acl_photos_renovation_edit",
+    "role": "team_lead"
+  },
+  {
+    "action": "acl_photos_renovation_get",
+    "role": "volunteer"
+  },
+  {
+    "action": "acl_photos_profile",
+    "role": "volunteer"
+  },
+  {
+    "action": "acl_homepage_actions",
+    "role": "admin"
+  }
 ]

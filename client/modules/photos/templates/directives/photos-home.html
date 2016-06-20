@@ -4,7 +4,7 @@
         <md-icon ng-show="!isEditMode" md-svg-src="assets/icons/ic_mode_edit_black_24px.svg"></md-icon>
         <md-icon ng-show="isEditMode" md-svg-src="assets/icons/ic_done_black_24px.svg"></md-icon>
     </md-button>
-    <div ng-show="isEditMode">
+    <div ng-show="isEditMode" class="toggle-slide-top">
         <!--Drop File:-->
         <div ngf-drop ngf-select ng-model="files" class="drop-box"
              ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
@@ -52,7 +52,7 @@
                              ng-click="showImageDialog($event, img.web_link)" style="cursor: pointer">
 
                         <md-button ng-show="isEditMode" ng-click="deletePhoto(img.file_id, $index)"
-                                   class="md-fab delete-button"
+                                   class="md-fab delete-button toggle-fade"
                                    aria-label="Delete">
                             <md-icon md-svg-src="assets/icons/ic_delete_white_24px.svg"></md-icon>
 

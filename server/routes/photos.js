@@ -19,8 +19,7 @@ var COLLECTIONS = config.COLLECTIONS;
  * @param file {File} : photo file to be upload
  * @param album {string} : your id (currently we use email as id) its the album
  */
-router.post('/profileUpload', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    multipartyMiddleware, function (req, res) {
+router.post('/profileUpload', middleware.ensureAuthenticated, middleware.ensurePermission, multipartyMiddleware, validation.validateParams, function (req, res) {
 
     if (req.files.file === undefined || req.files.file === null)
         return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "missing file"});
@@ -96,8 +95,8 @@ router.get('/profileGet', middleware.ensureAuthenticated, middleware.ensurePermi
  * @param file {File} : photo file to be upload
  * @param album {string} : need to be "home" the directive doing it
  */
-router.post('/homeUpload', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    multipartyMiddleware, function (req, res) {
+router.post('/homeUpload', middleware.ensureAuthenticated, middleware.ensurePermission, multipartyMiddleware, validation.validateParams,
+    function (req, res) {
 
     if (req.files.file === undefined || req.files.file === null)
         return res.status(HttpStatus.BAD_REQUEST).send("Error: missing file");
@@ -174,8 +173,8 @@ router.get('/homeGet', validation.validateParams, function (req, res) {
  * @param file {File} : photo file to be upload
  * @param album {string} : album (renovation) you want to save the photo to
  */
-router.post('/renoUpload', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    multipartyMiddleware, function (req, res) {
+router.post('/renoUpload', middleware.ensureAuthenticated, middleware.ensurePermission, multipartyMiddleware, validation.validateParams,
+    function (req, res) {
 
     if (req.files.file === undefined || req.files.file === null)
         return res.status(HttpStatus.BAD_REQUEST).send("Error: missing file");

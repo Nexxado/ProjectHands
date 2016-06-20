@@ -1,82 +1,27 @@
-    {
-        "addr": {
-            "city": "ירושלים",
-            "street": "ישראל זרחי",
-            "num": "12"
-        },
-        "created": "01/03/2016",
-        "updated": "05/03/2016",
-        "date": "07/04/2016",
-        "tasks": [
-            {
-                "name": "Kurkevan",
-                "description": "Bring the fooking Kurkevan",
-                "assigned_email": "ddraiman1990@gmail.com",
-                "done": "false"
-            }, {
-                "name": "Krepalach",
-                "description": "Cook some Krepalach for the guys",
-                "assigned_email": "pn@gmail.com",
-                "done": "true"
-            }, {
-                "name": "Bobalach",
-                "description": "Buy Bobalach before the renovation",
-                "assigned_email": "ms@gmail.com",
-                "done": "true"
-            }
-        ],
-        "chat_id": "ירושלים, ישראל זרחי 12",
-        "team": "צוות אחשורוש",
-        "pinned": [
-			{
-                "title": "לכל מי שבא היום",
-                "description": "תלכו הביתה",
-                "added_date": "07/04/2016"
-            },
-			{
-                "title": "לזכור לקחת מעיל",
-                "description": "הולך להיות היות קור כלבים",
-                "added_date": "05/04/2016"
-            },
-			{
-                "title": "נגמר המלבדו",
-                "description": "אין עוד מלבדו",
-                "added_date": "02/04/2016"
-            }
-
-        ],
-		"toolsNeeded": [
-				{
-					"name": "פטיש",
-					"quantity": "2",
-					"comment": "peter piper picked a pack of pickled peppers",
-					"assigned": "",
-					"being_brought": false
-		          },
-				{
-					"name": "מקדחה",
-					"quantity": "1",
-					"comment": "peter piper picked a pack of pickled peppers",
-					"assigned": "",
-					"being_brought": false
-		          },
-				{
-					"name": "ברגים",
-					"quantity": "1230",
-					"comment": "peter piper picked a pack of pickled peppers",
-					"assigned": "",
-					"being_brought": false
-		          }
-            ],
-        "renovation_stages":[
-            "ביקור ראשוני בדירה לבדיקת התאמה",
-            "הוחלט לשפץ, יש צורך לעדכן עובד סוציאלי",
-            "עובד סוציאלי עודכן, יש צורך לשבץ צוות",
-            "על ראש הצוות להגיע לביקור לצרכי תכנון",
-            "שלב ההכנות לשיפוץ",
-            "הדירה בשיפוץ",
-            "הסתיים השיפוץ"
-        ],
-        "current_stage": "שלב ההכנות לשיפוץ",
-		"rsvp":[]
-    }
+[
+  {
+    "_id": "ren1_chat",
+    "messages": [
+      {
+        "user": "משתאווה ברנבנק",
+        "content": "עזוב אותי באימא שלך",
+        "timestamp": "02/04/2016 15:45"
+      },
+      {
+        "user": "יוחאי רשף",
+        "content": "בוא נשחק קצת לול",
+        "timestamp": "02/04/2016 15:43"
+      }
+    ]
+  },
+  {
+    "_id": "ירושלים, ישראל זרחי 12",
+    "messages": [
+      {
+        "user": "משתאווה ברנבנק",
+        "content": "עזוב אותי באימא שלך",
+        "timestamp": "02/04/2016 15:45"
+      }
+    ]
+  }
+]
