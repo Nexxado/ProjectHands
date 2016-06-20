@@ -6,16 +6,16 @@
 
 var nodemailer = require('nodemailer');
 var debug = require('debug')('utils/email');
-const email = process.env.EMAIL_ADDR || "projhands@gmail.com";
-const password = process.env.EMAIL_PASS || "projecthands123456"; //FIXME in production, remove hardcoded password and email.
+const email = process.env.EMAIL_ADDR || "someone@gmail.com";
+const password = process.env.EMAIL_PASS || "pass_pass";
 
 var transporter = nodemailer.createTransport('smtps://' + email + ':' + password + '@smtp.gmail.com');
 
 /**
  * Used to send email to users
- * @param to : the email recipient
- * @param subject : the title of the mail
- * @param content : the body of the mail
+ * @param to {string} : the email recipient
+ * @param subject {string} : the title of the mail
+ * @param content {string}: the body of the mail
  */
 function sendMail(to, subject, content) {
 

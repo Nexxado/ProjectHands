@@ -20,7 +20,7 @@ debug('TOKEN DIR', TOKEN_DIR);
 var TOKEN_PATH = TOKEN_DIR + 'drive-nodejs-creds.json' ;
 
 // Load client secrets from a local file.
-fs.readFile('client_secret.json', function processClientSecrets(err, content) {
+fs.readFile(TOKEN_DIR + 'client_secret.json', function processClientSecrets(err, content) {
     if (err) {
         debug('Error loading client secret file: ' + err);
         return;
@@ -45,8 +45,9 @@ function authorize(credentials, callback) {
     var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
     // Check if we have previously stored a token.
-    fs.readFile('drive-nodejs-creds.json', function (err, token) {
+    fs.readFile(TOKEN_DIR + 'drive-nodejs-creds.json', function (err, token) {
         if (err) {
+            debug('Error couldn\'t find creds, requesting new token');
             getNewToken(oauth2Client, callback);
         } else {
             oauth2Client.credentials = JSON.parse(token);
