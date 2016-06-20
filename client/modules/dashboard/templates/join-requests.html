@@ -7,10 +7,10 @@
                 <span translate>{{'USER_DETAILS'}}</span>
             </div>
         </md-toolbar>
-        <md-content class="signup-info rtl" layout="row" layout-padding>
-            <user-details user="selectedUser"></user-details>
-            <span flex></span>
-            <div layout="column">
+        <md-content class="signup-info rtl" layout="row" layout-padding flex>
+            <user-details user="selectedUser" flex="50"></user-details>
+            <span flex hide-md></span>
+            <div layout="column" layout-wrap flex="50">
                 <div class="signup-actions" layout="row" layout-align="center center">
                     <md-button class="md-raised approve-btn" ng-click="approveUser(selectedUser, selectedRole)">
                         <span translate>{{'APPROVE_USER'}}</span>
@@ -34,7 +34,7 @@
         </md-content>
     </div>
     <!-- Join Requests List -->
-    <div flex-gt-sm="45" flex-offset-gt-sm="5" flex class="dashboard-list white-background dashboard-height" md-whiteframe="2">
+    <div  flex-gt-sm="45" flex-offset-gt-sm="5" flex class="dashboard-list white-background dashboard-height" md-whiteframe="2">
         <md-toolbar layout="row" class="md-hue-1 rtl">
             <div class="md-toolbar-tools">
                 <span translate>{{'JOIN_REQUESTS'}}</span>
