@@ -45,7 +45,7 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     if(analytics === 'auto')
         console.info('Activating Analytics');
 
-    ga('create', 'UA-79134913-1', analytics);
+    ga('create', 'UA-79679807-1', analytics);
 
     $rootScope.rootToastAnchor = '#main-view';
 

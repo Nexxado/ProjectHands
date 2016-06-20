@@ -95,6 +95,13 @@
     /*justify-content: center;*/
 }
 
+@media only screen and (max-width: 600px) {
+    .slider {
+        border: 10px solid white;
+        width: 95%;
+    }
+}
+
 .slide {
     position: absolute;
     top: 0;
