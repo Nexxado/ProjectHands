@@ -9,7 +9,7 @@
 	<div layout="row" class="dashboard-layout">
 		<!--First row-->
 		<!--Main part of Page - Content-->
-		<div class="md-primary dashboard-content-wrapper">
+		<div class="md-primary dashboard-content-wrapper" flex="100" flex-md="80" flex-lg="85" flex-gt-lg="90">
 			<div class="dashboard-content dashboard-top-rounded-toolbar" style="position:relative;">
 				<ui-view class="dashboard-view-slide-top"></ui-view>
 			</div>
@@ -58,7 +58,7 @@
 -->
 
 		<!--Second row-->
-		<md-toolbar layout="column" class="dashboard-navbar-wrapper" hide-xs hide-sm>
+		<md-toolbar layout="column" class="dashboard-navbar-wrapper" hide-xs hide-sm flex-md="20" flex-lg="15" flex-gt-lg="10">
 			<dashboard-sidenav-admin ng-show="user.role === ROLES.ADMIN"></dashboard-sidenav-admin>
 		</md-toolbar>
 	</div>
