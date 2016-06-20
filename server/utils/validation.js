@@ -330,7 +330,7 @@ validation.validateParams = function(req, res, next) {
         case /photos\/profileUpload/.test(req.originalUrl):
         case /photos\/homeUpload/.test(req.originalUrl):
         case /photos\/renoUpload/.test(req.originalUrl):
-            if(!validateString(req.body.album) || !validateString(req.files.file))
+            if(!validateString(req.body.album) || typeof req.files.file === 'undefined')
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "missing album"});
             break;
 
