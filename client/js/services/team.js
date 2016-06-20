@@ -78,12 +78,14 @@ angular.module('ProjectHands')
         /**
          * Assign team to work on a renovation
          * @param teamName {String}
+         * @param date {object} : the date of the renovation.
          * @param address {object} : contains city, street and house number
          * @returns {Promise}
          */
-        function assignToRenovation(teamName, address) {
+        function assignToRenovation(teamName, date, address) {
             return $resource(baseUrl + '/assign_to_renovation').save({
                 teamName: teamName,
+                date: date,
                 city: address.city,
                 street: address.street,
                 num: address.num
