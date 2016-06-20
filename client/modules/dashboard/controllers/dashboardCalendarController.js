@@ -1,30 +1,48 @@
 angular.module("ProjectHands.dashboard")
 
-.controller("DashboardCalendarController", function ($scope, $compile, uiCalendarConfig, $mdMedia, $mdDialog, RenovationService) {
+.controller("DashboardCalendarController", function ($scope, $compile, uiCalendarConfig, $mdMedia, $mdDialog, RenovationService, $state) {
 
 
+	$scope.eventSources = [];
+	$scope.eventSources2 = [];
+	
 	/* event source that contains custom events on the scope */
 	/*Event Format: {title: '', start: new Date(year, month, day), end: new Date(year,month,day), allDay: Bool},*/
 	$scope.events = [];
-	$scope.renovations = [];
+	$scope.allRenovations = [];
 
-
+	$scope.renderAllEvents = function(){
+		console.log("Rendered All Events");
+			uiCalendarConfig.calendars.renoCalendar.fullCalendar('removeEvents');
+			uiCalendarConfig.calendars.renoCalendar.fullCalendar('addEventSource', $scope.calEventsExt);
+	}
+	
+	
 	RenovationService.getAll()
 		.$promise.then(function (result) {
-
-			$scope.renovations = result;
-			for (var i in $scope.renovations) {
-				var title = $scope.renovations[i].addr.city + ", " + $scope.renovations[i].addr.street + " " + $scope.renovations[i].addr.num;
-				var date = new Date($scope.renovations[i].date);
-				$scope.events.push({
+		console.log("get all was called!@#!#!@#@#!@#");
+			$scope.allRenovations = [];
+			 for(var j = 0; j < result.length; j++){
+				if(result[j].addr !== null){
+					$scope.allRenovations.push(result[j]);
+				}
+			}
+			for (var i in $scope.allRenovations) {
+				var title = $scope.allRenovations[i].addr.city + ", " + $scope.allRenovations[i].addr.street + " " + $scope.allRenovations[i].addr.num;
+				var date = new Date($scope.allRenovations[i].date);
+				$scope.calEventsExt.events.push({
+					type: 'party',
 					title: title,
 					start: date,
 					end: date,
-					allDay: true
+					allDay: true,
+					addr: $scope.allRenovations[i].addr
 				})
 			}
-
+		
+			$scope.renderAllEvents();
 		}).catch(function (error) {
+		console.log("get all was called ERROR!@#!#!@#@#!@#");
 			console.log("Error: ", error);
 		});
 
@@ -57,35 +75,16 @@ angular.module("ProjectHands.dashboard")
 	};
 
 	$scope.calEventsExt = {
-		color: '#f00',
-		textColor: 'yellow',
-		events: [
-			{
-				type: 'party',
-				title: 'Lunch',
-				start: new Date(y, m, d, 12, 0),
-				end: new Date(y, m, d, 14, 0),
-				allDay: false
-		},
-			{
-				type: 'party',
-				title: 'Lunch 2',
-				start: new Date(y, m, d, 12, 0),
-				end: new Date(y, m, d, 14, 0),
-				allDay: false
-		},
-			{
-				type: 'party',
-				title: 'Click for Google',
-				start: new Date(y, m, 28),
-				end: new Date(y, m, 29),
-				url: 'http://google.com/'
-		}
-        ]
+		color: '#0033cc',
+		textColor: 'white',
+		events: []
 	};
 	/* alert on eventClick */
 	$scope.alertOnEventClick = function (date, jsEvent, view) {
-		console.log(date.title + ' was clicked ');
+		$state.go('dashboard.renovation', {city: date.addr.city, street: date.addr.street, num: date.addr.num} );
+		console.log("date is ", date, " jsEvent is: ", jsEvent, " view is: ", view);
+		console.log("the addr is ", date.addr);
+		
 	};
 	/* alert on Drop */
 	$scope.alertOnDrop = function (event, delta, revertFunc, jsEvent, ui, view) {
@@ -138,7 +137,7 @@ angular.module("ProjectHands.dashboard")
 	$scope.uiConfig = {
 		calendar: {
 			height: 850,
-			editable: true,
+			editable: false,
 			header: {
 				left: '',
 				center: 'title',
@@ -166,7 +165,9 @@ angular.module("ProjectHands.dashboard")
 	//	}
 	//};
 	/* event sources array*/
-	$scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
-	//$scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
+//	$scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
+//	$scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
 
+	
+	
 });
