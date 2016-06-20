@@ -3,6 +3,7 @@ var readline = require('readline');
 var google = require('googleapis');
 var googleAuth = require('google-auth-library');
 var mime = require('mime-types');
+var debug = require('debug')('utils/drive');
 var config = require('../../config.json');
 
 
@@ -14,16 +15,14 @@ var SCOPES = [
     ['https://www.googleapis.com/auth/drive'],
     ['https://www.googleapis.com/auth/drive.file']];
 
-var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
-    process.env.USERPROFILE) || '';
-TOKEN_DIR += '/.credentials/';
-var TOKEN_PATH = '/.credentials/' ;
-    //TOKEN_DIR + 'drive-nodejs-credentials.json';
+var TOKEN_DIR = __dirname + '/../../';
+debug('TOKEN DIR', TOKEN_DIR);
+var TOKEN_PATH = TOKEN_DIR + 'drive-nodejs-creds.json' ;
 
 // Load client secrets from a local file.
-fs.readFile('client_secret.json', function processClientSecrets(err, content) {
+fs.readFile(TOKEN_DIR + 'client_secret.json', function processClientSecrets(err, content) {
     if (err) {
-        console.log('Error loading client secret file: ' + err);
+        debug('Error loading client secret file: ' + err);
         return;
     }
     // Authorize a client with the loaded credentials, then call the
@@ -46,8 +45,9 @@ function authorize(credentials, callback) {
     var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
     // Check if we have previously stored a token.
-    fs.readFile('drive-nodejs-credentials.json', function (err, token) {
+    fs.readFile(TOKEN_DIR + 'drive-nodejs-creds.json', function (err, token) {
         if (err) {
+            debug('Error couldn\'t find creds, requesting new token');
             getNewToken(oauth2Client, callback);
         } else {
             oauth2Client.credentials = JSON.parse(token);
