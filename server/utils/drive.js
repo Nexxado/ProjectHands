@@ -15,7 +15,8 @@ var SCOPES = [
     ['https://www.googleapis.com/auth/drive.file']];
 
 var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
-    process.env.USERPROFILE) + '/.credentials/';
+    process.env.USERPROFILE) || '';
+TOKEN_DIR += '/.credentials/';
 var TOKEN_PATH = '/.credentials/' ;
     //TOKEN_DIR + 'drive-nodejs-credentials.json';
 
