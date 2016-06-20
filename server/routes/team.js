@@ -153,16 +153,23 @@ router.post('/assign_to_renovation', middleware.ensureAuthenticated, middleware.
                 num: req.body.num
             }
         };
+        
+        var update = {
+            $set: {
+                team: req.body.teamName,
+                date: req.body.date
+            }
+        };
 
         //Assign team to renovation
-        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {team: req.body.teamName}}, {},
+        mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, update, {},
             function (error, result) {
 
                 if (error || result.result.nModified === 0)
                     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign renovation to team"});
 
                 mongoUtils.update(COLLECTIONS.TEAMS, {name: req.body.teamName}, {$set: {renovation: renovation}}, {}, function(error, result) {
-                    if (error || result.result.nModified === 0)
+                    if (error) //|| result.result.nModified === 0
                         return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to assign renovation to team"});
 
                     res.send({success: true});
