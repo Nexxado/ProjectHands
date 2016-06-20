@@ -476,3 +476,13 @@ div.renovation-tab-content .renovation-list {
 div.renovation-tab-content .renovation-list .md-button.md-icon-button {
 	margin: 2px 6px;
 }
+
+/***** UI-Calendar Override *****/
+.fc-event-container {
+	cursor: pointer;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
