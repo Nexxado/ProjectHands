@@ -36,6 +36,15 @@ angular.module('ProjectHands.dashboard')
 		"/assets/img/renovation-page/extra-stage.png"
 	];
 
+	$scope.headerImages = [
+		"/assets/img/renovation-page/headers/renoPageHeader1.png",
+		"/assets/img/renovation-page/headers/renoPageHeader2.png",
+		"/assets/img/renovation-page/headers/renoPageHeader3.png",
+		"/assets/img/renovation-page/headers/renoPageHeader4.png",
+		"/assets/img/renovation-page/headers/renoPageHeader5.png",
+		"/assets/img/renovation-page/headers/renoPageHeader6.png",
+	];
+	$scope.currentHeaderImage = $scope.headerImages[Math.floor((Math.random() * 6))];
 	$scope.allTeams = [];
 	TeamService.getAllTeams()
 	.$promise.then(function(result){
