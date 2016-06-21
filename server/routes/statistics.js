@@ -11,7 +11,7 @@ router.get('/VolunteersCountPerDate/:date', middleware.ensureAuthenticated, midd
             var date = JSON.parse(req.params.date);
             debug("request data : ", date);
             statisticsUtils.getVolunteersCountPerDate(date.yearFrom, date.yearTo, date.monthFrom, date.monthTo, date.dayFrom, date.dayTo, function (error, result) {
-                res.send("" + result);
+                res.send({result: result});
             });
         }
         catch (e) {
@@ -70,7 +70,8 @@ router.get('/renovationsPerDate/:date', middleware.ensureAuthenticated, middlewa
         try {
             var date = JSON.parse(req.params.date);
             debug("request data : ", date);
-            statisticsUtils.getRenovationsPerDate(date.yearFrom, date.yearTo, date.monthFrom, date.monthTo, date.dayFrom, date.dayTo, function (error, result) {
+            statisticsUtils.getRenovationsPerDate(date.yearFrom, date.yearTo, date.monthFrom, date.monthTo, date.dayFrom, date.dayTo, 
+                function (error, result) {
                 //TODO change method to query and then you can return array
                 res.send({result: result});
             });

@@ -12,6 +12,9 @@ angular.module('ProjectHands.statistics')
         $scope.renovations = '';
 
         $scope.fixDate = function (date) {
+            if(!date)
+                return 'אין';
+
             return date.split("T")[0];
         };
 
@@ -43,54 +46,57 @@ angular.module('ProjectHands.statistics')
             StatisticsService.getVolunteersCountPerDate(startYear, endYear, startMonth, endMonth, startDay, endDay)
                 .$promise
                 .then(function (result) {
-                    console.log('result ' + result.toString());
-                    $scope.volunteersCount = result;
+                    console.log('result ', result);
+                    $scope.volunteersCount = result.result;
                 })
                 .catch(function (error) {
-                    console.log('error ' + error.toString());
+                    console.error('error ', error);
                 });
 
             StatisticsService.getRenovationsVolunteersNumberPerDate(startYear, endYear, startMonth, endMonth, startDay, endDay)
                 .$promise
                 .then(function (result) {
-                    console.log('result ' + result.toString());
+                    console.log('result ', result);
                     $scope.renovationsVolunteersNumber = result.totalVolunteers;
                 })
                 .catch(function (error) {
-                    console.log('error ' + error.toString());
+                    console.error('error ', error);
                 });
 
 
             StatisticsService.getRenovationsCostPerDate(startYear, endYear, startMonth, endMonth, startDay, endDay)
                 .$promise
                 .then(function (result) {
-                    console.log('result ' + result.toString());
+                    console.log('result ', result);
                     $scope.renovationsCost = result.totalCost;
                 })
                 .catch(function (error) {
-                    console.log('error ' + error.toString());
+                    console.error('error ', error);
                 });
 
 
             StatisticsService.getRenovationsVolunteeringHoursPerDate(startYear, endYear, startMonth, endMonth, startDay, endDay)
                 .$promise
                 .then(function (result) {
-                    console.log('result ' + result.toString());
+                    console.log('result ', result);
                     $scope.renovationsVolunteeringHours = result.totalHours;
                 })
                 .catch(function (error) {
-                    console.log('error ' + error.toString());
+                    console.error('error ', error);
                 });
 
 
             StatisticsService.getRenovationsPerDate(startYear, endYear, startMonth, endMonth, startDay, endDay)
                 .$promise
                 .then(function (result) {
-                    console.log('result ' + result.toString());
-                    $scope.renovations = result.result;
+                    console.log('getRenovationsPerDate result ', result);
+                    if(result.result && !Array.isArray(result))
+                        $scope.renovations = [];
+                    else
+                        $scope.renovations = result.result;
                 })
                 .catch(function (error) {
-                    console.log('error ' + error.toString());
+                    console.error('error ', error);
                 });
 
         };
