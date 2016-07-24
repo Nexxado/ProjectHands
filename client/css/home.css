@@ -82,9 +82,11 @@
 }
 
 .slider {
-    width: 80%;
+    /*width: 80%;*/
+    width: 40%;
     /*height: 600px;*/
-    height: 70vw;
+    /*height: 70vw;*/
+    height: 35vh;
     max-height: 600px;
     overflow: hidden;
     position: relative;
@@ -95,10 +97,19 @@
     /*justify-content: center;*/
 }
 
+
+@media only screen and (max-width: 960px) {
+    .slider {
+        width: 60%;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     .slider {
         border: 10px solid white;
         width: 95%;
+        height: 25vh;
+        max-width: 100%;
     }
 }
 
@@ -109,7 +120,9 @@
     left: 0;
     right: 0;
     margin: auto;
-    max-height: 600px;
+    /*max-height: 600px;*/
+    /*max-width: 100%;*/
+    max-height: 100%;
     max-width: 100%;
 }
 
@@ -117,8 +130,11 @@
     position: absolute;
     z-index: 1002;
     display: block;
-    top: 50%;
-    margin-top: -35px;
+    /*top: 50%;*/
+    /*margin-top: -35px;*/
+    top: 0;
+    bottom: 0;
+    margin: auto;
     width: 36px;
     height: 100px;
     outline: none;
@@ -283,11 +299,18 @@ NAV
     border: 32px solid white;
     text-align: center;
     background-color: white;
+    width: 100%;
 }
 
-.homepage-wrapper .homepage-content .homepage-banner,
+.homepage-wrapper .homepage-content .homepage-banner {
+    width: 60%;
+}
+
 .homepage-wrapper .homepage-footer {
+    background: white;
     width: 100%;
+    text-align: center;
+    padding: 10px;
 }
 
 .homepage-wrapper .homepage-content .organization-info,
@@ -306,4 +329,18 @@ NAV
 
 .homepage-wrapper .homepage-content .team-member {
     margin: 0 5px;
+}
+
+/* Medium Screens */
+@media only screen and (max-width: 960px) {
+    .homepage-wrapper .homepage-content .homepage-banner {
+        width: 80%;
+    }
+}
+
+/* Small Screens */
+@media only screen and (max-width: 600px) {
+    .homepage-wrapper .homepage-content .homepage-banner {
+        width: 100%;
+    }
 }

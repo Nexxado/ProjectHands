@@ -14,7 +14,7 @@
         </div>
         <!--PHOTO SLIDER-->
 
-            <photo-slider-home album="user@1231.com"></photo-slider-home>
+        <photo-slider-home album="user@1231.com"></photo-slider-home>
 
         <!--ORGANIZATION ADS-->
         <div>
@@ -29,29 +29,32 @@
             <team></team>
         </div>
 
-        <div md-whiteframe="2"
-             class="homepage-footer">
+        <div md-whiteframe="2" class="homepage-footer">
             <!-- Referral Status -->
-            <div class="status-container rtl" layout="column" layout-align="center center" layout-padding ng-controller="StatusController">
-                <div class="status-title">פניות לשיפוצים</div>
-                <div class="status-indicator" ng-class="active ? 'active' : 'not-active'"></div>
-                <div class="status-message">{{ message }}</div>
-                <md-button class="md-primary md-raised btn-referral" href="/assets/referral-form.docx" target="_self">טופס פנייה</md-button>
-                <!-- Admin Control Panel -->
-                <div admin-actions>
-                    <md-button ng-click="updateStatusDialog($event)">עדכן סטטוס הפניות</md-button>
-                    <md-button ui-sref="home-panel">עריכת תוכן דף הבית</md-button>
-                </div>
-            </div>
+            <!--<div class="status-container rtl" layout="column" layout-align="center center" layout-padding ng-controller="StatusController">-->
+            <!--<div class="status-title">פניות לשיפוצים</div>-->
+            <!--<div class="status-indicator" ng-class="active ? 'active' : 'not-active'"></div>-->
+            <!--<div class="status-message">{{ message }}</div>-->
+            <!--<md-button class="md-primary md-raised btn-referral" href="/assets/referral-form.docx" target="_self">טופס פנייה</md-button>-->
 
-            <!--DONATE-->
-            <div class="donate-info">
-                <paypal-button></paypal-button>
-            </div>
+            <!-- TODO Replace with Call-To-Action banner -->
+            <md-button class="md-primary md-raised btn-referral" ui-sref="status">הפניות לשיפוצים</md-button>
         </div>
 
-        <!--goto home panel-->
-        <!--<md-button ui-sref="home-panel">home-panel</md-button>-->
-
+        <!--DONATE-->
+        <div class="donate-info">
+            <paypal-button></paypal-button>
+        </div>
     </div>
+
+    <!-- Admin Control Panel -->
+    <div admin-actions>
+        <!--<md-button ng-click="updateStatusDialog($event)">עדכן סטטוס הפניות</md-button>-->
+        <md-button ui-sref="home-panel">עריכת תוכן דף הבית</md-button>
+    </div>
+
+    <!--goto home panel-->
+    <!--<md-button ui-sref="home-panel">home-panel</md-button>-->
+
+</div>
 </div>

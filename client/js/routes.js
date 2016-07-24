@@ -23,11 +23,11 @@ angular.module('ProjectHands')
             })
 
 
-            // .state('status', {
-            //     url: '/status',
-            //     templateUrl: 'templates/status.html',
-            //     controller: 'StatusController'
-            // })
+            .state('status', {
+                url: '/status',
+                templateUrl: 'templates/status.html',
+                controller: 'StatusController'
+            })
 
             // .state('profile', {
             //     url: '/profile',

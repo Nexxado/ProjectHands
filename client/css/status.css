@@ -1,7 +1,8 @@
 .status-container {
     background-color: white;
     width: 100%;
-    position: relative;
+    /*position: relative;*/
+    margin-top: 50px;
 }
 
 .status-container .status-message {

@@ -1,11 +1,12 @@
-<md-content>
-    <div layout="column" layout-align="center center" layout-padding>
-        <h1>Status Page</h1>
+<md-content style="min-height: calc(100vh - 64px)">
+    <div class="status-container rtl" layout="column" layout-align="center center" layout-padding ng-controller="StatusController">
+        <div class="status-title">פניות לשיפוצים</div>
         <div class="status-indicator" ng-class="active ? 'active' : 'not-active'"></div>
         <div class="status-message">{{ message }}</div>
+        <md-button class="md-primary md-raised btn-referral" href="/assets/referral-form.docx" target="_self">טופס פנייה</md-button>
         <!-- Admin Control Panel -->
         <div admin-actions>
-            <md-button ng-click="updateStatusDialog($event)">עדכן סטטוס</md-button>
+            <md-button ng-click="updateStatusDialog($event)">עדכן סטטוס הפניות</md-button>
         </div>
     </div>
 </md-content>

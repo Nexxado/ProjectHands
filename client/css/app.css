@@ -5,6 +5,7 @@ html {
 #main-view {
     height: calc(100vh - 64px);
     background-color: #ededed;
+    position: relative;
 }
 
 .offwhite-background {
