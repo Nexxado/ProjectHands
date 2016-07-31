@@ -4,11 +4,15 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     'angulartics', 'angulartics.google.analytics', 'pascalprecht.translate'])
 
 
-.config(function ($mdThemingProvider, $provide, $translateProvider, LanguagesProvider) {
+.config(function ($mdThemingProvider, $compileProvider, $provide, $translateProvider, LanguagesProvider) {
     //Set Angular-Material Theme
     $mdThemingProvider.theme('default')
         .primaryPalette('indigo')
         .accentPalette('orange');
+
+    //Disable Debugging outside of Dev Environment
+    if(!(/localhost/.test(window.location.host)))
+        $compileProvider.debugInfoEnabled(false);
 
     //Decoration for ExceptionHandler
     $provide.decorator('$exceptionHandler', function ($delegate) {

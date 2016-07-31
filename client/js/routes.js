@@ -29,38 +29,6 @@ angular.module('ProjectHands')
                 controller: 'StatusController'
             })
 
-            // .state('profile', {
-            //     url: '/profile',
-            //     templateUrl: 'templates/profile.html',
-            //     controller: 'ProfileController'
-            // })
-
-
-            // .state('about', {
-            //     url: '/about',
-            //     templateUrl: 'templates/about/index.html',
-            //     controller: 'AboutController',
-            //     deepStateRedirect: {
-            //         default: {
-            //             state: 'about.who'
-            //         }
-            //     }
-            // })
-            //
-            // .state('about.who', {
-            //     url: '/who',
-            //     templateUrl: 'templates/about/who.html'
-            // })
-            //
-            // .state('about.jobs', {
-            //     url: '/jobs',
-            //     templateUrl: 'templates/about/jobs.html'
-            // })
-            //
-            // .state('about.contact', {
-            //     url: '/contact',
-            //     templateUrl: 'templates/about/contact.html'
-            // })
             .state('profile', {
                 url: '/profile',
                 template: '<md-content>' +

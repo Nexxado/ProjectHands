@@ -71,7 +71,7 @@ angular.module('ProjectHands.dashboard')
                 fullscreen: isMobile,
                 locals: {
                     team: angular.copy(team),
-                    users: getUsersWithoutTeam()
+                    users: getUsersNotInTeam(team) //getUsersWithoutTeam()
                 }
             })
                 .then(function (result) {
@@ -257,7 +257,11 @@ angular.module('ProjectHands.dashboard')
                 .then(function (result) {
                     team.members = team.members.concat(addedUsers);
                     team.members_info = team.members_info.concat(getUsersInfo(addedUsers));
-                    removeMembers(team, manager_email, removedUsers);
+
+                    if(removedUsers.length)
+                        removeMembers(team, manager_email, removedUsers);
+                    else
+                        updateManager(team, manager_email)
                 })
                 .catch(function (error) {
                     console.error('addMembers error', error);
@@ -400,5 +404,20 @@ angular.module('ProjectHands.dashboard')
             }
 
             return usersWithoutTeam;
+        }
+
+        /**
+         * Get array of users not in team.
+         * @param team {object}
+         * @returns {Array} : users who don't belong to team
+         */
+        function getUsersNotInTeam(team) {
+            var usersNotInTeam = [];
+            for(var i = 0; i < $scope.users.length; i++) {
+                if(team.members.indexOf($scope.users[i].email) < 0)
+                    usersNotInTeam.push($scope.users[i]);
+            }
+
+            return usersNotInTeam;
         }
     });
