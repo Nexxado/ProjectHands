@@ -14,7 +14,7 @@
                 <input type="text"
                        name="title"
                        ng-model="ad.title"
-                       required />
+                       required/>
 
                 <div ng-messages="adsForm.title.$error">
                     <div ng-message="required" translate>
@@ -61,17 +61,21 @@
 
             <div layout="column" layout-align="start start" class="org-ads" style="width: 100%;">
                 <md-content style="width: inherit;height: inherit">
-                    <H1 dir="rtl" lang="he">{{ad.title}}</H1>
-                    <H3 dir="rtl" lang="he">{{ad.content}}</H3>
+                    <h1 dir="rtl" lang="he">{{ad.title}}</h1>
+                    <h3 dir="rtl" lang="he">{{ad.content}}</h3>
                     <md-button ng-click="deleteAd(ad._id, $index)"
-                               class="md-fab delete-button-ads"
+                               class="md-fab delete-button-ads md-mini"
                                aria-label="Delete">
-                        <md-icon md-svg-src="assets/icons/ic_delete_white_24px.svg"></md-icon>
+                        <md-icon class="material-icons">delete</md-icon>
+                    </md-button>
+                    <md-button ng-click="editAd($event, ad, $index)"
+                               class="md-fab edit-button-ads md-mini"
+                               aria-label="edit">
+                        <md-icon class="material-icons">edit</md-icon>
                     </md-button>
                 </md-content>
 
             </div>
-
 
 
         </div>

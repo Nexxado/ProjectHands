@@ -58,6 +58,34 @@ router.get('/ads', function (req, res) {
     })
 });
 
+
+router.post('/edit-ad', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    function(req, res) {
+
+    var query = {
+        _id: ObjectId(req.body._id)
+    };
+    var data = {
+        title: req.body.title,
+        content: req.body.content
+    };
+
+    mongoUtils.query(COLLECTIONS.ADS, query, function(error, result) {
+        if(error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Error finding ad"});
+        else if(result.length === 0)
+            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Ad doesn't exists"});
+
+        mongoUtils.update(COLLECTIONS.ADS, query, {$set: data}, {}, function(error, result) {
+            if(error)
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Error editing ad"});
+
+            res.send({success: true})
+        });
+    });
+
+});
+
 //DB METHODS
 /**
  * @param callback {Function} : holds err / success

@@ -54,10 +54,19 @@ angular.module('ProjectHands.photos')
 
             return deferred.promise;
         }
+
+        function editAd(ad) {
+            return $resource(baseUrl + '/edit-ad').save({
+                _id: ad._id,
+                title: ad.title,
+                content: ad.content
+            });
+        }
         
         return {
             deleteAd: deleteAd,
             getAds: getAds,
-            uploadAd: uploadAd
+            uploadAd: uploadAd,
+            editAd: editAd
         };
     });

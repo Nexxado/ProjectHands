@@ -30,6 +30,7 @@
     * [Upload Ad](#upload-ad)
     * [Delete Ad](#delete-ad)
     * [Get Ads](#get-ads)
+    * [Edit Ad](#edit-ad)
 * [**Renovations**](#renovations)
     * [Get Renovation Info](#get-renovation-info)
     * [Get All Renovations](#get-all-renovations)
@@ -716,6 +717,32 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 |---|---|
 |200   | [{_id: string, title: string, content: string},...]  |
 |500   | {errMessage: "Couldn't find ads"} |
+
+---
+
+#### Edit Ad
+
+##### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/home/edit-ad|
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY  |  _id    | string |
+| BODY  |  title  | string |
+| BODY  | content | string |
+
+##### Response
+
+| Status  | Response |
+|---|---|
+|200   | {success: true}  |
+|400   | {errMessage: "Ad doesn't exists"} |
+| 500  | {errMessage: "Error finding ad"} |
+|500   | {errMessage: "Error editing ad"} |
+
 
 ---
 ---

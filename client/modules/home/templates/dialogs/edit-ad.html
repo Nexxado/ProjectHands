@@ -1,0 +1,53 @@
+<md-dialog aria-label="Edit User Dialog" flex="60" flex-gt-md="45">
+    <form name="EditAdForm" ng-submit="submit()" novalidate>
+        <md-toolbar dir="rtl">
+            <div class="md-toolbar-tools">
+                <h2 translate="{{'EDIT_AD'}}">עריכת תוכן</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content" layout="column" layout-gt-sm="row" layout-align="end">
+                <!-- Input Container -->
+                <md-content class="edit-user-form" layout="column" flex="60" layout-padding>
+                    <!-- First name & Last name -->
+                    <md-input-container class="md-icon-float md-block rtl">
+                        <label translate="{{'TITLE'}}">כותרת</label>
+                        <input type="text" name="title" ng-model="ad.title" required/>
+                        <md-icon class="material-icons">title</md-icon>
+                        <div ng-messages="EditAdForm.title.$error">
+                            <div ng-message="required" translate="{{'REQUIRED'}}">
+                                שדה חובה
+                            </div>
+                        </div>
+                    </md-input-container>
+                    <!-- Phone Number-->
+                    <md-input-container class="md-icon-float md-block rtl">
+                        <label translate="{{'CONTENT'}}">תוכן</label>
+                        <textarea name="content" ng-model="ad.content" minlength="1" maxlength="300" required></textarea>
+                        <md-icon class="material-icons">message</md-icon>
+                        <div ng-messages="EditAdForm.content.$error">
+                            <div ng-message="required" translate="{{'REQUIRED'}}">
+                                שדה חובה
+                            </div>
+                            <div ng-message="maxlength" translate="{{'CONTENT_MIN_LENGTH'}}">
+                                תוכן ארוך מדי
+                            </div>
+                        </div>
+                    </md-input-container>
+                </md-content>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions class="user-actions" layout-align="start" flex>
+            <md-button class="md-warn" ng-click="cancel()" translate="{{'CANCEL'}}">
+                ביטול
+            </md-button>
+            <md-button class="md-primary md-raised" type="submit" translate="{{'APPROVE'}}">
+                אישור
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

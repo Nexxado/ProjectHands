@@ -331,6 +331,11 @@ validation.validateParams = function(req, res, next) {
             if(!validateString(req.query.id))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "missing id"});
             break;
+
+        case /home\/edit-ad/.test(req.originalUrl):
+            if(!validateString(req.body._id) || !validateString(req.body.title) || !validateString(req.body.content))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "missing required parameters"});
+            break;
         
         case /photos\/profileUpload/.test(req.originalUrl):
         case /photos\/homeUpload/.test(req.originalUrl):

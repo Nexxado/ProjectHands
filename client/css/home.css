@@ -75,6 +75,17 @@
     top: 0;
 }
 
+.edit-button-ads {
+    position: absolute;
+    left: 50px;
+    top: 0;
+}
+
+.edit-button-ads.md-button.md-fab md-icon,
+.delete-button-ads.md-button.md-fab md-icon {
+    color: white;
+}
+
 .home-photo-slider{
     /*width: inherit;*/
     /*height: inherit;*/

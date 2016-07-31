@@ -105,7 +105,10 @@ angular.module('ProjectHands')
             PHOTOS: "תמונות",
             
             BUTTON_LANG_HE: 'עברית',
-            BUTTON_LANG_AR: 'ערבית'
+            BUTTON_LANG_AR: 'ערבית',
+
+            EDIT_AD: 'עריכת תוכן',
+            CONTENT_MIN_LENGTH: 'תוכן ארוך מדי'
         };
 
         this.AR = {
