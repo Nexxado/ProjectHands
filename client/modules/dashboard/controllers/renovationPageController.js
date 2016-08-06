@@ -1082,7 +1082,13 @@ angular.module('ProjectHands.dashboard')
             //     }
             // });
         };
-
+    
+    $scope.isTeamAssigned = function(team){
+        if(team !== ""){
+            return true;
+        }
+        return false;
+    };
 
 
 });

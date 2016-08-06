@@ -44,7 +44,12 @@
                     <md-tabs md-dynamic-height md-border-bottom md-stretch-tabs="always" md-swipe-content
                              class="renovation-tabs">
                         <!--First Tab - Renovation Details -->
-                        <md-tab label="פרטי שיפוץ" flex>
+                        <md-tab flex>
+                            <md-tab-label>
+                                פרטי שיפוץ
+                                <md-icon class="material-icons">info</md-icon>
+                            </md-tab-label>
+                            <md-tab-body>
                             <div class="renovation-tab-content" flex layout="row" layout-align="center none"
                                  layout-align-gt-sm="none none" layout-wrap ng-cloak>
 
@@ -57,10 +62,15 @@
                                         <div flex-gt-sm="45" flex-offset-gt-sm="5" flex
                                              class="renovation-page grid-tab box-header">
                                             <div layout="row">
-                                                <h3>צוות: </h3>
-                                                <h3> {{renovationTeam.name}} </h3>
+                                                <div layout="column">
+                                                    <h3> {{renovationTeam.name}} </h3>
+                                                    <span>חברי צוות: {{renovationMembers.length}}</span>
+                                                </div>
+                                                <div ng-hide="isTeamAssigned(renovationTeam)">
+                                                    <h3>לא הוקצה צוות לשיפוץ</h3>
+                                                </div>
                                             </div>
-
+                                            
                                             <md-content>
                                                 <md-list class="md-dense list-volunteers" flex>
                                                     <md-list-item class="md-3-line rtl list-slide-right"
@@ -139,9 +149,10 @@
                                                         </md-button>
                                                     </div>
                                                     <div>
-                                                        <span class="message-text title">{{pinned.title}}</span>
-                                                        <div> </div>
-                                                        <span class="message-text description" ng-class="{show: !show}">{{pinned.description}}</span> <a href="" ng-click="show = true">קרא עוד</a>
+                                                        <span class="message-text title" ng-hide="pinned.title == ''">{{pinned.title}}</span>
+                                                        <div ng-hide="pinned.title == ''"> </div>
+                                                        <span class="message-text description" ng-class="{show: !show}">{{pinned.description}}</span> 
+                                                        <a href="" ng-click="show = true" ng-hide="show == true">קרא הודעה</a>
                                                         <p>{{pinned.added_date}}</p>
                                                     </div>
                                                 </div>
@@ -222,10 +233,16 @@
                                     </div>
                                 </div>
                             </div>
+                            </md-tab-body>
                         </md-tab>
                         <!--Second Tab - Renovation Sub Details -->
-                        <md-tab label="פרטים נוספים">
+                        <md-tab>
+                            <md-tab-label>
+                                כלים ומשימות
+                                <md-icon class="material-icons">build</md-icon>
+                            </md-tab-label>
                             <!--The Grid list for all Boxes in page -->
+                            <md-tab-body>
                             <div class="renovation-tab-content" flex layout="row" layout-align="center none"
                                  layout-align-gt-sm="none none" layout-wrap>
 
@@ -466,6 +483,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </md-tab-body>
                         </md-tab>
                     </md-tabs>
 

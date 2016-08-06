@@ -311,11 +311,12 @@ md-menu-item > .md-button {
 	overflow: hidden;
 }
 .renovation-tabs {
-	background-color: white;
+	background-color: white;    
 }
 .renovation-tabs md-grid-list {
 	background-color: #ededed;
 }
+
 .box-wrapper {
 	margin: 5px;
 	/*height: 100%;*/
