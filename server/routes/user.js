@@ -74,7 +74,7 @@ router.get('/all_signups', middleware.ensureAuthenticated, middleware.ensurePerm
         if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to find signups"});
         else if (!result.length)
-            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "No signups found"});
+            return res.send([]);
 
         //Filter out OAuth2 users who didn't complete the signup process
         result = result.filter(function(user) {

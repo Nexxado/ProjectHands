@@ -24,6 +24,7 @@ module.exports = function (req, res, next) {
         case /team\//.test(req.originalUrl):
             req.action = ACL.TEAM_ACTIONS;
             break;
+        case /renovation\/my_renovations/.test(req.originalUrl):
         case /renovation\/get_info/.test(req.originalUrl):
         case /renovation\/done_task/.test(req.originalUrl):
             req.action = ACL.RENOVATION_GET_INFO;
