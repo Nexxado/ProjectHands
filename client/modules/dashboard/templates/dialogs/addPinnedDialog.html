@@ -15,11 +15,14 @@
                 <md-input-container class="md-block md-icon-float rtl">
                     <label>כותרת</label>
                     <md-icon class="material-icons">title</md-icon>
-                    <input type="text" name="title" ng-model="pinned.title" required>
+                    <input type="text" name="title" ng-model="pinned.title" md-maxlength="75" required>
                     <md-tooltip md-delay="1000">כותרת ההודעה שתרצה להוסיף</md-tooltip>
                     <div ng-messages="AddPinnedForm.title.$error">
                         <div ng-message="required">
                             שדה חובה
+                        </div>
+                        <div ng-message="md-maxlength">
+                            כותרת ארוכה מדי
                         </div>
                     </div>
                 </md-input-container>
@@ -27,7 +30,7 @@
                 <md-input-container class="md-block md-icon-float rtl">
                     <label>תיאור</label>
                     <md-icon class="material-icons">description</md-icon>
-                    <input type="text" name="description" ng-model="pinned.description" minlength="5" md-maxlength="150" required>
+                    <input type="text" name="description" ng-model="pinned.description" minlength="5" md-maxlength="250" required>
                     <md-tooltip md-delay="1000">תתאר את המשימה שתרצה להוסיף</md-tooltip>
                     <div ng-messages="AddPinnedForm.description.$error">
                         <div ng-message="required">

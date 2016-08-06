@@ -8,7 +8,7 @@
                     <div class="renovation-header">
 
                         <!--Renovation Name and Date-->
-                        <div class="reno-page-title shadow-text large">{{thisRenovation.addr.city}},
+                        <div class="reno-page-title shadow-text medium">{{thisRenovation.addr.city}},
                             {{thisRenovation.addr.street}} {{thisRenovation.addr.num}}
                         </div>
 						<span class="shadow-text medium">{{thisRenovation.date | date: 'dd/MM/yyyy'}}
@@ -139,8 +139,9 @@
                                                         </md-button>
                                                     </div>
                                                     <div>
-                                                        <h2>{{pinned.title}}</h2>
-                                                        <h3>{{pinned.description}}</h3>
+                                                        <span class="message-text title">{{pinned.title}}</span>
+                                                        <div> </div>
+                                                        <span class="message-text description" ng-class="{show: !show}">{{pinned.description}}</span> <a href="" ng-click="show = true">קרא עוד</a>
                                                         <p>{{pinned.added_date}}</p>
                                                     </div>
                                                 </div>
