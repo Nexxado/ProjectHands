@@ -1090,5 +1090,19 @@ angular.module('ProjectHands.dashboard')
         return false;
     };
 
-
+    $scope.assignMyselfToTask = function(task){
+        if (task.assigned_email !== ""){
+            console.log("Trying to assign yourself while someone already assigned - shouldnt happen - error");
+            return;
+        }
+        task.assigned_email = $scope.user.email;
+    };
+    
+    $scope.removeMyselfFromTask = function(task){
+        if (task.assigned_email !== $scope.user.email){
+            console.log("Trying to remove yourself from task while you are not assigned to it - shouldnt happen - error");
+            return;
+        }
+        task.assigned_email = "";
+    };
 });

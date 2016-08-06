@@ -316,7 +316,10 @@ md-menu-item > .md-button {
 .renovation-tabs md-grid-list {
 	background-color: #ededed;
 }
-
+.marked-as-done{
+    background-color: darkslategrey;
+    color: white;
+}
 .box-wrapper {
 	margin: 5px;
 	/*height: 100%;*/

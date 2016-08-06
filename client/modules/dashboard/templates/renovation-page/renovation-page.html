@@ -8,10 +8,9 @@
                     <div class="renovation-header">
 
                         <!--Renovation Name and Date-->
-                        <div class="reno-page-title shadow-text medium">{{thisRenovation.addr.city}},
-                            {{thisRenovation.addr.street}} {{thisRenovation.addr.num}}
+                        <div class="reno-page-title shadow-text medium">{{thisRenovation.addr.city}}, {{thisRenovation.addr.street}} {{thisRenovation.addr.num}}
                         </div>
-						<span class="shadow-text medium">{{thisRenovation.date | date: 'dd/MM/yyyy'}}
+                        <span class="shadow-text medium">{{thisRenovation.date | date: 'dd/MM/yyyy'}}
                         </span>
 
                         <!--Chat Sidenav Button-->
@@ -23,17 +22,13 @@
 
                         <!--RSVP Button-->
                         <!--Button to Confirm RSVP-->
-                        <md-button layout="row" ng-click="toggleRSVP(user.email)"
-                                   class="md-raised md-accent rsvp-button"
-                                   ng-hide="my_rsvp || !checkUserInTeam(user.email)" layout-align="center center">
+                        <md-button layout="row" ng-click="toggleRSVP(user.email)" class="md-raised md-accent rsvp-button" ng-hide="my_rsvp || !checkUserInTeam(user.email)" layout-align="center center">
                             <div layout="row" layout-align="center center">
                                 אשר הגעה
                             </div>
                         </md-button>
                         <!--Button to Cancel RSVP -->
-                        <md-button layout="row" ng-click="toggleRSVP(user.email)"
-                                   class="md-raised md-primary rsvp-button"
-                                   ng-show="my_rsvp && checkUserInTeam(user.email)" layout-align="center center">
+                        <md-button layout="row" ng-click="toggleRSVP(user.email)" class="md-raised md-primary rsvp-button" ng-show="my_rsvp && checkUserInTeam(user.email)" layout-align="center center">
                             <div layout="row" layout-align="center center">
                                 <i class="material-icons" style="padding-left:5px;">thumb_up</i> מגיע
                             </div>
@@ -41,8 +36,7 @@
                     </div>
 
                     <!--Renovation Tabs - Main part and Secondary part -->
-                    <md-tabs md-dynamic-height md-border-bottom md-stretch-tabs="always" md-swipe-content
-                             class="renovation-tabs">
+                    <md-tabs md-dynamic-height md-border-bottom md-stretch-tabs="always" md-swipe-content class="renovation-tabs">
                         <!--First Tab - Renovation Details -->
                         <md-tab flex>
                             <md-tab-label>
@@ -50,189 +44,149 @@
                                 <md-icon class="material-icons">info</md-icon>
                             </md-tab-label>
                             <md-tab-body>
-                            <div class="renovation-tab-content" flex layout="row" layout-align="center none"
-                                 layout-align-gt-sm="none none" layout-wrap ng-cloak>
+                                <div class="renovation-tab-content" flex layout="row" layout-align="center none" layout-align-gt-sm="none none" layout-wrap ng-cloak>
 
-                                <!--Renovation Team Box	-->
-                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33"
-                                     flex-gt-md="25">
-                                    <div class="box-wrapper renovation-inner-grid-list">
+                                    <!--Renovation Team Box	-->
+                                    <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33" flex-gt-md="25">
+                                        <div class="box-wrapper renovation-inner-grid-list">
 
-                                        <!--TODO: make sure to disable tab if team not assigned yet-->
-                                        <div flex-gt-sm="45" flex-offset-gt-sm="5" flex
-                                             class="renovation-page grid-tab box-header">
-                                            <div layout="row">
-                                                <div layout="column">
-                                                    <h3> {{renovationTeam.name}} </h3>
-                                                    <span>חברי צוות: {{renovationMembers.length}}</span>
+                                            <!--TODO: make sure to disable tab if team not assigned yet-->
+                                            <div flex-gt-sm="45" flex-offset-gt-sm="5" flex class="renovation-page grid-tab box-header">
+                                                <div layout="row">
+                                                    <div layout="column">
+                                                        <h3> {{renovationTeam.name}} </h3>
+                                                        <span>חברי צוות: {{renovationMembers.length}}</span>
+                                                    </div>
+                                                    <div ng-hide="isTeamAssigned(renovationTeam)">
+                                                        <h3>לא הוקצה צוות לשיפוץ</h3>
+                                                    </div>
                                                 </div>
-                                                <div ng-hide="isTeamAssigned(renovationTeam)">
-                                                    <h3>לא הוקצה צוות לשיפוץ</h3>
-                                                </div>
+
+                                                <md-content>
+                                                    <md-list class="md-dense list-volunteers" flex>
+                                                        <md-list-item class="md-3-line rtl list-slide-right" ng-repeat="member in renovationMembers" ng-click="showUserDetails($event, member)">
+                                                            <div class="renovation-user" layout="row">
+                                                                <div class="md-list-item-text" layout="column">
+                                                                    <h3>{{ member.name }}</h3>
+                                                                    <h4>{{ member.email }}</h4>
+                                                                    <p>{{ member.phone }}</p>
+                                                                </div>
+                                                                <div class="arriving-icon toggle-fade" ng-show="member.email !== renovationTeam.manager && checkRSVP(member.email)" layout="row" layout-align="center center">
+                                                                    <i class="material-icons icon">thumb_up</i> <a class="text">- מגיע</a>
+                                                                </div>
+                                                                <md-button ng-show="member.email === renovationTeam.manager" class="md-secondary md-primary md-icon-button toggle-fade">
+                                                                    <md-icon class="material-icons">star</md-icon>
+                                                                </md-button>
+                                                            </div>
+                                                            <md-divider></md-divider>
+                                                        </md-list-item>
+                                                    </md-list>
+                                                </md-content>
                                             </div>
-                                            
-                                            <md-content>
-                                                <md-list class="md-dense list-volunteers" flex>
-                                                    <md-list-item class="md-3-line rtl list-slide-right"
-                                                                  ng-repeat="member in renovationMembers"
-                                                                  ng-click="showUserDetails($event, member)">
-                                                        <div class="renovation-user" layout="row">
-                                                            <div class="md-list-item-text" layout="column">
-                                                                <h3>{{ member.name }}</h3>
-                                                                <h4>{{ member.email }}</h4>
-                                                                <p>{{ member.phone }}</p>
-                                                            </div>
-                                                            <div class="arriving-icon toggle-fade"
-                                                                 ng-show="member.email !== renovationTeam.manager && checkRSVP(member.email)"
-                                                                 layout="row" layout-align="center center">
-                                                                <i class="material-icons icon">thumb_up</i> <a
-                                                                    class="text">- מגיע</a>
-                                                            </div>
-                                                            <md-button ng-show="member.email === renovationTeam.manager"
-                                                                       class="md-secondary md-primary md-icon-button toggle-fade">
-                                                                <md-icon class="material-icons">star</md-icon>
+                                        </div>
+                                    </div>
+
+                                    <!--Pinned Messages Box	-->
+                                    <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33" flex-gt-md="35">
+                                        <div class="box-wrapper renovation-inner-grid-list">
+                                            <div layout="row" class="box-header">
+                                                <h3>הודעות חשובות</h3>
+                                                <span flex></span>
+
+                                                <md-button ng-click="addPinned($event)" class="md-primary md-icon-button" layout="row" layout-align="center center" ng-hide="user.role === ROLES.VOLUNTEER">
+                                                    <md-icon class="material-icons">add_circle</md-icon>
+                                                </md-button>
+
+                                                <md-button ng-hide="user.role === ROLES.VOLUNTEER || editMessagesMode" ng-click="editMessages()" class="md-primary md-icon-button" layout="row" layout-align="center center">
+                                                    <md-icon class="material-icons">mode_edit</md-icon>
+                                                </md-button>
+
+                                                <md-button ng-show="user.role !== ROLES.VOLUNTEER && editMessagesMode" ng-click="editMessages()" class="md-accent md-icon-button" layout="row" layout-align="center center">
+                                                    <md-icon class="material-icons">mode_edit</md-icon>
+                                                </md-button>
+                                            </div>
+                                            <md-list layout="column">
+                                                <md-list-item class="md-2-line pinned-wrapper list-slide-right" ng-repeat="pinned in thisRenovation.pinned">
+                                                    <div class="md-list-item-text pinned-message effect7" style="padding:20px; margin:10px;" layout="column">
+                                                        <div layout="row" class="toggle-fade" ng-show="editMessagesMode">
+                                                            <span flex></span>
+                                                            <md-button ng-click="deletePinned(pinned)" class="md-icon-button pinned-delete-button" layout="row" layout-align="center center">
+                                                                <i class="material-icons">close</i>
+                                                            </md-button>
+                                                            <md-button ng-click="editPinned($event, pinned)" class="md-icon-button pinned-edit-button" layout="row" layout-align="center center">
+                                                                <i class="material-icons">border_color</i>
                                                             </md-button>
                                                         </div>
-                                                        <md-divider></md-divider>
-                                                    </md-list-item>
-                                                </md-list>
-                                            </md-content>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!--Pinned Messages Box	-->
-                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33"
-                                     flex-gt-md="35">
-                                    <div class="box-wrapper renovation-inner-grid-list">
-                                        <div layout="row" class="box-header">
-                                            <h3>הודעות חשובות</h3>
-                                            <span flex></span>
-
-                                            <md-button ng-click="addPinned($event)" class="md-primary md-icon-button"
-                                                       layout="row"
-                                                       layout-align="center center"
-                                                       ng-hide="user.role === ROLES.VOLUNTEER">
-                                                <md-icon class="material-icons">add_circle</md-icon>
-                                            </md-button>
-
-                                            <md-button ng-hide="user.role === ROLES.VOLUNTEER || editMessagesMode"
-                                                       ng-click="editMessages()" class="md-primary md-icon-button"
-                                                       layout="row"
-                                                       layout-align="center center">
-                                                <md-icon class="material-icons">mode_edit</md-icon>
-                                            </md-button>
-
-                                            <md-button ng-show="user.role !== ROLES.VOLUNTEER && editMessagesMode"
-                                                       ng-click="editMessages()" class="md-accent md-icon-button"
-                                                       layout="row"
-                                                       layout-align="center center">
-                                                <md-icon class="material-icons">mode_edit</md-icon>
-                                            </md-button>
-                                        </div>
-                                        <md-list layout="column">
-                                            <md-list-item class="md-2-line pinned-wrapper list-slide-right"
-                                                          ng-repeat="pinned in thisRenovation.pinned">
-                                                <div class="md-list-item-text pinned-message effect7"
-                                                     style="padding:20px; margin:10px;" layout="column">
-                                                    <div layout="row" class="toggle-fade" ng-show="editMessagesMode">
-                                                        <span flex></span>
-                                                        <md-button ng-click="deletePinned(pinned)"
-                                                                   class="md-icon-button pinned-delete-button"
-                                                                   layout="row" layout-align="center center">
-                                                            <i class="material-icons">close</i>
-                                                        </md-button>
-                                                        <md-button ng-click="editPinned($event, pinned)"
-                                                                   class="md-icon-button pinned-edit-button"
-                                                                   layout="row" layout-align="center center">
-                                                            <i class="material-icons">border_color</i>
-                                                        </md-button>
+                                                        <div>
+                                                            <span class="message-text title" ng-hide="pinned.title == ''">{{pinned.title}}</span>
+                                                            <div ng-hide="pinned.title == ''"> </div>
+                                                            <span class="message-text description" ng-class="{show: !show}">{{pinned.description}}</span>
+                                                            <a href="" ng-click="show = true" ng-hide="show == true">קרא הודעה</a>
+                                                            <p>{{pinned.added_date}}</p>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <span class="message-text title" ng-hide="pinned.title == ''">{{pinned.title}}</span>
-                                                        <div ng-hide="pinned.title == ''"> </div>
-                                                        <span class="message-text description" ng-class="{show: !show}">{{pinned.description}}</span> 
-                                                        <a href="" ng-click="show = true" ng-hide="show == true">קרא הודעה</a>
-                                                        <p>{{pinned.added_date}}</p>
-                                                    </div>
-                                                </div>
-                                            </md-list-item>
-                                        </md-list>
+                                                </md-list-item>
+                                            </md-list>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!--Renovation Stage Box -->
-                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33"
-                                     flex-gt-md="25">
-                                    <div class="box-wrapper" layout="column">
-                                        <div layout="row" class="box-header">
-                                            <h3>התקדמות השיפוץ</h3>
-                                            <span flex></span>
+                                    <!--Renovation Stage Box -->
+                                    <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33" flex-gt-md="25">
+                                        <div class="box-wrapper" layout="column">
+                                            <div layout="row" class="box-header">
+                                                <h3>התקדמות השיפוץ</h3>
+                                                <span flex></span>
 
-                                            <!--Stage Add and Edit Controls-->
-                                            <md-button ng-show="editStagesMode" ng-click="addStage($event)"
-                                                       class="md-primary md-icon-button toggle-fade" layout="row"
-                                                       layout-align="center center">
-                                                <md-icon class="material-icons">add_circle</md-icon>
-                                            </md-button>
+                                                <!--Stage Add and Edit Controls-->
+                                                <md-button ng-show="editStagesMode" ng-click="addStage($event)" class="md-primary md-icon-button toggle-fade" layout="row" layout-align="center center">
+                                                    <md-icon class="material-icons">add_circle</md-icon>
+                                                </md-button>
 
-                                            <md-button ng-hide="user.role === ROLES.VOLUNTEER || editStagesMode"
-                                                       ng-click="enableEditStages()" class="md-primary md-icon-button"
-                                                       layout="row"
-                                                       layout-align="center center">
-                                                <md-icon class="material-icons">border_color</md-icon>
-                                            </md-button>
+                                                <md-button ng-hide="user.role === ROLES.VOLUNTEER || editStagesMode" ng-click="enableEditStages()" class="md-primary md-icon-button" layout="row" layout-align="center center">
+                                                    <md-icon class="material-icons">border_color</md-icon>
+                                                </md-button>
 
-                                            <md-button ng-show="user.role !== ROLES.VOLUNTEER && editStagesMode"
-                                                       ng-click="disableEditStages()" class="md-accent md-icon-button"
-                                                       layout="row"
-                                                       layout-align="center center">
-                                                <md-icon class="material-icons">border_color</md-icon>
-                                            </md-button>
+                                                <md-button ng-show="user.role !== ROLES.VOLUNTEER && editStagesMode" ng-click="disableEditStages()" class="md-accent md-icon-button" layout="row" layout-align="center center">
+                                                    <md-icon class="material-icons">border_color</md-icon>
+                                                </md-button>
 
-                                        </div>
+                                            </div>
 
-                                        <!--Stage Picture-->
-                                        <div class="stage-images" layout="column" layout-align="center center">
-                                            <img ng-src="{{renovationStageImage}}" alt="stage icon"/>
-                                        </div>
-                                        <!--Stage Progress Bar-->
-                                        <div layout="column" layout-align="center center">
-                                            <md-progress-linear class="rtl" md-mode="determinate"
-                                                                ng-value="renovationProgress"
-                                                                md-diameter="50"></md-progress-linear>
-                                            <div class="stages-text">{{renovationProgress}}%</div>
-                                        </div>
-                                        <!--Stage Next and Prev Controls-->
-                                        <div layout="row" ng-show="editStagesMode" class="stages-controls toggle-fade">
-                                            <md-button ng-click="previousStage()" class="md-primary md-icon-button"
-                                                       layout="row" layout-align="center center">
-                                                <md-icon class="material-icons">keyboard_arrow_right</md-icon>
-                                            </md-button>
+                                            <!--Stage Picture-->
+                                            <div class="stage-images" layout="column" layout-align="center center">
+                                                <img ng-src="{{renovationStageImage}}" alt="stage icon" />
+                                            </div>
+                                            <!--Stage Progress Bar-->
+                                            <div layout="column" layout-align="center center">
+                                                <md-progress-linear class="rtl" md-mode="determinate" ng-value="renovationProgress" md-diameter="50"></md-progress-linear>
+                                                <div class="stages-text">{{renovationProgress}}%</div>
+                                            </div>
+                                            <!--Stage Next and Prev Controls-->
+                                            <div layout="row" ng-show="editStagesMode" class="stages-controls toggle-fade">
+                                                <md-button ng-click="previousStage()" class="md-primary md-icon-button" layout="row" layout-align="center center">
+                                                    <md-icon class="material-icons">keyboard_arrow_right</md-icon>
+                                                </md-button>
 
-                                            <span flex></span>
+                                                <span flex></span>
 
-                                            <md-button ng-show="needToAssignTeam" ng-click="finalizeRenovation($event)"
-                                                       class="md-primary md-raised toggle-fade" layout="row"
-                                                       layout-align="center center">
-                                                שבץ צוות
-                                            </md-button>
+                                                <md-button ng-show="needToAssignTeam" ng-click="finalizeRenovation($event)" class="md-primary md-raised toggle-fade" layout="row" layout-align="center center">
+                                                    שבץ צוות
+                                                </md-button>
 
-                                            <span flex></span>
+                                                <span flex></span>
 
-                                            <md-button ng-click="nextStage()" class="md-primary md-icon-button"
-                                                       layout="row" layout-align="center center">
-                                                <md-icon class="material-icons">keyboard_arrow_left</md-icon>
-                                            </md-button>
+                                                <md-button ng-click="nextStage()" class="md-primary md-icon-button" layout="row" layout-align="center center">
+                                                    <md-icon class="material-icons">keyboard_arrow_left</md-icon>
+                                                </md-button>
 
-                                        </div>
-                                        <!--Current Stage Label-->
-                                        <div layout="column" layout-align="center center">
-                                            <div class="stages-text">שלב נוכחי: {{renovationCurrentStage}}</div>
+                                            </div>
+                                            <!--Current Stage Label-->
+                                            <div layout="column" layout-align="center center">
+                                                <div class="stages-text">שלב נוכחי: {{renovationCurrentStage}}</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             </md-tab-body>
                         </md-tab>
                         <!--Second Tab - Renovation Sub Details -->
@@ -243,36 +197,26 @@
                             </md-tab-label>
                             <!--The Grid list for all Boxes in page -->
                             <md-tab-body>
-                            <div class="renovation-tab-content" flex layout="row" layout-align="center none"
-                                 layout-align-gt-sm="none none" layout-wrap>
+                                <div class="renovation-tab-content" flex layout="row" layout-align="center none" layout-align-gt-sm="none none" layout-wrap>
 
-                                <!--Tasks Box -->
-                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33"
-                                     flex-gt-md="35">
+                                    <!--Tasks Box -->
+                                    <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33" flex-gt-md="35">
 
-                                    <div class="box-wrapper renovation-inner-grid-list">
-                                        <div layout="row" class="box-header">
-                                            <h3>משימות</h3>
-                                            <span flex></span>
+                                        <div class="box-wrapper renovation-inner-grid-list">
+                                            <div layout="row" class="box-header">
+                                                <h3>משימות</h3>
+                                                <span flex></span>
 
-                                            <md-button ng-click="addTask($event)" class="md-primary md-icon-button"
-                                                       layout="row"
-                                                       layout-align="center center"
-                                                       ng-hide="user.role === ROLES.VOLUNTEER">
-                                                <md-icon class="material-icons">add_circle</md-icon>
-                                            </md-button>
-                                            <md-button ng-hide="editTasksMode || user.role === ROLES.VOLUNTEER"
-                                                       ng-click="editTasks()" class="md-primary md-icon-button"
-                                                       layout="row"
-                                                       layout-align="center center">
-                                                <md-icon class="material-icons">mode_edit</md-icon>
-                                            </md-button>
-                                            <md-button ng-show="editTasksMode && user.role !== ROLES.VOLUNTEER"
-                                                       ng-click="editTasks()" class="md-accent md-icon-button"
-                                                       layout="row"
-                                                       layout-align="center center">
-                                                <md-icon class="material-icons">mode_edit</md-icon>
-                                            </md-button>
+                                                <md-button ng-click="addTask($event)" class="md-primary md-icon-button" layout="row" layout-align="center center" ng-hide="user.role === ROLES.VOLUNTEER">
+                                                    <md-icon class="material-icons">add_circle</md-icon>
+                                                </md-button>
+                                                <md-button ng-hide="editTasksMode || user.role === ROLES.VOLUNTEER" ng-click="editTasks()" class="md-primary md-icon-button" layout="row" layout-align="center center">
+                                                    <md-icon class="material-icons">mode_edit</md-icon>
+                                                </md-button>
+                                                <md-button ng-show="editTasksMode && user.role !== ROLES.VOLUNTEER" ng-click="editTasks()" class="md-accent md-icon-button" layout="row" layout-align="center center">
+                                                    <md-icon class="material-icons">mode_edit</md-icon>
+                                                </md-button>
+                                                <!--
                                             <md-button ng-show="taskFilter" ng-click="changeTaskFilter()"
                                                        class="md-primary" layout="row" layout-align="center center">
                                                 בוצעו
@@ -281,208 +225,167 @@
                                                        class="md-accent" layout="row" layout-align="center center">
                                                 לא בוצעו
                                             </md-button>
-                                        </div>
-                                        <div>
-                                            <md-list>
-                                                <md-list-item class="md-2-line list-slide-right"
-                                                              ng-repeat="task in thisRenovation.tasks | filter:{ done: taskFilter }">
-                                                    <div class="renovation-task" layout="column">
-                                                        <div layout="row" class="toggle-fade" ng-show="editTasksMode">
-                                                            <span flex></span>
-                                                            <md-button ng-click="deleteTask(task)"
-                                                                       class="md-icon-button task-delete-button"
-                                                                       layout="row" layout-align="center center">
-                                                                <md-icon class="material-icons">close</md-icon>
-                                                            </md-button>
-                                                            <md-button ng-click="editTask($event, task)"
-                                                                       class="md-icon-button task-edit-button"
-                                                                       layout="row" layout-align="center center">
-                                                                <md-icon class="material-icons">border_color</md-icon>
-                                                            </md-button>
-                                                            <md-select aria-label="select task assignee"
-                                                                       ng-change="updateTaskAssignee(task, task.assigned_email)"
-                                                                       ng-model="task.assigned_email"
-                                                                       class="task-assign-button">
-                                                                <md-option ng-repeat="email in renovationTeam.members"
-                                                                           value="{{email}}">
-                                                                    {{getMemberName(email)}}
-                                                                </md-option>
-                                                            </md-select>
-                                                        </div>
-                                                        <div flex>
-                                                            <h2>{{task.name}}</h2>
-                                                            <p>{{task.description}}</p>
-                                                            <p>אחראי: <a
-                                                                    ng-show="checkMemberFound(getMemberName(task.assigned_email))">{{getMemberName(task.assigned_email)}}</a>
-                                                            </p>
-                                                            <div ng-hide="checkTaskDone(task.done)">
-                                                                <md-button layout="row" ng-click="taskDone(task)"
-                                                                           class="md-raised md-primary"
-                                                                           ng-show="user.email === task.assigned_email">
-                                                                    <div layout="row" layout-align="center center">
-                                                                        <md-icon class="material-icons"
-                                                                                 style="padding-left:5px;">thumb_up
-                                                                        </md-icon>
-                                                                        סיימתי
-                                                                        משימה
-                                                                    </div>
+-->
+                                            </div>
+                                            <div>
+                                                <md-list>
+                                                    <md-list-item class="md-2-line list-slide-right" ng-repeat="task in thisRenovation.tasks | orderBy: '+done'" ng-class="{'marked-as-done': task.done}">
+                                                        <div class="renovation-task" layout="column">
+                                                            <div layout="row" class="toggle-fade" ng-show="editTasksMode">
+                                                                <span flex></span>
+                                                                <md-button ng-click="deleteTask(task)" class="md-icon-button task-delete-button" layout="row" layout-align="center center">
+                                                                    <md-icon class="material-icons">close</md-icon>
                                                                 </md-button>
+                                                                <md-button ng-click="editTask($event, task)" class="md-icon-button task-edit-button" layout="row" layout-align="center center">
+                                                                    <md-icon class="material-icons">border_color</md-icon>
+                                                                </md-button>
+                                                                <md-select aria-label="select task assignee" ng-change="updateTaskAssignee(task, task.assigned_email)" ng-model="task.assigned_email" class="task-assign-button">
+                                                                    <md-option ng-repeat="email in renovationTeam.members" value="{{email}}">
+                                                                        {{getMemberName(email)}}
+                                                                    </md-option>
+                                                                </md-select>
                                                             </div>
-                                                            <md-icon class="material-icons task-done-icon"
-                                                                     ng-show="checkTaskDone(task.done)">done
-                                                            </md-icon>
+                                                            <div flex>
+                                                                <h2>{{task.name}}</h2>
+                                                                <p>{{task.description}}</p>
+                                                                <p>אחראי: <a ng-show="checkMemberFound(getMemberName(task.assigned_email))">{{getMemberName(task.assigned_email)}}</a>
+                                                                </p>
+                                                                <div ng-hide="checkTaskDone(task.done)">
+                                                                    <md-button layout="row" ng-click="taskDone(task)" class="md-raised md-primary" ng-show="user.email === task.assigned_email">
+                                                                        <div layout="row" layout-align="center center">
+                                                                            <md-icon class="material-icons" style="padding-left:5px;">thumb_up
+                                                                            </md-icon>
+                                                                            סיימתי משימה
+                                                                        </div>
+                                                                    </md-button>
+                                                                </div>
+                                                                <div>
+                                                                    <md-button ng-show="!task.assigned_email" ng-click="assignMyselfToTask(task)" class="md-primary" layout="row" layout-align="center center">
+                                                                        שיבוץ עצמי
+                                                                    </md-button>
+                                                                    <md-button ng-hide="user.email !== task.assigned_email" ng-click="removeMyselfFromTask(task)" class="md-accent" layout="row" layout-align="center center">
+                                                                        ביטול שיבוץ
+                                                                    </md-button>
+                                                                </div>
+                                                                <md-icon class="material-icons task-done-icon" ng-show="checkTaskDone(task.done)">done
+                                                                </md-icon>
+                                                            </div>
+                                                            <md-divider></md-divider>
                                                         </div>
-                                                        <md-divider></md-divider>
-                                                    </div>
-                                                </md-list-item>
-                                            </md-list>
+                                                    </md-list-item>
+                                                </md-list>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <!--Tools Box -->
-                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33"
-                                     flex-gt-md="40">
+                                    <!--Tools Box -->
+                                    <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33" flex-gt-md="40">
 
-                                    <div class="box-wrapper renovation-inner-grid-list">
-                                        <div layout="row" class="box-header">
-                                            <h3>כלים</h3>
-                                            <span flex></span>
+                                        <div class="box-wrapper renovation-inner-grid-list">
+                                            <div layout="row" class="box-header">
+                                                <h3>כלים</h3>
+                                                <span flex></span>
 
-                                            <md-button ng-click="addTool($event)" class="md-primary md-icon-button"
-                                                       layout="row"
-                                                       layout-align="center center"
-                                                       ng-hide="user.role === ROLES.VOLUNTEER">
-                                                <md-icon class="material-icons">add_circle</md-icon>
-                                            </md-button>
-                                            <md-button ng-hide="editToolsMode || user.role === ROLES.VOLUNTEER"
-                                                       ng-click="editTools()" class="md-primary md-icon-button"
-                                                       layout="row"
-                                                       layout-align="center center">
-                                                <md-icon class="material-icons">mode_edit</md-icon>
-                                            </md-button>
-                                            <md-button ng-show="editToolsMode && user.role !== ROLES.VOLUNTEER"
-                                                       ng-click="editTools()" class="md-accent md-icon-button"
-                                                       layout="row"
-                                                       layout-align="center center">
-                                                <md-icon class="material-icons">mode_edit</md-icon>
-                                            </md-button>
-                                            <md-button ng-show="toolsFilter" ng-click="changeToolsFilter()"
-                                                       class="md-primary" layout="row" layout-align="center center">
-                                                מביאים
-                                            </md-button>
-                                            <md-button ng-hide="toolsFilter" ng-click="changeToolsFilter()"
-                                                       class="md-accent" layout="row" layout-align="center center">
-                                                לא מביאים
-                                            </md-button>
-                                        </div>
-                                        <div>
-                                            <md-list>
-                                                <md-list-item class="md-2-line list-slide-right"
-                                                              ng-repeat="tool in thisRenovation.toolsNeeded | filter:{ being_brought: toolsFilter }">
-                                                    <div class=" renovation-task" layout="column">
-                                                        <div layout="row" class="toggle-fade" ng-show="editToolsMode">
-                                                            <span flex></span>
-                                                            <md-button ng-click="deleteTool(tool)"
-                                                                       class="md-icon-button task-delete-button"
-                                                                       layout="row" layout-align="center center">
-                                                                <md-icon class="material-icons">close</md-icon>
-                                                            </md-button>
+                                                <md-button ng-click="addTool($event)" class="md-primary md-icon-button" layout="row" layout-align="center center" ng-hide="user.role === ROLES.VOLUNTEER">
+                                                    <md-icon class="material-icons">add_circle</md-icon>
+                                                </md-button>
+                                                <md-button ng-hide="editToolsMode || user.role === ROLES.VOLUNTEER" ng-click="editTools()" class="md-primary md-icon-button" layout="row" layout-align="center center">
+                                                    <md-icon class="material-icons">mode_edit</md-icon>
+                                                </md-button>
+                                                <md-button ng-show="editToolsMode && user.role !== ROLES.VOLUNTEER" ng-click="editTools()" class="md-accent md-icon-button" layout="row" layout-align="center center">
+                                                    <md-icon class="material-icons">mode_edit</md-icon>
+                                                </md-button>
+<!--
+                                                <md-button ng-show="toolsFilter" ng-click="changeToolsFilter()" class="md-primary" layout="row" layout-align="center center">
+                                                    מביאים
+                                                </md-button>
+                                                <md-button ng-hide="toolsFilter" ng-click="changeToolsFilter()" class="md-accent" layout="row" layout-align="center center">
+                                                    לא מביאים
+                                                </md-button>
+-->
+                                            </div>
+                                            <div>
+                                                <md-list>
+                                                    <md-list-item class="md-2-line list-slide-right" ng-repeat="tool in thisRenovation.toolsNeeded | orderBy: '+being_brought'" ng-class="{'marked-as-done': checkToolBeingBrought(tool.being_brought)}">
+                                                        <div class="renovation-task" layout="column">
+                                                            <div layout="row" class="toggle-fade" ng-show="editToolsMode">
+                                                                <span flex></span>
+                                                                <md-button ng-click="deleteTool(tool)" class="md-icon-button task-delete-button" layout="row" layout-align="center center">
+                                                                    <md-icon class="material-icons">close</md-icon>
+                                                                </md-button>
 
-                                                        </div>
-                                                        <div flex>
-                                                            <h2>{{tool.name}}</h2>
-                                                            <p>{{tool.quantity}}</p>
-                                                            <p>{{tool.comment}}</p>
-                                                            <p>אחראי: <a
-                                                                    ng-show="checkMemberFound(getMemberName(tool.assigned))">{{getMemberName(tool.assigned)}}</a><a
-                                                                    ng-show="isFromShed(tool)">מהמחסן</a></p>
+                                                            </div>
+                                                            <div flex>
+                                                                <h2>{{tool.name}}</h2>
+                                                                <p>{{tool.quantity}}</p>
+                                                                <p>{{tool.comment}}</p>
+                                                                <p>אחראי: <a ng-show="checkMemberFound(getMemberName(tool.assigned))">{{getMemberName(tool.assigned)}}</a><a ng-show="isFromShed(tool)">מהמחסן</a></p>
 
-                                                            <div layout="row" layout-wrap style="margin-bottom: 5px;">
-                                                                <div ng-hide="checkToolBeingBrought(tool.being_brought)">
-                                                                    <md-button
-                                                                            ng-click="bringTool(tool, user.email)"
-                                                                            class="md-raised md-primary">
-                                                                        <div layout="row" layout-align="center center">
-                                                                            <md-icon class="material-icons"
-                                                                                     style="padding-left:5px;">thumb_up
-                                                                            </md-icon>
-                                                                            מביא
-                                                                            את הכלי
-                                                                        </div>
-                                                                    </md-button>
-                                                                </div>
-
-                                                                <div ng-show="checkToolBeingBrought(tool.being_brought) && user.email === tool.assigned">
-                                                                    <md-button ng-click="dontBringTool(tool)"
-                                                                               class="md-raised md-accent">
-                                                                        <div layout="row" layout-align="center center">
-                                                                            <md-icon class="material-icons"
-                                                                                     style="padding-left:5px;">
-                                                                                thumb_down
-                                                                            </md-icon>
-                                                                            לא
-                                                                            מביא את הכלי
-                                                                        </div>
-                                                                    </md-button>
-                                                                </div>
-                                                                <div ng-hide="user.role === ROLES.VOLUNTEER">
+                                                                <div layout="row" layout-wrap style="margin-bottom: 5px;">
                                                                     <div ng-hide="checkToolBeingBrought(tool.being_brought)">
-                                                                        <md-button
-                                                                                ng-click="bringTool(tool, 'shed')"
-                                                                                class="md-raised md-primary">
-                                                                            <div layout="row"
-                                                                                 layout-align="center center">
-                                                                                <md-icon class="material-icons"
-                                                                                         style="padding-left:5px;">
-                                                                                    thumb_up
+                                                                        <md-button ng-click="bringTool(tool, user.email)" class="md-raised md-primary">
+                                                                            <div layout="row" layout-align="center center">
+                                                                                <md-icon class="material-icons" style="padding-left:5px;">thumb_up
                                                                                 </md-icon>
-                                                                                מהמחסן
+                                                                                מביא את הכלי
                                                                             </div>
                                                                         </md-button>
                                                                     </div>
-                                                                    <div ng-show="checkToolBeingBrought(tool.being_brought) && isFromShed(tool) && user.role !== ROLES.VOLUNTEER">
-                                                                        <md-button
-                                                                                ng-click="dontBringTool(tool)"
-                                                                                class="md-raised md-accent">
-                                                                            <div layout="row"
-                                                                                 layout-align="center center">
-                                                                                <md-icon class="material-icons"
-                                                                                         style="padding-left:5px;">
+
+                                                                    <div ng-show="checkToolBeingBrought(tool.being_brought) && user.email === tool.assigned">
+                                                                        <md-button ng-click="dontBringTool(tool)" class="md-raised md-accent">
+                                                                            <div layout="row" layout-align="center center">
+                                                                                <md-icon class="material-icons" style="padding-left:5px;">
                                                                                     thumb_down
                                                                                 </md-icon>
-                                                                                לא מהמחסן
+                                                                                לא מביא את הכלי
                                                                             </div>
                                                                         </md-button>
                                                                     </div>
+                                                                    <div ng-hide="user.role === ROLES.VOLUNTEER">
+                                                                        <div ng-hide="checkToolBeingBrought(tool.being_brought)">
+                                                                            <md-button ng-click="bringTool(tool, 'shed')" class="md-raised md-primary">
+                                                                                <div layout="row" layout-align="center center">
+                                                                                    <md-icon class="material-icons" style="padding-left:5px;">
+                                                                                        thumb_up
+                                                                                    </md-icon>
+                                                                                    מהמחסן
+                                                                                </div>
+                                                                            </md-button>
+                                                                        </div>
+                                                                        <div ng-show="checkToolBeingBrought(tool.being_brought) && isFromShed(tool) && user.role !== ROLES.VOLUNTEER">
+                                                                            <md-button ng-click="dontBringTool(tool)" class="md-raised md-accent">
+                                                                                <div layout="row" layout-align="center center">
+                                                                                    <md-icon class="material-icons" style="padding-left:5px;">
+                                                                                        thumb_down
+                                                                                    </md-icon>
+                                                                                    לא מהמחסן
+                                                                                </div>
+                                                                            </md-button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <i class="material-icons task-done-icon" ng-show="checkToolBeingBrought(tool.being_brought)">thumb_up</i>
                                                                 </div>
-                                                                <i class="material-icons task-done-icon"
-                                                                   ng-show="checkToolBeingBrought(tool.being_brought)">thumb_up</i>
                                                             </div>
+                                                            <md-divider></md-divider>
                                                         </div>
-                                                        <md-divider></md-divider>
-                                                    </div>
-                                                </md-list-item>
-                                            </md-list>
+                                                    </md-list-item>
+                                                </md-list>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!--Renovation Map Box -->
-                                <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33"
-                                     flex-gt-md="25">
-                                    <div layout="column" class="box-wrapper">
-                                        <div layout="row" layout-align="center center"
-                                             style="height: 100%; padding:1px;">
-                                            <!--											<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2848.1677792216697!2d34.99999188673667!3d31.904929403828792!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1502cdb687a74b15%3A0x9bb5207a84b99291!2z15fXmNeZ15HXqiDXlNem16DXl9eg15nXnSAyLCDXnteV15PXmdei15nXnyDXnteb15HXmdedINeo16LXldeq!5e0!3m2!1siw!2sil!4v1461780210508" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>-->
+                                    <!--Renovation Map Box -->
+                                    <div class="renovation-list" layout="column" flex="100" flex-sm="50" flex-md="33" flex-gt-md="25">
+                                        <div layout="column" class="box-wrapper">
+                                            <div layout="row" layout-align="center center" style="height: 100%; padding:1px;">
+                                                <!--											<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2848.1677792216697!2d34.99999188673667!3d31.904929403828792!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1502cdb687a74b15%3A0x9bb5207a84b99291!2z15fXmNeZ15HXqiDXlNem16DXl9eg15nXnSAyLCDXnteV15PXmdei15nXnyDXnteb15HXmdedINeo16LXldeq!5e0!3m2!1siw!2sil!4v1461780210508" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>-->
 
-                                            <iframe width="100%" height="100%" frameborder="0" style="border:0"
-                                                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDIFdyao6eob2Em308R2fU1N1uWWMnyNI4&q=Space+Needle,Seattle+WA"
-                                                    allowfullscreen>
-                                            </iframe>
+                                                <iframe width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDIFdyao6eob2Em308R2fU1N1uWWMnyNI4&q=Space+Needle,Seattle+WA" allowfullscreen>
+                                                </iframe>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             </md-tab-body>
                         </md-tab>
                     </md-tabs>
