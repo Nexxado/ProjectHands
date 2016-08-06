@@ -5,7 +5,6 @@ angular.module('ProjectHands.auth', [])
 /**************************************/
     .constant('ROLES', {
         ADMIN: "admin",
-        MANAGER: "manager",
         TEAM_LEAD: "teamLead",
         VOLUNTEER: "volunteer",
         GUEST: "guest"
