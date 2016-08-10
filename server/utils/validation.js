@@ -290,6 +290,11 @@ validation.validateParams = function(req, res, next) {
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid user email"});
             break;
 
+        case /user\/reject/.test(req.originalUrl):
+            if(!validateEmail(req.body.email))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid user email"});
+            break;
+
         case /user\/assign_role/.test(req.originalUrl):
             if(!validateEmail(req.body.email) || !validateRole(req.body.newRole))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: 'No user or new role provided'});

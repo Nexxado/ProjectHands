@@ -11,6 +11,9 @@ var mongoUtils = require('../utils/mongo');
 var middleware = require('../utils/middleware');
 var validation = require('../utils/validation');
 
+/**
+ * Renovation CRUD routes
+ */
 router.get('/get_info/:city/:street/:num', middleware.ensureAuthenticated, middleware.ensurePermission,
     validation.validateParams, middleware.ensureRenovationExists, getRenovationInfo);
 
@@ -21,59 +24,73 @@ router.get('/get_future', middleware.ensureAuthenticated, middleware.ensurePermi
 router.get('/my_renovations', middleware.ensureAuthenticated, middleware.ensurePermission, getUserRenovations);
 
 router.post('/finish', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, createRenovationStamp, finishRenovation);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, createRenovationStamp, finishRenovation);
 
 router.post('/create', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
     createRenovation);
 
+/**
+ * Renovation Tools
+ */
 router.post('/add_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, addTool);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, addTool);
 
 router.post('/assign_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, middleware.ensureUserExists, assignToolToUser);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, middleware.ensureUserExists, assignToolToUser);
 
 router.post('/shed_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, assignToolToShed);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, assignToolToShed);
 
 router.post('/unassign_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, unassignTool);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, unassignTool);
 
 router.post('/delete_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, deleteTool);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, deleteTool);
 
+/**
+ * Renovation Tasks
+ */
 router.post('/add_task', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, addTask);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, addTask);
 
 router.post('/assign_task', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, middleware.ensureUserExists, assignTask);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, middleware.ensureUserExists, assignTask);
 
 router.post('/done_task', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, doneTask);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, doneTask);
 
 router.post('/edit_task', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, editTask);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, editTask);
 
 router.post('/delete_task', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, deleteTask);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, deleteTask);
 
+/**
+ * Renovation Pinned messages
+ */
 router.post('/add_pinned', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, addPinned);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, addPinned);
 
 router.post('/edit_pinned', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, editPinned);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, editPinned);
 
 router.post('/delete_pinned', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, deletePinned);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, deletePinned);
 
-
+/**
+ * Renovation Stages
+ */
 router.post('/add_stage', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, addStage);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, addStage);
 
 router.post('/update_stage', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, updateStage);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, updateStage);
 
+/**
+ * RSVP
+ */
 router.post('/rsvp', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureRenovationExists, middleware.ensureTeamExists, rsvp);
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, middleware.ensureTeamExists, rsvp);
 
 
 module.exports = router;
@@ -671,9 +688,6 @@ function finishRenovation(req, res) {
             num: req.body.num
         }
     };
-
-    if(req.queriedRenovation.finished)
-        return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Renovation already finished"});
 
     mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {finished: true, stamp: req.stamp}}, {},
         function (error, result) {

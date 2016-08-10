@@ -119,6 +119,7 @@ module.exports = function (passport) {
                     role: ROLES.GUEST,
                     signup_complete: false,
                     approved: false,
+                    rejected: false,
                     joined_date: new Date()
                 };
 
@@ -184,6 +185,7 @@ module.exports = function (passport) {
                     role: ROLES.GUEST,
                     signup_complete: false,
                     approved: false,
+                    rejected: false,
                     joined_date: new Date()
                 };
 

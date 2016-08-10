@@ -23,7 +23,7 @@ router.get('/user_info/:email', middleware.ensureAuthenticated, middleware.ensur
  * Get basic user info
  */
 router.get('/basic/:email', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureUserExists, function(req, res) {
+    middleware.ensureUserExists, function (req, res) {
 
         var info = {
             email: req.queriedUser.email,
@@ -32,7 +32,7 @@ router.get('/basic/:email', middleware.ensureAuthenticated, middleware.ensurePer
         };
 
         res.send(info);
-});
+    });
 
 /**
  * Get all volunteers
@@ -45,15 +45,15 @@ router.get('/all_users', middleware.ensureAuthenticated, middleware.ensurePermis
         if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to find users"});
         else if (!result.length)
-            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "No users found"});
+            return res.send([]);
 
         //filter out unapproved users.
-        result = result.filter(function(user) {
+        result = result.filter(function (user) {
             return typeof user.approved === 'undefined' || user.approved === true
         });
 
         //Don't send user password
-        result.forEach(function(user) {
+        result.forEach(function (user) {
             delete user.password;
         });
 
@@ -77,14 +77,31 @@ router.get('/all_signups', middleware.ensureAuthenticated, middleware.ensurePerm
             return res.send([]);
 
         //Filter out OAuth2 users who didn't complete the signup process
-        result = result.filter(function(user) {
-            return typeof user.signup_complete === 'undefined' || user.signup_complete === true
+        //Or rejected users
+        result = result.filter(function (user) {
+            return (typeof user.signup_complete === 'undefined' || user.signup_complete === true)
+            && (typeof user.rejected === 'undefined' || user.rejected === false)
         });
 
         //Don't send user password
-        result.forEach(function(user) {
+        result.forEach(function (user) {
             delete user.password;
         });
+
+        res.send(result);
+    });
+});
+
+
+/**
+ * Get all rejected users
+ */
+router.get('/all_rejected', middleware.ensureAuthenticated, middleware.ensurePermission, function (req, res) {
+    mongoUtils.query(COLLECTIONS.USERS, {rejected: true}, function (error, result) {
+        if (error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to find signups"});
+        else if (!result.length)
+            return res.send([]);
 
         res.send(result);
     });
@@ -100,8 +117,8 @@ router.post('/approve', middleware.ensureAuthenticated, middleware.ensurePermiss
         if (req.queriedUser.approved)
             return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User already approved"});
 
-        mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, 
-            {$set: {approved: true, role: req.body.role}, $unset: {signupDate: ''}}, 
+        mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email},
+            {$set: {approved: true, role: req.body.role}, $unset: {signupDate: '', rejected: ''}},
             {},
             function (error, result) {
                 debug('approve', error, result.result);
@@ -111,6 +128,27 @@ router.post('/approve', middleware.ensureAuthenticated, middleware.ensurePermiss
 
                 res.send({success: true})
             });
+    });
+
+
+/**
+ * Reject User - move to rejects list.
+ */
+router.post('/reject', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureUserExists, function (req, res) {
+
+        if (req.queriedUser.rejected)
+            return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User already marked as rejected"});
+
+        mongoUtils.update(COLLECTIONS.USERS, {email: req.queriedUser.email}, {$set: {rejected: true, approved: false}}, {},
+            function (error, result) {
+            debug('reject', req.queriedUser.email, error, result.result);
+
+            if (error || result.result.n === 0)
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to reject user"});
+
+            res.send({success: true});
+        });
     });
 
 
@@ -155,22 +193,22 @@ router.post('/assign_role', middleware.ensureAuthenticated, middleware.ensurePer
  * Update user details
  */
 router.post('/update', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
-    middleware.ensureUserExists, function(req, res) {
+    middleware.ensureUserExists, function (req, res) {
 
         var updatedData = {
             name: req.body.name,
             phone: req.body.phone,
             role: req.body.role
         };
-        
-        mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, {$set: updatedData}, {}, function(error, result) {
+
+        mongoUtils.update(COLLECTIONS.USERS, {email: req.body.email}, {$set: updatedData}, {}, function (error, result) {
             debug('update', error, result);
             if (error || result.result.nModified === 0)
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed update user data"});
 
             return res.send({success: true});
         })
-        
+
     });
 
 

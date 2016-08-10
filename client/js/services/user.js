@@ -93,6 +93,23 @@ angular.module('ProjectHands')
             });
         }
 
+        /**
+         * Mark user as rejected
+         * @param email {string}
+         */
+        function rejectUser(email) {
+            return $resource(baseUrl + '/reject').save({
+                email: email
+            });
+        }
+
+        /**
+         * Get all users marked as rejected
+         */
+        function getAllRejects() {
+            return $resource(baseUrl + '/all_rejected').query();
+        }
+
         return {
             getFullUserInfo: getFullUserInfo,
             getBasicUserInfo: getBasicUserInfo,
@@ -101,6 +118,8 @@ angular.module('ProjectHands')
             approveUser: approveUser,
             deleteUser: deleteUser,
             updateRole: updateRole,
-            updateUser: updateUser
+            updateUser: updateUser,
+            rejectUser: rejectUser,
+            getAllRejects: getAllRejects
         };
     });

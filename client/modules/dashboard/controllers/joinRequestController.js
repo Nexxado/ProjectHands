@@ -7,15 +7,22 @@ angular.module('ProjectHands.dashboard')
 
         $scope.search = '';
         $scope.signups = [];
+        $scope.rejectedUsers = [];
         $scope.selectedUser;
         $scope.selectedRole = ROLES.VOLUNTEER;
         $scope.roles = [];
 
-        for(var role in ROLES) {
-            if(ROLES.hasOwnProperty(role) && ROLES[role] !== ROLES.GUEST && ROLES[role] !== ROLES.TEAM_LEAD)
+        /**
+         * Construct ROLEs array
+         */
+        for (var role in ROLES) {
+            if (ROLES.hasOwnProperty(role) && ROLES[role] !== ROLES.GUEST && ROLES[role] !== ROLES.TEAM_LEAD)
                 $scope.roles.push(ROLES[role])
         }
 
+        /**
+         * Get all user sign-ups
+         */
         UserService.getAllSignups().$promise
             .then(function (result) {
                 console.info('getAllSignups result', result);
@@ -26,93 +33,142 @@ angular.module('ProjectHands.dashboard')
                 UtilsService.makeToast(error.data.errMessage, $scope.rootToastAnchor, 'top right');
             });
 
-
-        $scope.showUserDetails = function ($event, user) {
+        /**
+         * Get all rejected users
+         */
+        UserService.getAllRejects().$promise
+            .then(function (result) {
+                console.info('getAllRejects result', result);
+                $scope.rejectedUsers = result;
+            })
+            .catch(function (error) {
+                console.info('getAllRejects error', error);
+                UtilsService.makeToast(error.data.errMessage, $scope.rootToastAnchor, 'top right');
+            });
+        /**
+         * Show user details in a dialog
+         * @param $event
+         * @param user {object}
+         * @param shouldReject {boolean} : if true, user will be rejected instead of deleted
+         */
+        $scope.showUserDetails = function ($event, user, shouldReject) {
             var isMobile = $mdMedia('sm') || $mdMedia('xs');
 
+            $mdDialog.show({
+                controller: function ($scope, $mdDialog, ROLES, user, roles) {
 
-            if (!isMobile) {
-                if ($scope.selectedUser === user) {
-                    $scope.selectedUser = undefined;
+                    $scope.user = user;
+                    $scope.roles = roles;
                     $scope.selectedRole = ROLES.VOLUNTEER;
-                    return;
-                }
 
-                $scope.selectedUser = user;
-            }
-            else {
-                $mdDialog.show({
-                    controller: function ($scope, $mdDialog, ROLES, user, roles) {
+                    $scope.cancel = function () {
+                        $mdDialog.cancel();
+                    };
 
-                        $scope.user = user;
-                        $scope.roles = roles;
-                        $scope.selectedRole = ROLES.VOLUNTEER;
-
-                        $scope.cancel = function () {
-                            $mdDialog.cancel();
-                        };
-
-                        $scope.submit = function (approve) {
-                            $mdDialog.hide({approve: approve, role: $scope.selectedRole});
-                        }
-                    },
-                    templateUrl: '/modules/dashboard/templates/dialogs/signupDetails.html',
-                    parent: angular.element(document.body),
-                    targetEvent: $event,
-                    clickOutsideToClose: true,
-                    fullscreen: true,
-                    locals: {
-                        user: user,
-                        roles: $scope.roles
+                    $scope.submit = function (approve) {
+                        $mdDialog.hide({approve: approve, role: $scope.selectedRole});
                     }
-                })
-                    .then(function (result) {
-                        console.log('dialog result', result.approve);
-                        if(result.approve)
-                            $scope.approveUser(user, result.role);
-                        else
-                            $scope.deleteUser(user);
+                },
+                templateUrl: '/modules/dashboard/templates/dialogs/signupDetails.html',
+                parent: angular.element(document.body),
+                targetEvent: $event,
+                clickOutsideToClose: true,
+                fullscreen: true,
+                locals: {
+                    user: user,
+                    roles: $scope.roles
+                }
+            })
+                .then(function (result) {
+                    console.log('dialog result', result.approve);
+                    if (result.approve)
+                        $scope.approveUser(user, result.role);
+                    else if (shouldReject)
+                        $scope.rejectUser(user);
+                    else
+                        $scope.deleteUser(user);
 
 
-                    }, function () {
-                        //Dialog Canceled
-                    });
-            }
+                }, function () {
+                    //Dialog Canceled
+                });
+            // }
         };
 
-
+        /**
+         * Check if user is selected
+         * Shows selectedUser's details
+         * @param user
+         * @returns {boolean}
+         */
         $scope.isSelected = function (user) {
             return $scope.selectedUser === user;
         };
 
-        $scope.approveUser = function(user, role) {
+        /**
+         * Approve user to join
+         * @param user {object}
+         * @param role {string} : role to assign the user
+         */
+        $scope.approveUser = function (user, role) {
             UserService.approveUser(user.email, role).$promise
-                .then(function(result) {
+                .then(function (result) {
                     console.info('approveUser result', result);
-                    removeUserFromList($scope.signups.indexOf(user));
+                    removeUserFromList(user);
                     UtilsService.makeToast(user.name + " אושר בהצלחה", $scope.rootToastAnchor, 'top right');
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.info('approveUser error', error);
                     UtilsService.makeToast(error.data.errMessage, $scope.rootToastAnchor, 'top right');
                 });
         };
 
-        $scope.deleteUser = function(user) {
+        /**
+         * Delete user permanently
+         * @param user {object}
+         */
+        $scope.deleteUser = function (user) {
             UserService.deleteUser(user.email).$promise
-                .then(function(result) {
+                .then(function (result) {
                     console.info('deleteUser result', result);
-                    removeUserFromList($scope.signups.indexOf(user));
+                    removeUserFromList(user);
                     UtilsService.makeToast(user.name + " הוסר", $scope.rootToastAnchor, 'top right');
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.info('deleteUser error', error);
                     UtilsService.makeToast(error.data.errMessage, $scope.rootToastAnchor, 'top right');
                 });
         };
 
-        function removeUserFromList(index) {
-            $scope.signups.splice(index, 1);
+        /**
+         * Mark user as rejected, move him to rejected list
+         * @param user {object}
+         */
+        $scope.rejectUser = function (user) {
+            UserService.rejectUser(user.email).$promise
+                .then(function (result) {
+                    console.info('rejectUser result', result);
+                    $scope.rejectedUsers.push(user);
+                    removeUserFromList(user)
+                })
+                .catch(function (error) {
+                    console.info('rejectUser error', error);
+                });
+        };
+
+        /**
+         * Remove user from sign-ups/rejected list
+         * @param user
+         */
+        function removeUserFromList(user) {
+            var index = $scope.signups.indexOf(user);
+            if (index > -1) {
+                $scope.signups.splice(index, 1);
+            } else {
+                index = $scope.rejectedUsers.indexOf(user);
+                $scope.rejectedUsers.splice(index, 1);
+            }
+
             $scope.selectedUser = undefined;
             $scope.selectedRole = ROLES.VOLUNTEER;
         }
