@@ -110,6 +110,19 @@ angular.module('ProjectHands')
             return $resource(baseUrl + '/all_rejected').query();
         }
 
+        /**
+         * Update a user's note
+         * user must be in rejected list
+         * @param email {string} : user's email
+         * @param note {string} : note to add to user
+         */
+        function updateUserNote(email, note) {
+            return $resource(baseUrl + '/note').save({
+                email: email,
+                admin_note: note
+            })
+        }
+
         return {
             getFullUserInfo: getFullUserInfo,
             getBasicUserInfo: getBasicUserInfo,
@@ -120,6 +133,7 @@ angular.module('ProjectHands')
             updateRole: updateRole,
             updateUser: updateUser,
             rejectUser: rejectUser,
-            getAllRejects: getAllRejects
+            getAllRejects: getAllRejects,
+            updateUserNote: updateUserNote
         };
     });

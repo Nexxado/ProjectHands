@@ -92,7 +92,6 @@ angular.module('ProjectHands.dashboard')
                 }, function () {
                     //Dialog Canceled
                 });
-            // }
         };
 
         /**
@@ -153,6 +152,51 @@ angular.module('ProjectHands.dashboard')
                 })
                 .catch(function (error) {
                     console.info('rejectUser error', error);
+                    UtilsService.makeToast(error.data.errMessage, $scope.rootToastAnchor, 'top right');
+                });
+        };
+
+
+        $scope.addUserNote = function ($event, user) {
+
+            $mdDialog.show({
+                controller: function ($scope, $mdDialog, note) {
+
+                    $scope.note = note;
+
+                    $scope.cancel = function () {
+                        $mdDialog.cancel();
+                    };
+
+                    $scope.submit = function () {
+                        $mdDialog.hide($scope.note);
+                    }
+                },
+                templateUrl: '/modules/dashboard/templates/dialogs/userNote.html',
+                parent: angular.element(document.body),
+                targetEvent: $event,
+                clickOutsideToClose: true,
+                fullscreen: true,
+                locals: {
+                    note: user.admin_note || ''
+                }
+            })
+                .then(function (note) {
+                    if (note !== user.admin_note) {
+                        UserService.updateUserNote(user.email, note).$promise
+                            .then(function (result) {
+                                console.info('updateUserNote result', result);
+                                $scope.user.note = note;
+                                UtilsService.makeToast('עודכנה הערת מתנדב', $scope.rootToastAnchor, 'top right');
+                            })
+                            .catch(function (error) {
+                                console.info('updateUserNote error', error);
+                                UtilsService.makeToast(error.data.errMessage, $scope.rootToastAnchor, 'top right');
+                            })
+                    }
+
+                }, function () {
+                    //Dialog Canceled
                 });
         };
 

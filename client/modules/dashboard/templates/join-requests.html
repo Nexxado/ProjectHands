@@ -22,6 +22,9 @@
                         <h4>{{ user.email }}</h4>
                         <p>{{ user.phone }}</p>
                     </div>
+                    <md-button class="md-secondary md-icon-button toggle-fade" ng-click="addUserNote($event, user)">
+                        <md-icon class="material-icons">note</md-icon>
+                    </md-button>
                 </md-list-item>
             </md-list>
         </md-content>

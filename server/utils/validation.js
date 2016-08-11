@@ -278,6 +278,11 @@ validation.validateParams = function(req, res, next) {
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or stage"});
             break;
 
+        case /user\/note/.test(req.originalUrl):
+            if(!validateEmail(req.body.email) || !validateString(req.body.admin_note))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid user email or note"});
+            break;
+
         case /user\/approve/.test(req.originalUrl):
             if(!validateEmail(req.body.email) || !validateRole(req.body.role))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid user email or role"});
