@@ -20,7 +20,6 @@ angular.module("ProjectHands.dashboard")
 
 	RenovationService.getAll()
 		.$promise.then(function (result) {
-			console.log("get all was called!@#!#!@#@#!@#");
 			$scope.allRenovations = [];
 			for (var j = 0; j < result.length; j++) {
 				if (result[j].addr !== null) {
@@ -30,6 +29,11 @@ angular.module("ProjectHands.dashboard")
 			for (var i in $scope.allRenovations) {
 				var title = $scope.allRenovations[i].addr.city + ", " + $scope.allRenovations[i].addr.street + " " + $scope.allRenovations[i].addr.num;
 				var date = new Date($scope.allRenovations[i].date);
+                var year = date.getFullYear();
+                var month = date.getMonth() + 1;
+                var day = date.getDate();
+                var newDateString = day + "/" + month + "/" + year;
+                date = new Date(newDateString);
 				$scope.calEventsExt.events.push({
 					type: 'party',
 					title: title,

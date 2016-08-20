@@ -1,25 +1,57 @@
 <div md-whiteframe="2" class="dashboard-top-rounded-toolbar">
-	<md-toolbar layout="row" layout-align="none center" class="md-hue-1 dashboard-top-rounded-toolbar">
-		<md-button ng-click="addRenovation($event)" class="md-fab md-primary md-mini" layout="row" layout-align="center center">
-			<i class="material-icons">add_circle</i>
-		</md-button>
-		<span flex></span>
-		<div class="md-toolbar-tools" dir="rtl">
-			<span translate>PLANNED_RENOVATIONS</span>
-		</div>
-	</md-toolbar>
-	<md-content>
-		<md-list flex>
-			<md-list-item class="md-3-line" ng-repeat="renovation in renovations" ui-sref="dashboard.renovation({city: renovation.addr.city, street: renovation.addr.street, num: renovation.addr.num})" ng-click="">
-				<div class="md-list-item-text hebrew-text renovation-list-text" layout="column" dir="rtl">
-					<div>
-						<div>{{ renovation.addr.street }} {{renovation.addr.num}}, {{renovation.addr.city}}</div>
-						<p>{{ myTeam.name }}</p>
-					</div>
-					<p>{{ renovation.date | date:'MM/dd/yyyy'}}</p>
-				</div>
+    <md-toolbar layout="row" layout-align="none center" class="md-hue-1 dashboard-top-rounded-toolbar">
+        <md-button ng-click="addRenovation($event)" class="md-fab md-primary md-mini" layout="row" layout-align="center center">
+            <i class="material-icons">add_circle</i>
+        </md-button>
+        <span flex></span>
+        <div class="md-toolbar-tools" dir="rtl">
+            <span translate>PLANNED_RENOVATIONS</span>
+        </div>
+    </md-toolbar>
+    <md-content>
+        <md-tabs md-dynamic-height md-border-bottom md-stretch-tabs="always" md-swipe-content class="renovation-tabs rtl">
+            <!--First Tab - Renovation Details -->
+            <md-tab flex>
+                <md-tab-label>
+                     בתכנון
+                    <md-icon class="material-icons">info</md-icon>
+                </md-tab-label>
+                <md-tab-body>
+                    <md-list flex>
+                        <md-list-item class="md-3-line" ng-repeat="renovation in renovations" ui-sref="dashboard.renovation({city: renovation.addr.city, street: renovation.addr.street, num: renovation.addr.num})" ng-click="">
+                            <div class="md-list-item-text hebrew-text renovation-list-text" layout="column" dir="rtl">
+                                <div>
+                                    <div>{{ renovation.addr.street }} {{renovation.addr.num}}, {{renovation.addr.city}}</div>
+                                    <p>{{ myTeam.name }}</p>
+                                </div>
+                                <p>{{ renovation.date | date:'dd/MM/yyyy'}}</p>
+                            </div>
 
-			</md-list-item>
-		</md-list>
-	</md-content>
+                        </md-list-item>
+                    </md-list>
+                </md-tab-body>
+            </md-tab>
+            
+            <md-tab flex>
+                <md-tab-label>
+                    הסתיימו
+                    <md-icon class="material-icons">info</md-icon>
+                </md-tab-label>
+                <md-tab-body>
+                    <md-list flex>
+                        <md-list-item class="md-3-line" ng-repeat="renovation in renovations" ui-sref="dashboard.renovation({city: renovation.addr.city, street: renovation.addr.street, num: renovation.addr.num})" ng-click="">
+                            <div class="md-list-item-text hebrew-text renovation-list-text" layout="column" dir="rtl">
+                                <div>
+                                    <div>{{ renovation.addr.street }} {{renovation.addr.num}}, {{renovation.addr.city}}</div>
+                                    <p>{{ myTeam.name }}</p>
+                                </div>
+                                <p>{{ renovation.date | date:'dd/MM/yyyy'}}</p>
+                            </div>
+
+                        </md-list-item>
+                    </md-list>
+                </md-tab-body>
+            </md-tab>
+        </md-tabs>
+    </md-content>
 </div>

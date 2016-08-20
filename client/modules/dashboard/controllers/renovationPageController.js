@@ -609,6 +609,11 @@ angular.module('ProjectHands.dashboard')
 
 
 	/******Stages Editing functions******/
+    $scope.completeRenovation = function(){
+        
+        
+    };
+    
 	$scope.enableEditStages = function () {
 		$scope.editStagesMode = true;
 		$scope.lastStage = $scope.renovationCurrentStage;
@@ -742,7 +747,8 @@ angular.module('ProjectHands.dashboard')
 				//TODO Update renovation date in the database
                 TeamService.assignToRenovation(renovationAddedDetails.team.name, renovationAddedDetails.date, addr)
 					.$promise.then(function (result) {
-						$scope.thisRenovation.date = new Date(renovationAddedDetails.date);
+//						$scope.thisRenovation.date = new Date((renovationAddedDetails.date.getMonth() + 1) + "/" + renovationAddedDetails.date.getDate() + "/" + renovationAddedDetails.date.getYear());
+                        $scope.thisRenovation.date = new Date(renovationAddedDetails.date);
 						$scope.thisRenovation.team = renovationAddedDetails.team;
 						$scope.getRenovationTeam($scope.thisRenovation.team.name);
 //						$scope.enableEditStages();

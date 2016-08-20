@@ -12,6 +12,13 @@
                         </div>
                         <span class="shadow-text medium">{{thisRenovation.date | date: 'dd/MM/yyyy'}}
                         </span>
+                        <div ng-hide="user.role === ROLES.VOLUNTEER">
+                            <md-button ng-click="completeRenovation()" class="md-primary md-raised">
+                                <div layout="row" layout-align="center center">
+                                <i class="material-icons">done_all</i> סיום שיפוץ 
+                                </div>
+                            </md-button>
+                        </div>
 
                         <!--Chat Sidenav Button-->
                         <md-button layout="row" ng-click="toggleRight()" class="md-primary chat-button">
@@ -295,7 +302,7 @@
                                                 <md-button ng-show="editToolsMode && user.role !== ROLES.VOLUNTEER" ng-click="editTools()" class="md-accent md-icon-button" layout="row" layout-align="center center">
                                                     <md-icon class="material-icons">mode_edit</md-icon>
                                                 </md-button>
-<!--
+                                                <!--
                                                 <md-button ng-show="toolsFilter" ng-click="changeToolsFilter()" class="md-primary" layout="row" layout-align="center center">
                                                     מביאים
                                                 </md-button>
