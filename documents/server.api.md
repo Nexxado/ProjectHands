@@ -34,6 +34,9 @@
 * [**Renovations**](#renovations)
     * [Get Renovation Info](#get-renovation-info)
     * [Get All Renovations](#get-all-renovations)
+    * [Get Future Renovations](#get-future-renovations)
+    * [Get User Renovations](#get-user-renovations)
+    * [Finish Renovation](#finish-renovation)
     * [Create Renovation](#create-renovation)
     * [Renovation RSVP](#renovation-rsvp)
     * Renovation Tools
@@ -797,6 +800,83 @@ Endpoints regarding ProjectHands' Referral Receiving Status
 | 401 | {errMessage: "Error: User is not logged in"} |
 | 403 | {errMessage: "Not Allowed"} |
 | 500 | {errMessage: "Failed to find renovations"} |
+
+---
+
+### Get Future Renovations
+Get all upcoming renovations
+
+#### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/renovation/get_future |
+
+| Type  | Params | Values |
+|---|---|---|
+|  |   |   |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | [{...}, {...}, ...] |
+| 400 | {errMessage: "No renovations found"} |
+| 401 | {errMessage: "Error: User is not logged in"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to find renovations"} |
+
+---
+
+### Get User Renovations
+Get all the user's previous and upcoming renovations
+
+#### Request
+
+| Method | Url |
+|---|---|
+| GET | /api/renovation/my_renovations|
+
+| Type  | Params | Values |
+|---|---|---|
+|  |   |   |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | [{...}, {...}, ...] |
+| 401 | {errMessage: "Error: User is not logged in"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to get user's team"} |
+| 500 | {errMessage: "Failed to get user's renovations"} |
+
+---
+
+### Finish Renovations
+Mark a renovation as finished
+
+#### Request
+
+| Method | Url |
+|---|---|
+| POST | /api/renovation/finish|
+
+| Type  | Params | Values |
+|---|---|---|
+| BODY | city  | String  |
+| BODY | street  | String  |
+| BODY | num  | int  |
+
+#### Response
+
+| Status  | Response |
+|---|---|
+| 200 | [{...}, {...}, ...] |
+| 400 | {errMessage: "Renovation already finished"} |
+| 401 | {errMessage: "Error: User is not logged in"} |
+| 403 | {errMessage: "Not Allowed"} |
+| 500 | {errMessage: "Failed to mark renovation as finished"} |
 
 ---
 

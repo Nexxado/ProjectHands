@@ -12,10 +12,8 @@ angular.module('ProjectHands')
                 return 'מתנדב';
             case ROLES.TEAM_LEAD:
                 return 'ראש צוות';
-            case ROLES.MANAGER:
-                return 'מנהל';
             case ROLES.ADMIN:
-                return 'אדמין';
+                return 'מנהל';
             default:
                 return 'failed to translate role';
         }

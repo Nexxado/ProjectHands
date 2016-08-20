@@ -1,36 +1,32 @@
-<div layout="row" layout-align="end">
-    <!-- Selected User Details -->
-    <div class="toggle-slide-right toggle-fade list-border white-background dashboard-height" flex-gt-sm="50" flex hide-sm hide-xs
-         ng-show="selectedUser" md-whiteframe="2">
-        <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
+<div layout="column" layout-align="end" layout-gt-xs="row">
+    <!-- Rejected List -->
+    <div flex-gt-sm="45" flex-offset-gt-sm="5" flex
+         class="dashboard-list white-background dashboard-height" md-whiteframe="2">
+        <md-toolbar layout="row" class="md-hue-1 rtl">
             <div class="md-toolbar-tools">
-                <span translate>{{'USER_DETAILS'}}</span>
+                <span translate>משתמשים דחויים</span>
+                <span flex></span>
+                <md-input-container class="md-icon-float rtl list-search-input">
+                    <input aria-label="search join requests" type="text" name="search" ng-model="search"/>
+                    <md-icon class="material-icons">search</md-icon>
+                </md-input-container>
             </div>
         </md-toolbar>
-        <md-content class="signup-info rtl" layout="row" layout-padding flex>
-            <user-details user="selectedUser" flex="50"></user-details>
-            <span flex hide-md></span>
-            <div layout="column" layout-wrap flex="50">
-                <div class="signup-actions" layout="row" layout-align="center center">
-                    <md-button class="md-raised approve-btn" ng-click="approveUser(selectedUser, selectedRole)">
-                        <span translate>{{'APPROVE_USER'}}</span>
+        <md-content>
+            <md-list class="md-dense list-signups" flex>
+                <md-list-item class="md-3-line rtl list-slide-right" ng-class="{'selected': isSelected(user)}"
+                              ng-repeat="user in rejectedUsers | filter: search"
+                              ng-click="showUserDetails($event, user)">
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{ user.name }}</h3>
+                        <h4>{{ user.email }}</h4>
+                        <p>{{ user.phone }}</p>
+                    </div>
+                    <md-button class="md-secondary md-icon-button toggle-fade" ng-click="addUserNote($event, user)">
+                        <md-icon class="material-icons">note</md-icon>
                     </md-button>
-                    <md-button class="md-warn md-raised" ng-click="deleteUser(selectedUser)">
-                        <span translate>{{'DELETE_USER'}}</span>
-                    </md-button>
-                </div>
-                <!-- Role -->
-                <div class="signup-role" layout="row" flex>
-                    <md-input-container class="md-block rtl" flex="60">
-                        <label translate>{{'JOB'}}</label>
-                        <md-select name="role" ng-model="selectedRole" required>
-                            <md-option ng-value="role" ng-repeat="role in roles">
-                                {{ role | translateRole }}
-                            </md-option>
-                        </md-select>
-                    </md-input-container>
-                </div>
-            </div>
+                </md-list-item>
+            </md-list>
         </md-content>
     </div>
     <!-- Join Requests List -->
@@ -49,7 +45,7 @@
             <md-list class="md-dense list-signups" flex>
                 <md-list-item class="md-3-line rtl list-slide-right" ng-class="{'selected': isSelected(user)}"
                               ng-repeat="user in signups | filter: search"
-                              ng-click="showUserDetails($event, user)">
+                              ng-click="showUserDetails($event, user, true)">
                     <div class="md-list-item-text" layout="column">
                         <h3>{{ user.name }}</h3>
                         <h4>{{ user.email }}</h4>

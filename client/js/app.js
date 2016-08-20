@@ -4,7 +4,7 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     'angulartics', 'angulartics.google.analytics', 'pascalprecht.translate'])
 
 
-.config(function ($mdThemingProvider, $compileProvider, $provide, $translateProvider, LanguagesProvider) {
+.config(function ($mdThemingProvider, $compileProvider, $provide, $translateProvider, $httpProvider, LanguagesProvider) {
     //Set Angular-Material Theme
     $mdThemingProvider.theme('default')
         .primaryPalette('indigo')
@@ -31,6 +31,9 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     $translateProvider.translations('he', LanguagesProvider.HE);
     $translateProvider.translations('ar', LanguagesProvider.AR);
     $translateProvider.preferredLanguage('he');
+
+    //
+    $httpProvider.interceptors.push('LoadingInterceptor');
 })
 
 /**************************************/
@@ -52,6 +55,7 @@ angular.module('ProjectHands', ['ngResource', 'ngAria', 'ngAnimate', 'ngMessages
     ga('create', 'UA-79679807-1', analytics);
 
     $rootScope.rootToastAnchor = '#main-view';
+    $rootScope.showLoadingSpinner = false;
 
     //Scroll to top on state change.
     $rootScope.$on('$stateChangeSuccess', function() {

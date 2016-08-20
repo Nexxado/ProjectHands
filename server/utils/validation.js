@@ -150,6 +150,15 @@ function validateString(string) {
 }
 
 /**
+ * Validate a number
+ * @param num
+ * @returns {boolean}
+ */
+function validateNumber(num) {
+    return !isNaN(num) && Number(num) % 1 === 0;
+}
+
+/**
  * Check if a string is empty
  * @param string {String}
  * @returns {boolean}
@@ -204,68 +213,74 @@ validation.validateParams = function(req, res, next) {
             break;
 
         case /renovation\/get_info/.test(req.originalUrl):
+        case /renovation\/finish/.test(req.originalUrl):
             if(!validateString(req.params.city) || !validateString(req.params.street) || !validateString(req.params.num))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address"});
             break;
         case /renovation\/create/.test(req.originalUrl):
         case /renovation\/rsvp/.test(req.originalUrl):
-            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num))
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateNumber(req.body.num))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address"});
             break;
 
         case /renovation\/add_tool/.test(req.originalUrl):
         case /renovation\/delete_tool/.test(req.originalUrl):
         case /renovation\/unassign_tool/.test(req.originalUrl):
-            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || typeof req.body.tool === 'undefined')
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateNumber(req.body.num) || typeof req.body.tool === 'undefined')
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or tool"});
             break;
 
         case /renovation\/assign_tool/.test(req.originalUrl):
-            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || typeof req.body.tool === 'undefined' || !validateEmail(req.body.email))
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateNumber(req.body.num) || typeof req.body.tool === 'undefined' || !validateEmail(req.body.email))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address, tool or user email"});
             break;
 
         case /renovation\/shed_tool/.test(req.originalUrl):
-            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || typeof req.body.tool === 'undefined')
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateNumber(req.body.num) || typeof req.body.tool === 'undefined')
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or tool"});
             break;
 
         case /renovation\/add_task/.test(req.originalUrl):
         case /renovation\/delete_task/.test(req.originalUrl):
         case /renovation\/done_task/.test(req.originalUrl):
-            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || typeof req.body.task === 'undefined')
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateNumber(req.body.num) || typeof req.body.task === 'undefined')
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or task"});
             break;
 
         case /renovation\/edit_task/.test(req.originalUrl):
-            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || !Array.isArray(req.body.tasks))
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateNumber(req.body.num) || !Array.isArray(req.body.tasks))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or task"});
             break;
 
         case /renovation\/assign_task/.test(req.originalUrl):
-            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || typeof req.body.task === 'undefined' || !validateEmail(req.body.email))
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateNumber(req.body.num) || typeof req.body.task === 'undefined' || !validateEmail(req.body.email))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address, task or user email"});
             break;
 
         case /renovation\/add_pinned/.test(req.originalUrl):
         case /renovation\/delete_pinned/.test(req.originalUrl):
-            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || typeof req.body.pinned === 'undefined')
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateNumber(req.body.num) || typeof req.body.pinned === 'undefined')
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or pinned message"});
             break;
 
         case /renovation\/edit_pinned/.test(req.originalUrl):
-            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || !Array.isArray(req.body.pinneds))
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateNumber(req.body.num) || !Array.isArray(req.body.pinneds))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or pinned message"});
             break;
 
         case /renovation\/add_stage/.test(req.originalUrl):
-            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || typeof req.body.stage === 'undefined' || typeof req.body.index === 'undefined')
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateNumber(req.body.num) || typeof req.body.stage === 'undefined' || typeof req.body.index === 'undefined')
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or stage"});
             break;
         
         case /renovation\/update_stage/.test(req.originalUrl):
-            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num) || !validateString(req.body.stage))
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateNumber(req.body.num) || !validateString(req.body.stage))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or stage"});
+            break;
+
+        case /user\/note/.test(req.originalUrl):
+            if(!validateEmail(req.body.email) || !validateString(req.body.admin_note))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid user email or note"});
             break;
 
         case /user\/approve/.test(req.originalUrl):
@@ -277,6 +292,11 @@ validation.validateParams = function(req, res, next) {
         case /user\/basic/.test(req.originalUrl):
         case /user\/delete/.test(req.originalUrl):
             if(!validateEmail(req.params.email))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid user email"});
+            break;
+
+        case /user\/reject/.test(req.originalUrl):
+            if(!validateEmail(req.body.email))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid user email"});
             break;
 
@@ -308,7 +328,7 @@ validation.validateParams = function(req, res, next) {
             break;
 
         case /team\/assign_to_renovation/.test(req.originalUrl):
-            if(!validateString(req.body.teamName) || !validateString(req.body.city) || !validateString(req.body.street) || !validateString(req.body.num))
+            if(!validateString(req.body.teamName) || !validateString(req.body.city) || !validateString(req.body.street) || !validateNumber(req.body.num))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid team name or renovation address"});
             break;
         

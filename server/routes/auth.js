@@ -334,6 +334,7 @@ function sendUserInfo(req, res) {
         phone: req.user.phone,
         isOAuth: !!(req.user.googleId || req.user.facebookId),
         approved: req.user.approved,
+        rejected: req.user.rejected,
         signup_complete: req.user.signup_complete,
         joined_date: req.user.joined_date,
         avatar: req.user.avatar,

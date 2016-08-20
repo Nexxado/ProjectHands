@@ -133,6 +133,17 @@ middleware.ensureRenovationExists = function (req, res, next) {
 };
 
 /**
+ * Check if renovation is mark as finished,
+ * must be used after {@link ensureRenovationExists}
+ */
+middleware.ensureRenovationNotFinished = function(req, res, next) {
+    if(req.queriedRenovation.finished)
+        return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Renovation marked as finished"})
+
+    next();
+};
+
+/**
  * Get logged-in user's team.
  */
 middleware.getUsersTeam = function (req, res, next) {

@@ -1,0 +1,27 @@
+<md-dialog aria-label="Signup Details Dialog" flex="40" flex-gt-md="30">
+    <md-toolbar dir="rtl">
+        <div class="md-toolbar-tools">
+            <h2>הערת משתמש</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon class="material-icons">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <md-input-container class="md-block rtl" flex>
+                <textarea name="note" ng-model="note"></textarea>
+            </md-input-container>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="signup-actions" layout-align="start">
+        <md-button class="md-warn md-raised" ng-click="cancel()">
+            <span translate="{{'CANCEL'}}"></span>
+
+        </md-button>
+        <md-button class="md-raised approve-btn" ng-click="submit()">
+            <span translate="{{'APPROVE'}}"></span>
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>
