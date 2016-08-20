@@ -213,12 +213,12 @@ validation.validateParams = function(req, res, next) {
             break;
 
         case /renovation\/get_info/.test(req.originalUrl):
-        case /renovation\/finish/.test(req.originalUrl):
             if(!validateString(req.params.city) || !validateString(req.params.street) || !validateString(req.params.num))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address"});
             break;
         case /renovation\/create/.test(req.originalUrl):
         case /renovation\/rsvp/.test(req.originalUrl):
+        case /renovation\/finish/.test(req.originalUrl):
             if(!validateString(req.body.city) || !validateString(req.body.street) || !validateNumber(req.body.num))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address"});
             break;
