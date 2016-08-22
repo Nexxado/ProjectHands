@@ -28,6 +28,15 @@ angular.module('ProjectHands')
             return $resource(baseUrl + '/get_all').query();
         }
 
+
+        /**
+         * Get all current user's renovations
+         * @returns {*}
+         */
+        function getAllUserRenovations() {
+            return $resource(baseUrl + '/get_all_user').query();
+        }
+
         /**
          * Get all Future(!) renovations in database
          * @returns {Promise}
@@ -48,6 +57,19 @@ angular.module('ProjectHands')
                 city: city,
                 street: street,
                 num: num
+            });
+        }
+
+        /**
+         * Mark a renovation as finished
+         * @param address {object} : renovation's address
+         * @returns {Promise}
+         */
+        function finish(address) {
+            return $resource(baseUrl + '/finish').save({
+                city: address.city,
+                street: address.street,
+                num: address.num
             });
         }
 
@@ -299,8 +321,10 @@ angular.module('ProjectHands')
         return {
             getRenovation: getRenovation,
             getAll: getAll,
+            getAllUserRenovations: getAllUserRenovations,
             getAllFutureRenovations: getAllFutureRenovations,
             create: create,
+            finish: finish,
             rsvp: rsvp,
             addTool: addTool,
             assignTool: assignTool,

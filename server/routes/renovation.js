@@ -19,6 +19,9 @@ router.get('/get_info/:city/:street/:num', middleware.ensureAuthenticated, middl
 
 router.get('/get_all', middleware.ensureAuthenticated, middleware.ensurePermission, getAllRenovations);
 
+router.get('/get_all_user', middleware.ensureAuthenticated, middleware.ensurePermission, middleware.getUsersTeam,
+    getAllUserRenovations);
+
 router.get('/get_future', middleware.ensureAuthenticated, middleware.ensurePermission, getAllFutureRenovations);
 
 router.get('/my_renovations', middleware.ensureAuthenticated, middleware.ensurePermission, getUserRenovations);
@@ -123,6 +126,21 @@ function getAllRenovations(req, res) {
         res.send(result);
     });
 }
+
+/**
+ * Get all the renovations of the logged in user
+ */
+function getAllUserRenovations(req, res) {
+
+    mongoUtils.query(COLLECTIONS.RENOVATIONS, {$or: [{team: req.queriedTeam.name}, {"stamp.members": req.user.email}]}, function(error, result) {
+        if(error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to find renovations"});
+
+        res.send(result);
+    });
+
+}
+
 
 /**
  * Get all future renovations in the database
