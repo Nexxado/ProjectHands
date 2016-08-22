@@ -342,6 +342,9 @@ md-menu-item > .md-button {
 .shadow-text.large {
 	font: 700 80px 'Bitter';
 }
+.finished-renovation-title{
+    color: indianred;
+}
 .dialog.list {
 	overflow: auto;
 	max-height: 30%;

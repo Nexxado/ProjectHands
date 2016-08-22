@@ -13,6 +13,8 @@ angular.module('ProjectHands.dashboard')
 	$scope.myTeam = "";
 	/*All the renovations of project hands*/
 	$scope.renovations = [];
+    
+    $scope.finishedRenovations = [];
 	/*Default renovation Stages*/
 	$scope.defaultRenoStages = ["ביקור ראשוני בדירה לבדיקת התאמה",
             "הוחלט לשפץ, יש צורך לעדכן עובד סוציאלי",
@@ -68,9 +70,18 @@ angular.module('ProjectHands.dashboard')
 	$scope.getRenovations = function () {
 		console.log("called all renovations");
 		// RenovationService.getAll() //TODO change back to getALL if there are issues
-		RenovationService.getAllFutureRenovations()
+		RenovationService.getAllUserRenovations()
 			.$promise.then(function (result) {
-				$scope.renovations = result;
+                var allRenovations = result;
+                for(var i in allRenovations){
+                    if(allRenovations[i].finished){
+                        $scope.finishedRenovations.push(allRenovations[i]);
+                    }
+                    else{
+                        $scope.renovations.push(allRenovations[i]);
+                    }
+                }
+//				$scope.renovations = result;
 			}).catch(function (error) {
 				console.log("Error: ", error);
 			});

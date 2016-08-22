@@ -609,9 +609,11 @@ angular.module('ProjectHands.dashboard')
 
 
 	/******Stages Editing functions******/
-    $scope.completeRenovation = function(){
-        
-        
+    $scope.finishRenovation = function(){
+        $scope.thisRenovation.finished = true;
+        $scope.renovations.splice($scope.renovations.indexOf($scope.thisRenovation), 1);
+        $scope.finishedRenovations.push($scope.thisRenovation);
+        RenovationService.finish($scope.thisRenovation.addr);
     };
     
 	$scope.enableEditStages = function () {

@@ -39,7 +39,7 @@
                 </md-tab-label>
                 <md-tab-body>
                     <md-list flex>
-                        <md-list-item class="md-3-line" ng-repeat="renovation in renovations" ui-sref="dashboard.renovation({city: renovation.addr.city, street: renovation.addr.street, num: renovation.addr.num})" ng-click="">
+                        <md-list-item class="md-3-line" ng-repeat="renovation in finishedRenovations" ui-sref="dashboard.renovation({city: renovation.addr.city, street: renovation.addr.street, num: renovation.addr.num})" ng-click="">
                             <div class="md-list-item-text hebrew-text renovation-list-text" layout="column" dir="rtl">
                                 <div>
                                     <div>{{ renovation.addr.street }} {{renovation.addr.num}}, {{renovation.addr.city}}</div>
