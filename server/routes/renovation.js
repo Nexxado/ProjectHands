@@ -132,8 +132,19 @@ function getAllRenovations(req, res) {
  */
 function getAllUserRenovations(req, res) {
 
-    mongoUtils.query(COLLECTIONS.RENOVATIONS, {$or: [{team: req.queriedTeam.name}, {"stamp.members": req.user.email}]}, function(error, result) {
-        if(error)
+    var query = {};
+
+    if (req.queriedTeam)
+        query["$or"] = [
+            {"stamp.members": req.user.email},
+            {team: req.queriedTeam.name}
+        ];
+    else
+        query["stamp.members"] = req.user.email;
+
+
+    mongoUtils.query(COLLECTIONS.RENOVATIONS, query, function (error, result) {
+        if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to find renovations"});
 
         res.send(result);
@@ -165,22 +176,22 @@ function getAllFutureRenovations(req, res) {
  */
 function getUserRenovations(req, res) {
     //get user's teams
-    mongoUtils.query(COLLECTIONS.TEAMS, {members: req.user.email}, function(error, result) {
-        if(error)
+    mongoUtils.query(COLLECTIONS.TEAMS, {members: req.user.email}, function (error, result) {
+        if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: 'failed to get user\'s team'});
 
         //search for user in renovation stamp
         var query = {$or: [{'stamp.members': req.user.email}]};
 
         //add user's team names to query
-        if(result && result.length) {
-            for(var i = 0; i < result.length; i++) {
+        if (result && result.length) {
+            for (var i = 0; i < result.length; i++) {
                 query.$or.push({team: result[i].name});
             }
         }
 
-        mongoUtils.query(COLLECTIONS.RENOVATIONS, query, function(error, result) {
-            if(error)
+        mongoUtils.query(COLLECTIONS.RENOVATIONS, query, function (error, result) {
+            if (error)
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: 'failed to get user\'s renovations'});
 
             res.send(result);
@@ -681,8 +692,8 @@ function rsvp(req, res) {
  */
 function createRenovationStamp(req, res, next) {
 
-    mongoUtils.query(COLLECTIONS.TEAMS, {name: req.queriedRenovation.team}, function(error, result) {
-        if(error)
+    mongoUtils.query(COLLECTIONS.TEAMS, {name: req.queriedRenovation.team}, function (error, result) {
+        if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to mark renovation as finished"});
 
         req.stamp = {

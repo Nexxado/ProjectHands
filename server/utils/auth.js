@@ -3,7 +3,7 @@ var debug = require('debug')('utils/auth');
 var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
 var ROLES = config.ROLES;
-var bcrypt = {};
+var bcrypt = require('bcrypt');
 var saltRounds = 10; // will do 2^rounds
 
 
