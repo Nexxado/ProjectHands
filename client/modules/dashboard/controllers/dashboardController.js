@@ -70,21 +70,39 @@ angular.module('ProjectHands.dashboard')
 	$scope.getRenovations = function () {
 		console.log("called all renovations");
 		// RenovationService.getAll() //TODO change back to getALL if there are issues
-		RenovationService.getAllUserRenovations()
-			.$promise.then(function (result) {
-                var allRenovations = result;
-                for(var i in allRenovations){
-                    if(allRenovations[i].finished){
-                        $scope.finishedRenovations.push(allRenovations[i]);
-                    }
-                    else{
-                        $scope.renovations.push(allRenovations[i]);
-                    }
-                }
+		if($scope.user.role === ROLES.ADMIN) {
+			RenovationService.getAll()
+				.$promise.then(function (result) {
+				var allRenovations = result;
+				for(var i = 0; i < allRenovations.length; i++){
+					if(allRenovations[i].finished){
+						$scope.finishedRenovations.push(allRenovations[i]);
+					}
+					else{
+						$scope.renovations.push(allRenovations[i]);
+					}
+				}
 //				$scope.renovations = result;
 			}).catch(function (error) {
 				console.log("Error: ", error);
 			});
+		} else {
+			RenovationService.getAllUserRenovations()
+				.$promise.then(function (result) {
+				var allRenovations = result;
+				for(var i = 0; i < allRenovations.length; i++){
+					if(allRenovations[i].finished){
+						$scope.finishedRenovations.push(allRenovations[i]);
+					}
+					else{
+						$scope.renovations.push(allRenovations[i]);
+					}
+				}
+//				$scope.renovations = result;
+			}).catch(function (error) {
+				console.log("Error: ", error);
+			});
+		}
 	};
 
 	/*Dialog to add a renovation by Address*/
