@@ -696,10 +696,11 @@ function createRenovationStamp(req, res, next) {
         if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to mark renovation as finished"});
 
+        var team  = result[0];
         req.stamp = {
             date: new Date().toISOString(),
-            team: result[0].name,
-            members: result[0].members
+            team: team ? team.name : 'No Team',
+            members: team ? team.members : []
         };
         next();
     });
