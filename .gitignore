@@ -5,3 +5,4 @@
 /node_modules/
 *.bat
 /.idea/
+thumbs.db

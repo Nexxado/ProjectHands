@@ -3,7 +3,10 @@
         <div class="status-title">פניות לשיפוצים</div>
         <div class="status-indicator" ng-class="active ? 'active' : 'not-active'"></div>
         <div class="status-message">{{ message }}</div>
-        <md-button class="md-primary md-raised btn-referral" href="/assets/referral-form.docx" target="_self">טופס פנייה</md-button>
+        <div layout="row">
+            <md-button class="md-primary md-raised btn-referral" href="/assets/referral-form.docx" target="_self">טופס פנייה</md-button>
+            <md-button class="md-primary md-raised" href="/assets/referral-info.doc" target="_self">מידע על הפנייה לשיפוץ</md-button>
+        </div>
         <!-- Admin Control Panel -->
         <div admin-actions>
             <md-button ng-click="updateStatusDialog($event)">עדכן סטטוס הפניות</md-button>

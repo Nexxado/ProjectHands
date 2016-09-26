@@ -14,7 +14,25 @@
         </div>
         <!--PHOTO SLIDER-->
 
-        <photo-slider-home album="user@1231.com"></photo-slider-home>
+        <div style="width: 100%" layout="column" layout-gt-sm="row">
+            <div flex="25%" layout="column" layout-align="center center" style="max-width: 80%; margin: auto; padding: 0 10px;">
+                <a ui-sref="home">
+                    <img ng-src="assets/icons/btn_donate.png" style="max-width: 100%">
+                </a>
+                <a ui-sref="status">
+                    <img ng-src="assets/icons/btn_refer.png" style="max-width: 100%">
+                </a>
+            </div>
+            <photo-slider-home album="user@1231.com"></photo-slider-home>
+            <div flex="25%" layout="column" layout-align="center center" style="max-width: 80%; margin: auto; padding: 0 10px;">
+                <a ui-sref="login">
+                    <img ng-src="assets/icons/btn_login.png" style="max-width: 100%">
+                </a>
+                <a ui-sref="signup">
+                    <img ng-src="assets/icons/btn_join.png" style="max-width: 100%">
+                </a>
+            </div>
+        </div>
 
         <!--ORGANIZATION ADS-->
         <div>
@@ -56,5 +74,4 @@
     <!--goto home panel-->
     <!--<md-button ui-sref="home-panel">home-panel</md-button>-->
 
-</div>
 </div>
