@@ -142,7 +142,7 @@ md-progress-linear.rtl {
 
 /* INPUT */
 md-input-container.rtl label {
-    right: 0;
+    /*right: 0;*/
     left: auto;
     -webkit-transform-origin: right top !important;
     transform-origin: right top !important;

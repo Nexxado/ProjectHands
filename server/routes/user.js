@@ -3,6 +3,7 @@ var HttpStatus = require('http-status-codes');
 var debug = require('debug')('routes/user');
 var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
+var ROLES = config.ROLES;
 var mongoUtils = require('../utils/mongo');
 var middleware = require('../utils/middleware');
 var validation = require('../utils/validation');
@@ -168,10 +169,19 @@ function rejectUser(req, res) {
     if (req.queriedUser.rejected)
         return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "User already marked as rejected"});
 
+    //Remove user from the teams he is in.
+    mongoUtils.update(COLLECTIONS.TEAMS, {}, {$pull: {members: req.queriedUser.email}}, {multi: true}, function (error, result) {
+        if(error)
+            return debug("failed to remove user from some teams", error);
+
+        debug("removed user " + req.queriedUser.email + " from " + result.result.nModified + " teams")
+    });
+
     mongoUtils.update(COLLECTIONS.USERS, {email: req.queriedUser.email}, {
             $set: {
                 rejected: true,
-                approved: false
+                approved: false,
+                role: ROLES.GUEST
             }
         }, {},
         function (error, result) {
@@ -244,11 +254,11 @@ function updateUserData(req, res) {
  * currently only for users marked as rejected
  */
 function updateUserNote(req, res) {
-    if(!req.queriedUser.rejected)
+    if (!req.queriedUser.rejected)
         return res.status(HttpStatus.BAD_REQUEST).send({errMessage: 'notes are allowed only for rejected users'});
 
     mongoUtils.update(COLLECTIONS.USERS, {email: req.queriedUser.email}, {$set: {admin_note: req.body.admin_note}}, {},
-        function(error, result) {
+        function (error, result) {
 
             if (error || result.result.nModified === 0)
                 return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to update user's notes"});

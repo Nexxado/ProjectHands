@@ -214,6 +214,34 @@ angular.module('ProjectHands.dashboard')
                 })
         };
 
+        $scope.deleteUser = function($event, index) {
+            var user = $scope.users[index];
+
+            for(var i = 0; i < $scope.teams.length; i++) {
+                if($scope.teams[i].manager === user.email)
+                    return UtilsService.makeToast("לא ניתן למחוק מנהל צוות, אנא החלף מנהל צוות ונסה שוב.", $scope.rootToastAnchor, 'top right');
+            }
+
+            UserService.rejectUser(user.email).$promise
+                .then(function(result) {
+                    console.log('deleteUser result', result);
+
+                    //Delete user on client side
+                    for(var i = 0; i < $scope.teams.length; i++) {
+                        var userIndex = $scope.teams[i].members.indexOf(user.email);
+                        if(userIndex >= 0) {
+                            $scope.teams[i].members.splice(userIndex, 1);
+                            $scope.teams[i].members_info.splice(userIndex, 1);
+                        }
+                    }
+
+                    $scope.users.splice(index, 1);
+                })
+                .catch(function(error) {
+                    console.error('deleteUser error', error);
+                });
+        };
+
 
         /**
          * Update team in database and on client
