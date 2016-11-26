@@ -32,9 +32,6 @@ angular.module('ProjectHands.dashboard')
             });
 
 
-
-
-
         /**
          * Shows team members
          * Invoked when clicking on a team in the teams list
@@ -87,7 +84,7 @@ angular.module('ProjectHands.dashboard')
         /**
          * Invoke dialog to create a new team
          */
-        $scope.createTeam = function($event) {
+        $scope.createTeam = function ($event) {
             var isMobile = $mdMedia('sm') || $mdMedia('xs');
 
             $mdDialog.show({
@@ -99,7 +96,7 @@ angular.module('ProjectHands.dashboard')
                 fullscreen: isMobile,
                 locals: {
                     usersWithoutTeam: getUsersWithoutTeam(),
-                    existingTeams: $scope.teams.map(function(team) {
+                    existingTeams: $scope.teams.map(function (team) {
                         return team.name;
                     })
                 }
@@ -139,12 +136,12 @@ angular.module('ProjectHands.dashboard')
                 .then(function (team) {
                     console.log('dialog result', team);
                     TeamService.deleteTeam(team.name).$promise
-                        .then(function(result) {
+                        .then(function (result) {
                             $scope.teams.splice($scope.selectedIndex, 1);
                             $scope.selectedTeam = undefined;
                             $scope.selectedIndex = -1;
                         })
-                        .catch(function(error) {
+                        .catch(function (error) {
                             UtilsService.makeToast(error.data.errMessage, $scope.rootToastAnchor, 'top right');
                         })
 
@@ -193,7 +190,7 @@ angular.module('ProjectHands.dashboard')
          * @param $event
          * @param index {Number} : index of user in users array
          */
-        $scope.editUser = function($event, index) {
+        $scope.editUser = function ($event, index) {
             var isMobile = $mdMedia('sm') || $mdMedia('xs');
 
             var temp = angular.copy($scope.users[index]);
@@ -209,36 +206,68 @@ angular.module('ProjectHands.dashboard')
                     user: temp
                 }
             })
-                .then(function(updatedUser) {
+                .then(function (updatedUser) {
                     $scope.users[index] = updatedUser;
                 })
         };
 
-        $scope.deleteUser = function($event, index) {
+        /**
+         * Delete user and add it to rejects list
+         * @param $event
+         * @param index {Number} : index of user in users array
+         */
+        $scope.deleteUser = function ($event, index) {
             var user = $scope.users[index];
 
-            for(var i = 0; i < $scope.teams.length; i++) {
-                if($scope.teams[i].manager === user.email)
+            for (var i = 0; i < $scope.teams.length; i++) {
+                if ($scope.teams[i].manager === user.email)
                     return UtilsService.makeToast("לא ניתן למחוק מנהל צוות, אנא החלף מנהל צוות ונסה שוב.", $scope.rootToastAnchor, 'top right');
             }
 
-            UserService.rejectUser(user.email).$promise
-                .then(function(result) {
-                    console.log('deleteUser result', result);
 
-                    //Delete user on client side
-                    for(var i = 0; i < $scope.teams.length; i++) {
-                        var userIndex = $scope.teams[i].members.indexOf(user.email);
-                        if(userIndex >= 0) {
-                            $scope.teams[i].members.splice(userIndex, 1);
-                            $scope.teams[i].members_info.splice(userIndex, 1);
-                        }
-                    }
+            $mdDialog.show({
+                controller: function($scope, $mdDialog, title, textContent) {
 
-                    $scope.users.splice(index, 1);
-                })
-                .catch(function(error) {
-                    console.error('deleteUser error', error);
+                    $scope.title = title;
+                    $scope.textContent = textContent;
+
+                    $scope.confirm = function() {
+                        $mdDialog.hide();
+                    };
+
+                    $scope.cancel = function () {
+                        $mdDialog.cancel();
+                    };
+                },
+                templateUrl: '/modules/dashboard/templates/dialogs/confirm.html',
+                parent: angular.element(document.body),
+                targetEvent: $event,
+                clickOutsideToClose: true,
+                fullscreen: $mdMedia('sm') || $mdMedia('xs'),
+                locals: {
+                    title: 'אישור מחיקת מתנדב',
+                    textContent: 'להעביר את ' + user.name + ' לרשימת הדחויים?'
+                }
+            })
+                .then(function () {
+                    UserService.rejectUser(user.email).$promise
+                        .then(function (result) {
+                            console.log('deleteUser result', result);
+
+                            //Delete user on client side
+                            for (var i = 0; i < $scope.teams.length; i++) {
+                                var userIndex = $scope.teams[i].members.indexOf(user.email);
+                                if (userIndex >= 0) {
+                                    $scope.teams[i].members.splice(userIndex, 1);
+                                    $scope.teams[i].members_info.splice(userIndex, 1);
+                                }
+                            }
+
+                            $scope.users.splice(index, 1);
+                        })
+                        .catch(function (error) {
+                            console.error('deleteUser error', error);
+                        });
                 });
         };
 
@@ -286,7 +315,7 @@ angular.module('ProjectHands.dashboard')
                     team.members = team.members.concat(addedUsers);
                     team.members_info = team.members_info.concat(getUsersInfo(addedUsers));
 
-                    if(removedUsers.length)
+                    if (removedUsers.length)
                         removeMembers(team, manager_email, removedUsers);
                     else
                         updateManager(team, manager_email)
@@ -342,10 +371,10 @@ angular.module('ProjectHands.dashboard')
                     team.manager_name = getUsersInfo([manager_email])[0].name;
 
                     //Update user roles in View
-                    for(var i = 0; i < $scope.users.length; i++) {
-                        if($scope.users[i].email === formerManager)
+                    for (var i = 0; i < $scope.users.length; i++) {
+                        if ($scope.users[i].email === formerManager)
                             $scope.users[i].role = ROLES.VOLUNTEER;
-                        else if($scope.users[i].email === manager_email)
+                        else if ($scope.users[i].email === manager_email)
                             $scope.users[i].role = ROLES.TEAM_LEAD;
                     }
                     getAllTeamsInfo();
@@ -441,8 +470,8 @@ angular.module('ProjectHands.dashboard')
          */
         function getUsersNotInTeam(team) {
             var usersNotInTeam = [];
-            for(var i = 0; i < $scope.users.length; i++) {
-                if(team.members.indexOf($scope.users[i].email) < 0)
+            for (var i = 0; i < $scope.users.length; i++) {
+                if (team.members.indexOf($scope.users[i].email) < 0)
                     usersNotInTeam.push($scope.users[i]);
             }
 

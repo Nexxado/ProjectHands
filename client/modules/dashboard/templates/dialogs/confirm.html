@@ -1,0 +1,24 @@
+<md-dialog aria-label="Confirm Dialog" flex="60" flex-gt-md="45" style="max-width: 500px;">
+        <md-toolbar dir="rtl">
+            <div class="md-toolbar-tools">
+                <h2>{{ title }}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content dir="rtl">
+            <div class="md-dialog-content" style="font-weight: bold">
+                {{ textContent }}
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout-align="start" flex>
+            <md-button class="md-warn" ng-click="cancel()" translate="{{'CANCEL'}}">
+                ביטול
+            </md-button>
+            <md-button class="md-primary md-raised" ng-click="confirm()" translate="{{'APPROVE'}}">
+                אישור
+            </md-button>
+        </md-dialog-actions>
+</md-dialog>
