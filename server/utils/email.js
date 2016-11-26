@@ -6,8 +6,8 @@
 
 var nodemailer = require('nodemailer');
 var debug = require('debug')('utils/email');
-const email = process.env.EMAIL_ADDR || "projhands@gmail.com";
-const password = process.env.EMAIL_PASS || "projecthands123456";
+const email = process.env.EMAIL_ADDR || "someone@gmail.com";
+const password = process.env.EMAIL_PASS || "pass_pass";
 
 var transporter = nodemailer.createTransport('smtps://' + email + ':' + password + '@smtp.gmail.com');
 
