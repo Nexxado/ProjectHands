@@ -6,8 +6,8 @@
 
 var nodemailer = require('nodemailer');
 var debug = require('debug')('utils/email');
-const email = process.env.EMAIL_ADDR || "someone@gmail.com";
-const password = process.env.EMAIL_PASS || "pass_pass";
+const email = process.env.EMAIL_ADDR || "projhands@gmail.com";
+const password = process.env.EMAIL_PASS || "projecthands123456";
 
 var transporter = nodemailer.createTransport('smtps://' + email + ':' + password + '@smtp.gmail.com');
 
@@ -41,6 +41,29 @@ function sendMail(to, subject, content) {
         debug('Message sent: ' + info.response);
     });
 }
+
+/**
+ * Format date object to string dd/MM/YYYY
+ * @param date
+ * @returns {string}
+ */
+function formatDate(date) {
+    try {
+        var day = date.getDate();
+        var monthIndex = date.getMonth() + 1;
+        var year = date.getFullYear();
+
+        if(day < 10)
+            day = '0' + day;
+        if(monthIndex < 10)
+            monthIndex = '0' + monthIndex;
+
+        return day + '/' + monthIndex + '/' + year;
+    } catch(error) {
+        return date;
+    }
+}
+
 module.exports = {
 
 
@@ -77,6 +100,13 @@ module.exports = {
             '<p>  בקשה לשינוי כתיבת אמייל בוצעה <p>';
 
         sendMail(to, "Email address has been changed", body);
+    },
+    renovationReminder: function(to, teamName, renovationAddress, renovationDate) {
+        var body = '<h1>פרויקט ידיים - ' + teamName + '</h1>' +
+            '<h2>  זו היא תזכורת לגבי שיפוץ בתאריך ' + formatDate(new Date(renovationDate)) +  '<h2>' +
+            '<p> בכתובת ' + renovationAddress.street + ' ' + renovationAddress.num + ', ' + renovationAddress.city + '</p>';
+
+        sendMail(to, "Renovation Reminder", body);
     },
     /**
      *After user sign up , he will receive this email

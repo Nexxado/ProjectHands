@@ -5,6 +5,7 @@ var config = require('../../config.json');
 var COLLECTIONS = config.COLLECTIONS;
 var ROLES = config.ROLES;
 var mongoUtils = require('../utils/mongo');
+var emailUtils = require('../utils/email');
 var middleware = require('../utils/middleware');
 var validation = require('../utils/validation');
 
@@ -175,6 +176,16 @@ router.post('/assign_to_renovation', middleware.ensureAuthenticated, middleware.
                     res.send({success: true});
                 })
             });
+
+        mongoUtils.query(COLLECTIONS.TEAMS, {name: req.body.teamName}, function(error, result) {
+            if(error || !result.length)
+                return debug("failed to send renovation reminder to team", req.body.teamName);
+
+            var team = result[0];
+            for(var i = 0; i < team.members.length; i++) {
+                emailUtils.renovationReminder(team.members[i], team.name, renovation.addr, req.body.date);
+            }
+        })
     });
 
 
