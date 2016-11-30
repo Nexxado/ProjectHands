@@ -7,8 +7,8 @@
         "sessionSecret": "projecthands session secret"
     },
     "AUTH": {
-        "google_client_id": "990301468716-ubc9ojva16mhq03k1sb88k2djruph8is.apps.googleusercontent.com",
-        "google_client_secret": "SPUQWJcDkLyQ5FHKu_cCLCUg",
+        "google_client_id": "877552383148-t2iakf5c893b3tms8qn6a2lhplamr9th.apps.googleusercontent.com",
+        "google_client_secret": "mfnCWinmK3_wL2SMSbtk8gUF",
         "google_callback": "http://localhost:8080/api/auth/google/callback",
         "facebook_app_id": "1078269265566476",
         "facebook_app_secret": "5deb9c085f1669a0cd8d3150027519d3",

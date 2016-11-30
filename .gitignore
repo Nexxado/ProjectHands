@@ -6,3 +6,5 @@
 *.bat
 /.idea/
 thumbs.db
+/drive-nodejs-creds.json
+/client_secret.json
