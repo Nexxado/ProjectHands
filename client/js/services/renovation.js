@@ -87,6 +87,13 @@ angular.module('ProjectHands')
         }
 
         /**
+         * get default tools list
+         */
+        function getTools() {
+            return $resource(baseUrl + '/tools').query();
+        }
+
+        /**
          * Add needed tool to renovation
          * @param address {object} : renovation's address
          * @param tool {object} : tool needed
@@ -326,6 +333,7 @@ angular.module('ProjectHands')
             create: create,
             finish: finish,
             rsvp: rsvp,
+            getTools: getTools,
             addTool: addTool,
             assignTool: assignTool,
             shedTool: shedTool,

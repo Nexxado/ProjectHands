@@ -5,4 +5,5 @@ mongoimport --db hands --collection teams --type json --file ./teams-seed.json -
 mongoimport --db hands --collection actions --type json --file ./actions-seed.json --jsonArray --drop
 mongoimport --db hands --collection admin --type json --file ./admin-seed.json --jsonArray --drop
 mongoimport --db hands --collection ads --type json --file ./home-ads.json --jsonArray --drop
+mongoimport --db hands --collection tools --type json --file ./tools.json --jsonArray --drop
 pause

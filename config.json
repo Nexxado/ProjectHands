@@ -27,7 +27,8 @@
         "RENOVATION_PHOTOS": "renovation_photos",
         "ADS": "ads",
         "ADMIN": "admin",
-        "BRUTE": "bruteforce"
+        "BRUTE": "bruteforce",
+        "TOOLS": "tools"
     },
     "ROLES": {
         "ADMIN": "admin",

@@ -3,7 +3,6 @@
 # Example .gitignore files: https://github.com/github/gitignore
 /bower_components/
 /node_modules/
-*.bat
 /.idea/
 thumbs.db
 /drive-nodejs-creds.json

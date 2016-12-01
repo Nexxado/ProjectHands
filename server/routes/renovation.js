@@ -35,6 +35,8 @@ router.post('/create', middleware.ensureAuthenticated, middleware.ensurePermissi
 /**
  * Renovation Tools
  */
+router.get('/tools', middleware.ensureAuthenticated, middleware.ensurePermission, getTools);
+
 router.post('/add_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
     middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, addTool);
 
@@ -248,6 +250,18 @@ function createRenovation(req, res) {
             res.send({success: true})
         });
     })
+}
+
+/**
+ * Get default tools list
+ */
+function getTools(req, res) {
+    mongoUtils.query(COLLECTIONS.TOOLS, {}, function(error, result) {
+        if (error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to get tools"});
+
+        res.send(result);
+    });
 }
 
 /**

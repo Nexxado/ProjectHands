@@ -446,27 +446,7 @@ angular.module('ProjectHands.dashboard')
         $scope.addTool = function ($event) {
             var useFullScreen = $mdMedia('sm') || $mdMedia('xs');
             $mdDialog.show({
-                controller: function ($scope, $mdToast, $mdDialog) {
-                    $scope.tool = {
-                        name: "",
-                        quantity: "",
-                        comment: "",
-                        assigned: "",
-                        being_brought: false
-                    };
-                    $scope.cancel = function () {
-                        $mdDialog.cancel();
-                    };
-
-                    $scope.submit = function () {
-                        if ($scope.AddToolForm.$invalid) {
-                            return;
-                        }
-                        if ($scope.tool.quantity <= 0 || $scope.tool.quantity === "")
-                            $scope.tool.quantity = 1;
-                        $mdDialog.hide($scope.tool);
-                    };
-                },
+                controller: 'ToolsDialogController',
                 templateUrl: '/modules/dashboard/templates/dialogs/addToolDialog.html',
                 targetEvent: $event,
                 clickOutsideToClose: false,
