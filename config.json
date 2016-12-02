@@ -10,8 +10,8 @@
         "google_client_id": "877552383148-t2iakf5c893b3tms8qn6a2lhplamr9th.apps.googleusercontent.com",
         "google_client_secret": "mfnCWinmK3_wL2SMSbtk8gUF",
         "google_callback": "http://localhost:8080/api/auth/google/callback",
-        "facebook_app_id": "1078269265566476",
-        "facebook_app_secret": "5deb9c085f1669a0cd8d3150027519d3",
+        "facebook_app_id": "146052695873694",
+        "facebook_app_secret": "9852cb79e97858fe35fa7c9fd7424162",
         "facebook_callback": "http://localhost:8080/api/auth/facebook/callback"
     },
     "COLLECTIONS": {
