@@ -37,6 +37,9 @@ router.post('/create', middleware.ensureAuthenticated, middleware.ensurePermissi
  */
 router.get('/tools', middleware.ensureAuthenticated, middleware.ensurePermission, getTools);
 
+router.post('/set_tools', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
+    middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, setRenovationTools);
+
 router.post('/add_tool', middleware.ensureAuthenticated, middleware.ensurePermission, validation.validateParams,
     middleware.ensureRenovationExists, middleware.ensureRenovationNotFinished, addTool);
 
@@ -256,12 +259,33 @@ function createRenovation(req, res) {
  * Get default tools list
  */
 function getTools(req, res) {
-    mongoUtils.query(COLLECTIONS.TOOLS, {}, function(error, result) {
+    mongoUtils.query(COLLECTIONS.TOOLS, {}, function (error, result) {
         if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to get tools"});
 
         res.send(result);
     });
+}
+
+/**
+ * Set renovation tools to given tools
+ */
+function setRenovationTools(req, res) {
+    var renovation = {
+        addr: {
+            city: req.body.city,
+            street: req.body.street,
+            num: req.body.num
+        }
+    };
+
+    mongoUtils.update(COLLECTIONS.RENOVATIONS, renovation, {$set: {toolsNeeded: req.body.tools}}, {},
+        function (error, result) {
+            if (error || result.result.nModified === 0)
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to update renovation tools"});
+
+            res.send({success: true});
+        })
 }
 
 /**
@@ -710,7 +734,7 @@ function createRenovationStamp(req, res, next) {
         if (error)
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({errMessage: "Failed to mark renovation as finished"});
 
-        var team  = result[0];
+        var team = result[0];
         req.stamp = {
             date: new Date().toISOString(),
             team: team ? team.name : 'No Team',

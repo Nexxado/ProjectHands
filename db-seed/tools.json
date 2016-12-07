@@ -1,60 +1,60 @@
 [
 	{
 		name: 'מברגה',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'פטישון+סט מקדחים',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'ג\'קסו',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'מסור דיסק',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'סולם',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'אקדח סיליקון',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'שפכטל',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'מסטרינה',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'מגש צבע',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'רולר',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'מברשת',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'ניילון',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'קערה לערבוב',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'דיבלים',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'חוט סימון',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'דלי',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'בלה לפסולת',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'משייפת',
-		amount: 1
+		quantity: 1
 	} , {
 		name: 'מלאג\'',
-		amount: 1
+		quantity: 1
 	}
 ]

@@ -451,22 +451,20 @@ angular.module('ProjectHands.dashboard')
                 targetEvent: $event,
                 clickOutsideToClose: false,
                 fullscreen: useFullScreen,
-                locals: {}
+                locals: {
+                    toolsInRenovation: $scope.thisRenovation.toolsNeeded
+                }
             })
-                .then(function (newTool) {
-                    //Check for duplicates in tools
-                    for (var i in $scope.thisRenovation.toolsNeeded) {
-                        if ($scope.thisRenovation.toolsNeeded[i].name === newTool.name) {
-                            $scope.constructionToast('top right');
-                            throw new Error("Tool Name already exists. Please choose a different name");
-                        }
-                    }
-                    RenovationService.addTool($scope.thisRenovation.addr, newTool)
-                        .$promise.then(function (result) {
-                        $scope.thisRenovation.toolsNeeded.push(newTool);
-                    }).catch(function (error) {
-                        console.log("Error: ", error);
-                    });
+                .then(function (tools) {
+
+                    $scope.thisRenovation.toolsNeeded = tools;
+                    RenovationService.setRenovationTools($scope.thisRenovation.addr, tools).$promise
+                        .then(function (result) {
+                            $scope.thisRenovation.toolsNeeded = tools;
+                        })
+                        .catch(function (error) {
+                            console.log("Error: ", error);
+                        });
                     console.log("Dialog finished");
 
                 }, function () {

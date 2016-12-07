@@ -48,21 +48,21 @@
   "toolsNeeded": [
     {
       "name": "פטיש",
-      "quantity": "2",
+      "quantity": 2,
       "comment": "peter piper picked a pack of pickled peppers",
       "assigned": "",
       "being_brought": false
     },
     {
       "name": "מקדחה",
-      "quantity": "1",
+      "quantity": 1,
       "comment": "peter piper picked a pack of pickled peppers",
       "assigned": "",
       "being_brought": false
     },
     {
       "name": "ברגים",
-      "quantity": "1230",
+      "quantity": 750,
       "comment": "peter piper picked a pack of pickled peppers",
       "assigned": "",
       "being_brought": false

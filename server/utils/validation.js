@@ -230,6 +230,11 @@ validation.validateParams = function(req, res, next) {
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or tool"});
             break;
 
+        case /renovation\/set_tools/.test(req.originalUrl):
+            if(!validateString(req.body.city) || !validateString(req.body.street) || !validateNumber(req.body.num) || !Array.isArray(req.body.tools))
+                return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address or tools array"});
+            break;
+
         case /renovation\/assign_tool/.test(req.originalUrl):
             if(!validateString(req.body.city) || !validateString(req.body.street) || !validateNumber(req.body.num) || typeof req.body.tool === 'undefined' || !validateEmail(req.body.email))
                 return res.status(HttpStatus.BAD_REQUEST).send({errMessage: "Invalid renovation address, tool or user email"});

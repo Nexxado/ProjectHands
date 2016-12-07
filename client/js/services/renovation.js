@@ -94,6 +94,21 @@ angular.module('ProjectHands')
         }
 
         /**
+         * Set renovation needed tools to given tools array
+         * @param address {object} : renovation's address
+         * @param tools {Array} : tools needed for renovation
+         * @returns {Promise}
+         */
+        function setRenovationTools(address, tools) {
+            return $resource(baseUrl + '/set_tools').save({
+                city: address.city,
+                street: address.street,
+                num: address.num,
+                tools: tools
+            });
+        }
+
+        /**
          * Add needed tool to renovation
          * @param address {object} : renovation's address
          * @param tool {object} : tool needed
@@ -334,6 +349,7 @@ angular.module('ProjectHands')
             finish: finish,
             rsvp: rsvp,
             getTools: getTools,
+            setRenovationTools: setRenovationTools,
             addTool: addTool,
             assignTool: assignTool,
             shedTool: shedTool,

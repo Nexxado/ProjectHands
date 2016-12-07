@@ -368,17 +368,17 @@
                                             <md-button ng-click="addTool($event)" class="md-primary md-icon-button"
                                                        layout="row" layout-align="center center"
                                                        ng-hide="user.role === ROLES.VOLUNTEER || thisRenovation.finished">
-                                                <md-icon class="material-icons">add_circle</md-icon>
+                                                <md-icon class="material-icons">mode_edit</md-icon>
                                             </md-button>
                                             <!--<md-button ng-hide="editToolsMode || user.role === ROLES.VOLUNTEER || thisRenovation.finished" ng-click="editTools()" class="md-primary md-icon-button" layout="row" layout-align="center center">-->
                                             <!--<md-icon class="material-icons">mode_edit</md-icon>-->
                                             <!--</md-button>-->
-                                            <md-button
-                                                    ng-show="user.role !== ROLES.VOLUNTEER && !thisRenovation.finished"
-                                                    ng-click="editTools()" class="md-primary md-icon-button"
-                                                    layout="row" layout-align="center center">
-                                                <md-icon class="material-icons">mode_edit</md-icon>
-                                            </md-button>
+                                            <!--<md-button-->
+                                                    <!--ng-show="user.role !== ROLES.VOLUNTEER && !thisRenovation.finished"-->
+                                                    <!--ng-click="editTools()" class="md-primary md-icon-button"-->
+                                                    <!--layout="row" layout-align="center center">-->
+                                                <!--<md-icon class="material-icons">mode_edit</md-icon>-->
+                                            <!--</md-button>-->
 
                                         </div>
                                         <div>
@@ -387,22 +387,22 @@
                                                               ng-repeat="tool in thisRenovation.toolsNeeded | orderBy: '+being_brought'"
                                                               ng-class="{'marked-as-done': checkToolBeingBrought(tool.being_brought)}">
                                                     <div class="renovation-task" layout="column">
-                                                        <div layout="row" class="toggle-fade" ng-show="editToolsMode">
-                                                            <span flex></span>
-                                                            <md-button ng-click="deleteTool(tool)"
-                                                                       class="md-icon-button task-delete-button"
-                                                                       layout="row" layout-align="center center">
-                                                                <md-icon class="material-icons">close</md-icon>
-                                                            </md-button>
+                                                        <!--<div layout="row" class="toggle-fade" ng-show="editToolsMode">-->
+                                                            <!--<span flex></span>-->
+                                                            <!--<md-button ng-click="deleteTool(tool)"-->
+                                                                       <!--class="md-icon-button task-delete-button"-->
+                                                                       <!--layout="row" layout-align="center center">-->
+                                                                <!--<md-icon class="material-icons">close</md-icon>-->
+                                                            <!--</md-button>-->
 
-                                                        </div>
+                                                        <!--</div>-->
                                                         <div flex>
                                                             <span style="font-size: 1.5rem;">{{tool.name}}</span> -
                                                             <span>{{tool.quantity}}</span>
                                                             <!--<p>{{tool.comment}}</p>-->
-                                                            <p>אחראי: <a
+                                                            <span style="margin: 0 5px;">אחראי: <a
                                                                     ng-show="checkMemberFound(getMemberName(tool.assigned))">{{getMemberName(tool.assigned)}}</a><a
-                                                                    ng-show="isFromShed(tool)">מהמחסן</a></p>
+                                                                    ng-show="isFromShed(tool)">מהמחסן</a></span>
 
                                                             <div layout="row" layout-wrap style="margin-bottom: 5px;">
                                                                 <div ng-hide="checkToolBeingBrought(tool.being_brought) || thisRenovation.finished">

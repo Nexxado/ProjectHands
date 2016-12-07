@@ -1,5 +1,5 @@
 <md-dialog aria-label="Edit Team Dialog" flex="50">
-    <form name="EditTeamForm" ng-submit="submit()" layout="column" novalidate>
+    <form name="EditToolsForm" layout="column" novalidate>
         <md-toolbar dir="rtl">
             <div class="md-toolbar-tools">
                 <h2>עריכת כלים</h2>
@@ -12,41 +12,44 @@
         <md-dialog-content>
             <div class="md-dialog-content" layout="column" layout-align="end">
                 <div layout="row">
-                    <!-- Users without team list -->
+                    <!-- Default Tools list -->
                     <div flex-gt-sm="45" flex class="list-border dialog-list">
                         <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
                             <div class="md-toolbar-tools">
-                                <span>כלים</span>
+                                <span>ארגז כלים</span>
                             </div>
                         </md-toolbar>
-                        <md-content id="teamless-users-list">
+                        <md-content id="default-tools-list">
                             <md-list class="md-dense list-volunteers" flex>
                                 <md-list-item class="md-2-line rtl list-slide-right"
                                               ng-repeat="tool in tools">
                                     <div class="md-list-item-text" layout="column">
-                                        <h3>{{ tool.name }}</h3>
+                                        <h3 style="line-height: 1.2rem">{{ tool.name }}</h3>
                                     </div>
-                                    <md-icon class="md-secondary rtl" ng-click="addUserToTeam($index, user)">arrow_back
+                                    <md-icon class="md-secondary rtl" ng-click="addToolToRenovation($index, tool)">arrow_back
                                     </md-icon>
                                 </md-list-item>
                             </md-list>
                         </md-content>
                     </div>
-                    <!-- Team members list -->
+                    <!-- Renovation Tools list -->
                     <div flex-gt-sm="45" flex-offset-gt-sm="10" flex class="list-border dialog-list">
                         <md-toolbar layout="row" class="md-hue-1 rtl rounded-toolbar">
                             <div class="md-toolbar-tools">
                                 <span>כלים בשיפוץ</span>
                             </div>
                         </md-toolbar>
-                        <md-content id="team-members-list">
+                        <md-content id="renovation-tools-list">
                             <md-list class="md-dense list-volunteers" flex>
                                 <md-list-item class="md-2-line rtl list-slide-left"
                                               ng-repeat="tool in toolsInRenovation">
                                     <div class="md-list-item-text" layout="column">
-                                        <h3>{{ tool.name }}</h3>
+                                        <h3 style="line-height: 1.2rem">{{ tool.name }}</h3>
                                     </div>
-                                    <md-icon class="md-secondary rtl" ng-click="removeUserFromTeam($index, user)">
+                                    <md-input-container class="md-block rtl">
+                                        <input class="md-secondary" ng-model="tool.quantity" type="number" min="1" max="999" style="width: 40px; margin: 0 10px;" required>
+                                    </md-input-container>
+                                    <md-icon class="md-secondary rtl" ng-click="removeToolFromRenovation($index, tool)">
                                         arrow_forward
                                     </md-icon>
                                 </md-list-item>
@@ -54,13 +57,22 @@
                         </md-content>
                     </div>
                 </div>
+                <!-- Add new tool -->
+                <div layout="row" layout-align="end center">
+                    <md-button class="md-accent" ng-click="addNewTool()">
+                        הוסף כלי
+                    </md-button>
+                    <md-input-container class="md-block rtl">
+                        <input ng-model="newTool.name" type="text" id="newTool" name="newTool" placeholder="כלי חדש">
+                    </md-input-container>
+                </div>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout-align="start">
             <md-button type="button" ng-click="cancel()" class="md-warn">
                 ביטול
             </md-button>
-            <md-button type="submit" class="md-raised md-primary">
+            <md-button type="button" ng-click="submit()" class="md-raised md-primary">
                 אישור
             </md-button>
         </md-dialog-actions>
