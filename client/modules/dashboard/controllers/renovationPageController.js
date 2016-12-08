@@ -417,13 +417,13 @@ angular.module('ProjectHands.dashboard')
                 clickOutsideToClose: false,
                 fullscreen: useFullScreen,
                 locals: {
-                    renovation_stages: $scope.thisRenovation.renovation_stages
+                    renovation_stages: $scope.thisRenovation.renovation_stages.slice(0, $scope.thisRenovation.renovation_stages.length - 1)
 
                 }
             })
                 .then(function (newStage) {
                     //Check for duplicates in pinned
-                    for (var i in $scope.thisRenovation.renovation_stages) {
+                    for (var i = 0; i < $scope.thisRenovation.renovation_stages.length; i++) {
                         if ($scope.thisRenovation.renovation_stages[i] === newStage) {
                             $scope.constructionToast('top right');
                             throw new Error("Stage already exists");
@@ -478,6 +478,18 @@ angular.module('ProjectHands.dashboard')
             $scope.thisRenovation.finished = true;
             $scope.renovations.splice($scope.renovations.indexOf($scope.thisRenovation), 1);
             $scope.finishedRenovations.push($scope.thisRenovation);
+
+            //Update renovation to last stage.
+            RenovationService.updateStage($scope.thisRenovation.addr, $scope.thisRenovation.renovation_stages[$scope.thisRenovation.renovation_stages.length - 1])
+                .$promise
+                .then(function (result) {
+                    $scope.renovationCurrentStage = $scope.thisRenovation.renovation_stages[$scope.thisRenovation.renovation_stages.length - 1];
+                })
+                .catch(function (error) {
+                console.log("Error: ", error);
+            });
+
+            //Mark renovation as finished.
             RenovationService.finish($scope.thisRenovation.addr);
         };
 
