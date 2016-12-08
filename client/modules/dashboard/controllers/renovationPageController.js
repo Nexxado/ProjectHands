@@ -474,23 +474,40 @@ angular.module('ProjectHands.dashboard')
 
 
         /******Stages Editing functions******/
-        $scope.finishRenovation = function () {
-            $scope.thisRenovation.finished = true;
-            $scope.renovations.splice($scope.renovations.indexOf($scope.thisRenovation), 1);
-            $scope.finishedRenovations.push($scope.thisRenovation);
+        $scope.finishRenovation = function ($event) {
 
-            //Update renovation to last stage.
-            RenovationService.updateStage($scope.thisRenovation.addr, $scope.thisRenovation.renovation_stages[$scope.thisRenovation.renovation_stages.length - 1])
-                .$promise
-                .then(function (result) {
-                    $scope.renovationCurrentStage = $scope.thisRenovation.renovation_stages[$scope.thisRenovation.renovation_stages.length - 1];
-                })
-                .catch(function (error) {
-                console.log("Error: ", error);
-            });
+            $mdDialog.show({
+                controller: 'FinishRenovationFormController',
+                templateUrl: '/modules/dashboard/templates/dialogs/finishRenovationForm.html',
+                targetEvent: $event,
+                clickOutsideToClose: false,
+                fullscreen: $mdMedia('sm') || $mdMedia('xs'),
+                locals: {}
+            })
+                .then(function () {
+                    console.log("Dialog finished");
+                    //TODO update renovation with form details
 
-            //Mark renovation as finished.
-            RenovationService.finish($scope.thisRenovation.addr);
+                    $scope.thisRenovation.finished = true;
+                    $scope.renovations.splice($scope.renovations.indexOf($scope.thisRenovation), 1);
+                    $scope.finishedRenovations.push($scope.thisRenovation);
+
+                    //Update renovation to last stage.
+                    RenovationService.updateStage($scope.thisRenovation.addr, $scope.thisRenovation.renovation_stages[$scope.thisRenovation.renovation_stages.length - 1])
+                        .$promise
+                        .then(function (result) {
+                            $scope.renovationCurrentStage = $scope.thisRenovation.renovation_stages[$scope.thisRenovation.renovation_stages.length - 1];
+                        })
+                        .catch(function (error) {
+                            console.log("Error: ", error);
+                        });
+
+                    //Mark renovation as finished.
+                    RenovationService.finish($scope.thisRenovation.addr);
+                }, function () {
+                    console.log('Dialog Canceled.');
+                });
+
         };
 
         $scope.enableEditStages = function () {

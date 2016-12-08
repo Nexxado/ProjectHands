@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div style="display: flex; background: white;">
-                        <md-button ng-click="finishRenovation()" class="md-primary md-raised" ng-hide="user.role === ROLES.VOLUNTEER || thisRenovation.finished"
+                        <md-button ng-click="finishRenovation($event)" class="md-primary md-raised" ng-hide="user.role === ROLES.VOLUNTEER || thisRenovation.finished"
                                    ng-hide="thisRenovation.finished">
                             <div layout="row" layout-align="center center">
                                 <i class="material-icons">done_all</i> סיום שיפוץ
