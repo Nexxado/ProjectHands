@@ -81,7 +81,7 @@ angular.module('ProjectHands.dashboard')
         };
 
         $scope.getMemberName = function (email) {
-            for (var i in $scope.renovationMembers) {
+            for (var i = 0; i < $scope.renovationMembers.length; i++) {
                 if ($scope.renovationMembers[i].email === email)
                     return $scope.renovationMembers[i].name;
             }
@@ -106,7 +106,7 @@ angular.module('ProjectHands.dashboard')
         $scope.getRenovationMembers = function (team) {
             $scope.renovationMembers = [];
             console.log("getting members for ", team.name);
-            for (var i in team.members) {
+            for (var i = 0; i < team.members.length; i++) {
                 $scope.pushMemberByMail(team.members[i]);
             }
             $scope.initializeVariables();
@@ -214,7 +214,7 @@ angular.module('ProjectHands.dashboard')
                 .then(function (pinneds) {
                     RenovationService.editPinned($scope.thisRenovation.addr, pinneds)
                         .$promise.then(function (result) {
-                        for (var i in $scope.thisRenovation.pinned) {
+                        for (var i = 0; i < $scope.thisRenovation.pinned.length; i++) {
                             if ($scope.thisRenovation.pinned[i].title === pinneds[0].title) {
                                 $scope.thisRenovation.pinned[i].title = pinneds[1].title;
                                 $scope.thisRenovation.pinned[i].description = pinneds[1].description;
@@ -268,7 +268,7 @@ angular.module('ProjectHands.dashboard')
                 .then(function (tasks) {
                     RenovationService.editTask($scope.thisRenovation.addr, tasks)
                         .$promise.then(function (result) {
-                        for (var i in $scope.thisRenovation.tasks) {
+                        for (var i = 0; i < $scope.thisRenovation.tasks.length; i++) {
                             if ($scope.thisRenovation.tasks[i].name === tasks[0].name) {
                                 $scope.thisRenovation.tasks[i].name = tasks[1].name;
                                 $scope.thisRenovation.tasks[i].description = tasks[1].description;
@@ -325,7 +325,7 @@ angular.module('ProjectHands.dashboard')
             })
                 .then(function (newTask) {
                     //Check for duplicates in tasks
-                    for (var i in $scope.thisRenovation.tasks) {
+                    for (var i = 0; i < $scope.thisRenovation.tasks.length; i++) {
                         if ($scope.thisRenovation.tasks[i].name === newTask.name) {
                             $scope.constructionToast('top right');
                             throw new Error("Task Title already exists. Please choose a different title");
@@ -373,7 +373,7 @@ angular.module('ProjectHands.dashboard')
             })
                 .then(function (newPinned) {
                     //Check for duplicates in pinned
-                    for (var i in $scope.thisRenovation.pinned) {
+                    for (var i = 0; i <  $scope.thisRenovation.pinned.length; i++) {
                         if ($scope.thisRenovation.pinned[i].title === newPinned.title) {
                             $scope.constructionToast('top right');
                             throw new Error("Pinned Title already exists. Please choose a different title");
@@ -658,7 +658,7 @@ angular.module('ProjectHands.dashboard')
         /*Functions*/
         $scope.checkRSVP = function (email) {
             var reno = $scope.thisRenovation;
-            for (var i in reno.rsvp) {
+            for (var i = 0; i < reno.rsvp.length; i++) {
                 if (reno.rsvp[i] === email) {
                     return true;
                 }
