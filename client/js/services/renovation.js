@@ -63,13 +63,22 @@ angular.module('ProjectHands')
         /**
          * Mark a renovation as finished
          * @param address {object} : renovation's address
+         * @param finishForm {object}: renovation's filled finish form details
          * @returns {Promise}
          */
-        function finish(address) {
+        function finish(address, finishForm) {
             return $resource(baseUrl + '/finish').save({
                 city: address.city,
                 street: address.street,
-                num: address.num
+                num: address.num,
+                renovation_name: finishForm.name,
+                renovation_phone: finishForm.phone,
+                referrer: finishForm.referrer,
+                referrer_email: finishForm.referrer_email,
+                referrer_phone: finishForm.referrer_phone,
+                renovation_hours: finishForm.hours,
+                what_done: finishForm.what_done,
+                second_visit: finishForm.secondVisit
             });
         }
 

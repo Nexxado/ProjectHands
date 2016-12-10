@@ -738,7 +738,15 @@ function createRenovationStamp(req, res, next) {
         req.stamp = {
             date: new Date().toISOString(),
             team: team ? team.name : 'No Team',
-            members: team ? team.members : []
+            members: team ? team.members : [],
+            name: req.body.renovation_name,
+            phone: req.body.renovation_phone,
+            referrer: req.body.referrer,
+            referrer_email: req.body.referrer_email || '',
+            referrer_phone: req.body.referrer_phone,
+            hours: req.body.renovation_hours,
+            what_done: req.body.what_done,
+            secondVisit: req.body.second_visit
         };
         next();
     });

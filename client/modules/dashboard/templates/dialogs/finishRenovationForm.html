@@ -1,0 +1,61 @@
+<md-dialog aria-label="Edit Team Dialog" flex="50">
+    <form name="FinishRenovationForm" layout="column" novalidate>
+        <md-toolbar dir="rtl">
+            <div class="md-toolbar-tools">
+                <h2>טופס סיום שיפוץ</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon class="material-icons">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content" layout="column" layout-align="end">
+                <!-- Renovation Name -->
+                <md-input-container class="md-block rtl">
+                    <input ng-model="renovation.name" type="text" id="name" name="name" placeholder="שם השיפוץ" required>
+                </md-input-container>
+                <!-- Renovation Address FIXME: already part of renovation details -->
+                <!-- Renovation Phone -->
+                <md-input-container class="md-block rtl">
+                    <input ng-model="renovation.phone" type="text" id="phone" name="phone" placeholder="טלפון בשיפוץ" required>
+                </md-input-container>
+                <!-- Referrer -->
+                <md-input-container class="md-block rtl">
+                    <input ng-model="renovation.referrer" type="text" id="referrer" name="referrer" placeholder="גורם מפנה" required>
+                </md-input-container>
+                <!-- Referrer Email -->
+                <md-input-container class="md-block rtl">
+                    <input ng-model="renovation.referrer_email" type="text" id="referrer_email" name="referrer_email" placeholder="מייל גורם מפנה- אם ידוע">
+                </md-input-container>
+                <!-- Referrer Phone -->
+                <md-input-container class="md-block rtl">
+                    <input ng-model="renovation.referrer_phone" type="text" id="referrer_phone" name="referrer_phone" placeholder="טלפון גורם מפנה" required>
+                </md-input-container>
+                <!-- Renovation Date FIXME: already part of renovation details -->
+                <!-- Renovation Hours -->
+                <md-input-container class="md-block rtl">
+                    <input ng-model="renovation.hours" min="0.5" step="0.5" max="99" type="number" id="hours" name="hours" placeholder="מס שעות השיפוץ" required>
+                </md-input-container>
+                <!-- Amount of volunteers FIXME: already part of renovation details -->
+                <!-- What was done in the renovation -->
+                <md-input-container class="md-block rtl">
+                    <textarea ng-model="renovation.what_done" id="what_done" name="what_done" placeholder="מה בוצע בשיפוץ" required></textarea>
+                </md-input-container>
+                <!-- Volunteer Names FIXME: already part of renovation details -->
+                <!-- Should come back to paint -->
+                <md-checkbox class="rtl" ng-model="renovation.secondVisit" aria-label="second Visit">
+                    אמורה להגיע לדירה קבוצה נוספת לעבודות סיוד וצביעה
+                </md-checkbox>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout-align="start">
+            <md-button type="button" ng-click="cancel()" class="md-warn">
+                ביטול
+            </md-button>
+            <md-button type="button" ng-click="submit()" class="md-raised md-primary">
+                אישור
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

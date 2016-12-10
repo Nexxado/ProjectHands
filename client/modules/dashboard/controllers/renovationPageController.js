@@ -373,7 +373,7 @@ angular.module('ProjectHands.dashboard')
             })
                 .then(function (newPinned) {
                     //Check for duplicates in pinned
-                    for (var i = 0; i <  $scope.thisRenovation.pinned.length; i++) {
+                    for (var i = 0; i < $scope.thisRenovation.pinned.length; i++) {
                         if ($scope.thisRenovation.pinned[i].title === newPinned.title) {
                             $scope.constructionToast('top right');
                             throw new Error("Pinned Title already exists. Please choose a different title");
@@ -484,26 +484,33 @@ angular.module('ProjectHands.dashboard')
                 fullscreen: $mdMedia('sm') || $mdMedia('xs'),
                 locals: {}
             })
-                .then(function () {
+                .then(function (renovationForm) {
                     console.log("Dialog finished");
                     //TODO update renovation with form details
 
-                    $scope.thisRenovation.finished = true;
-                    $scope.renovations.splice($scope.renovations.indexOf($scope.thisRenovation), 1);
-                    $scope.finishedRenovations.push($scope.thisRenovation);
 
                     //Update renovation to last stage.
                     RenovationService.updateStage($scope.thisRenovation.addr, $scope.thisRenovation.renovation_stages[$scope.thisRenovation.renovation_stages.length - 1])
                         .$promise
                         .then(function (result) {
                             $scope.renovationCurrentStage = $scope.thisRenovation.renovation_stages[$scope.thisRenovation.renovation_stages.length - 1];
+                            $scope.calcRenoProgress();
+                            $scope.getStageImage();
                         })
                         .catch(function (error) {
                             console.log("Error: ", error);
                         });
 
                     //Mark renovation as finished.
-                    RenovationService.finish($scope.thisRenovation.addr);
+                    RenovationService.finish($scope.thisRenovation.addr, renovationForm).$promise
+                        .then(function (result) {
+                            $scope.thisRenovation.finished = true;
+                            $scope.renovations.splice($scope.renovations.indexOf($scope.thisRenovation), 1);
+                            $scope.finishedRenovations.push($scope.thisRenovation);
+                        })
+                        .catch(function (error) {
+
+                        });
                 }, function () {
                     console.log('Dialog Canceled.');
                 });
@@ -658,6 +665,9 @@ angular.module('ProjectHands.dashboard')
         /*Functions*/
         $scope.checkRSVP = function (email) {
             var reno = $scope.thisRenovation;
+            if (!reno || !reno.rsvp)
+                return false;
+
             for (var i = 0; i < reno.rsvp.length; i++) {
                 if (reno.rsvp[i] === email) {
                     return true;
